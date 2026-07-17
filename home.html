@@ -17,80 +17,62 @@
 
   <link rel="stylesheet" href="css/style.css" />
 </head>
-  
-  <audio id="bgMusic" loop preload="auto">
-  <source src="music/goodnessofGod.mp3" type="audio/mpeg" />
-  Your browser does not support audio playback.
-</audio>
 
-<button
-  id="musicButton"
-  type="button"
-  aria-label="Play background music"
->
-  🔇
-</button>
-
-<script src="js/common.js"></script>
-  
 <body class="home-page" data-current-page="home">
   <main class="page-container">
-    
-<section class="home-hero">
-  <div class="hero-overlay"></div>
+    <section class="home-hero">
+      <div class="hero-overlay"></div>
 
-  <div class="hero-content">
-    <h1 class="hero-names">
-      Rhaf
-      <span>&amp;</span>
-      Jen
-    </h1>
+      <div class="hero-content">
+        <h1 class="hero-names">
+          Rhaf
+          <span>&amp;</span>
+          Jen
+        </h1>
 
-    <div class="decorative-dots">•••••••••••••••</div>
-    <p class="wedding-date">FEBRUARY 4, 2027</p>
-  </div>
-</section>
+        <div class="decorative-dots">•••••••••••••••</div>
+        <p class="wedding-date">FEBRUARY 4, 2027</p>
+      </div>
+    </section>
 
-<section class="countdown-section">
-  <div class="countdown">
-    <div class="countdown-item">
-      <strong id="days">000</strong>
-      <span>DAYS</span>
-    </div>
+    <section class="countdown-section">
+      <div class="countdown">
+        <div class="countdown-item">
+          <strong id="days">000</strong>
+          <span>DAYS</span>
+        </div>
 
-    <div class="countdown-item">
-      <strong id="hours">00</strong>
-      <span>HOURS</span>
-    </div>
+        <div class="countdown-item">
+          <strong id="hours">00</strong>
+          <span>HOURS</span>
+        </div>
 
-    <div class="countdown-item">
-      <strong id="minutes">00</strong>
-      <span>MINUTES</span>
-    </div>
+        <div class="countdown-item">
+          <strong id="minutes">00</strong>
+          <span>MINUTES</span>
+        </div>
 
-    <div class="countdown-item">
-      <strong id="seconds">00</strong>
-      <span>SECONDS</span>
-    </div>
-  </div>
+        <div class="countdown-item">
+          <strong id="seconds">00</strong>
+          <span>SECONDS</span>
+        </div>
+      </div>
 
-  <p class="countdown-message" id="countdownMessage"></p>
-</section>
+      <p class="countdown-message" id="countdownMessage"></p>
+    </section>
 
-<section class="home-actions">
-  <p class="navigation-instruction">
-    Please tap an icon below to view more details.
-  </p>
+    <section class="home-actions">
+      <p class="navigation-instruction">
+        Please tap an icon below to view more details.
+      </p>
 
-  <div class="primary-actions">
-    <a class="primary-button" href="rsvp.html">RSVP HERE</a>
-    <a class="primary-button" href="prenup.html">PRENUP</a>
-  </div>
-</section>
-
+      <div class="primary-actions">
+        <a class="primary-button" href="rsvp.html">RSVP HERE</a>
+        <a class="primary-button" href="prenup.html">PRENUP</a>
+      </div>
+    </section>
   </main>
 
-  
   <nav class="bottom-navigation" aria-label="Wedding navigation">
     <a class="nav-item" data-page="home" href="home.html">
       <span class="nav-icon">⌂</span>
@@ -128,9 +110,20 @@
     </a>
   </nav>
 
+  <audio id="bgMusic" loop preload="metadata">
+    <source src="music/goodnessofGod.mp3" type="audio/mpeg" />
+    Your browser does not support audio playback.
+  </audio>
+
+  <button
+    id="musicButton"
+    type="button"
+    aria-label="Play background music"
+  >
+    🔇
+  </button>
 
   <script src="js/common.js"></script>
   <script src="js/countdown.js"></script>
-  
 </body>
 </html>
