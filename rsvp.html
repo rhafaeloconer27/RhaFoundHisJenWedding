@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#8c997d" />
+
+  <title>RSVP | Rhaf &amp; Jen</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body data-current-page="rsvp">
+  <main class="page-container">
+    <section class="page-hero small-hero rsvp-hero">
+      <div class="page-hero-overlay"></div>
+
+      <div class="page-hero-content">
+        <p>We hope you can join us</p>
+        <h1>RSVP</h1>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="rsvp-introduction">
+        <h2>Kindly Respond</h2>
+
+        <p>
+          Please submit your response on or before January 4, 2027.
+          One RSVP submission is required per invited family or group.
+        </p>
+      </div>
+
+      <!--
+        The form is submitted to a hidden iframe.
+        This avoids leaving the wedding website after submission.
+        JavaScript assigns the Google Apps Script URL as the form action.
+      -->
+      <form
+        class="rsvp-form"
+        id="rsvpForm"
+        method="POST"
+        target="rsvpSubmissionFrame"
+        autocomplete="on"
+      >
+        <!-- Honeypot field for basic spam protection -->
+        <div class="honeypot-field" aria-hidden="true">
+          <label>
+            Website
+            <input
+              id="website"
+              name="website"
+              type="text"
+              tabindex="-1"
+              autocomplete="off"
+            />
+          </label>
+        </div>
+
+        <label>
+          Full Name
+          <input
+            id="fullName"
+            name="fullName"
+            type="text"
+            maxlength="150"
+            placeholder="Enter your full name"
+            autocomplete="name"
+            required
+          />
+        </label>
+
+        <label>
+          Attendance
+          <select id="attendance" name="attendance" required>
+            <option value="">Select your response</option>
+            <option value="Joyfully accepts">
+              Joyfully accepts
+            </option>
+            <option value="Regretfully declines">
+              Regretfully declines
+            </option>
+          </select>
+        </label>
+
+        <label>
+          Number of Attending Guests
+          <input
+            id="guestCount"
+            name="guestCount"
+            type="number"
+            min="0"
+            max="10"
+            value="1"
+            required
+          />
+          <small class="field-help">
+            Enter 0 when regretfully declining.
+          </small>
+        </label>
+
+        <label>
+          Contact Number
+          <input
+            id="contactNumber"
+            name="contactNumber"
+            type="tel"
+            maxlength="30"
+            placeholder="+63 9XX XXX XXXX"
+            autocomplete="tel"
+          />
+        </label>
+
+        <label>
+          Email Address
+          <input
+            id="emailAddress"
+            name="emailAddress"
+            type="email"
+            maxlength="150"
+            placeholder="name@example.com"
+            autocomplete="email"
+          />
+        </label>
+
+        <label>
+          Dietary Restrictions
+          <input
+            id="dietaryRestrictions"
+            name="dietaryRestrictions"
+            type="text"
+            maxlength="250"
+            placeholder="Optional"
+          />
+        </label>
+
+        <label>
+          Message for the Couple
+          <textarea
+            id="message"
+            name="message"
+            rows="5"
+            maxlength="1000"
+            placeholder="Write a short message"
+          ></textarea>
+        </label>
+
+        <input
+          id="submittedFrom"
+          name="submittedFrom"
+          type="hidden"
+          value="Wedding Website"
+        />
+
+        <button
+          class="submit-button"
+          id="submitButton"
+          type="submit"
+        >
+          Submit RSVP
+        </button>
+
+        <p
+          class="form-response"
+          id="formResponse"
+          role="status"
+          aria-live="polite"
+        ></p>
+      </form>
+
+      <iframe
+        class="hidden-submission-frame"
+        id="rsvpSubmissionFrame"
+        name="rsvpSubmissionFrame"
+        title="RSVP submission response"
+      ></iframe>
+    </section>
+  </main>
+
+  <nav class="bottom-navigation" aria-label="Wedding navigation">
+    <a class="nav-item" data-page="home" href="home.html">
+      <span class="nav-icon">⌂</span>
+      <span class="nav-label">Home</span>
+    </a>
+
+    <a class="nav-item" data-page="sponsors" href="sponsors.html">
+      <span class="nav-icon">♔</span>
+      <span class="nav-label">Sponsors</span>
+    </a>
+
+    <a class="nav-item" data-page="location" href="location.html">
+      <span class="nav-icon">⌖</span>
+      <span class="nav-label">Location</span>
+    </a>
+
+    <a class="nav-item" data-page="attire" href="attire.html">
+      <span class="nav-icon">♙</span>
+      <span class="nav-label">Attire</span>
+    </a>
+
+    <a class="nav-item" data-page="gift" href="gift-guide.html">
+      <span class="nav-icon">♡</span>
+      <span class="nav-label">Gift</span>
+    </a>
+
+    <a class="nav-item" data-page="faq" href="faq.html">
+      <span class="nav-icon">?</span>
+      <span class="nav-label">FAQ</span>
+    </a>
+
+    <a class="nav-item" data-page="contact" href="contact.html">
+      <span class="nav-icon">✆</span>
+      <span class="nav-label">Contact</span>
+    </a>
+  </nav>
+
+  <script src="js/common.js"></script>
+  <script src="js/rsvp.js"></script>
+</body>
+</html>
