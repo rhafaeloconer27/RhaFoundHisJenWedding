@@ -5,7 +5,7 @@
 */
 
 const GOOGLE_APPS_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbyNSYDb_2XmlIC6AlwdrUclue_CNxOyrQvEcPOPoBBXLbqx_fYI15XeF2_aYaLjMcCt/exec";
+  "https://script.google.com/macros/s/AKfycbxuNkbTqIPVvLEB18qxM2noodhW05r4sD6rkV6ZLhWypjX8r9TsAlfucVwJDIrIIao/exec";
 
 const SUBMISSION_TIMEOUT_MS = 15000;
 
