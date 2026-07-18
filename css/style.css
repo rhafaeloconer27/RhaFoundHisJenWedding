@@ -1900,3 +1900,733 @@ body[data-current-page="home"] .hero-countdown {
     transform: translateX(50%);
   }
 }
+
+/* ==============================
+   WEDDING LOADING SCREEN
+============================== */
+
+body.loading-active {
+  overflow: hidden;
+}
+
+.wedding-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 100svh;
+  padding: 24px;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(255, 255, 255, 0.95),
+      rgba(248, 245, 238, 0.98)
+    );
+
+  opacity: 1;
+  visibility: visible;
+
+  transition:
+    opacity 0.7s ease,
+    visibility 0.7s ease;
+}
+
+.wedding-loader.loader-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.wedding-loader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  text-align: center;
+
+  animation: loaderContentEnter 0.8s ease both;
+}
+
+.loader-rings {
+  position: relative;
+
+  width: 86px;
+  height: 54px;
+  margin-bottom: 22px;
+}
+
+.loader-ring {
+  position: absolute;
+  top: 4px;
+
+  width: 46px;
+  height: 46px;
+
+  border: 3px solid var(--gold);
+  border-radius: 50%;
+
+  box-shadow:
+    0 4px 16px rgba(183, 160, 106, 0.2),
+    inset 0 0 0 2px rgba(255, 255, 255, 0.7);
+}
+
+.loader-ring-left {
+  left: 4px;
+
+  animation:
+    ringFloatLeft 1.7s ease-in-out infinite;
+}
+
+.loader-ring-right {
+  right: 4px;
+
+  animation:
+    ringFloatRight 1.7s ease-in-out infinite;
+}
+
+.loader-names {
+  color: var(--sage-dark);
+
+  font-family: "Allura", cursive;
+  font-size: clamp(3.8rem, 17vw, 5.6rem);
+  font-weight: 400;
+  line-height: 0.8;
+}
+
+.loader-names span {
+  display: block;
+
+  margin: 5px 0;
+
+  color: var(--gold);
+  font-size: 0.52em;
+}
+
+.loader-message {
+  margin-top: 23px;
+
+  color: var(--muted);
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.05rem;
+  font-style: italic;
+  letter-spacing: 0.04em;
+}
+
+.loader-dots {
+  display: flex;
+  gap: 7px;
+
+  margin-top: 18px;
+}
+
+.loader-dots span {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: var(--sage);
+
+  animation: loaderDot 1.2s ease-in-out infinite;
+}
+
+.loader-dots span:nth-child(2) {
+  animation-delay: 0.18s;
+}
+
+.loader-dots span:nth-child(3) {
+  animation-delay: 0.36s;
+}
+
+/* Cover transition */
+
+.cover-page-hidden {
+  opacity: 0;
+  transform: scale(1.03);
+}
+
+.cover-page-visible {
+  opacity: 1;
+  transform: scale(1);
+
+  transition:
+    opacity 1s ease,
+    transform 1.2s ease;
+}
+
+/* Animations */
+
+@keyframes loaderContentEnter {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes loaderDot {
+  0%,
+  80%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+
+  40% {
+    opacity: 1;
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes ringFloatLeft {
+  0%,
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateX(3px) rotate(-8deg);
+  }
+}
+
+@keyframes ringFloatRight {
+  0%,
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateX(-3px) rotate(8deg);
+  }
+}
+
+@keyframes sealFloat{
+
+    0%,100%{
+        transform:
+        translate(-50%,-50%)
+        scale(1);
+    }
+
+    50%{
+        transform:
+        translate(-50%,-50%)
+        scale(1.04);
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wedding-loader-content,
+  .loader-ring,
+  .loader-dots span {
+    animation: none;
+  }
+
+  .wedding-loader,
+  .cover-page-visible {
+    transition-duration: 0.2s;
+  }
+}
+
+/* ==========================================================
+   GSAP INVITATION INTRO
+========================================================== */
+
+.invitation-intro-body {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  overflow: hidden;
+
+  background: #56614f;
+}
+
+.invitation-intro {
+  position: fixed;
+  inset: 0;
+
+  display: grid;
+  place-items: center;
+
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  padding: 24px 18px;
+
+  overflow: hidden;
+}
+
+.intro-background {
+  position: absolute;
+  inset: -5%;
+
+  background:
+    url("../images/rhafjeneight.webp")
+    center / cover no-repeat;
+
+  transform: scale(1.05);
+}
+
+.intro-overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(24, 29, 21, 0.32),
+      rgba(24, 29, 21, 0.72)
+    );
+}
+
+.invitation-stage {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: min(100%, 510px);
+
+  text-align: center;
+}
+
+.intro-label {
+  margin-bottom: 23px;
+
+  color: rgba(255, 255, 255, 0.94);
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    clamp(1rem, 3.5vw, 1.25rem);
+
+  font-style: italic;
+
+  text-shadow:
+    0 3px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Invitation cover */
+
+.invitation-cover {
+  position: relative;
+
+  width: min(88vw, 430px);
+  aspect-ratio: 0.82 / 1;
+
+  overflow: hidden;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.42);
+
+  border-radius: 8px;
+
+  background: #f5f0e6;
+
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.36);
+
+  perspective: 1200px;
+}
+
+/* Revealed content */
+.invitation-reveal {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(circle at top, rgba(255,255,255,.9), rgba(255,255,255,0) 55%),
+        linear-gradient(180deg,#faf6ee 0%,#f4efe5 100%);
+}
+
+.reveal-photo{
+    display:none;
+}
+
+.invitation-reveal::before{
+    content:"";
+
+    position:absolute;
+    inset:18px;
+
+    border:1px solid rgba(183,160,106,.55);
+
+    pointer-events:none;
+}
+
+.invitation-reveal::after{
+    content:"";
+
+    position:absolute;
+    inset:34px;
+
+    border:1px solid rgba(183,160,106,.18);
+
+    pointer-events:none;
+}
+
+.reveal-content{
+    position:relative;
+
+    z-index:3;
+
+    color:#5d6658;
+
+    text-align:center;
+}
+
+.reveal-small{
+    font-family:"Cormorant Garamond",serif;
+    font-style:italic;
+    font-size:1rem;
+    color:#7d7b72;
+}
+
+.reveal-divider{
+    margin:14px 0;
+
+    color:#b7a06a;
+
+    font-size:.9rem;
+}
+
+.reveal-content h1{
+    margin:12px 0;
+
+    color:#6f7d63;
+
+    font-family:"Allura",cursive;
+
+    font-size:5.4rem;
+
+    font-weight:400;
+
+    line-height:.72;
+}
+
+.reveal-content h1 span{
+    display:block;
+
+    margin:8px 0;
+
+    color:#b7a06a;
+
+    font-size:.48em;
+}
+
+.reveal-invites{
+    margin-top:18px;
+
+    color:#66645c;
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:1.08rem;
+
+    line-height:1.7;
+}
+
+.reveal-date{
+    margin-top:18px;
+
+    color:#6f7d63;
+
+    font-size:.78rem;
+
+    font-weight:600;
+
+    letter-spacing:.22em;
+
+    text-transform:uppercase;
+}
+
+/* Opening panels */
+
+.cover-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 4;
+
+  width: 51%;
+
+  background:
+    linear-gradient(
+      145deg,
+      #f7f2e8,
+      #e1d6c4
+    );
+
+  will-change: transform;
+}
+
+.cover-panel-left {
+  left: 0;
+
+  border-right:
+    1px solid rgba(183, 160, 106, 0.35);
+}
+
+.cover-panel-right {
+  right: 0;
+
+  border-left:
+    1px solid rgba(183, 160, 106, 0.35);
+}
+
+.cover-decoration {
+  position: absolute;
+  inset: 17px;
+
+  border:
+    1px solid rgba(183, 160, 106, 0.42);
+}
+
+.cover-panel-left .cover-decoration {
+  border-right: 0;
+}
+
+.cover-panel-right .cover-decoration {
+  border-left: 0;
+}
+
+/* Center title */
+
+.cover-title {
+  position: absolute;
+  top: 18%;
+  right: 16px;
+  left: 16px;
+  z-index: 6;
+
+  color: var(--sage-dark);
+
+  text-align: center;
+
+  pointer-events: none;
+}
+
+.cover-title p {
+  margin-bottom: 17px;
+
+  color: #847b6d;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+
+  text-transform: uppercase;
+}
+
+.cover-title h2 {
+  font-family:
+    "Allura",
+    cursive;
+
+  font-size:
+    clamp(4rem, 17vw, 6rem);
+
+  font-weight: 400;
+  line-height: 0.7;
+}
+
+.cover-title h2 span {
+  display: block;
+
+  margin: 8px 0;
+
+  color: var(--gold);
+
+  font-size: 0.5em;
+}
+
+/* Wax seal */
+
+.gsap-wax-seal {
+  position: absolute;
+  top:74%;
+  left: 50%;
+  z-index: 8;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 78px;
+  height: 78px;
+
+  padding: 0;
+
+  border:
+    2px solid rgba(255, 255, 255, 0.3);
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      #9fac94,
+      #627058 72%
+    );
+
+  color: #ffffff;
+
+  box-shadow:
+    0 10px 26px rgba(62, 68, 56, 0.38),
+    inset 0 0 0 5px
+      rgba(255, 255, 255, 0.08);
+
+  cursor: pointer;
+
+  transform: translate(-50%, -50%);
+
+  will-change:
+    transform,
+    opacity;
+
+animation:
+        sealFloat 2.8s ease-in-out infinite;
+
+  transition:
+        transform .35s ease,
+        box-shadow .35s ease;
+}
+
+.gsap-wax-seal:hover{
+    transform:
+        translate(-50%,-50%)
+        scale(1.08);
+
+    box-shadow:
+        0 16px 40px rgba(0,0,0,.28);
+}
+
+.gsap-wax-seal span,
+.gsap-wax-seal small {
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-weight: 600;
+}
+
+.gsap-wax-seal span {
+  font-size: 1.5rem;
+}
+
+.gsap-wax-seal small {
+  margin: 0 3px;
+
+  font-size: 0.9rem;
+}
+
+/* Open button */
+
+.gsap-open-button {
+  margin-top: 27px;
+
+  padding: 13px 28px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.8);
+
+  border-radius: 999px;
+
+  background:
+    rgba(255, 255, 255, 0.94);
+
+  color: var(--sage-dark);
+
+  box-shadow:
+    0 10px 26px rgba(0, 0, 0, 0.22);
+
+  font-size: 0.71rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+
+  text-transform: uppercase;
+
+  cursor: pointer;
+}
+
+.gsap-open-button:disabled {
+  cursor: default;
+  opacity: 0.72;
+}
+
+.intro-helper {
+  margin-top: 11px;
+
+  color: rgba(255, 255, 255, 0.86);
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 0.88rem;
+  font-style: italic;
+}
+
+@media (max-width: 480px) {
+  .invitation-cover {
+    width: min(82vw, 360px);
+  }
+
+  .intro-label {
+    margin-bottom: 17px;
+  }
+
+  .gsap-wax-seal {
+    width: 66px;
+    height: 66px;
+  }
+
+  .gsap-open-button {
+    margin-top: 21px;
+  }
+}
+
+@media (max-height: 720px) {
+  .invitation-cover {
+    width: min(68vw, 330px);
+  }
+
+  .intro-label {
+    margin-bottom: 13px;
+  }
+
+  .gsap-open-button {
+    margin-top: 16px;
+  }
+
+  .intro-helper {
+    display: none;
+  }
+}
