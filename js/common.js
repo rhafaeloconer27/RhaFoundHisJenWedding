@@ -1,167 +1,119 @@
-document.addEventListener("DOMContentLoaded", function () {
-  initializeCommonNavigation();
-  initializeBackgroundMusic();
-});
+const WEDDING_NAVIGATION_ITEMS = [
+  {
+    page: "home",
+    href: "home.html",
+    icon: "fa-solid fa-house",
+    label: "Home",
+  },
+  {
+    page: "sponsors",
+    href: "sponsors.html",
+    icon: "fa-solid fa-crown",
+    label: "Sponsors",
+  },
+  {
+    page: "location",
+    href: "location.html",
+    icon: "fa-solid fa-location-dot",
+    label: "Location",
+  },
+  {
+    page: "rsvp",
+    href: "rsvp.html",
+    icon: "fa-solid fa-envelope-open-text",
+    label: "RSVP",
+    featured: true,
+  },
+  {
+    page: "attire",
+    href: "attire.html",
+    icon: "fa-solid fa-shirt",
+    label: "Attire",
+  },
+  {
+    page: "gift",
+    href: "gift-guide.html",
+    icon: "fa-solid fa-gift",
+    label: "Gift",
+  },
+  {
+    page: "contact",
+    href: "contact.html",
+    icon: "fa-solid fa-phone",
+    label: "Contact",
+  },
+];
+
+document.addEventListener(
+  "DOMContentLoaded",
+  initializeCommonNavigation
+);
 
 function initializeCommonNavigation() {
-  const currentPage = document.body.dataset.currentPage;
-  const navigationItems = document.querySelectorAll(".nav-item");
+  const currentPage =
+    document.body.dataset.currentPage || "";
 
-  navigationItems.forEach(function (item) {
-    if (item.dataset.page === currentPage) {
-      item.classList.add("active");
-    }
-  });
-}
-
-let bgMusic = null;
-let musicButton = null;
-
-function initializeBackgroundMusic() {
-  bgMusic = document.getElementById("bgMusic");
-  musicButton = document.getElementById("musicButton");
-
-  if (!bgMusic || !musicButton) {
-    return;
-  }
-
-  bgMusic.loop = true;
-  bgMusic.volume = 0.5;
-
-  restoreMusicState();
-  updateMusicButton();
-
-  bgMusic.play().catch(function () {
-    document.addEventListener(
-      "click",
-      function playMusicAfterFirstInteraction(event) {
-        if (event.target.closest("#musicButton")) {
-          return;
-        }
-
-        playMusic();
-      },
-      { once: true }
+  let navigationContainer =
+    document.getElementById(
+      "globalNavigation"
     );
-  });
 
-  musicButton.addEventListener("click", function (event) {
-    event.preventDefault();
-    event.stopPropagation();
+  if (!navigationContainer) {
+    navigationContainer =
+      document.createElement("div");
 
-    if (bgMusic.paused) {
-      playMusic();
-    } else {
-      pauseMusic();
-    }
-  });
+    navigationContainer.id =
+      "globalNavigation";
 
-  bgMusic.addEventListener("play", function () {
-    updateMusicButton();
-    saveMusicState();
-  });
-
-  bgMusic.addEventListener("pause", function () {
-    updateMusicButton();
-    saveMusicState();
-  });
-
-  bgMusic.addEventListener("timeupdate", function () {
-    saveMusicState();
-  });
-
-  window.addEventListener("beforeunload", function () {
-    saveMusicState();
-  });
-}
-
-function playMusic() {
-  if (!bgMusic) {
-    return;
-  }
-
-  bgMusic
-    .play()
-    .then(function () {
-      updateMusicButton();
-      saveMusicState();
-    })
-    .catch(function (error) {
-      console.error("Unable to play background music:", error);
-    });
-}
-
-function pauseMusic() {
-  if (!bgMusic) {
-    return;
-  }
-
-  bgMusic.pause();
-  updateMusicButton();
-  saveMusicState();
-}
-
-function updateMusicButton() {
-  if (!bgMusic || !musicButton) {
-    return;
-  }
-
-  if (bgMusic.paused) {
-    musicButton.textContent = "🔇";
-    musicButton.setAttribute(
-      "aria-label",
-      "Play background music"
-    );
-    musicButton.setAttribute(
-      "title",
-      "Play background music"
-    );
-  } else {
-    musicButton.textContent = "🔊";
-    musicButton.setAttribute(
-      "aria-label",
-      "Pause background music"
-    );
-    musicButton.setAttribute(
-      "title",
-      "Pause background music"
+    document.body.appendChild(
+      navigationContainer
     );
   }
+
+  navigationContainer.innerHTML =
+    createNavigationMarkup(currentPage);
 }
 
-function saveMusicState() {
-  if (!bgMusic) {
-    return;
-  }
+function createNavigationMarkup(currentPage) {
+  const navigationItems =
+    WEDDING_NAVIGATION_ITEMS.map(
+      function (item) {
+        const isActive =
+          item.page === currentPage;
 
-  localStorage.setItem(
-    "weddingMusicTime",
-    String(bgMusic.currentTime || 0)
-  );
+        const featuredClass =
+          item.featured
+            ? " nav-item-featured"
+            : "";
 
-  localStorage.setItem(
-    "weddingMusicPaused",
-    String(bgMusic.paused)
-  );
-}
+        return `
+          <a
+            class="nav-item${featuredClass}${isActive ? " active" : ""}"
+            data-page="${item.page}"
+            href="${item.href}"
+            ${isActive ? 'aria-current="page"' : ""}
+          >
+            <span class="nav-icon">
+              <i
+                class="${item.icon}"
+                aria-hidden="true"
+              ></i>
+            </span>
 
-function restoreMusicState() {
-  if (!bgMusic) {
-    return;
-  }
+            <span class="nav-label">
+              ${item.label}
+            </span>
+          </a>
+        `;
+      }
+    ).join("");
 
-  const savedTime = Number(
-    localStorage.getItem("weddingMusicTime")
-  );
-
-  const savedPaused =
-    localStorage.getItem("weddingMusicPaused");
-
-  if (Number.isFinite(savedTime) && savedTime > 0) {
-    bgMusic.currentTime = savedTime;
-  }
-
-  if (savedPaused === "true") {
-    bgMusic.pause();
-  }
+  return `
+    <nav
+      class="bottom-navigation"
+      aria-label="Wedding navigation"
+    >
+      ${navigationItems}
+    </nav>
+  `;
 }
