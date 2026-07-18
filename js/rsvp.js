@@ -1,36 +1,57 @@
 /*
-  Replace the value below with your deployed Google Apps Script Web App URL.
+  Google Apps Script Web App URL.
 
-  Correct format:
-  https://script.google.com/macros/s/DEPLOYMENT_ID/exec
-
-  Important:
-  Use the URL ending in /exec, not the /dev test URL.
+  Use the deployed URL ending in /exec.
 */
+
 const GOOGLE_APPS_SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbyNSYDb_2XmlIC6AlwdrUclue_CNxOyrQvEcPOPoBBXLbqx_fYI15XeF2_aYaLjMcCt/exec";
 
 const SUBMISSION_TIMEOUT_MS = 15000;
 
-document.addEventListener("DOMContentLoaded", initializeRsvpForm);
+document.addEventListener(
+  "DOMContentLoaded",
+  initializeRsvpForm
+);
 
 function initializeRsvpForm() {
-  const form = document.getElementById("rsvpForm");
-  const attendance = document.getElementById("attendance");
-  const submissionFrame = document.getElementById("rsvpSubmissionFrame");
+  const form =
+    document.getElementById("rsvpForm");
 
-  if (!form || !attendance || !submissionFrame) {
+  const submissionFrame =
+    document.getElementById(
+      "rsvpSubmissionFrame"
+    );
+
+  const clearFormButton =
+    document.getElementById(
+      "clearFormButton"
+    );
+
+  if (!form || !submissionFrame) {
     return;
   }
 
-  form.addEventListener("submit", handleRsvpSubmission);
-  attendance.addEventListener("change", updateGuestCountFromAttendance);
-  submissionFrame.addEventListener("load", handleSubmissionFrameLoad);
+  form.addEventListener(
+    "submit",
+    handleRsvpSubmission
+  );
+
+  submissionFrame.addEventListener(
+    "load",
+    handleSubmissionFrameLoad
+  );
+
+  if (clearFormButton) {
+    clearFormButton.addEventListener(
+      "click",
+      clearRsvpForm
+    );
+  }
 }
 
 function handleRsvpSubmission(event) {
   const form = event.currentTarget;
-  const formResponse = document.getElementById("formResponse");
 
   clearFormResponse();
 
@@ -38,7 +59,7 @@ function handleRsvpSubmission(event) {
     event.preventDefault();
 
     showFormResponse(
-      "Please configure the Google Apps Script Web App URL in js/rsvp.js.",
+      "Please configure the Google Apps Script Web App URL.",
       "error"
     );
 
@@ -48,11 +69,13 @@ function handleRsvpSubmission(event) {
   if (!form.checkValidity()) {
     event.preventDefault();
     form.reportValidity();
+
     return;
   }
 
   if (isHoneypotFilled()) {
     event.preventDefault();
+
     form.reset();
 
     showFormResponse(
@@ -63,21 +86,9 @@ function handleRsvpSubmission(event) {
     return;
   }
 
-  if (!isGuestCountValid()) {
-    event.preventDefault();
-
-    showFormResponse(
-      "Please check the number of attending guests.",
-      "error"
-    );
-
-    return;
-  }
-
   form.action = GOOGLE_APPS_SCRIPT_URL;
 
   window.rsvpSubmissionPending = true;
-  window.rsvpSubmissionStartedAt = Date.now();
 
   setSubmittingState(true);
 
@@ -86,12 +97,15 @@ function handleRsvpSubmission(event) {
     "loading"
   );
 
-  window.clearTimeout(window.rsvpSubmissionTimer);
-
-  window.rsvpSubmissionTimer = window.setTimeout(
-    handleSubmissionTimeout,
-    SUBMISSION_TIMEOUT_MS
+  window.clearTimeout(
+    window.rsvpSubmissionTimer
   );
+
+  window.rsvpSubmissionTimer =
+    window.setTimeout(
+      handleSubmissionTimeout,
+      SUBMISSION_TIMEOUT_MS
+    );
 }
 
 function handleSubmissionFrameLoad() {
@@ -99,17 +113,16 @@ function handleSubmissionFrameLoad() {
     return;
   }
 
-  /*
-    Because Google Apps Script is on another domain, the browser does not
-    allow this page to read the iframe response body. A completed iframe
-    load indicates that the POST request finished.
-  */
   window.rsvpSubmissionPending = false;
-  window.clearTimeout(window.rsvpSubmissionTimer);
+
+  window.clearTimeout(
+    window.rsvpSubmissionTimer
+  );
 
   setSubmittingState(false);
 
-  const form = document.getElementById("rsvpForm");
+  const form =
+    document.getElementById("rsvpForm");
 
   if (form) {
     form.reset();
@@ -127,6 +140,7 @@ function handleSubmissionTimeout() {
   }
 
   window.rsvpSubmissionPending = false;
+
   setSubmittingState(false);
 
   showFormResponse(
@@ -135,39 +149,23 @@ function handleSubmissionTimeout() {
   );
 }
 
-function updateGuestCountFromAttendance() {
-  const attendance = document.getElementById("attendance").value;
-  const guestCount = document.getElementById("guestCount");
+function clearRsvpForm() {
+  const form =
+    document.getElementById("rsvpForm");
 
-  if (!guestCount) {
+  if (!form) {
     return;
   }
 
-  if (attendance === "Regretfully declines") {
-    guestCount.value = "0";
-    return;
+  form.reset();
+  clearFormResponse();
+
+  const firstField =
+    document.getElementById("guestName");
+
+  if (firstField) {
+    firstField.focus();
   }
-
-  if (attendance === "Joyfully accepts" && Number(guestCount.value) < 1) {
-    guestCount.value = "1";
-  }
-}
-
-function isGuestCountValid() {
-  const attendance = document.getElementById("attendance").value;
-  const guestCount = Number(
-    document.getElementById("guestCount").value
-  );
-
-  if (attendance === "Joyfully accepts") {
-    return guestCount >= 1 && guestCount <= 10;
-  }
-
-  if (attendance === "Regretfully declines") {
-    return guestCount === 0;
-  }
-
-  return false;
 }
 
 function isWebAppUrlConfigured() {
@@ -175,47 +173,76 @@ function isWebAppUrlConfigured() {
     GOOGLE_APPS_SCRIPT_URL.startsWith(
       "https://script.google.com/macros/s/"
     ) &&
-    GOOGLE_APPS_SCRIPT_URL.endsWith("/exec")
+    GOOGLE_APPS_SCRIPT_URL.endsWith(
+      "/exec"
+    )
   );
 }
 
 function isHoneypotFilled() {
-  const websiteField = document.getElementById("website");
+  const websiteField =
+    document.getElementById("website");
 
-  return Boolean(websiteField && websiteField.value.trim());
+  return Boolean(
+    websiteField &&
+    websiteField.value.trim()
+  );
 }
 
 function setSubmittingState(isSubmitting) {
-  const submitButton = document.getElementById("submitButton");
+  const submitButton =
+    document.getElementById(
+      "submitButton"
+    );
 
-  if (!submitButton) {
-    return;
+  const clearFormButton =
+    document.getElementById(
+      "clearFormButton"
+    );
+
+  if (submitButton) {
+    submitButton.disabled = isSubmitting;
+
+    submitButton.textContent =
+      isSubmitting
+        ? "Submitting..."
+        : "Submit";
   }
 
-  submitButton.disabled = isSubmitting;
-  submitButton.textContent = isSubmitting
-    ? "Submitting..."
-    : "Submit RSVP";
+  if (clearFormButton) {
+    clearFormButton.disabled =
+      isSubmitting;
+  }
 }
 
 function showFormResponse(message, type) {
-  const formResponse = document.getElementById("formResponse");
+  const formResponse =
+    document.getElementById(
+      "formResponse"
+    );
 
   if (!formResponse) {
     return;
   }
 
   formResponse.textContent = message;
-  formResponse.className = `form-response ${type}`;
+
+  formResponse.className =
+    `form-response ${type}`;
 }
 
 function clearFormResponse() {
-  const formResponse = document.getElementById("formResponse");
+  const formResponse =
+    document.getElementById(
+      "formResponse"
+    );
 
   if (!formResponse) {
     return;
   }
 
   formResponse.textContent = "";
-  formResponse.className = "form-response";
+
+  formResponse.className =
+    "form-response";
 }
