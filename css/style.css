@@ -2630,3 +2630,77 @@ animation:
     display: none;
   }
 }
+
+/* ==========================================================
+   INITIAL SPA LOADING STATE
+
+   The page content and navigation remain hidden until
+   the first partial page and important image are ready.
+========================================================== */
+
+body.spa-initializing {
+  overflow: hidden;
+}
+
+/*
+  Hide the dynamic page while the first page is loading.
+*/
+
+body.spa-initializing #app {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/*
+  Hide navigation during the initial loading screen.
+*/
+
+body.spa-initializing #globalNavigation {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/*
+  Smooth reveal after initial loading completes.
+*/
+
+#app,
+#globalNavigation {
+  transition:
+    opacity 0.55s ease,
+    visibility 0.55s ease;
+}
+
+/*
+  Initial loader uses a solid background.
+
+  This prevents the slideshow from briefly flashing before
+  its first image has completely loaded.
+*/
+
+body.spa-initializing .page-transition-loader {
+  background: #8c997d;
+}
+
+/*
+  Normal page-to-page transition remains transparent.
+*/
+
+body:not(.spa-initializing)
+.page-transition-loader {
+  background: rgba(36, 44, 34, 0.25);
+}
+
+/*
+  Optional:
+  Prevent broken or partially loaded images from appearing.
+*/
+
+.hero-slide img {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.hero-slide img.is-loaded {
+  opacity: 1;
+}

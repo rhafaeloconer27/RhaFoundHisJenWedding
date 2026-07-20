@@ -13,9 +13,10 @@
     content="#8c997d"
   />
 
-  <title>Home | Rhaf &amp; Jen</title>
+  <title>RhaFoundHisJen</title>
 
   <!-- Browser tab logo -->
+
   <link
     rel="icon"
     type="image/webp"
@@ -49,27 +50,49 @@
   />
 </head>
 
-<body data-current-page="home">
+<body
+  data-current-page="home"
+  class="spa-initializing"
+>
 
-  <!-- Dynamic page content -->
-  <div id="app">
-    <main class="spa-initial-loading">
-      <p>Loading invitation...</p>
-    </main>
-  </div>
+  <!-- =====================================================
+       DYNAMIC PAGE CONTENT
 
-  <!-- Permanent navigation -->
+       CHANGE:
+       No temporary text is displayed here because the
+       loader already provides the initial loading state.
+  ====================================================== -->
+
+  <div
+    id="app"
+    aria-busy="true"
+  ></div>
+
+  <!-- =====================================================
+       PERMANENT NAVIGATION
+  ====================================================== -->
+
   <div id="globalNavigation"></div>
 
-  <!-- Transparent page loader -->
+  <!-- =====================================================
+       INITIAL AND PAGE TRANSITION LOADER
+
+       CHANGE:
+       "is-visible" makes the loader visible immediately.
+  ====================================================== -->
+
   <div
-    class="page-transition-loader"
+    class="page-transition-loader is-visible"
     id="pageTransitionLoader"
-    aria-hidden="true"
+    aria-hidden="false"
+    aria-label="Loading wedding invitation"
   >
     <div class="page-transition-loader-content">
 
-      <div class="loader-rings">
+      <div
+        class="loader-rings"
+        aria-hidden="true"
+      >
         <span class="loader-ring loader-ring-left"></span>
         <span class="loader-ring loader-ring-right"></span>
       </div>
@@ -80,11 +103,17 @@
         Jen
       </h1>
 
-      <p class="loader-message">
-        Loading...
+      <p
+        class="loader-message"
+        id="pageLoaderMessage"
+      >
+        Loading invitation...
       </p>
 
-      <div class="loader-dots">
+      <div
+        class="loader-dots"
+        aria-hidden="true"
+      >
         <span></span>
         <span></span>
         <span></span>
@@ -93,15 +122,18 @@
     </div>
   </div>
 
-  <!-- Permanent global scripts -->
+  <!-- PERMANENT GLOBAL SCRIPTS -->
+
   <script src="js/common.js"></script>
   <script src="js/music.js"></script>
 
-  <!-- Page-specific scripts -->
+  <!-- PAGE-SPECIFIC SCRIPTS -->
+
   <script src="js/home.js"></script>
   <script src="js/rsvp.js"></script>
 
-  <!-- SPA loader must remain last -->
+  <!-- SPA SCRIPT MUST REMAIN LAST -->
+
   <script src="js/app.js"></script>
 
 </body>
