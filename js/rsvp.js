@@ -1,84 +1,80 @@
 /* =========================================================
-   RSVP SCRIPT — SPA COMPATIBLE
-
-   CHANGES:
-   - Tinanggal ang DOMContentLoaded initialization.
-   - Ginawang window.initializeRsvpPage().
-   - May duplicate-listener protection.
-   - Reset ang submission state tuwing nire-reload ang RSVP.
+   RSVP FORM — SPA COMPATIBLE
 ========================================================= */
 
 const GOOGLE_APPS_SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbxuNkbTqIPVvLEB18qxM2noodhW05r4sD6rkV6ZLhWypjX8r9TsAlfucVwJDIrIIao/exec";
 
-const SUBMISSION_TIMEOUT_MS = 15000;
+const SUBMISSION_TIMEOUT_MS =
+  15000;
 
 /*
-  Tatawagin ng app.js pagkatapos ma-load
-  ang pages/rsvp.html.
+  Called by app.js after pages/rsvp.html
+  is inserted inside #app.
 */
-window.initializeRsvpPage = function () {
-  const form =
-    document.getElementById("rsvpForm");
+window.initializeRsvpPage =
+  function () {
+    const form =
+      document.getElementById(
+        "rsvpForm"
+      );
 
-  const submissionFrame =
-    document.getElementById(
-      "rsvpSubmissionFrame"
+    const submissionFrame =
+      document.getElementById(
+        "rsvpSubmissionFrame"
+      );
+
+    const clearFormButton =
+      document.getElementById(
+        "clearFormButton"
+      );
+
+    if (!form || !submissionFrame) {
+      return;
+    }
+
+    if (
+      form.dataset.initialized ===
+      "true"
+    ) {
+      return;
+    }
+
+    form.dataset.initialized =
+      "true";
+
+    window.rsvpSubmissionPending =
+      false;
+
+    form.addEventListener(
+      "submit",
+      handleRsvpSubmission
     );
 
-  const clearFormButton =
-    document.getElementById(
-      "clearFormButton"
+    submissionFrame.addEventListener(
+      "load",
+      handleSubmissionFrameLoad
     );
 
-  if (!form || !submissionFrame) {
-    return;
-  }
-
-  /*
-    Prevent duplicate initialization.
-  */
-  if (
-    form.dataset.initialized === "true"
-  ) {
-    return;
-  }
-
-  form.dataset.initialized = "true";
-
-  window.rsvpSubmissionPending = false;
-
-  form.addEventListener(
-    "submit",
-    handleRsvpSubmission
-  );
-
-  submissionFrame.addEventListener(
-    "load",
-    handleSubmissionFrameLoad
-  );
-
-  if (clearFormButton) {
-    clearFormButton.addEventListener(
+    clearFormButton?.addEventListener(
       "click",
       clearRsvpForm
     );
-  }
-};
+  };
 
-/*
-  Cleanup before leaving RSVP.
-*/
-window.cleanupRsvpPage = function () {
-  window.clearTimeout(
-    window.rsvpSubmissionTimer
-  );
+window.cleanupRsvpPage =
+  function () {
+    window.clearTimeout(
+      window.rsvpSubmissionTimer
+    );
 
-  window.rsvpSubmissionPending = false;
-};
+    window.rsvpSubmissionPending =
+      false;
+  };
 
 function handleRsvpSubmission(event) {
-  const form = event.currentTarget;
+  const form =
+    event.currentTarget;
 
   clearFormResponse();
 
@@ -95,6 +91,7 @@ function handleRsvpSubmission(event) {
 
   if (!form.checkValidity()) {
     event.preventDefault();
+
     form.reportValidity();
 
     return;
@@ -113,9 +110,15 @@ function handleRsvpSubmission(event) {
     return;
   }
 
-  form.action = GOOGLE_APPS_SCRIPT_URL;
+  /*
+    The form submits to Google Apps Script
+    using the hidden iframe.
+  */
+  form.action =
+    GOOGLE_APPS_SCRIPT_URL;
 
-  window.rsvpSubmissionPending = true;
+  window.rsvpSubmissionPending =
+    true;
 
   setSubmittingState(true);
 
@@ -136,11 +139,14 @@ function handleRsvpSubmission(event) {
 }
 
 function handleSubmissionFrameLoad() {
-  if (!window.rsvpSubmissionPending) {
+  if (
+    !window.rsvpSubmissionPending
+  ) {
     return;
   }
 
-  window.rsvpSubmissionPending = false;
+  window.rsvpSubmissionPending =
+    false;
 
   window.clearTimeout(
     window.rsvpSubmissionTimer
@@ -149,11 +155,11 @@ function handleSubmissionFrameLoad() {
   setSubmittingState(false);
 
   const form =
-    document.getElementById("rsvpForm");
+    document.getElementById(
+      "rsvpForm"
+    );
 
-  if (form) {
-    form.reset();
-  }
+  form?.reset();
 
   showFormResponse(
     "Thank you! Your RSVP has been submitted successfully.",
@@ -162,11 +168,14 @@ function handleSubmissionFrameLoad() {
 }
 
 function handleSubmissionTimeout() {
-  if (!window.rsvpSubmissionPending) {
+  if (
+    !window.rsvpSubmissionPending
+  ) {
     return;
   }
 
-  window.rsvpSubmissionPending = false;
+  window.rsvpSubmissionPending =
+    false;
 
   setSubmittingState(false);
 
@@ -178,21 +187,21 @@ function handleSubmissionTimeout() {
 
 function clearRsvpForm() {
   const form =
-    document.getElementById("rsvpForm");
+    document.getElementById(
+      "rsvpForm"
+    );
 
   if (!form) {
     return;
   }
 
   form.reset();
+
   clearFormResponse();
 
-  const firstField =
-    document.getElementById("guestName");
-
-  if (firstField) {
-    firstField.focus();
-  }
+  document
+    .getElementById("guestName")
+    ?.focus();
 }
 
 function isWebAppUrlConfigured() {
@@ -208,11 +217,12 @@ function isWebAppUrlConfigured() {
 
 function isHoneypotFilled() {
   const websiteField =
-    document.getElementById("website");
+    document.getElementById(
+      "website"
+    );
 
   return Boolean(
-    websiteField &&
-    websiteField.value.trim()
+    websiteField?.value.trim()
   );
 }
 
@@ -258,7 +268,8 @@ function showFormResponse(
     return;
   }
 
-  formResponse.textContent = message;
+  formResponse.textContent =
+    message;
 
   formResponse.className =
     `form-response ${type}`;

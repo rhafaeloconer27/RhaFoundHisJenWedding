@@ -1,12 +1,10 @@
 /* =========================================================
    GLOBAL MUSIC — SPA COMPATIBLE
 
-   CHANGES:
-   - Isang beses lang ini-initialize.
-   - Hindi na nire-recreate sa bawat SPA navigation.
-   - Hindi na kailangang mag-save ng currentTime habang
-     nagpapalit lang ng SPA page.
-   - May localStorage pa rin para sa refresh/reopen.
+   This script is loaded only in wedding.html.
+
+   Since wedding.html does not reload during SPA navigation,
+   the audio will continue playing.
 ========================================================= */
 
 const MUSIC_TIME_KEY =
@@ -27,9 +25,6 @@ document.addEventListener(
 );
 
 function initializeGlobalMusic() {
-  /*
-    Prevent duplicate initialization.
-  */
   if (globalMusicInitialized) {
     return;
   }
@@ -42,7 +37,9 @@ function initializeGlobalMusic() {
     document.getElementById("bgMusic");
 
   musicButton =
-    document.getElementById("musicButton");
+    document.getElementById(
+      "musicButton"
+    );
 
   if (!bgMusic || !musicButton) {
     return;
@@ -55,16 +52,16 @@ function initializeGlobalMusic() {
   restoreMusicTime();
   updateMusicButton();
 
-  const wasPlaying =
+  /*
+    Default to enabled unless the visitor
+    explicitly paused it previously.
+  */
+  const shouldPlay =
     localStorage.getItem(
       MUSIC_PLAYING_KEY
     ) !== "false";
 
-  /*
-    Default:
-    attempt autoplay unless the user previously paused it.
-  */
-  if (wasPlaying) {
+  if (shouldPlay) {
     attemptAutomaticPlayback();
   }
 }
@@ -74,7 +71,11 @@ function initializeGlobalMusic() {
 ========================================================= */
 
 function createMusicElements() {
-  if (!document.getElementById("bgMusic")) {
+  if (
+    !document.getElementById(
+      "bgMusic"
+    )
+  ) {
     const audio =
       document.createElement("audio");
 
@@ -88,9 +89,11 @@ function createMusicElements() {
     source.src =
       "music/goodnessofGod.mp3";
 
-    source.type = "audio/mpeg";
+    source.type =
+      "audio/mpeg";
 
     audio.appendChild(source);
+
     document.body.appendChild(audio);
   }
 
@@ -103,23 +106,31 @@ function createMusicElements() {
       document.createElement("button");
 
     button.id = "musicButton";
-    button.className = "music-button";
+    button.className =
+      "music-button";
+
     button.type = "button";
 
-    button.innerHTML =
-      '<i class="fa-solid fa-volume-high" aria-hidden="true"></i>';
+    button.innerHTML = `
+      <i
+        class="fa-solid fa-volume-xmark"
+        aria-hidden="true"
+      ></i>
+    `;
 
     button.setAttribute(
       "aria-label",
-      "Pause background music"
+      "Play background music"
     );
 
     button.setAttribute(
       "title",
-      "Pause background music"
+      "Play background music"
     );
 
-    document.body.appendChild(button);
+    document.body.appendChild(
+      button
+    );
   }
 }
 
@@ -148,11 +159,6 @@ function attachMusicEvents() {
   bgMusic.addEventListener(
     "pause",
     function () {
-      localStorage.setItem(
-        MUSIC_PLAYING_KEY,
-        "false"
-      );
-
       updateMusicButton();
       saveMusicTime();
     }
@@ -163,10 +169,6 @@ function attachMusicEvents() {
     scheduleMusicTimeSave
   );
 
-  /*
-    pagehide is more reliable than beforeunload,
-    especially on mobile browsers.
-  */
   window.addEventListener(
     "pagehide",
     saveMusicTime
@@ -183,7 +185,7 @@ function attachMusicEvents() {
 }
 
 /* =========================================================
-   PLAY / PAUSE
+   PLAY AND PAUSE
 ========================================================= */
 
 async function toggleMusic() {
@@ -192,8 +194,18 @@ async function toggleMusic() {
   }
 
   if (bgMusic.paused) {
+    localStorage.setItem(
+      MUSIC_PLAYING_KEY,
+      "true"
+    );
+
     await playMusic();
   } else {
+    localStorage.setItem(
+      MUSIC_PLAYING_KEY,
+      "false"
+    );
+
     pauseMusic();
   }
 }
@@ -207,8 +219,7 @@ async function attemptAutomaticPlayback() {
     await bgMusic.play();
   } catch (error) {
     /*
-      Browser blocked autoplay.
-      Start after the first valid interaction.
+      Expected on browsers that block autoplay.
     */
     updateMusicButton();
     addFirstInteractionPlayback();
@@ -266,21 +277,15 @@ async function playMusicAfterFirstInteraction(
 ) {
   firstInteractionHandlerAdded = false;
 
-  /*
-    Kapag music button ang pinindot,
-    toggleMusic ang hahawak nito.
-  */
   if (
     event.target instanceof Element &&
-    event.target.closest("#musicButton")
+    event.target.closest(
+      "#musicButton"
+    )
   ) {
     return;
   }
 
-  /*
-    Huwag awtomatikong i-play kapag pinause
-    mismo ng user noong nakaraan.
-  */
   const userPausedMusic =
     localStorage.getItem(
       MUSIC_PLAYING_KEY
@@ -294,7 +299,7 @@ async function playMusicAfterFirstInteraction(
 }
 
 /* =========================================================
-   MUSIC BUTTON STATE
+   BUTTON DISPLAY
 ========================================================= */
 
 function updateMusicButton() {
@@ -305,13 +310,25 @@ function updateMusicButton() {
   const isPlaying =
     !bgMusic.paused;
 
-  musicButton.innerHTML = isPlaying
-    ? '<i class="fa-solid fa-volume-high" aria-hidden="true"></i>'
-    : '<i class="fa-solid fa-volume-xmark" aria-hidden="true"></i>';
+  musicButton.innerHTML =
+    isPlaying
+      ? `
+        <i
+          class="fa-solid fa-volume-high"
+          aria-hidden="true"
+        ></i>
+      `
+      : `
+        <i
+          class="fa-solid fa-volume-xmark"
+          aria-hidden="true"
+        ></i>
+      `;
 
-  const label = isPlaying
-    ? "Pause background music"
-    : "Play background music";
+  const label =
+    isPlaying
+      ? "Pause background music"
+      : "Play background music";
 
   musicButton.setAttribute(
     "aria-label",
@@ -330,11 +347,13 @@ function updateMusicButton() {
 }
 
 /* =========================================================
-   SAVE CURRENT MUSIC TIME
+   SAVE MUSIC POSITION
 ========================================================= */
 
 function scheduleMusicTimeSave() {
-  if (musicStateSaveTimer !== null) {
+  if (
+    musicStateSaveTimer !== null
+  ) {
     return;
   }
 
@@ -357,7 +376,9 @@ function saveMusicTime() {
   try {
     localStorage.setItem(
       MUSIC_TIME_KEY,
-      String(bgMusic.currentTime || 0)
+      String(
+        bgMusic.currentTime || 0
+      )
     );
   } catch (error) {
     console.warn(
@@ -368,7 +389,7 @@ function saveMusicTime() {
 }
 
 /* =========================================================
-   RESTORE CURRENT MUSIC TIME
+   RESTORE MUSIC POSITION
 ========================================================= */
 
 function restoreMusicTime() {
@@ -377,11 +398,12 @@ function restoreMusicTime() {
   }
 
   try {
-    const savedTime = Number(
-      localStorage.getItem(
-        MUSIC_TIME_KEY
-      )
-    );
+    const savedTime =
+      Number(
+        localStorage.getItem(
+          MUSIC_TIME_KEY
+        )
+      );
 
     if (
       !Number.isFinite(savedTime) ||
@@ -392,11 +414,14 @@ function restoreMusicTime() {
 
     function applySavedTime() {
       if (
-        Number.isFinite(bgMusic.duration) &&
+        Number.isFinite(
+          bgMusic.duration
+        ) &&
         bgMusic.duration > 0
       ) {
         bgMusic.currentTime =
-          savedTime % bgMusic.duration;
+          savedTime %
+          bgMusic.duration;
       } else {
         bgMusic.currentTime =
           savedTime;

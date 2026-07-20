@@ -1,9 +1,9 @@
 /* ==========================================================
-   SINGLE PAGE NAVIGATION
+   SINGLE PAGE APPLICATION NAVIGATION
 
-   Purpose:
-   - Load page content without refreshing index.html
-   - Keep the background music playing
+   PURPOSE:
+   - Load page partials without refreshing wedding.html
+   - Keep background music playing continuously
    - Keep navigation and music button permanent
 ========================================================== */
 
@@ -14,98 +14,129 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("pageTransitionLoader");
 
   /*
-    Mapping ng URL name papunta sa partial HTML file.
+    IMPORTANT:
+    The keys here must match data-page values
+    inside common.js.
   */
   const pages = {
     home: {
       file: "pages/home.html",
-      title: "Home | Rhaf & Jen"
+      title: "Home | Rhaf & Jen",
     },
 
     sponsors: {
       file: "pages/sponsors.html",
-      title: "Sponsors | Rhaf & Jen"
+      title: "Sponsors | Rhaf & Jen",
     },
 
     location: {
       file: "pages/location.html",
-      title: "Location | Rhaf & Jen"
-    },
-
-    attire: {
-      file: "pages/attire.html",
-      title: "Theme & Attire | Rhaf & Jen"
-    },
-
-    gifts: {
-      file: "pages/gift-guide.html",
-      title: "Gift Guide | Rhaf & Jen"
-    },
-
-    faq: {
-      file: "pages/faq.html",
-      title: "FAQ | Rhaf & Jen"
-    },
-
-    contact: {
-      file: "pages/contact.html",
-      title: "Contact | Rhaf & Jen"
+      title: "Location | Rhaf & Jen",
     },
 
     rsvp: {
       file: "pages/rsvp.html",
-      title: "RSVP | Rhaf & Jen"
+      title: "RSVP | Rhaf & Jen",
+    },
+
+    attire: {
+      file: "pages/attire.html",
+      title: "Theme & Attire | Rhaf & Jen",
+    },
+
+    gift: {
+      file: "pages/gift-guide.html",
+      title: "Gift Guide | Rhaf & Jen",
+    },
+
+    faq: {
+      file: "pages/faq.html",
+      title: "FAQ | Rhaf & Jen",
+    },
+
+    contact: {
+      file: "pages/contact.html",
+      title: "Contact | Rhaf & Jen",
     },
 
     prenup: {
       file: "pages/prenup.html",
-      title: "Prenup | Rhaf & Jen"
-    }
+      title: "Prenup | Rhaf & Jen",
+    },
   };
 
   let currentPage = null;
+  let navigationInProgress = false;
 
   /*
-    Show transparent page transition loader.
+    Stop when app container is missing.
+
+    This prevents errors if app.js is accidentally
+    loaded in index.html.
   */
+  if (!app) {
+    return;
+  }
+
+  /* ========================================================
+     LOADER
+  ======================================================== */
+
   function showLoader() {
     if (!pageLoader) {
       return;
     }
 
     pageLoader.classList.add("is-visible");
-    pageLoader.setAttribute("aria-hidden", "false");
+
+    pageLoader.setAttribute(
+      "aria-hidden",
+      "false"
+    );
+
+    document.body.classList.add(
+      "page-transition-active"
+    );
   }
 
-  /*
-    Hide transparent page transition loader.
-  */
   function hideLoader() {
     if (!pageLoader) {
       return;
     }
 
-    pageLoader.classList.remove("is-visible");
-    pageLoader.setAttribute("aria-hidden", "true");
+    pageLoader.classList.remove(
+      "is-visible"
+    );
+
+    pageLoader.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+
+    document.body.classList.remove(
+      "page-transition-active"
+    );
   }
 
-  /*
-    Determine page name from URL.
+  /* ========================================================
+     URL
+  ======================================================== */
 
-    Examples:
-    index.html?page=rsvp
-    index.html?page=location
-  */
   function getPageFromUrl() {
-    const urlParameters =
-      new URLSearchParams(window.location.search);
+    const parameters =
+      new URLSearchParams(
+        window.location.search
+      );
 
     const requestedPage =
-      urlParameters.get("page");
+      parameters.get("page");
 
     if (
       requestedPage &&
-      pages[requestedPage]
+      Object.prototype.hasOwnProperty.call(
+        pages,
+        requestedPage
+      )
     ) {
       return requestedPage;
     }
@@ -113,54 +144,104 @@ document.addEventListener("DOMContentLoaded", function () {
     return "home";
   }
 
-  /*
-    Run page-specific JavaScript after the HTML
-    has been placed inside #app.
-  */
-  function initializePage(pageName) {
-    document.body.dataset.currentPage = pageName;
+  function createPageUrl(pageName) {
+    if (pageName === "home") {
+      return "wedding.html";
+    }
 
-    /*
-      Home slideshow and countdown.
-    */
+    return `wedding.html?page=${encodeURIComponent(
+      pageName
+    )}`;
+  }
+
+  /* ========================================================
+     PAGE CLEANUP
+  ======================================================== */
+
+  function cleanupCurrentPage() {
+    if (
+      currentPage === "home" &&
+      typeof window.cleanupHomePage ===
+        "function"
+    ) {
+      window.cleanupHomePage();
+    }
+
+    if (
+      currentPage === "rsvp" &&
+      typeof window.cleanupRsvpPage ===
+        "function"
+    ) {
+      window.cleanupRsvpPage();
+    }
+  }
+
+  /* ========================================================
+     PAGE INITIALIZATION
+  ======================================================== */
+
+  function initializePage(pageName) {
+    document.body.dataset.currentPage =
+      pageName;
+
     if (
       pageName === "home" &&
-      typeof window.initializeHomePage === "function"
+      typeof window.initializeHomePage ===
+        "function"
     ) {
       window.initializeHomePage();
     }
 
-    /*
-      RSVP form behavior.
-    */
     if (
       pageName === "rsvp" &&
-      typeof window.initializeRsvpPage === "function"
+      typeof window.initializeRsvpPage ===
+        "function"
     ) {
       window.initializeRsvpPage();
     }
+
+    /*
+      Update active item in global navigation.
+    */
+    if (
+      typeof window.updateCommonNavigation ===
+      "function"
+    ) {
+      window.updateCommonNavigation(
+        pageName
+      );
+    }
   }
 
-  /*
-    Load a partial HTML file and place it inside #app.
-  */
+  /* ========================================================
+     LOAD PAGE
+  ======================================================== */
+
   async function loadPage(
-    pageName,
+    requestedPageName,
     options = {}
   ) {
     const {
       updateHistory = true,
-      showTransition = true
+      showTransition = true,
     } = options;
 
+    const pageName =
+      pages[requestedPageName]
+        ? requestedPageName
+        : "home";
+
     const pageConfig =
-      pages[pageName] || pages.home;
+      pages[pageName];
 
     if (
-      pageName === currentPage
+      pageName === currentPage ||
+      navigationInProgress
     ) {
       return;
     }
+
+    navigationInProgress = true;
 
     if (showTransition) {
       showLoader();
@@ -170,13 +251,13 @@ document.addEventListener("DOMContentLoaded", function () {
       const response = await fetch(
         pageConfig.file,
         {
-          cache: "no-cache"
+          cache: "no-cache",
         }
       );
 
       if (!response.ok) {
         throw new Error(
-          `Unable to load ${pageConfig.file}`
+          `HTTP ${response.status}: Unable to load ${pageConfig.file}`
         );
       }
 
@@ -184,10 +265,16 @@ document.addEventListener("DOMContentLoaded", function () {
         await response.text();
 
       /*
-        Place the new page content inside #app.
+        Stop timers and events from the current page
+        before replacing its HTML.
+      */
+      cleanupCurrentPage();
 
-        The audio element remains untouched because
-        it is outside #app.
+      /*
+        Only #app changes.
+
+        Audio, music button and navigation remain
+        outside #app, so they are not recreated.
       */
       app.innerHTML = html;
 
@@ -198,30 +285,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
       initializePage(pageName);
 
-      /*
-        Update the browser URL without reloading.
-      */
       if (updateHistory) {
-        const newUrl =
-          pageName === "home"
-            ? "index.html"
-            : `index.html?page=${pageName}`;
-
         window.history.pushState(
           {
-            page: pageName
+            page: pageName,
           },
           "",
-          newUrl
+          createPageUrl(pageName)
         );
       }
 
       /*
-        Return to the top after changing pages.
+        Return to the top of the new page.
       */
       window.scrollTo({
         top: 0,
-        behavior: "instant"
+        left: 0,
+        behavior: "auto",
       });
     } catch (error) {
       console.error(
@@ -232,10 +312,38 @@ document.addEventListener("DOMContentLoaded", function () {
       app.innerHTML = `
         <main class="page-load-error">
           <h1>Unable to load the page</h1>
-          <p>Please refresh the website and try again.</p>
+
+          <p>
+            Please check your connection and try again.
+          </p>
+
+          <button
+            type="button"
+            id="retryPageButton"
+          >
+            Try again
+          </button>
         </main>
       `;
+
+      const retryButton =
+        document.getElementById(
+          "retryPageButton"
+        );
+
+      retryButton?.addEventListener(
+        "click",
+        function () {
+          navigationInProgress = false;
+
+          loadPage(pageName, {
+            updateHistory: false,
+          });
+        }
+      );
     } finally {
+      navigationInProgress = false;
+
       window.setTimeout(
         hideLoader,
         300
@@ -243,18 +351,33 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  /*
-    Intercept navigation links.
+  /* ========================================================
+     NAVIGATION LINK CLICKS
+  ======================================================== */
 
-    The links should use data-page attributes.
-  */
   document.addEventListener(
     "click",
     function (event) {
       const pageLink =
-        event.target.closest("[data-page]");
+        event.target.closest(
+          "a[data-page]"
+        );
 
       if (!pageLink) {
+        return;
+      }
+
+      /*
+        Preserve middle-click, Ctrl+Click,
+        Command+Click and Shift+Click.
+      */
+      if (
+        event.button !== 0 ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.shiftKey ||
+        event.altKey
+      ) {
         return;
       }
 
@@ -271,29 +394,31 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   );
 
-  /*
-    Browser Back and Forward buttons.
-  */
+  /* ========================================================
+     BROWSER BACK AND FORWARD
+  ======================================================== */
+
   window.addEventListener(
     "popstate",
     function () {
       loadPage(
         getPageFromUrl(),
         {
-          updateHistory: false
+          updateHistory: false,
         }
       );
     }
   );
 
-  /*
-    Initial page load.
-  */
+  /* ========================================================
+     INITIAL PAGE
+  ======================================================== */
+
   loadPage(
     getPageFromUrl(),
     {
       updateHistory: false,
-      showTransition: false
+      showTransition: false,
     }
   );
 });

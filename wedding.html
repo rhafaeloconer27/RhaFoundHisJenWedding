@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  />
+
+  <meta
+    name="theme-color"
+    content="#8c997d"
+  />
+
+  <title>Home | Rhaf &amp; Jen</title>
+
+  <!-- Browser tab logo -->
+  <link
+    rel="icon"
+    type="image/webp"
+    href="images/rhafjenLogo.webp"
+  />
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  />
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  />
+
+  <link
+    rel="stylesheet"
+    href="css/style.css"
+  />
+</head>
+
+<body data-current-page="home">
+
+  <!-- Dynamic page content -->
+  <div id="app">
+    <main class="spa-initial-loading">
+      <p>Loading invitation...</p>
+    </main>
+  </div>
+
+  <!-- Permanent navigation -->
+  <div id="globalNavigation"></div>
+
+  <!-- Transparent page loader -->
+  <div
+    class="page-transition-loader"
+    id="pageTransitionLoader"
+    aria-hidden="true"
+  >
+    <div class="page-transition-loader-content">
+
+      <div class="loader-rings">
+        <span class="loader-ring loader-ring-left"></span>
+        <span class="loader-ring loader-ring-right"></span>
+      </div>
+
+      <h1 class="loader-names">
+        Rhaf
+        <span>&amp;</span>
+        Jen
+      </h1>
+
+      <p class="loader-message">
+        Loading...
+      </p>
+
+      <div class="loader-dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Permanent global scripts -->
+  <script src="js/common.js"></script>
+  <script src="js/music.js"></script>
+
+  <!-- Page-specific scripts -->
+  <script src="js/home.js"></script>
+  <script src="js/rsvp.js"></script>
+
+  <!-- SPA loader must remain last -->
+  <script src="js/app.js"></script>
+
+</body>
+</html>

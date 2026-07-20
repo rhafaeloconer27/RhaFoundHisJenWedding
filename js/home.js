@@ -1,280 +1,282 @@
-/* =========================================================
-   HOME PAGE SCRIPT — SPA COMPATIBLE
-
-   CHANGES:
-   - Tinanggal ang DOMContentLoaded initialization.
-   - Ginawang global function ang initializeHomePage().
-   - Nililinis ang lumang intervals bago gumawa ng bago.
-   - Safe kapag aalis at babalik sa Home page.
-========================================================= */
-
-let homeSlideshowTimer = null;
-let homeCountdownTimer = null;
-let homeVisibilityHandler = null;
-
-/*
-  Tatawagin ito ng app.js pagkatapos ma-load
-  ang pages/home.html sa loob ng #app.
-*/
-window.initializeHomePage = function () {
-  cleanupHomePage();
-
-  initializeHeroSlideshow();
-  initializeWeddingCountdown();
-};
-
-/*
-  Tatawagin ito bago lumipat sa ibang page.
-
-  Mahalaga ito para hindi manatiling tumatakbo
-  ang slideshow at countdown sa background.
-*/
-window.cleanupHomePage = function () {
-  if (homeSlideshowTimer !== null) {
-    window.clearInterval(homeSlideshowTimer);
-    homeSlideshowTimer = null;
-  }
-
-  if (homeCountdownTimer !== null) {
-    window.clearInterval(homeCountdownTimer);
-    homeCountdownTimer = null;
-  }
-
-  if (homeVisibilityHandler) {
-    document.removeEventListener(
-      "visibilitychange",
-      homeVisibilityHandler
-    );
-
-    homeVisibilityHandler = null;
-  }
-};
-
-/* =========================================================
-   HERO BACKGROUND SLIDESHOW
-========================================================= */
-
-function initializeHeroSlideshow() {
-  const slides =
-    document.querySelectorAll(".hero-slide");
-
-  if (slides.length === 0) {
-    return;
-  }
-
-  let currentSlideIndex = 0;
-  const slideDuration = 5000;
-
-  function showSlide(index) {
-    slides.forEach(function (slide) {
-      slide.classList.remove("active");
-    });
-
-    currentSlideIndex =
-      (index + slides.length) % slides.length;
-
-    slides[currentSlideIndex].classList.add(
-      "active"
-    );
-  }
-
-  function showNextSlide() {
-    showSlide(currentSlideIndex + 1);
-  }
-
-  function stopSlideshow() {
-    if (homeSlideshowTimer === null) {
-      return;
-    }
-
-    window.clearInterval(
-      homeSlideshowTimer
-    );
-
-    homeSlideshowTimer = null;
-  }
-
-  function startSlideshow() {
-    stopSlideshow();
-
-    /*
-      Hindi kailangan ng timer kapag isang image lang.
-    */
-    if (slides.length <= 1) {
-      return;
-    }
-
-    homeSlideshowTimer =
-      window.setInterval(
-        showNextSlide,
-        slideDuration
+document.addEventListener(
+  "DOMContentLoaded",
+  function () {
+    const loader =
+      document.getElementById(
+        "weddingLoader"
       );
-  }
 
-  showSlide(0);
-  startSlideshow();
+    const invitationIntro =
+      document.getElementById(
+        "invitationIntro"
+      );
 
-  /*
-    NEW:
-    Naka-reference ang handler para matanggal
-    sa cleanupHomePage().
-  */
-  homeVisibilityHandler = function () {
-    if (document.hidden) {
-      stopSlideshow();
-    } else {
-      startSlideshow();
-    }
-  };
+    const openSealButton =
+      document.getElementById(
+        "openInvitationButton"
+      );
 
-  document.addEventListener(
-    "visibilitychange",
-    homeVisibilityHandler
-  );
-}
-
-/* =========================================================
-   WEDDING COUNTDOWN
-========================================================= */
-
-function initializeWeddingCountdown() {
-  const daysElement =
-    document.getElementById("days");
-
-  const hoursElement =
-    document.getElementById("hours");
-
-  const minutesElement =
-    document.getElementById("minutes");
-
-  const secondsElement =
-    document.getElementById("seconds");
-
-  if (
-    !daysElement ||
-    !hoursElement ||
-    !minutesElement ||
-    !secondsElement
-  ) {
-    return;
-  }
-
-  /*
-    February 4, 2027
-    3:00 PM Philippine time
-  */
-  const weddingDate = new Date(
-    "2027-02-04T15:00:00+08:00"
-  ).getTime();
-
-  function formatNumber(
-    value,
-    minimumLength
-  ) {
-    return String(value).padStart(
-      minimumLength,
-      "0"
-    );
-  }
-
-  function updateCountdown() {
     /*
-      Kapag wala na ang countdown elements,
-      ibig sabihin umalis na sa Home page.
+      Stop when this is not the intro page.
     */
     if (
-      !document.getElementById("days") ||
-      !document.getElementById("hours") ||
-      !document.getElementById("minutes") ||
-      !document.getElementById("seconds")
+      !loader ||
+      !invitationIntro ||
+      !openSealButton ||
+      typeof gsap === "undefined"
     ) {
-      if (homeCountdownTimer !== null) {
-        window.clearInterval(
-          homeCountdownTimer
-        );
-
-        homeCountdownTimer = null;
-      }
-
       return;
     }
 
-    const currentTime = Date.now();
+    let isOpening = false;
 
-    const remainingTime =
-      weddingDate - currentTime;
+    /* ======================================================
+       INITIAL STATE
+    ====================================================== */
 
-    if (remainingTime <= 0) {
-      daysElement.textContent = "000";
-      hoursElement.textContent = "00";
-      minutesElement.textContent = "00";
-      secondsElement.textContent = "00";
+    gsap.set(
+      invitationIntro,
+      {
+        autoAlpha: 0,
+      }
+    );
 
-      if (homeCountdownTimer !== null) {
-        window.clearInterval(
-          homeCountdownTimer
-        );
+    gsap.set(
+      ".invitation-stage",
+      {
+        y: 40,
+        opacity: 0,
+      }
+    );
 
-        homeCountdownTimer = null;
+    gsap.set(
+      ".invitation-cover",
+      {
+        scale: 0.94,
+      }
+    );
+
+    /* ======================================================
+       INTRO LOADER
+    ====================================================== */
+
+    const loadingTimeline =
+      gsap.timeline({
+        defaults: {
+          ease: "power2.out",
+        },
+      });
+
+    loadingTimeline
+      .from(
+        ".loader-rings",
+        {
+          scale: 0.5,
+          opacity: 0,
+          duration: 0.7,
+        }
+      )
+      .from(
+        ".loader-names",
+        {
+          y: 20,
+          opacity: 0,
+          duration: 0.7,
+        },
+        "-=0.35"
+      )
+      .from(
+        ".loader-message",
+        {
+          y: 10,
+          opacity: 0,
+          duration: 0.5,
+        },
+        "-=0.25"
+      )
+      .to(
+        {},
+        {
+          duration: 0.7,
+        }
+      )
+      .to(
+        loader,
+        {
+          autoAlpha: 0,
+          duration: 0.7,
+          ease: "power2.inOut",
+        }
+      )
+      .to(
+        invitationIntro,
+        {
+          autoAlpha: 1,
+          duration: 0.7,
+        },
+        "-=0.35"
+      )
+      .to(
+        ".invitation-stage",
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.9,
+        },
+        "-=0.5"
+      )
+      .to(
+        ".invitation-cover",
+        {
+          scale: 1,
+          duration: 1,
+          ease: "back.out(1.3)",
+        },
+        "-=0.8"
+      )
+      .set(
+        loader,
+        {
+          display: "none",
+        }
+      );
+
+    /* ======================================================
+       OPEN INVITATION
+    ====================================================== */
+
+    function openInvitation() {
+      if (isOpening) {
+        return;
       }
 
-      return;
+      isOpening = true;
+      openSealButton.disabled = true;
+
+      const openTimeline =
+        gsap.timeline({
+          defaults: {
+            ease: "power3.inOut",
+          },
+
+          onComplete: function () {
+            /*
+              IMPORTANT CHANGE:
+
+              Open the permanent SPA shell,
+              not pages/home.html and not home.html.
+            */
+            window.location.href =
+              "wedding.html";
+          },
+        });
+
+      openTimeline
+        .to(
+          ".gsap-wax-seal",
+          {
+            scale: 0.88,
+            duration: 0.15,
+            ease: "power2.in",
+          }
+        )
+        .to(
+          ".gsap-wax-seal",
+          {
+            scale: 1.35,
+            opacity: 0,
+            rotation: 12,
+            duration: 0.45,
+            ease: "back.in(1.7)",
+          }
+        )
+        .to(
+          ".cover-title",
+          {
+            opacity: 0,
+            y: -15,
+            duration: 0.4,
+          },
+          "-=0.3"
+        )
+        .to(
+          ".cover-panel-left",
+          {
+            xPercent: -102,
+            rotationY: -8,
+            duration: 1.15,
+          },
+          "-=0.1"
+        )
+        .to(
+          ".cover-panel-right",
+          {
+            xPercent: 102,
+            rotationY: 8,
+            duration: 1.15,
+          },
+          "<"
+        )
+        .fromTo(
+          ".reveal-photo",
+          {
+            scale: 1.15,
+          },
+          {
+            scale: 1,
+            duration: 1.6,
+            ease: "power2.out",
+          },
+          "-=0.95"
+        )
+        .from(
+          ".reveal-content > *",
+          {
+            y: 24,
+            opacity: 0,
+            duration: 0.65,
+            stagger: 0.14,
+            ease: "power2.out",
+          },
+          "-=1.15"
+        )
+        .to(
+          ".intro-label",
+          {
+            opacity: 0,
+            y: 12,
+            duration: 0.45,
+          },
+          "-=1"
+        )
+        .to(
+          {},
+          {
+            duration: 0.65,
+          }
+        )
+        .to(
+          ".invitation-cover",
+          {
+            scale: 1.08,
+            duration: 0.8,
+            ease: "power2.inOut",
+          }
+        )
+        .to(
+          ".invitation-intro",
+          {
+            opacity: 0,
+            duration: 0.65,
+            ease: "power2.in",
+          },
+          "-=0.3"
+        );
     }
 
-    const millisecondsPerSecond = 1000;
-
-    const millisecondsPerMinute =
-      millisecondsPerSecond * 60;
-
-    const millisecondsPerHour =
-      millisecondsPerMinute * 60;
-
-    const millisecondsPerDay =
-      millisecondsPerHour * 24;
-
-    const days = Math.floor(
-      remainingTime / millisecondsPerDay
+    openSealButton.addEventListener(
+      "click",
+      openInvitation
     );
-
-    const hours = Math.floor(
-      (
-        remainingTime %
-        millisecondsPerDay
-      ) / millisecondsPerHour
-    );
-
-    const minutes = Math.floor(
-      (
-        remainingTime %
-        millisecondsPerHour
-      ) / millisecondsPerMinute
-    );
-
-    const seconds = Math.floor(
-      (
-        remainingTime %
-        millisecondsPerMinute
-      ) / millisecondsPerSecond
-    );
-
-    daysElement.textContent =
-      formatNumber(days, 3);
-
-    hoursElement.textContent =
-      formatNumber(hours, 2);
-
-    minutesElement.textContent =
-      formatNumber(minutes, 2);
-
-    secondsElement.textContent =
-      formatNumber(seconds, 2);
   }
-
-  updateCountdown();
-
-  homeCountdownTimer =
-    window.setInterval(
-      updateCountdown,
-      1000
-    );
-}
+);

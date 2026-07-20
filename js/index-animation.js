@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
       },
 
       onComplete: () => {
-        window.location.href = "home.html";
+        window.location.href = "wedding.html";
       },
     });
 

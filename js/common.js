@@ -1,10 +1,8 @@
 /* =========================================================
    GLOBAL NAVIGATION — SPA COMPATIBLE
 
-   CHANGES:
-   - Ang href ay wedding.html?page=...
-   - May data-page para ma-intercept ng app.js.
-   - Ginawang reusable ang navigation update.
+   IMPORTANT:
+   The page values must match the keys in app.js.
 ========================================================= */
 
 const WEDDING_NAVIGATION_ITEMS = [
@@ -14,18 +12,21 @@ const WEDDING_NAVIGATION_ITEMS = [
     icon: "fa-solid fa-house",
     label: "Home",
   },
+
   {
     page: "sponsors",
     href: "wedding.html?page=sponsors",
     icon: "fa-solid fa-crown",
     label: "Sponsors",
   },
+
   {
     page: "location",
     href: "wedding.html?page=location",
     icon: "fa-solid fa-location-dot",
     label: "Location",
   },
+
   {
     page: "rsvp",
     href: "wedding.html?page=rsvp",
@@ -33,18 +34,21 @@ const WEDDING_NAVIGATION_ITEMS = [
     label: "RSVP",
     featured: true,
   },
+
   {
     page: "attire",
     href: "wedding.html?page=attire",
     icon: "fa-solid fa-shirt",
     label: "Attire",
   },
+
   {
     page: "gift",
     href: "wedding.html?page=gift",
     icon: "fa-solid fa-gift",
     label: "Gift",
   },
+
   {
     page: "contact",
     href: "wedding.html?page=contact",
@@ -55,14 +59,9 @@ const WEDDING_NAVIGATION_ITEMS = [
 
 document.addEventListener(
   "DOMContentLoaded",
-  function () {
-    initializeCommonNavigation();
-  }
+  initializeCommonNavigation
 );
 
-/*
-  Initial navigation creation.
-*/
 function initializeCommonNavigation() {
   const currentPage =
     document.body.dataset.currentPage ||
@@ -72,9 +71,8 @@ function initializeCommonNavigation() {
 }
 
 /*
-  NEW:
-  Tatawagin din ito ng app.js pagkatapos
-  magpalit ng SPA page.
+  Called by app.js every time a new page
+  is loaded.
 */
 window.updateCommonNavigation =
   function (currentPage) {
@@ -124,12 +122,17 @@ function createNavigationMarkup(
             ? " active"
             : "";
 
+        const ariaCurrent =
+          isActive
+            ? 'aria-current="page"'
+            : "";
+
         return `
           <a
             class="nav-item${featuredClass}${activeClass}"
             data-page="${item.page}"
             href="${item.href}"
-            ${isActive ? 'aria-current="page"' : ""}
+            ${ariaCurrent}
           >
             <span class="nav-icon">
               <i
