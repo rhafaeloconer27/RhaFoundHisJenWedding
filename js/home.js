@@ -1,282 +1,321 @@
-document.addEventListener(
-  "DOMContentLoaded",
-  function () {
-    const loader =
-      document.getElementById(
-        "weddingLoader"
-      );
+/* =========================================================
+   HOME PAGE — SPA COMPATIBLE
 
-    const invitationIntro =
-      document.getElementById(
-        "invitationIntro"
-      );
+   Works with:
+   .hero-slideshow
+   .hero-slide
+========================================================= */
 
-    const openSealButton =
-      document.getElementById(
-        "openInvitationButton"
-      );
+let homeSlideshowInterval = null;
+let homeVisibilityHandler = null;
+let homeCountdownInterval = null;
 
-    /*
-      Stop when this is not the intro page.
-    */
+/*
+  Called by app.js after pages/home.html
+  is inserted into #app.
+*/
+window.initializeHomePage = function () {
+  window.cleanupHomePage();
+
+  initializeHeroSlideshow();
+  initializeWeddingCountdown();
+};
+
+/*
+  Called before leaving Home.
+*/
+window.cleanupHomePage = function () {
+  if (homeSlideshowInterval !== null) {
+    window.clearInterval(
+      homeSlideshowInterval
+    );
+
+    homeSlideshowInterval = null;
+  }
+
+  if (homeCountdownInterval !== null) {
+    window.clearInterval(
+      homeCountdownInterval
+    );
+
+    homeCountdownInterval = null;
+  }
+
+  if (homeVisibilityHandler) {
+    document.removeEventListener(
+      "visibilitychange",
+      homeVisibilityHandler
+    );
+
+    homeVisibilityHandler = null;
+  }
+};
+
+/* =========================================================
+   HERO SLIDESHOW
+========================================================= */
+
+function initializeHeroSlideshow() {
+  const slideshow =
+    document.querySelector(
+      ".hero-slideshow"
+    );
+
+  if (!slideshow) {
+    return;
+  }
+
+  const slides =
+    Array.from(
+      slideshow.querySelectorAll(
+        ".hero-slide"
+      )
+    );
+
+  if (slides.length === 0) {
+    return;
+  }
+
+  let currentSlideIndex = 0;
+
+  const slideshowDelay = 5000;
+
+  function showSlide(index) {
+    currentSlideIndex =
+      (index + slides.length) %
+      slides.length;
+
+    slides.forEach(
+      function (slide, slideIndex) {
+        slide.classList.toggle(
+          "active",
+          slideIndex === currentSlideIndex
+        );
+      }
+    );
+  }
+
+  function showNextSlide() {
+    showSlide(
+      currentSlideIndex + 1
+    );
+  }
+
+  function stopSlideshow() {
     if (
-      !loader ||
-      !invitationIntro ||
-      !openSealButton ||
-      typeof gsap === "undefined"
+      homeSlideshowInterval === null
     ) {
       return;
     }
 
-    let isOpening = false;
-
-    /* ======================================================
-       INITIAL STATE
-    ====================================================== */
-
-    gsap.set(
-      invitationIntro,
-      {
-        autoAlpha: 0,
-      }
+    window.clearInterval(
+      homeSlideshowInterval
     );
 
-    gsap.set(
-      ".invitation-stage",
-      {
-        y: 40,
-        opacity: 0,
-      }
-    );
+    homeSlideshowInterval = null;
+  }
 
-    gsap.set(
-      ".invitation-cover",
-      {
-        scale: 0.94,
-      }
-    );
+  function startSlideshow() {
+    stopSlideshow();
 
-    /* ======================================================
-       INTRO LOADER
-    ====================================================== */
+    if (slides.length <= 1) {
+      return;
+    }
 
-    const loadingTimeline =
-      gsap.timeline({
-        defaults: {
-          ease: "power2.out",
-        },
-      });
+    homeSlideshowInterval =
+      window.setInterval(
+        showNextSlide,
+        slideshowDelay
+      );
+  }
 
-    loadingTimeline
-      .from(
-        ".loader-rings",
+  /*
+    Ensure all images become visible after loading.
+  */
+  slides.forEach(function (slide) {
+    const image =
+      slide.querySelector("img");
+
+    if (!image) {
+      return;
+    }
+
+    function markImageLoaded() {
+      image.classList.add(
+        "is-loaded"
+      );
+    }
+
+    if (
+      image.complete &&
+      image.naturalWidth > 0
+    ) {
+      markImageLoaded();
+    } else {
+      image.addEventListener(
+        "load",
+        markImageLoaded,
         {
-          scale: 0.5,
-          opacity: 0,
-          duration: 0.7,
-        }
-      )
-      .from(
-        ".loader-names",
-        {
-          y: 20,
-          opacity: 0,
-          duration: 0.7,
-        },
-        "-=0.35"
-      )
-      .from(
-        ".loader-message",
-        {
-          y: 10,
-          opacity: 0,
-          duration: 0.5,
-        },
-        "-=0.25"
-      )
-      .to(
-        {},
-        {
-          duration: 0.7,
-        }
-      )
-      .to(
-        loader,
-        {
-          autoAlpha: 0,
-          duration: 0.7,
-          ease: "power2.inOut",
-        }
-      )
-      .to(
-        invitationIntro,
-        {
-          autoAlpha: 1,
-          duration: 0.7,
-        },
-        "-=0.35"
-      )
-      .to(
-        ".invitation-stage",
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.9,
-        },
-        "-=0.5"
-      )
-      .to(
-        ".invitation-cover",
-        {
-          scale: 1,
-          duration: 1,
-          ease: "back.out(1.3)",
-        },
-        "-=0.8"
-      )
-      .set(
-        loader,
-        {
-          display: "none",
+          once: true,
         }
       );
 
-    /* ======================================================
-       OPEN INVITATION
-    ====================================================== */
-
-    function openInvitation() {
-      if (isOpening) {
-        return;
-      }
-
-      isOpening = true;
-      openSealButton.disabled = true;
-
-      const openTimeline =
-        gsap.timeline({
-          defaults: {
-            ease: "power3.inOut",
-          },
-
-          onComplete: function () {
-            /*
-              IMPORTANT CHANGE:
-
-              Open the permanent SPA shell,
-              not pages/home.html and not home.html.
-            */
-            window.location.href =
-              "wedding.html";
-          },
-        });
-
-      openTimeline
-        .to(
-          ".gsap-wax-seal",
-          {
-            scale: 0.88,
-            duration: 0.15,
-            ease: "power2.in",
-          }
-        )
-        .to(
-          ".gsap-wax-seal",
-          {
-            scale: 1.35,
-            opacity: 0,
-            rotation: 12,
-            duration: 0.45,
-            ease: "back.in(1.7)",
-          }
-        )
-        .to(
-          ".cover-title",
-          {
-            opacity: 0,
-            y: -15,
-            duration: 0.4,
-          },
-          "-=0.3"
-        )
-        .to(
-          ".cover-panel-left",
-          {
-            xPercent: -102,
-            rotationY: -8,
-            duration: 1.15,
-          },
-          "-=0.1"
-        )
-        .to(
-          ".cover-panel-right",
-          {
-            xPercent: 102,
-            rotationY: 8,
-            duration: 1.15,
-          },
-          "<"
-        )
-        .fromTo(
-          ".reveal-photo",
-          {
-            scale: 1.15,
-          },
-          {
-            scale: 1,
-            duration: 1.6,
-            ease: "power2.out",
-          },
-          "-=0.95"
-        )
-        .from(
-          ".reveal-content > *",
-          {
-            y: 24,
-            opacity: 0,
-            duration: 0.65,
-            stagger: 0.14,
-            ease: "power2.out",
-          },
-          "-=1.15"
-        )
-        .to(
-          ".intro-label",
-          {
-            opacity: 0,
-            y: 12,
-            duration: 0.45,
-          },
-          "-=1"
-        )
-        .to(
-          {},
-          {
-            duration: 0.65,
-          }
-        )
-        .to(
-          ".invitation-cover",
-          {
-            scale: 1.08,
-            duration: 0.8,
-            ease: "power2.inOut",
-          }
-        )
-        .to(
-          ".invitation-intro",
-          {
-            opacity: 0,
-            duration: 0.65,
-            ease: "power2.in",
-          },
-          "-=0.3"
-        );
+      image.addEventListener(
+        "error",
+        markImageLoaded,
+        {
+          once: true,
+        }
+      );
     }
+  });
 
-    openSealButton.addEventListener(
-      "click",
-      openInvitation
+  showSlide(0);
+  startSlideshow();
+
+  homeVisibilityHandler =
+    function () {
+      if (document.hidden) {
+        stopSlideshow();
+      } else {
+        startSlideshow();
+      }
+    };
+
+  document.addEventListener(
+    "visibilitychange",
+    homeVisibilityHandler
+  );
+}
+
+/* =========================================================
+   WEDDING COUNTDOWN
+========================================================= */
+
+function initializeWeddingCountdown() {
+  const daysElement =
+    document.getElementById("days");
+
+  const hoursElement =
+    document.getElementById("hours");
+
+  const minutesElement =
+    document.getElementById("minutes");
+
+  const secondsElement =
+    document.getElementById("seconds");
+
+  if (
+    !daysElement ||
+    !hoursElement ||
+    !minutesElement ||
+    !secondsElement
+  ) {
+    return;
+  }
+
+  const weddingDate =
+    new Date(
+      "2027-02-04T15:00:00+08:00"
+    ).getTime();
+
+  function formatNumber(
+    value,
+    minimumLength
+  ) {
+    return String(value).padStart(
+      minimumLength,
+      "0"
     );
   }
-);
+
+  function updateCountdown() {
+    if (
+      !daysElement.isConnected ||
+      !hoursElement.isConnected ||
+      !minutesElement.isConnected ||
+      !secondsElement.isConnected
+    ) {
+      if (
+        homeCountdownInterval !== null
+      ) {
+        window.clearInterval(
+          homeCountdownInterval
+        );
+
+        homeCountdownInterval = null;
+      }
+
+      return;
+    }
+
+    const remainingTime =
+      weddingDate - Date.now();
+
+    if (remainingTime <= 0) {
+      daysElement.textContent = "000";
+      hoursElement.textContent = "00";
+      minutesElement.textContent = "00";
+      secondsElement.textContent = "00";
+
+      if (
+        homeCountdownInterval !== null
+      ) {
+        window.clearInterval(
+          homeCountdownInterval
+        );
+
+        homeCountdownInterval = null;
+      }
+
+      return;
+    }
+
+    const second = 1000;
+    const minute = second * 60;
+    const hour = minute * 60;
+    const day = hour * 24;
+
+    const days =
+      Math.floor(
+        remainingTime / day
+      );
+
+    const hours =
+      Math.floor(
+        (remainingTime % day) / hour
+      );
+
+    const minutes =
+      Math.floor(
+        (remainingTime % hour) /
+          minute
+      );
+
+    const seconds =
+      Math.floor(
+        (remainingTime % minute) /
+          second
+      );
+
+    daysElement.textContent =
+      formatNumber(days, 3);
+
+    hoursElement.textContent =
+      formatNumber(hours, 2);
+
+    minutesElement.textContent =
+      formatNumber(minutes, 2);
+
+    secondsElement.textContent =
+      formatNumber(seconds, 2);
+  }
+
+  updateCountdown();
+
+  homeCountdownInterval =
+    window.setInterval(
+      updateCountdown,
+      1000
+    );
+}
