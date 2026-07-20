@@ -1,44 +1,53 @@
+/* =========================================================
+   GLOBAL NAVIGATION — SPA COMPATIBLE
+
+   CHANGES:
+   - Ang href ay wedding.html?page=...
+   - May data-page para ma-intercept ng app.js.
+   - Ginawang reusable ang navigation update.
+========================================================= */
+
 const WEDDING_NAVIGATION_ITEMS = [
   {
     page: "home",
-    href: "home.html",
+    href: "wedding.html",
     icon: "fa-solid fa-house",
     label: "Home",
   },
   {
     page: "sponsors",
-    href: "sponsors.html",
+    href: "wedding.html?page=sponsors",
     icon: "fa-solid fa-crown",
     label: "Sponsors",
   },
   {
     page: "location",
-    href: "location.html",
+    href: "wedding.html?page=location",
     icon: "fa-solid fa-location-dot",
     label: "Location",
   },
   {
     page: "rsvp",
-    href: "rsvp.html",
+    href: "wedding.html?page=rsvp",
     icon: "fa-solid fa-envelope-open-text",
     label: "RSVP",
     featured: true,
   },
   {
     page: "attire",
-    href: "attire.html",
+    href: "wedding.html?page=attire",
     icon: "fa-solid fa-shirt",
     label: "Attire",
   },
   {
     page: "gift",
-    href: "gift-guide.html",
+    href: "wedding.html?page=gift",
     icon: "fa-solid fa-gift",
     label: "Gift",
   },
   {
     page: "contact",
-    href: "contact.html",
+    href: "wedding.html?page=contact",
     icon: "fa-solid fa-phone",
     label: "Contact",
   },
@@ -46,13 +55,35 @@ const WEDDING_NAVIGATION_ITEMS = [
 
 document.addEventListener(
   "DOMContentLoaded",
-  initializeCommonNavigation
+  function () {
+    initializeCommonNavigation();
+  }
 );
 
+/*
+  Initial navigation creation.
+*/
 function initializeCommonNavigation() {
   const currentPage =
-    document.body.dataset.currentPage || "";
+    document.body.dataset.currentPage ||
+    "home";
 
+  renderCommonNavigation(currentPage);
+}
+
+/*
+  NEW:
+  Tatawagin din ito ng app.js pagkatapos
+  magpalit ng SPA page.
+*/
+window.updateCommonNavigation =
+  function (currentPage) {
+    renderCommonNavigation(currentPage);
+  };
+
+function renderCommonNavigation(
+  currentPage
+) {
   let navigationContainer =
     document.getElementById(
       "globalNavigation"
@@ -74,7 +105,9 @@ function initializeCommonNavigation() {
     createNavigationMarkup(currentPage);
 }
 
-function createNavigationMarkup(currentPage) {
+function createNavigationMarkup(
+  currentPage
+) {
   const navigationItems =
     WEDDING_NAVIGATION_ITEMS.map(
       function (item) {
@@ -86,9 +119,14 @@ function createNavigationMarkup(currentPage) {
             ? " nav-item-featured"
             : "";
 
+        const activeClass =
+          isActive
+            ? " active"
+            : "";
+
         return `
           <a
-            class="nav-item${featuredClass}${isActive ? " active" : ""}"
+            class="nav-item${featuredClass}${activeClass}"
             data-page="${item.page}"
             href="${item.href}"
             ${isActive ? 'aria-current="page"' : ""}

@@ -1,20 +1,23 @@
-/*
-  Google Apps Script Web App URL.
+/* =========================================================
+   RSVP SCRIPT — SPA COMPATIBLE
 
-  Use the deployed URL ending in /exec.
-*/
+   CHANGES:
+   - Tinanggal ang DOMContentLoaded initialization.
+   - Ginawang window.initializeRsvpPage().
+   - May duplicate-listener protection.
+   - Reset ang submission state tuwing nire-reload ang RSVP.
+========================================================= */
 
 const GOOGLE_APPS_SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbxuNkbTqIPVvLEB18qxM2noodhW05r4sD6rkV6ZLhWypjX8r9TsAlfucVwJDIrIIao/exec";
 
 const SUBMISSION_TIMEOUT_MS = 15000;
 
-document.addEventListener(
-  "DOMContentLoaded",
-  initializeRsvpForm
-);
-
-function initializeRsvpForm() {
+/*
+  Tatawagin ng app.js pagkatapos ma-load
+  ang pages/rsvp.html.
+*/
+window.initializeRsvpPage = function () {
   const form =
     document.getElementById("rsvpForm");
 
@@ -32,6 +35,19 @@ function initializeRsvpForm() {
     return;
   }
 
+  /*
+    Prevent duplicate initialization.
+  */
+  if (
+    form.dataset.initialized === "true"
+  ) {
+    return;
+  }
+
+  form.dataset.initialized = "true";
+
+  window.rsvpSubmissionPending = false;
+
   form.addEventListener(
     "submit",
     handleRsvpSubmission
@@ -48,7 +64,18 @@ function initializeRsvpForm() {
       clearRsvpForm
     );
   }
-}
+};
+
+/*
+  Cleanup before leaving RSVP.
+*/
+window.cleanupRsvpPage = function () {
+  window.clearTimeout(
+    window.rsvpSubmissionTimer
+  );
+
+  window.rsvpSubmissionPending = false;
+};
 
 function handleRsvpSubmission(event) {
   const form = event.currentTarget;
@@ -189,7 +216,9 @@ function isHoneypotFilled() {
   );
 }
 
-function setSubmittingState(isSubmitting) {
+function setSubmittingState(
+  isSubmitting
+) {
   const submitButton =
     document.getElementById(
       "submitButton"
@@ -201,7 +230,8 @@ function setSubmittingState(isSubmitting) {
     );
 
   if (submitButton) {
-    submitButton.disabled = isSubmitting;
+    submitButton.disabled =
+      isSubmitting;
 
     submitButton.textContent =
       isSubmitting
@@ -215,7 +245,10 @@ function setSubmittingState(isSubmitting) {
   }
 }
 
-function showFormResponse(message, type) {
+function showFormResponse(
+  message,
+  type
+) {
   const formResponse =
     document.getElementById(
       "formResponse"

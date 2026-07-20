@@ -1,9 +1,25 @@
-const MUSIC_TIME_KEY = "weddingMusicTime";
+/* =========================================================
+   GLOBAL MUSIC — SPA COMPATIBLE
+
+   CHANGES:
+   - Isang beses lang ini-initialize.
+   - Hindi na nire-recreate sa bawat SPA navigation.
+   - Hindi na kailangang mag-save ng currentTime habang
+     nagpapalit lang ng SPA page.
+   - May localStorage pa rin para sa refresh/reopen.
+========================================================= */
+
+const MUSIC_TIME_KEY =
+  "weddingMusicTime";
+
+const MUSIC_PLAYING_KEY =
+  "weddingMusicPlaying";
 
 let bgMusic = null;
 let musicButton = null;
 let musicStateSaveTimer = null;
 let firstInteractionHandlerAdded = false;
+let globalMusicInitialized = false;
 
 document.addEventListener(
   "DOMContentLoaded",
@@ -11,80 +27,105 @@ document.addEventListener(
 );
 
 function initializeGlobalMusic() {
+  /*
+    Prevent duplicate initialization.
+  */
+  if (globalMusicInitialized) {
+    return;
+  }
+
+  globalMusicInitialized = true;
+
   createMusicElements();
 
-  bgMusic = document.getElementById("bgMusic");
-  musicButton = document.getElementById("musicButton");
+  bgMusic =
+    document.getElementById("bgMusic");
+
+  musicButton =
+    document.getElementById("musicButton");
 
   if (!bgMusic || !musicButton) {
     return;
   }
 
   bgMusic.loop = true;
-  bgMusic.volume = 1.0;
+  bgMusic.volume = 1;
 
   attachMusicEvents();
   restoreMusicTime();
+  updateMusicButton();
+
+  const wasPlaying =
+    localStorage.getItem(
+      MUSIC_PLAYING_KEY
+    ) !== "false";
 
   /*
-    Default behavior:
-    laging attempt mag-play sa bawat page load/reload.
+    Default:
+    attempt autoplay unless the user previously paused it.
   */
-  attemptAutomaticPlayback();
+  if (wasPlaying) {
+    attemptAutomaticPlayback();
+  }
 }
 
-/* =========================================
-   CREATE MUSIC ELEMENTS
-========================================= */
+/* =========================================================
+   CREATE PERMANENT MUSIC ELEMENTS
+========================================================= */
 
 function createMusicElements() {
   if (!document.getElementById("bgMusic")) {
-    const audio = document.createElement("audio");
+    const audio =
+      document.createElement("audio");
 
     audio.id = "bgMusic";
     audio.loop = true;
     audio.preload = "auto";
 
-    const source = document.createElement("source");
+    const source =
+      document.createElement("source");
 
-    source.src = "music/goodnessofGod.mp3";
+    source.src =
+      "music/goodnessofGod.mp3";
+
     source.type = "audio/mpeg";
 
     audio.appendChild(source);
     document.body.appendChild(audio);
   }
 
-  if (!document.getElementById("musicButton")) {
-    const button = document.createElement("button");
+  if (
+    !document.getElementById(
+      "musicButton"
+    )
+  ) {
+    const button =
+      document.createElement("button");
 
     button.id = "musicButton";
     button.className = "music-button";
     button.type = "button";
 
-    /*
-      Initial visual state ay playing,
-      dahil default natin ay mag-autoplay.
-    */
     button.innerHTML =
-  '<i class="fa-solid fa-volume-high"></i>';
+      '<i class="fa-solid fa-volume-high" aria-hidden="true"></i>';
 
     button.setAttribute(
       "aria-label",
-      "Mute background music"
+      "Pause background music"
     );
 
     button.setAttribute(
       "title",
-      "Mute background music"
+      "Pause background music"
     );
 
     document.body.appendChild(button);
   }
 }
 
-/* =========================================
+/* =========================================================
    EVENTS
-========================================= */
+========================================================= */
 
 function attachMusicEvents() {
   musicButton.addEventListener(
@@ -94,12 +135,27 @@ function attachMusicEvents() {
 
   bgMusic.addEventListener(
     "play",
-    updateMusicButton
+    function () {
+      localStorage.setItem(
+        MUSIC_PLAYING_KEY,
+        "true"
+      );
+
+      updateMusicButton();
+    }
   );
 
   bgMusic.addEventListener(
     "pause",
-    updateMusicButton
+    function () {
+      localStorage.setItem(
+        MUSIC_PLAYING_KEY,
+        "false"
+      );
+
+      updateMusicButton();
+      saveMusicTime();
+    }
   );
 
   bgMusic.addEventListener(
@@ -107,22 +163,28 @@ function attachMusicEvents() {
     scheduleMusicTimeSave
   );
 
+  /*
+    pagehide is more reliable than beforeunload,
+    especially on mobile browsers.
+  */
   window.addEventListener(
-    "beforeunload",
+    "pagehide",
     saveMusicTime
   );
 
   document.addEventListener(
     "visibilitychange",
     function () {
-      saveMusicTime();
+      if (document.hidden) {
+        saveMusicTime();
+      }
     }
   );
 }
 
-/* =========================================
+/* =========================================================
    PLAY / PAUSE
-========================================= */
+========================================================= */
 
 async function toggleMusic() {
   if (!bgMusic) {
@@ -143,12 +205,10 @@ async function attemptAutomaticPlayback() {
 
   try {
     await bgMusic.play();
-
-    updateMusicButton();
   } catch (error) {
     /*
-      Kapag binlock ng browser ang autoplay,
-      tutugtog ito sa unang click/tap ng user.
+      Browser blocked autoplay.
+      Start after the first valid interaction.
     */
     updateMusicButton();
     addFirstInteractionPlayback();
@@ -162,8 +222,6 @@ async function playMusic() {
 
   try {
     await bgMusic.play();
-
-    updateMusicButton();
   } catch (error) {
     console.warn(
       "Music playback was blocked:",
@@ -180,12 +238,11 @@ function pauseMusic() {
   }
 
   bgMusic.pause();
-  updateMusicButton();
 }
 
-/* =========================================
+/* =========================================================
    AUTOPLAY FALLBACK
-========================================= */
+========================================================= */
 
 function addFirstInteractionPlayback() {
   if (firstInteractionHandlerAdded) {
@@ -204,12 +261,14 @@ function addFirstInteractionPlayback() {
   );
 }
 
-async function playMusicAfterFirstInteraction(event) {
+async function playMusicAfterFirstInteraction(
+  event
+) {
   firstInteractionHandlerAdded = false;
 
   /*
-    Kapag music button mismo ang pinindot,
-    toggleMusic ang bahala.
+    Kapag music button ang pinindot,
+    toggleMusic ang hahawak nito.
   */
   if (
     event.target instanceof Element &&
@@ -218,12 +277,25 @@ async function playMusicAfterFirstInteraction(event) {
     return;
   }
 
+  /*
+    Huwag awtomatikong i-play kapag pinause
+    mismo ng user noong nakaraan.
+  */
+  const userPausedMusic =
+    localStorage.getItem(
+      MUSIC_PLAYING_KEY
+    ) === "false";
+
+  if (userPausedMusic) {
+    return;
+  }
+
   await playMusic();
 }
 
-/* =========================================
-   BUTTON STATE
-========================================= */
+/* =========================================================
+   MUSIC BUTTON STATE
+========================================================= */
 
 function updateMusicButton() {
   if (!bgMusic || !musicButton) {
@@ -234,11 +306,11 @@ function updateMusicButton() {
     !bgMusic.paused;
 
   musicButton.innerHTML = isPlaying
-    ? '<i class="fa-solid fa-volume-high"></i>'
-    : '<i class="fa-solid fa-volume-xmark"></i>';
+    ? '<i class="fa-solid fa-volume-high" aria-hidden="true"></i>'
+    : '<i class="fa-solid fa-volume-xmark" aria-hidden="true"></i>';
 
   const label = isPlaying
-    ? "Mute background music"
+    ? "Pause background music"
     : "Play background music";
 
   musicButton.setAttribute(
@@ -257,22 +329,24 @@ function updateMusicButton() {
   );
 }
 
-/* =========================================
+/* =========================================================
    SAVE CURRENT MUSIC TIME
-========================================= */
+========================================================= */
 
 function scheduleMusicTimeSave() {
   if (musicStateSaveTimer !== null) {
     return;
   }
 
-  musicStateSaveTimer = window.setTimeout(
-    function () {
-      saveMusicTime();
-      musicStateSaveTimer = null;
-    },
-    1000
-  );
+  musicStateSaveTimer =
+    window.setTimeout(
+      function () {
+        saveMusicTime();
+
+        musicStateSaveTimer = null;
+      },
+      1000
+    );
 }
 
 function saveMusicTime() {
@@ -293,9 +367,9 @@ function saveMusicTime() {
   }
 }
 
-/* =========================================
+/* =========================================================
    RESTORE CURRENT MUSIC TIME
-========================================= */
+========================================================= */
 
 function restoreMusicTime() {
   if (!bgMusic) {
@@ -304,7 +378,9 @@ function restoreMusicTime() {
 
   try {
     const savedTime = Number(
-      localStorage.getItem(MUSIC_TIME_KEY)
+      localStorage.getItem(
+        MUSIC_TIME_KEY
+      )
     );
 
     if (
@@ -314,7 +390,7 @@ function restoreMusicTime() {
       return;
     }
 
-    const applySavedTime = function () {
+    function applySavedTime() {
       if (
         Number.isFinite(bgMusic.duration) &&
         bgMusic.duration > 0
@@ -322,9 +398,10 @@ function restoreMusicTime() {
         bgMusic.currentTime =
           savedTime % bgMusic.duration;
       } else {
-        bgMusic.currentTime = savedTime;
+        bgMusic.currentTime =
+          savedTime;
       }
-    };
+    }
 
     if (bgMusic.readyState >= 1) {
       applySavedTime();
