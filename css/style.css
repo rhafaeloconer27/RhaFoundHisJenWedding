@@ -2167,3 +2167,481 @@ body[data-current-page="rsvp"] .rsvp-section {
     height: 58px;
   }
 }
+
+/* ==========================================================
+   LOCATION PAGE
+   pages/location.html
+========================================================== */
+
+body[data-current-page="location"] {
+  background: #eef2eb;
+}
+
+body[data-current-page="location"]
+.page-container {
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  padding-bottom:
+    calc(
+      var(--nav-height) +
+      38px +
+      env(safe-area-inset-bottom)
+    );
+}
+
+/* ==============================
+   LOCATION HERO
+============================== */
+
+.location-hero {
+  min-height: 42svh;
+
+  background:
+    url("../images/jhaymars.webp")
+    center 42% / cover no-repeat;
+}
+
+.location-hero
+.page-hero-overlay {
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(25, 31, 23, 0.3),
+      rgba(25, 31, 23, 0.68)
+    );
+}
+
+.location-hero
+.page-hero-content {
+  padding: 20px;
+}
+
+.location-hero
+.page-hero-content p {
+  margin-bottom: 4px;
+
+  color:
+    rgba(255, 255, 255, 0.92);
+
+  font-size: 1rem;
+}
+
+.location-hero
+.page-hero-content h1 {
+  max-width: 420px;
+
+  margin-right: auto;
+  margin-left: auto;
+
+  font-size:
+    clamp(3.3rem, 15vw, 5.5rem);
+
+  line-height: 0.9;
+
+  text-shadow:
+    0 4px 18px rgba(0, 0, 0, 0.3);
+}
+
+/* ==============================
+   LOCATION CONTENT
+============================== */
+
+.location-section {
+  padding:
+    28px 16px
+    calc(
+      var(--nav-height) +
+      34px +
+      env(safe-area-inset-bottom)
+    );
+
+  background:
+    linear-gradient(
+      180deg,
+      #eef2eb 0%,
+      #f8f5ee 100%
+    );
+}
+
+.location-card {
+  width: min(100%, 560px);
+
+  margin: 0 auto;
+  padding: 30px 22px;
+
+  border:
+    1px solid
+    rgba(111, 125, 99, 0.2);
+
+  border-radius: 18px;
+
+  background:
+    rgba(255, 255, 255, 0.96);
+
+  box-shadow:
+    0 14px 36px
+    rgba(58, 67, 52, 0.13);
+
+  text-align: center;
+}
+
+.location-icon {
+  display: grid;
+  place-items: center;
+
+  width: 58px;
+  height: 58px;
+
+  margin: 0 auto 18px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(140, 153, 125, 0.14);
+
+  color: var(--sage-dark);
+}
+
+.location-icon i {
+  font-size: 24px;
+}
+
+.location-label {
+  margin-bottom: 8px;
+
+  color: var(--gold);
+
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+
+  text-transform: uppercase;
+}
+
+.location-name {
+  color: var(--sage-dark);
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    clamp(1.8rem, 7vw, 2.5rem);
+
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.location-address {
+  margin-top: 9px;
+
+  color: var(--muted);
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 1.05rem;
+}
+
+.location-divider {
+  width: 60px;
+  height: 1px;
+
+  margin: 24px auto;
+
+  background:
+    rgba(183, 160, 106, 0.55);
+}
+
+.location-details {
+  display: grid;
+
+  gap: 14px;
+
+  margin-bottom: 26px;
+
+  text-align: left;
+}
+
+.location-detail-item {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 13px 14px;
+
+  border-radius: 12px;
+
+  background:
+    rgba(140, 153, 125, 0.08);
+}
+
+.location-detail-item > i {
+  color: var(--sage-dark);
+
+  font-size: 18px;
+
+  text-align: center;
+}
+
+.location-detail-item div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.location-detail-item span {
+  color: var(--muted);
+
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+
+  text-transform: uppercase;
+}
+
+.location-detail-item strong {
+  color: #454b41;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.location-map-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  width: 100%;
+
+  padding: 13px 18px;
+
+  border-radius: 999px;
+
+  background: var(--sage-dark);
+  color: var(--white);
+
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+
+  text-decoration: none;
+  text-transform: uppercase;
+
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.location-map-button:hover {
+  transform:
+    translateY(-2px);
+
+  background: #637058;
+
+  box-shadow:
+    0 10px 22px
+    rgba(73, 84, 66, 0.2);
+}
+
+.location-map-button:focus-visible {
+  outline:
+    3px solid
+    rgba(140, 153, 125, 0.3);
+
+  outline-offset: 3px;
+}
+
+/* ==========================================================
+   LOCATION MAP
+========================================================== */
+
+.location-address {
+  margin-top: 10px;
+
+  color: var(--muted);
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 1.05rem;
+  font-style: normal;
+  line-height: 1.5;
+
+  text-align: center;
+}
+
+.location-map-container {
+  position: relative;
+
+  width: 100%;
+  height: 260px;
+
+  margin: 6px 0 22px;
+
+  overflow: hidden;
+
+  border:
+    1px solid rgba(111, 125, 99, 0.22);
+
+  border-radius: 14px;
+
+  background: #e5e9e1;
+
+  box-shadow:
+    0 8px 22px rgba(58, 67, 52, 0.12);
+}
+
+.location-map-frame {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+
+  pointer-events: none;
+}
+
+.location-map-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  padding: 14px;
+
+  color: var(--white);
+
+  text-decoration: none;
+
+  cursor: pointer;
+}
+
+.location-map-open-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 9px 14px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.3);
+
+  border-radius: 999px;
+
+  background:
+    rgba(45, 54, 41, 0.78);
+
+  color: var(--white);
+
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+
+  box-shadow:
+    0 5px 16px rgba(0, 0, 0, 0.2);
+
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.location-map-overlay:hover
+.location-map-open-label {
+  transform: translateY(-2px);
+
+  background:
+    rgba(45, 54, 41, 0.92);
+}
+
+/* ==========================================================
+   LOCATION MOBILE
+========================================================== */
+
+@media (max-width: 480px) {
+  .location-hero {
+    min-height: 34svh;
+
+    background-position:
+      center 38%;
+  }
+
+  .location-hero
+  .page-hero-content h1 {
+    font-size:
+      clamp(3rem, 15vw, 4.2rem);
+  }
+
+  .location-section {
+    padding-top: 18px;
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .location-card {
+    padding: 25px 17px;
+
+    border-radius: 14px;
+  }
+
+  .location-icon {
+    width: 52px;
+    height: 52px;
+
+    margin-bottom: 15px;
+  }
+
+  .location-name {
+    font-size: 1.9rem;
+  }
+
+  .location-detail-item {
+    grid-template-columns:
+      34px 1fr;
+
+    gap: 9px;
+
+    padding: 12px;
+  }
+
+  .location-detail-item strong {
+    font-size: 0.95rem;
+  }
+
+  .location-map-container {
+    height: 220px;
+
+    margin-bottom: 18px;
+
+    border-radius: 12px;
+  }
+
+  .location-map-open-label {
+    padding: 8px 12px;
+
+    font-size: 0.62rem;
+  }
+}

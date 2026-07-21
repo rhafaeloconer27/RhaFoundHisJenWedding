@@ -1,96 +1,162 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#8c997d" />
+<!-- =====================================================
+     LOCATION PAGE PARTIAL
 
-  <title>Location | Rhaf &amp; Jen</title>
+     Loaded dynamically inside:
+     <div id="app"></div>
+====================================================== -->
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<main class="page-container location-page">
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600&display=swap"
-    rel="stylesheet"
-  />
+  <!-- LOCATION HERO -->
 
-  <link rel="stylesheet" href="css/style.css" />
-</head>
+  <section class="page-hero small-hero location-hero">
 
-<body class="" data-current-page="location">
-  <main class="page-container">
-    
-<section class="page-hero small-hero location-hero">
-  <div class="page-hero-overlay"></div>
-  <div class="page-hero-content">
-    <p>Join us at</p>
-    <h1>Wedding Location</h1>
-  </div>
-</section>
+    <div class="page-hero-overlay"></div>
 
-<section class="content-section">
-  <article class="info-card centered-card">
-    <p class="detail-label">Ceremony and Reception</p>
-    <h2>The Garden Pavilion</h2>
-    <p>Manila, Philippines</p>
-    <p>Thursday, February 4, 2027</p>
-    <p>3:00 in the afternoon</p>
+    <div class="page-hero-content">
+      <p>Join us at</p>
 
-    <a
-      class="secondary-button"
-      href="https://maps.google.com"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Open Google Maps
-    </a>
-  </article>
-</section>
+      <h1>
+        Wedding Location
+      </h1>
+    </div>
 
-  </main>
+  </section>
 
-  
-  <nav class="bottom-navigation" aria-label="Wedding navigation">
-    <a class="nav-item" data-page="home" href="home.html">
-      <span class="nav-icon">⌂</span>
-      <span class="nav-label">Home</span>
-    </a>
+  <!-- LOCATION DETAILS -->
 
-    <a class="nav-item" data-page="sponsors" href="sponsors.html">
-      <span class="nav-icon">♔</span>
-      <span class="nav-label">Sponsors</span>
-    </a>
+  <section class="content-section location-section">
 
-    <a class="nav-item" data-page="location" href="location.html">
-      <span class="nav-icon">⌖</span>
-      <span class="nav-label">Location</span>
-    </a>
+    <article class="location-card">
 
-    <a class="nav-item" data-page="attire" href="attire.html">
-      <span class="nav-icon">♙</span>
-      <span class="nav-label">Attire</span>
-    </a>
+      <!-- LOCATION ICON -->
 
-    <a class="nav-item" data-page="gift" href="gift-guide.html">
-      <span class="nav-icon">♡</span>
-      <span class="nav-label">Gift</span>
-    </a>
+      <div
+        class="location-icon"
+        aria-hidden="true"
+      >
+        <i class="fa-solid fa-location-dot"></i>
+      </div>
 
-    <a class="nav-item" data-page="faq" href="faq.html">
-      <span class="nav-icon">?</span>
-      <span class="nav-label">FAQ</span>
-    </a>
+      <p class="location-label">
+        Ceremony and Reception
+      </p>
 
-    <a class="nav-item" data-page="contact" href="contact.html">
-      <span class="nav-icon">✆</span>
-      <span class="nav-label">Contact</span>
-    </a>
-  </nav>
+      <!-- UPDATED: Actual venue name -->
 
+      <h2 class="location-name">
+        Jhaymar’s Treehouse Events Place
+      </h2>
 
-  <script src="js/common.js"></script>
-  
-  
-</body>
-</html>
+      <!-- UPDATED: Actual venue address -->
+
+      <address class="location-address">
+        29 Gloria Street, Barangay Gulod,
+        <br />
+        Novaliches, Quezon City
+      </address>
+
+      <div class="location-divider"></div>
+
+      <!-- EVENT DETAILS -->
+
+      <div class="location-details">
+
+        <div class="location-detail-item">
+          <i
+            class="fa-regular fa-calendar"
+            aria-hidden="true"
+          ></i>
+
+          <div>
+            <span>Date</span>
+
+            <strong>
+              Thursday, February 4, 2027
+            </strong>
+          </div>
+        </div>
+
+        <div class="location-detail-item">
+          <i
+            class="fa-regular fa-clock"
+            aria-hidden="true"
+          ></i>
+
+          <div>
+            <span>Time</span>
+
+            <strong>
+              3:00 in the afternoon
+            </strong>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- =================================================
+           NEW: CLICKABLE GOOGLE MAP PREVIEW
+
+           The iframe displays the map.
+
+           pointer-events are disabled through CSS so that
+           clicking anywhere on the map opens Google Maps.
+      ================================================== -->
+
+      <div class="location-map-container">
+
+        <iframe
+          class="location-map-frame"
+          src="https://www.google.com/maps?q=Jhaymar%27s%20Treehouse%20Events%20Place%2C%2029%20Gloria%20Street%2C%20Barangay%20Gulod%2C%20Novaliches%2C%20Quezon%20City&amp;output=embed"
+          title="Map showing Jhaymar’s Treehouse Events Place"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+
+        <!--
+          The transparent link covers the entire map.
+          Clicking it opens the venue in Google Maps.
+        -->
+
+        <a
+          class="location-map-overlay"
+          href="https://www.google.com/maps/search/?api=1&amp;query=Jhaymar%27s%20Treehouse%20Events%20Place%2C%2029%20Gloria%20Street%2C%20Barangay%20Gulod%2C%20Novaliches%2C%20Quezon%20City"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open Jhaymar’s Treehouse Events Place in Google Maps"
+        >
+          <span class="location-map-open-label">
+            <i
+              class="fa-solid fa-up-right-from-square"
+              aria-hidden="true"
+            ></i>
+
+            Tap map to open
+          </span>
+        </a>
+
+      </div>
+
+      <!-- OPEN GOOGLE MAPS BUTTON -->
+
+      <a
+        class="location-map-button"
+        href="https://www.google.com/maps/search/?api=1&amp;query=Jhaymar%27s%20Treehouse%20Events%20Place%2C%2029%20Gloria%20Street%2C%20Barangay%20Gulod%2C%20Novaliches%2C%20Quezon%20City"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <i
+          class="fa-solid fa-map-location-dot"
+          aria-hidden="true"
+        ></i>
+
+        <span>
+          Open in Google Maps
+        </span>
+      </a>
+
+    </article>
+
+  </section>
+
+</main>
