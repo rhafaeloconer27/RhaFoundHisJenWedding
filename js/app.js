@@ -4,7 +4,8 @@
    PURPOSE:
    - Load page partials without refreshing wedding.html
    - Keep the background music playing
-   - Show the loader until the first important image is ready
+   - Show the loader until important assets are ready
+   - Animate page content after every page transition
 ========================================================== */
 
 document.addEventListener(
@@ -22,6 +23,13 @@ document.addEventListener(
       document.getElementById(
         "pageLoaderMessage"
       );
+
+    /* ======================================================
+       PAGE CONFIGURATION
+
+       The keys here must match the data-page values
+       used in common.js.
+    ====================================================== */
 
     const pages = {
       home: {
@@ -75,6 +83,10 @@ document.addEventListener(
     let initialLoadCompleted = false;
 
     if (!app) {
+      console.error(
+        'SPA initialization failed: "#app" was not found.'
+      );
+
       return;
     }
 
@@ -95,6 +107,11 @@ document.addEventListener(
       message = "Loading..."
     ) {
       setLoaderMessage(message);
+
+      app.setAttribute(
+        "aria-busy",
+        "true"
+      );
 
       if (!pageLoader) {
         return;
@@ -136,8 +153,10 @@ document.addEventListener(
     /* ======================================================
        IMAGE WAITING
 
-       Wait for the first Home slideshow image before
-       showing the Home content.
+       Wait for a specific image to finish loading.
+
+       A timeout is included so the page will not remain
+       stuck on the loader when an image fails to load.
     ====================================================== */
 
     function waitForImage(
@@ -165,6 +184,7 @@ document.addEventListener(
         }
 
         let completed = false;
+        let timeoutId = null;
 
         function finish() {
           if (completed) {
@@ -172,6 +192,12 @@ document.addEventListener(
           }
 
           completed = true;
+
+          if (timeoutId !== null) {
+            window.clearTimeout(
+              timeoutId
+            );
+          }
 
           image.classList.add(
             "is-loaded"
@@ -206,12 +232,18 @@ document.addEventListener(
           }
         );
 
-        window.setTimeout(
-          finish,
-          timeout
-        );
+        timeoutId =
+          window.setTimeout(
+            finish,
+            timeout
+          );
       });
     }
+
+    /*
+      Marks the remaining Home slideshow images
+      as visible once each image finishes loading.
+    */
 
     function markRemainingImagesWhenLoaded() {
       const images =
@@ -242,8 +274,31 @@ document.addEventListener(
             once: true,
           }
         );
+
+        /*
+          Avoid permanently hiding a broken image.
+        */
+
+        image.addEventListener(
+          "error",
+          function () {
+            image.classList.add(
+              "is-loaded"
+            );
+          },
+          {
+            once: true,
+          }
+        );
       });
     }
+
+    /*
+      Wait for important page assets.
+
+      Currently, Home waits for the first slideshow image.
+      Other pages can be added here later when necessary.
+    */
 
     async function waitForPageAssets(
       pageName
@@ -268,18 +323,136 @@ document.addEventListener(
         firstHomeImage
       );
 
-      /*
-        The first image is ready, so Home can be shown.
-        Other slideshow images may continue loading behind it.
-      */
       markRemainingImagesWhenLoaded();
     }
 
     /* ======================================================
-       INITIAL PAGE REVEAL
+       PAGE CONTENT ANIMATION
+
+       Runs every time a page partial is loaded.
     ====================================================== */
 
-    function revealInitialPage() {
+    function getAnimatedPageElements() {
+      const selectors = [
+        /*
+          Home page
+        */
+        ".hero-content",
+        ".hero-countdown",
+
+        /*
+          Shared page hero
+        */
+        ".page-hero-content",
+
+        /*
+          General content sections
+        */
+        ".content-section > *",
+
+        /*
+          Page-specific containers
+        */
+        ".sponsors-section > *",
+        ".location-section > *",
+        ".rsvp-section > *",
+        ".attire-section > *",
+        ".attire-poster > *",
+        ".gift-section > *",
+        ".contact-section > *",
+      ];
+
+      const elements =
+        selectors.flatMap(
+          function (selector) {
+            return Array.from(
+              app.querySelectorAll(
+                selector
+              )
+            );
+          }
+        );
+
+      /*
+        Remove duplicated elements in case they match
+        more than one selector.
+      */
+
+      return Array.from(
+        new Set(elements)
+      );
+    }
+
+    function preparePageContentAnimation() {
+      const animatedElements =
+        getAnimatedPageElements();
+
+      animatedElements.forEach(
+        function (element, index) {
+          element.classList.remove(
+            "page-content-visible"
+          );
+
+          element.classList.add(
+            "page-content-animate"
+          );
+
+          /*
+            Maximum delay is limited so pages with many cards
+            do not take too long to finish animating.
+          */
+
+          const delay =
+            Math.min(
+              index * 70,
+              420
+            );
+
+          element.style.setProperty(
+            "--page-animation-delay",
+            `${delay}ms`
+          );
+        }
+      );
+    }
+
+    function playPageContentAnimation() {
+      const animatedElements =
+        getAnimatedPageElements();
+
+      if (!animatedElements.length) {
+        return;
+      }
+
+      /*
+        Two animation frames ensure that the browser first
+        applies the hidden state before starting the animation.
+      */
+
+      window.requestAnimationFrame(
+        function () {
+          window.requestAnimationFrame(
+            function () {
+              animatedElements.forEach(
+                function (element) {
+                  element.classList.add(
+                    "page-content-visible"
+                  );
+                }
+              );
+            }
+          );
+        }
+      );
+    }
+
+    /* ======================================================
+       PAGE REVEAL
+
+       Hide the loader first, then animate the content.
+    ====================================================== */
+
+    function revealLoadedPage() {
       app.setAttribute(
         "aria-busy",
         "false"
@@ -294,7 +467,18 @@ document.addEventListener(
       window.requestAnimationFrame(
         function () {
           window.setTimeout(
-            hideLoader,
+            function () {
+              hideLoader();
+
+              /*
+                Start shortly after the loader begins fading.
+              */
+
+              window.setTimeout(
+                playPageContentAnimation,
+                80
+              );
+            },
             250
           );
         }
@@ -302,7 +486,7 @@ document.addEventListener(
     }
 
     /* ======================================================
-       URL
+       URL HANDLING
     ====================================================== */
 
     function getPageFromUrl() {
@@ -338,7 +522,10 @@ document.addEventListener(
     }
 
     /* ======================================================
-       CLEANUP
+       PAGE CLEANUP
+
+       Stop page-specific timers and handlers before
+       replacing the current HTML.
     ====================================================== */
 
     function cleanupCurrentPage() {
@@ -367,6 +554,10 @@ document.addEventListener(
       document.body.dataset.currentPage =
         pageName;
 
+      /*
+        Home slideshow and countdown.
+      */
+
       if (
         pageName === "home" &&
         typeof window.initializeHomePage ===
@@ -375,6 +566,10 @@ document.addEventListener(
         window.initializeHomePage();
       }
 
+      /*
+        RSVP form events.
+      */
+
       if (
         pageName === "rsvp" &&
         typeof window.initializeRsvpPage ===
@@ -382,6 +577,10 @@ document.addEventListener(
       ) {
         window.initializeRsvpPage();
       }
+
+      /*
+        Update active navigation item.
+      */
 
       if (
         typeof window.updateCommonNavigation ===
@@ -413,6 +612,11 @@ document.addEventListener(
 
       const pageConfig =
         pages[pageName];
+
+      /*
+        Prevent loading the current page again and prevent
+        simultaneous navigation requests.
+      */
 
       if (
         pageName === currentPage ||
@@ -452,7 +656,15 @@ document.addEventListener(
         const html =
           await response.text();
 
+        /*
+          Stop timers and listeners from the current page.
+        */
+
         cleanupCurrentPage();
+
+        /*
+          Insert the new page partial.
+        */
 
         app.innerHTML = html;
 
@@ -461,14 +673,29 @@ document.addEventListener(
         document.title =
           pageConfig.title;
 
+        /*
+          Initialize page-specific JavaScript and navigation.
+        */
+
         initializePage(pageName);
 
         /*
-          Wait until the first slideshow image is ready.
+          Prepare the elements in their hidden animation state.
         */
+
+        preparePageContentAnimation();
+
+        /*
+          Wait until important page assets are ready.
+        */
+
         await waitForPageAssets(
           pageName
         );
+
+        /*
+          Update the browser URL without refreshing.
+        */
 
         if (updateHistory) {
           window.history.pushState(
@@ -480,25 +707,21 @@ document.addEventListener(
           );
         }
 
+        /*
+          Return to the top of the new page.
+        */
+
         window.scrollTo({
           top: 0,
           left: 0,
           behavior: "auto",
         });
 
-        if (!initialLoadCompleted) {
-          revealInitialPage();
-        } else {
-          app.setAttribute(
-            "aria-busy",
-            "false"
-          );
+        /*
+          Reveal the page and start the content animation.
+        */
 
-          window.setTimeout(
-            hideLoader,
-            250
-          );
-        }
+        revealLoadedPage();
       } catch (error) {
         console.error(
           "Page loading error:",
@@ -558,7 +781,7 @@ document.addEventListener(
     }
 
     /* ======================================================
-       NAVIGATION
+       NAVIGATION LINK HANDLING
     ====================================================== */
 
     document.addEventListener(
@@ -572,6 +795,11 @@ document.addEventListener(
         if (!pageLink) {
           return;
         }
+
+        /*
+          Allow Ctrl+Click, Cmd+Click, Shift+Click,
+          middle-click, and other modified clicks.
+        */
 
         if (
           event.button !== 0 ||
@@ -597,7 +825,7 @@ document.addEventListener(
     );
 
     /* ======================================================
-       BACK AND FORWARD
+       BROWSER BACK AND FORWARD
     ====================================================== */
 
     window.addEventListener(
@@ -613,9 +841,9 @@ document.addEventListener(
     );
 
     /* ======================================================
-       INITIAL LOAD
+       INITIAL PAGE LOAD
 
-       Loader is already visible from the HTML.
+       The loader is already visible in wedding.html.
     ====================================================== */
 
     loadPage(
