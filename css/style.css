@@ -2645,3 +2645,356 @@ body[data-current-page="location"]
     font-size: 0.62rem;
   }
 }
+
+/* ==========================================================
+   SPONSORS PAGE
+   pages/sponsors.html
+========================================================== */
+
+body[data-current-page="sponsors"] {
+  background: #eef2eb;
+}
+
+body[data-current-page="sponsors"]
+.page-container {
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  padding-bottom:
+    calc(
+      var(--nav-height) +
+      42px +
+      env(safe-area-inset-bottom)
+    );
+}
+
+/* ==============================
+   SPONSORS HERO
+============================== */
+
+.sponsors-hero {
+  min-height: 42svh;
+
+  background:
+    url("../images/rhafjeneight.webp")
+    center 40% / cover no-repeat;
+}
+
+.sponsors-hero
+.page-hero-overlay {
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(25, 31, 23, 0.28),
+      rgba(25, 31, 23, 0.7)
+    );
+}
+
+.sponsors-hero
+.page-hero-content {
+  padding: 20px;
+}
+
+.sponsors-hero
+.page-hero-content p {
+  margin-bottom: 5px;
+
+  color:
+    rgba(255, 255, 255, 0.92);
+
+  font-size: 1rem;
+}
+
+.sponsors-hero
+.page-hero-content h1 {
+  max-width: 420px;
+
+  margin-right: auto;
+  margin-left: auto;
+
+  font-size:
+    clamp(3.4rem, 15vw, 5.6rem);
+
+  line-height: 0.9;
+
+  text-shadow:
+    0 4px 18px rgba(0, 0, 0, 0.3);
+}
+
+/* ==============================
+   SPONSORS CONTENT
+============================== */
+
+.sponsors-section {
+  display: grid;
+
+  gap: 20px;
+
+  padding:
+    28px 16px
+    calc(
+      var(--nav-height) +
+      38px +
+      env(safe-area-inset-bottom)
+    );
+
+  background:
+    linear-gradient(
+      180deg,
+      #eef2eb 0%,
+      #f8f5ee 100%
+    );
+}
+
+.sponsors-section-divider {
+  color: var(--gold);
+
+  font-size: 1rem;
+
+  text-align: center;
+}
+
+.sponsors-card {
+  width: min(100%, 620px);
+
+  margin: 0 auto;
+  padding: 30px 22px;
+
+  border:
+    1px solid
+    rgba(111, 125, 99, 0.2);
+
+  border-radius: 18px;
+
+  background:
+    rgba(255, 255, 255, 0.96);
+
+  box-shadow:
+    0 14px 36px
+    rgba(58, 67, 52, 0.13);
+
+  text-align: center;
+}
+
+.sponsors-card-icon {
+  display: grid;
+  place-items: center;
+
+  width: 58px;
+  height: 58px;
+
+  margin: 0 auto 18px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(140, 153, 125, 0.14);
+
+  color: var(--sage-dark);
+}
+
+.sponsors-card-icon i {
+  font-size: 23px;
+}
+
+.sponsors-card-label {
+  margin-bottom: 8px;
+
+  color: var(--gold);
+
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+
+  text-transform: uppercase;
+}
+
+.sponsors-card-title {
+  color: var(--sage-dark);
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    clamp(1.9rem, 7vw, 2.6rem);
+
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+/* ==============================
+   PRINCIPAL SPONSORS
+============================== */
+
+.sponsors-name-list {
+  display: grid;
+
+  gap: 13px;
+
+  margin-top: 24px;
+}
+
+.sponsors-name-list p {
+  padding: 13px 14px;
+
+  border-radius: 12px;
+
+  background:
+    rgba(140, 153, 125, 0.08);
+
+  color: #454b41;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 1.08rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.sponsors-name-list p span {
+  margin: 0 4px;
+
+  color: var(--gold);
+
+  font-family:
+    "Allura",
+    cursive;
+
+  font-size: 1.25em;
+}
+
+/* ==============================
+   SECONDARY SPONSORS
+============================== */
+
+.secondary-sponsors-grid {
+  display: grid;
+
+  gap: 14px;
+
+  margin-top: 24px;
+}
+
+.secondary-sponsor-item {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 14px;
+
+  border-radius: 12px;
+
+  background:
+    rgba(140, 153, 125, 0.08);
+
+  text-align: left;
+}
+
+.secondary-sponsor-item > i {
+  color: var(--sage-dark);
+
+  font-size: 19px;
+
+  text-align: center;
+}
+
+.secondary-sponsor-item div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.secondary-sponsor-item span {
+  color: var(--muted);
+
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+
+  text-transform: uppercase;
+}
+
+.secondary-sponsor-item strong {
+  color: #454b41;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+/* ==============================
+   SPONSORS MOBILE
+============================== */
+
+@media (max-width: 480px) {
+  .sponsors-hero {
+    min-height: 34svh;
+
+    background-position:
+      center 38%;
+  }
+
+  .sponsors-hero
+  .page-hero-content h1 {
+    font-size:
+      clamp(3rem, 15vw, 4.3rem);
+  }
+
+  .sponsors-section {
+    padding-top: 18px;
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .sponsors-card {
+    padding: 25px 17px;
+
+    border-radius: 14px;
+  }
+
+  .sponsors-card-icon {
+    width: 52px;
+    height: 52px;
+
+    margin-bottom: 15px;
+  }
+
+  .sponsors-card-title {
+    font-size: 1.95rem;
+  }
+
+  .sponsors-name-list {
+    gap: 11px;
+
+    margin-top: 20px;
+  }
+
+  .sponsors-name-list p {
+    padding: 12px;
+
+    font-size: 1rem;
+  }
+
+  .secondary-sponsor-item {
+    grid-template-columns:
+      36px 1fr;
+
+    gap: 9px;
+
+    padding: 12px;
+  }
+
+  .secondary-sponsor-item strong {
+    font-size: 0.95rem;
+  }
+}

@@ -1,97 +1,167 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#8c997d" />
+<!-- =====================================================
+     SPONSORS PAGE PARTIAL
 
-  <title>Sponsors | Rhaf &amp; Jen</title>
+     Important:
+     - No <!DOCTYPE html>
+     - No <html>
+     - No <head>
+     - No <body>
+     - No navigation
+     - No common.js
+     - No music.js
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+     This file is loaded inside:
+     <div id="app"></div>
+====================================================== -->
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600&display=swap"
-    rel="stylesheet"
-  />
+<main class="page-container sponsors-page">
 
-  <link rel="stylesheet" href="css/style.css" />
-</head>
+  <!-- SPONSORS HERO -->
 
-<body class="" data-current-page="sponsors">
-  <main class="page-container">
-    
-<section class="page-hero small-hero sponsors-hero">
-  <div class="page-hero-overlay"></div>
-  <div class="page-hero-content">
-    <p>With love and guidance from</p>
-    <h1>Our Sponsors</h1>
-  </div>
-</section>
+  <section class="page-hero small-hero sponsors-hero">
 
-<section class="content-section">
-  <div class="section-divider">✦</div>
+    <div class="page-hero-overlay"></div>
 
-  <div class="card-grid">
-    <article class="info-card">
-      <h2>Principal Sponsors</h2>
-      <p>Mr. Sponsor One &amp; Mrs. Sponsor One</p>
-      <p>Mr. Sponsor Two &amp; Mrs. Sponsor Two</p>
-      <p>Mr. Sponsor Three &amp; Mrs. Sponsor Three</p>
+    <div class="page-hero-content">
+      <p>With love and guidance from</p>
+
+      <h1>
+        Our Sponsors
+      </h1>
+    </div>
+
+  </section>
+
+  <!-- SPONSORS CONTENT -->
+
+  <section class="content-section sponsors-section">
+
+    <div
+      class="sponsors-section-divider"
+      aria-hidden="true"
+    >
+      ✦
+    </div>
+
+    <!-- PRINCIPAL SPONSORS -->
+
+    <article class="sponsors-card">
+
+      <div
+        class="sponsors-card-icon"
+        aria-hidden="true"
+      >
+        <i class="fa-solid fa-crown"></i>
+      </div>
+
+      <p class="sponsors-card-label">
+        With Honor and Gratitude
+      </p>
+
+      <h2 class="sponsors-card-title">
+        Principal Sponsors
+      </h2>
+
+      <div class="sponsors-name-list">
+
+        <p>
+          Mr. Sponsor One
+          <span>&amp;</span>
+          Mrs. Sponsor One
+        </p>
+
+        <p>
+          Mr. Sponsor Two
+          <span>&amp;</span>
+          Mrs. Sponsor Two
+        </p>
+
+        <p>
+          Mr. Sponsor Three
+          <span>&amp;</span>
+          Mrs. Sponsor Three
+        </p>
+
+      </div>
+
     </article>
 
-    <article class="info-card">
-      <h2>Secondary Sponsors</h2>
-      <p>Candle Sponsors</p>
-      <p>Veil Sponsors</p>
-      <p>Cord Sponsors</p>
+    <!-- SECONDARY SPONSORS -->
+
+    <article class="sponsors-card">
+
+      <div
+        class="sponsors-card-icon"
+        aria-hidden="true"
+      >
+        <i class="fa-solid fa-hands-holding-circle"></i>
+      </div>
+
+      <p class="sponsors-card-label">
+        In Support of Our Union
+      </p>
+
+      <h2 class="sponsors-card-title">
+        Secondary Sponsors
+      </h2>
+
+      <div class="secondary-sponsors-grid">
+
+        <div class="secondary-sponsor-item">
+          <i
+            class="fa-solid fa-fire-flame-simple"
+            aria-hidden="true"
+          ></i>
+
+          <div>
+            <span>Candle Sponsors</span>
+
+            <strong>
+              Sponsor Name
+              <br />
+              Sponsor Name
+            </strong>
+          </div>
+        </div>
+
+        <div class="secondary-sponsor-item">
+          <i
+            class="fa-solid fa-scroll"
+            aria-hidden="true"
+          ></i>
+
+          <div>
+            <span>Veil Sponsors</span>
+
+            <strong>
+              Sponsor Name
+              <br />
+              Sponsor Name
+            </strong>
+          </div>
+        </div>
+
+        <div class="secondary-sponsor-item">
+          <i
+            class="fa-solid fa-link"
+            aria-hidden="true"
+          ></i>
+
+          <div>
+            <span>Cord Sponsors</span>
+
+            <strong>
+              Sponsor Name
+              <br />
+              Sponsor Name
+            </strong>
+          </div>
+        </div>
+
+      </div>
+
     </article>
-  </div>
-</section>
 
-  </main>
+  </section>
 
-  
-  <nav class="bottom-navigation" aria-label="Wedding navigation">
-    <a class="nav-item" data-page="home" href="home.html">
-      <span class="nav-icon">⌂</span>
-      <span class="nav-label">Home</span>
-    </a>
-
-    <a class="nav-item" data-page="sponsors" href="sponsors.html">
-      <span class="nav-icon">♔</span>
-      <span class="nav-label">Sponsors</span>
-    </a>
-
-    <a class="nav-item" data-page="location" href="location.html">
-      <span class="nav-icon">⌖</span>
-      <span class="nav-label">Location</span>
-    </a>
-
-    <a class="nav-item" data-page="attire" href="attire.html">
-      <span class="nav-icon">♙</span>
-      <span class="nav-label">Attire</span>
-    </a>
-
-    <a class="nav-item" data-page="gift" href="gift-guide.html">
-      <span class="nav-icon">♡</span>
-      <span class="nav-label">Gift</span>
-    </a>
-
-    <a class="nav-item" data-page="faq" href="faq.html">
-      <span class="nav-icon">?</span>
-      <span class="nav-label">FAQ</span>
-    </a>
-
-    <a class="nav-item" data-page="contact" href="contact.html">
-      <span class="nav-icon">✆</span>
-      <span class="nav-label">Contact</span>
-    </a>
-  </nav>
-
-
-  <script src="js/common.js"></script>
-  
-  
-</body>
-</html>
+</main>
