@@ -1936,3 +1936,234 @@ body[data-current-page="rsvp"] .rsvp-section {
     transform: none;
   }
 }
+
+/* ==========================================================
+   MOBILE FIX — INVITATION INTRO
+
+   Fixes:
+   - Card size on narrow phones
+   - Text overflowing outside the invitation border
+   - Wax seal covering the names
+   - Decorative borders too close to text
+========================================================== */
+
+@media (max-width: 600px) {
+
+  /* Use the available mobile screen properly */
+
+  .invitation-intro {
+    padding:
+      max(16px, env(safe-area-inset-top))
+      12px
+      max(16px, env(safe-area-inset-bottom));
+  }
+
+  .invitation-stage {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Keep the label close to the card */
+
+  .intro-label {
+    margin-bottom: 12px;
+
+    font-size: clamp(
+      0.85rem,
+      3.8vw,
+      1rem
+    );
+
+    line-height: 1.3;
+  }
+
+  /* Responsive invitation card */
+
+  .invitation-cover {
+    width: min(76vw, 300px);
+
+    /*
+      Keep a consistent portrait shape instead of
+      allowing the card to become too wide.
+    */
+    aspect-ratio: 0.78 / 1;
+
+    border-radius: 7px;
+  }
+
+  /* Give the revealed text enough internal spacing */
+
+  .reveal-content {
+    width: 100%;
+    max-width: 100%;
+
+    padding:
+      36px
+      30px;
+
+    overflow: hidden;
+  }
+
+  /* Move decorative lines closer to the outer edge */
+
+  .invitation-reveal::before {
+    inset: 12px;
+  }
+
+  .invitation-reveal::after {
+    inset: 24px;
+  }
+
+  .reveal-small {
+    font-size: clamp(
+      0.72rem,
+      3vw,
+      0.88rem
+    );
+
+    line-height: 1.3;
+  }
+
+  .reveal-divider {
+    margin: 9px 0;
+
+    font-size: 0.72rem;
+  }
+
+  /* Reduce names so they fit inside the card */
+
+  .reveal-content h1 {
+    margin: 8px 0;
+
+    font-size: clamp(
+      3.25rem,
+      17vw,
+      4.4rem
+    );
+
+    line-height: 0.68;
+  }
+
+  .reveal-content h1 span {
+    margin: 5px 0;
+
+    font-size: 0.44em;
+  }
+
+  /* Prevent invitation message from crossing the border */
+
+  .reveal-invites {
+    max-width: 210px;
+
+    margin:
+      14px auto
+      0;
+
+    font-size: clamp(
+      0.72rem,
+      3.3vw,
+      0.9rem
+    );
+
+    line-height: 1.45;
+
+    overflow-wrap: break-word;
+  }
+
+  .reveal-date {
+    margin-top: 13px;
+
+    font-size: 0.62rem;
+    letter-spacing: 0.13em;
+  }
+
+  /* Cover title before opening */
+
+  .cover-title {
+    top: 17%;
+    right: 24px;
+    left: 24px;
+  }
+
+  .cover-title p {
+    margin-bottom: 13px;
+
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+  }
+
+  .cover-title h2 {
+    font-size: clamp(
+      3.2rem,
+      16vw,
+      4.5rem
+    );
+
+    line-height: 0.67;
+  }
+
+  .cover-title h2 span {
+    margin: 5px 0;
+  }
+
+  /*
+    Place seal lower, but keep it inside the card.
+    It should no longer cover "Jen".
+  */
+
+  .gsap-wax-seal {
+    top: 74%;
+
+    width: 62px;
+    height: 62px;
+  }
+
+  .gsap-wax-seal span {
+    font-size: 1.15rem;
+  }
+
+  .gsap-wax-seal small {
+    margin: 0 2px;
+
+    font-size: 0.72rem;
+  }
+}
+
+/* ==========================================================
+   EXTRA-SMALL PHONES
+========================================================== */
+
+@media (max-width: 380px) {
+
+  .invitation-cover {
+    width: min(72vw, 270px);
+  }
+
+  .reveal-content {
+    padding:
+      32px
+      27px;
+  }
+
+  .reveal-content h1 {
+    font-size: clamp(
+      3rem,
+      16vw,
+      3.9rem
+    );
+  }
+
+  .reveal-invites {
+    max-width: 190px;
+
+    font-size: 0.7rem;
+    line-height: 1.4;
+  }
+
+  .gsap-wax-seal {
+    top: 75%;
+
+    width: 58px;
+    height: 58px;
+  }
+}
