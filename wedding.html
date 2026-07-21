@@ -52,88 +52,173 @@
 />
 
 <style>
-html,
-body{
-    margin:0;
-    width:100%;
-    height:100%;
-    background:#8c997d;
-}
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    min-height: 100%;
+    background: #8c997d;
+  }
 
-body.spa-initializing{
-    overflow:hidden;
-}
+  body.spa-initializing {
+    overflow: hidden;
+  }
 
-.page-transition-loader{
-    position:fixed;
-    inset:0;
-    z-index:999999;
+  body.spa-initializing #app,
+  body.spa-initializing #globalNavigation,
+  body.spa-initializing #musicButton,
+  body.spa-initializing .music-button {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+  .page-transition-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
 
-    background:#8c997d;
-}
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-.page-transition-loader-content{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-}
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
 
-.loader-rings{
-    position:relative;
-    width:72px;
-    height:46px;
-    margin-bottom:22px;
-}
+    padding: 24px;
+    box-sizing: border-box;
 
-.loader-ring{
-    position:absolute;
-    width:42px;
-    height:42px;
-    border-radius:50%;
-    border:3px solid #d8c08c;
-}
+    background: #8c997d;
 
-.loader-ring-left{
-    left:0;
-}
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
 
-.loader-ring-right{
-    right:0;
-}
+  .page-transition-loader.is-visible {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+  }
 
-.loader-names{
-    margin:0;
-    color:#fff;
-    font-family:cursive;
-    font-size:3.5rem;
-    line-height:.8;
-}
+  body.spa-initializing .page-transition-loader {
+    background: #8c997d !important;
+  }
 
-.loader-message{
-    color:#fff;
-    margin-top:20px;
-}
+  body.spa-initializing
+  .page-transition-loader-content {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
-.loader-dots{
-    display:flex;
-    gap:8px;
-    margin-top:18px;
-}
+    width: min(320px, 88vw);
 
-.loader-dots span{
-    width:8px;
-    height:8px;
-    border-radius:50%;
-    background:white;
-}
+    text-align: center;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .page-transition-loader .loader-rings {
+    position: relative;
+
+    width: 86px;
+    height: 54px;
+
+    margin: 0 auto 22px;
+  }
+
+  .page-transition-loader .loader-ring {
+    position: absolute;
+    top: 4px;
+
+    display: block;
+
+    width: 46px;
+    height: 46px;
+
+    border: 3px solid #ead59f;
+    border-radius: 50%;
+
+    box-sizing: border-box;
+
+    background: transparent;
+  }
+
+  .page-transition-loader .loader-ring-left {
+    left: 4px;
+  }
+
+  .page-transition-loader .loader-ring-right {
+    right: 4px;
+  }
+
+  .page-transition-loader .loader-names {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-family:
+      "Allura",
+      "Brush Script MT",
+      cursive;
+
+    font-size: clamp(3.8rem, 17vw, 5.6rem);
+    font-weight: 400;
+    line-height: 0.8;
+
+    text-align: center;
+  }
+
+  .page-transition-loader .loader-names span {
+    display: block;
+
+    margin: 5px 0;
+
+    color: #ead59f;
+
+    font-family: Georgia, serif;
+    font-size: 0.52em;
+  }
+
+  .page-transition-loader .loader-message {
+    margin: 23px 0 0;
+
+    color: rgba(255, 255, 255, 0.94);
+
+    font-family: Georgia, serif;
+    font-size: 1rem;
+    font-style: italic;
+
+    text-align: center;
+  }
+
+  .page-transition-loader .loader-dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    margin-top: 18px;
+  }
+
+  .page-transition-loader .loader-dots span {
+    display: block;
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.92);
+  }
 </style>
-
   <link
     rel="stylesheet"
     href="css/style.css"
