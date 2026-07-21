@@ -1,96 +1,432 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#8c997d" />
+<!-- =====================================================
+     THEME AND ATTIRE PAGE PARTIAL
 
-  <title>Theme and Attire | Rhaf &amp; Jen</title>
+     Important:
+     - No <!DOCTYPE html>
+     - No <html>
+     - No <head>
+     - No <body>
+     - No navigation
+     - No scripts
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+     Loaded inside:
+     <div id="app"></div>
+====================================================== -->
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600&display=swap"
-    rel="stylesheet"
-  />
+<main class="page-container attire-page">
 
-  <link rel="stylesheet" href="css/style.css" />
-</head>
+  <!-- ATTIRE HERO -->
 
-<body class="" data-current-page="attire">
-  <main class="page-container">
-    
-<section class="page-hero small-hero attire-hero">
-  <div class="page-hero-overlay"></div>
-  <div class="page-hero-content">
-    <p>Dress beautifully in our</p>
-    <h1>Theme &amp; Attire</h1>
-  </div>
-</section>
+  <section class="page-hero small-hero attire-hero">
 
-<section class="content-section">
-  <article class="info-card centered-card">
-    <h2>Formal Earth-Tone Attire</h2>
+    <div class="page-hero-overlay"></div>
 
-    <p>
-      We encourage our guests to wear formal clothing in sage green,
-      beige, cream, brown, or muted gold.
-    </p>
+    <div class="page-hero-content">
+      <p>Dress beautifully in our</p>
 
-    <div class="color-palette">
-      <span class="palette-color sage"></span>
-      <span class="palette-color beige"></span>
-      <span class="palette-color cream"></span>
-      <span class="palette-color brown"></span>
-      <span class="palette-color gold"></span>
+      <h1>
+        Theme &amp; Attire
+      </h1>
     </div>
-  </article>
-</section>
 
-  </main>
+  </section>
 
-  
-  <nav class="bottom-navigation" aria-label="Wedding navigation">
-    <a class="nav-item" data-page="home" href="home.html">
-      <span class="nav-icon">⌂</span>
-      <span class="nav-label">Home</span>
-    </a>
+  <!-- ATTIRE CONTENT -->
 
-    <a class="nav-item" data-page="sponsors" href="sponsors.html">
-      <span class="nav-icon">♔</span>
-      <span class="nav-label">Sponsors</span>
-    </a>
+  <section class="content-section attire-section">
 
-    <a class="nav-item" data-page="location" href="location.html">
-      <span class="nav-icon">⌖</span>
-      <span class="nav-label">Location</span>
-    </a>
+    <!-- INTRODUCTION -->
 
-    <a class="nav-item" data-page="attire" href="attire.html">
-      <span class="nav-icon">♙</span>
-      <span class="nav-label">Attire</span>
-    </a>
+    <article class="attire-intro-card">
 
-    <a class="nav-item" data-page="gift" href="gift-guide.html">
-      <span class="nav-icon">♡</span>
-      <span class="nav-label">Gift</span>
-    </a>
+      <div
+        class="attire-card-icon"
+        aria-hidden="true"
+      >
+        <i class="fa-solid fa-shirt"></i>
+      </div>
 
-    <a class="nav-item" data-page="faq" href="faq.html">
-      <span class="nav-icon">?</span>
-      <span class="nav-label">FAQ</span>
-    </a>
+      <p class="attire-eyebrow">
+        Our Wedding Color Story
+      </p>
 
-    <a class="nav-item" data-page="contact" href="contact.html">
-      <span class="nav-icon">✆</span>
-      <span class="nav-label">Contact</span>
-    </a>
-  </nav>
+      <h2>
+        Modern Grayscale Elegance
+      </h2>
 
+      <p class="attire-intro-text">
+        We kindly invite everyone to celebrate with us
+        in formal attire inspired by shades of gray,
+        silver, charcoal, black, and white.
+      </p>
 
-  <script src="js/common.js"></script>
-  
-  
-</body>
-</html>
+      <!-- COLOR PALETTE -->
+
+      <div
+        class="attire-palette"
+        aria-label="Wedding color palette"
+      >
+        <span
+          class="attire-color attire-color-dark"
+          title="Charcoal"
+        ></span>
+
+        <span
+          class="attire-color attire-color-slate"
+          title="Slate Gray"
+        ></span>
+
+        <span
+          class="attire-color attire-color-gray"
+          title="Gray"
+        ></span>
+
+        <span
+          class="attire-color attire-color-silver"
+          title="Silver"
+        ></span>
+
+        <span
+          class="attire-color attire-color-light"
+          title="Light Gray"
+        ></span>
+      </div>
+
+      <p class="attire-palette-note">
+        Charcoal · Slate · Gray · Silver · Light Gray
+      </p>
+
+    </article>
+
+    <!-- =================================================
+         PRINCIPAL SPONSORS
+    ================================================== -->
+
+    <article class="attire-category-card">
+
+      <div class="attire-category-header">
+
+        <p class="attire-eyebrow">
+          With Honor and Distinction
+        </p>
+
+        <h2>
+          Principal Sponsors
+        </h2>
+
+        <p>
+          We respectfully request our principal sponsors
+          to follow the designated formal attire below.
+        </p>
+
+      </div>
+
+      <div class="attire-outfit-grid">
+
+        <!-- PRINCIPAL SPONSORS MEN -->
+
+        <div class="attire-outfit-card">
+
+          <div class="attire-image-frame">
+            <img
+              src="images/attire-principal-men.png"
+              alt="Gray embroidered Barong for male principal sponsors"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+
+          <div class="attire-outfit-content">
+
+            <span class="attire-role">
+              Gentlemen
+            </span>
+
+            <h3>
+              Gray Embroidered Barong
+            </h3>
+
+            <p>
+              Gray embroidered Barong paired with
+              formal black trousers and black dress shoes.
+            </p>
+
+          </div>
+
+        </div>
+
+        <!-- PRINCIPAL SPONSORS WOMEN -->
+
+        <div class="attire-outfit-card">
+
+          <div class="attire-women-gallery">
+
+            <div class="attire-image-frame">
+              <img
+                src="images/attire-white-dress.png"
+                alt="White or silver formal gown option"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+
+            <div class="attire-image-frame">
+              <img
+                src="images/attire-gray-dress.png"
+                alt="Gray formal gown option"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+
+          </div>
+
+          <div class="attire-outfit-content">
+
+            <span class="attire-role">
+              Ladies
+            </span>
+
+            <h3>
+              White, Silver, or Gray Formal Dress
+            </h3>
+
+            <p>
+              Floor-length or midi formal dress in white,
+              silver, light gray, or charcoal gray.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </article>
+
+    <!-- =================================================
+         WEDDING ENTOURAGE
+    ================================================== -->
+
+    <article class="attire-category-card">
+
+      <div class="attire-category-header">
+
+        <p class="attire-eyebrow">
+          Standing Beside Us
+        </p>
+
+        <h2>
+          Wedding Entourage
+        </h2>
+
+        <p>
+          Our entourage will follow the same grayscale
+          palette with the designated attire below.
+        </p>
+
+      </div>
+
+      <div class="attire-outfit-grid">
+
+        <!-- ENTOURAGE MEN -->
+
+        <div class="attire-outfit-card">
+
+          <div class="attire-image-frame">
+            <img
+              src="images/attire-entourage-men.png"
+              alt="Gray long-sleeve polo for male entourage"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+
+          <div class="attire-outfit-content">
+
+            <span class="attire-role">
+              Male Entourage
+            </span>
+
+            <h3>
+              Gray Long-Sleeve Polo
+            </h3>
+
+            <p>
+              Plain gray long-sleeve polo paired with
+              formal black trousers and black dress shoes.
+            </p>
+
+          </div>
+
+        </div>
+
+        <!-- ENTOURAGE WOMEN -->
+
+        <div class="attire-outfit-card">
+
+          <div class="attire-women-gallery">
+
+            <div class="attire-image-frame">
+              <img
+                src="images/attire-white-dress.png"
+                alt="White or silver formal dress for female entourage"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+
+            <div class="attire-image-frame">
+              <img
+                src="images/attire-gray-dress.png"
+                alt="Gray formal dress for female entourage"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+
+          </div>
+
+          <div class="attire-outfit-content">
+
+            <span class="attire-role">
+              Female Entourage
+            </span>
+
+            <h3>
+              White, Silver, or Gray Formal Dress
+            </h3>
+
+            <p>
+              The same formal dress choices designated
+              for the female principal sponsors.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </article>
+
+    <!-- =================================================
+         GUEST ATTIRE
+    ================================================== -->
+
+    <article class="attire-category-card guest-attire-card">
+
+      <div
+        class="attire-card-icon"
+        aria-hidden="true"
+      >
+        <i class="fa-solid fa-user-group"></i>
+      </div>
+
+      <p class="attire-eyebrow">
+        For Our Dear Guests
+      </p>
+
+      <h2>
+        Formal Grayscale Attire
+      </h2>
+
+      <p class="guest-attire-description">
+        Guests may wear any formal clothing style, provided
+        that it follows our grayscale wedding color theme.
+      </p>
+
+      <div class="guest-attire-guidelines">
+
+        <div class="guest-attire-item">
+          <i
+            class="fa-solid fa-user-tie"
+            aria-hidden="true"
+          ></i>
+
+          <div>
+            <span>Gentlemen</span>
+
+            <strong>
+              Formal shirt, long-sleeve polo, Barong,
+              suit, or coat with formal trousers
+            </strong>
+          </div>
+        </div>
+
+        <div class="guest-attire-item">
+          <i
+            class="fa-solid fa-person-dress"
+            aria-hidden="true"
+          ></i>
+
+          <div>
+            <span>Ladies</span>
+
+            <strong>
+              Formal dress, gown, cocktail dress,
+              or elegant pantsuit
+            </strong>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- GUEST COLOR THEME -->
+
+      <div class="guest-color-theme">
+
+        <h3>
+          Recommended Colors
+        </h3>
+
+        <div class="guest-color-grid">
+
+          <div class="guest-color-option">
+            <span class="guest-swatch charcoal"></span>
+            <small>Charcoal</small>
+          </div>
+
+          <div class="guest-color-option">
+            <span class="guest-swatch dark-gray"></span>
+            <small>Dark Gray</small>
+          </div>
+
+          <div class="guest-color-option">
+            <span class="guest-swatch medium-gray"></span>
+            <small>Gray</small>
+          </div>
+
+          <div class="guest-color-option">
+            <span class="guest-swatch silver"></span>
+            <small>Silver</small>
+          </div>
+
+          <div class="guest-color-option">
+            <span class="guest-swatch light-gray"></span>
+            <small>Light Gray</small>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="attire-reminder">
+
+        <i
+          class="fa-solid fa-circle-info"
+          aria-hidden="true"
+        ></i>
+
+        <p>
+          Please avoid bright or highly saturated colors
+          so we can maintain a harmonious wedding theme.
+        </p>
+
+      </div>
+
+    </article>
+
+  </section>
+
+</main>

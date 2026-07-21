@@ -1,91 +1,137 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#8c997d" />
+<!-- =====================================================
+     CONTACT PAGE PARTIAL
 
-  <title>Contact Us | Rhaf &amp; Jen</title>
+     Loaded inside:
+     <div id="app"></div>
+====================================================== -->
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<main class="page-container contact-page">
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600&display=swap"
-    rel="stylesheet"
-  />
+  <!-- HERO -->
 
-  <link rel="stylesheet" href="css/style.css" />
-</head>
+  <section class="page-hero small-hero contact-hero">
 
-<body class="" data-current-page="contact">
-  <main class="page-container">
-    
-<section class="page-hero small-hero contact-hero">
-  <div class="page-hero-overlay"></div>
-  <div class="page-hero-content">
-    <p>For questions and assistance</p>
-    <h1>Contact Us</h1>
-  </div>
-</section>
+    <div class="page-hero-overlay"></div>
 
-<section class="content-section">
-  <div class="card-grid">
-    <a class="contact-card" href="tel:+639000000000">
-      <strong>Rhaf</strong>
-      <span>+63 900 000 0000</span>
-    </a>
+    <div class="page-hero-content">
+      <p>We're happy to assist you</p>
 
-    <a class="contact-card" href="tel:+639111111111">
-      <strong>Jen</strong>
-      <span>+63 911 111 1111</span>
-    </a>
-  </div>
-</section>
+      <h1>
+        Contact Us
+      </h1>
+    </div>
 
-  </main>
+  </section>
 
-  
-  <nav class="bottom-navigation" aria-label="Wedding navigation">
-    <a class="nav-item" data-page="home" href="home.html">
-      <span class="nav-icon">⌂</span>
-      <span class="nav-label">Home</span>
-    </a>
+  <!-- CONTACT CONTENT -->
 
-    <a class="nav-item" data-page="sponsors" href="sponsors.html">
-      <span class="nav-icon">♔</span>
-      <span class="nav-label">Sponsors</span>
-    </a>
+  <section class="content-section contact-section">
 
-    <a class="nav-item" data-page="location" href="location.html">
-      <span class="nav-icon">⌖</span>
-      <span class="nav-label">Location</span>
-    </a>
+    <article class="contact-intro-card">
 
-    <a class="nav-item" data-page="attire" href="attire.html">
-      <span class="nav-icon">♙</span>
-      <span class="nav-label">Attire</span>
-    </a>
+      <div
+        class="contact-icon"
+        aria-hidden="true"
+      >
+        <i class="fa-solid fa-heart"></i>
+      </div>
 
-    <a class="nav-item" data-page="gift" href="gift-guide.html">
-      <span class="nav-icon">♡</span>
-      <span class="nav-label">Gift</span>
-    </a>
+      <p class="contact-label">
+        We'd Love to Hear From You
+      </p>
 
-    <a class="nav-item" data-page="faq" href="faq.html">
-      <span class="nav-icon">?</span>
-      <span class="nav-label">FAQ</span>
-    </a>
+      <h2 class="contact-title">
+        Need Assistance?
+      </h2>
 
-    <a class="nav-item" data-page="contact" href="contact.html">
-      <span class="nav-icon">✆</span>
-      <span class="nav-label">Contact</span>
-    </a>
-  </nav>
+      <p class="contact-description">
+        If you have questions regarding the wedding,
+        RSVP, venue, or any other details, feel free
+        to reach out to either one of us.
+      </p>
 
+    </article>
 
-  <script src="js/common.js"></script>
-  
-  
-</body>
-</html>
+    <!-- CONTACTS -->
+
+    <div class="contact-grid">
+
+      <!-- RHAF -->
+
+      <a
+        class="contact-card"
+        href="tel:+639171234567"
+      >
+
+        <div class="contact-avatar">
+          <i class="fa-solid fa-phone"></i>
+        </div>
+
+        <div>
+
+          <span class="contact-role">
+            Groom
+          </span>
+
+          <h3>
+            Rhaf
+          </h3>
+
+          <p>
+            +63 917 123 4567
+          </p>
+
+        </div>
+
+      </a>
+
+      <!-- JEN -->
+
+      <a
+        class="contact-card"
+        href="tel:+639181234567"
+      >
+
+        <div class="contact-avatar">
+          <i class="fa-solid fa-phone"></i>
+        </div>
+
+        <div>
+
+          <span class="contact-role">
+            Bride
+          </span>
+
+          <h3>
+            Jen
+          </h3>
+
+          <p>
+            +63 918 123 4567
+          </p>
+
+        </div>
+
+      </a>
+
+    </div>
+
+    <!-- MESSAGE -->
+
+    <article class="contact-note-card">
+
+      <i
+        class="fa-regular fa-comments"
+        aria-hidden="true"
+      ></i>
+
+      <p>
+        We will do our best to respond as soon as possible.
+        Thank you for celebrating this special moment with us.
+      </p>
+
+    </article>
+
+  </section>
+
+</main>

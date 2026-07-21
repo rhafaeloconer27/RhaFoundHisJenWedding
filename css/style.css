@@ -3169,4 +3169,1253 @@ body[data-current-page="sponsors"]
   font-size: 0.8rem;
 }
 }
+/* ==========================================================
+   ATTIRE PAGE
+   pages/attire.html
+========================================================== */
+
+body[data-current-page="attire"] {
+  background: #eef0ec;
+}
+
+body[data-current-page="attire"]
+.page-container {
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  padding-bottom:
+    calc(
+      var(--nav-height) +
+      42px +
+      env(safe-area-inset-bottom)
+    );
+}
+
+/* ==============================
+   ATTIRE HERO
+============================== */
+
+.attire-hero {
+  min-height: 42svh;
+
+  background:
+    linear-gradient(
+      rgba(30, 32, 30, 0.12),
+      rgba(30, 32, 30, 0.32)
+    ),
+    url("../images/rhafjeneight.webp")
+    center 38% / cover no-repeat;
+}
+
+.attire-hero
+.page-hero-overlay {
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(22, 24, 22, 0.25),
+      rgba(22, 24, 22, 0.72)
+    );
+}
+
+.attire-hero
+.page-hero-content {
+  padding: 20px;
+}
+
+.attire-hero
+.page-hero-content p {
+  margin-bottom: 5px;
+
+  color:
+    rgba(255, 255, 255, 0.94);
+
+  font-size: 1rem;
+}
+
+.attire-hero
+.page-hero-content h1 {
+  max-width: 480px;
+
+  margin-right: auto;
+  margin-left: auto;
+
+  font-size:
+    clamp(3.2rem, 14vw, 5.5rem);
+
+  line-height: 0.9;
+
+  text-shadow:
+    0 4px 18px rgba(0, 0, 0, 0.35);
+}
+
+/* ==============================
+   ATTIRE CONTENT
+============================== */
+
+.attire-section {
+  display: grid;
+  gap: 22px;
+
+  padding:
+    28px 16px
+    calc(
+      var(--nav-height) +
+      38px +
+      env(safe-area-inset-bottom)
+    );
+
+  background:
+    linear-gradient(
+      180deg,
+      #eef0ec 0%,
+      #f8f5ee 100%
+    );
+}
+
+.attire-intro-card,
+.attire-category-card {
+  width: min(100%, 680px);
+
+  margin: 0 auto;
+  padding: 30px 22px;
+
+  border:
+    1px solid rgba(92, 94, 90, 0.14);
+
+  border-radius: 18px;
+
+  background:
+    rgba(255, 255, 255, 0.97);
+
+  box-shadow:
+    0 14px 36px
+    rgba(49, 52, 48, 0.12);
+}
+
+.attire-intro-card {
+  text-align: center;
+}
+
+.attire-card-icon {
+  display: grid;
+  place-items: center;
+
+  width: 58px;
+  height: 58px;
+
+  margin: 0 auto 18px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(105, 108, 103, 0.11);
+
+  color: var(--sage-dark);
+}
+
+.attire-card-icon i {
+  font-size: 22px;
+}
+
+.attire-eyebrow {
+  margin-bottom: 8px;
+
+  color: var(--gold);
+
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.attire-intro-card h2,
+.attire-category-header h2,
+.guest-attire-card > h2 {
+  color: var(--sage-dark);
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    clamp(2rem, 8vw, 2.8rem);
+
+  font-weight: 600;
+  line-height: 1.08;
+
+  text-align: center;
+}
+
+.attire-intro-text,
+.attire-category-header > p,
+.guest-attire-description {
+  max-width: 520px;
+
+  margin:
+    13px auto 0;
+
+  color: #666a63;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 1.05rem;
+  line-height: 1.55;
+
+  text-align: center;
+}
+
+/* ==============================
+   COLOR PALETTE
+============================== */
+
+.attire-palette {
+  display: grid;
+  grid-template-columns:
+    repeat(5, minmax(0, 1fr));
+
+  width: min(100%, 440px);
+  height: 68px;
+
+  margin:
+    25px auto 0;
+
+  overflow: hidden;
+
+  border:
+    1px solid rgba(55, 57, 54, 0.14);
+
+  border-radius: 10px;
+}
+
+.attire-color {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.attire-color-dark {
+  background: #555555;
+}
+
+.attire-color-slate {
+  background: #808080;
+}
+
+.attire-color-gray {
+  background: #a5a5a5;
+}
+
+.attire-color-silver {
+  background: #bdbdbd;
+}
+
+.attire-color-light {
+  background: #d8d8d8;
+}
+
+.attire-palette-note {
+  margin-top: 11px;
+
+  color: var(--muted);
+
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* ==============================
+   ATTIRE CATEGORY
+============================== */
+
+.attire-category-header {
+  margin-bottom: 25px;
+
+  text-align: center;
+}
+
+.attire-outfit-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 16px;
+}
+
+.attire-outfit-card {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+  overflow: hidden;
+
+  border:
+    1px solid rgba(92, 94, 90, 0.12);
+
+  border-radius: 14px;
+
+  background:
+    rgba(243, 244, 241, 0.78);
+}
+
+.attire-image-frame {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  min-width: 0;
+  height: 310px;
+
+  padding: 14px 10px 0;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #ffffff 0%,
+      #f0f1ee 72%,
+      #e5e7e2 100%
+    );
+}
+
+.attire-image-frame img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+.attire-women-gallery {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  min-width: 0;
+}
+
+.attire-women-gallery
+.attire-image-frame {
+  height: 310px;
+  padding-right: 2px;
+  padding-left: 2px;
+}
+
+.attire-women-gallery
+.attire-image-frame:first-child {
+  border-right:
+    1px solid rgba(92, 94, 90, 0.1);
+}
+
+.attire-outfit-content {
+  flex: 1;
+
+  padding: 18px 16px 20px;
+
+  text-align: center;
+}
+
+.attire-role {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: var(--gold);
+
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+
+  text-transform: uppercase;
+}
+
+.attire-outfit-content h3 {
+  color: #50554d;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.attire-outfit-content p {
+  margin-top: 9px;
+
+  color: #74776f;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 0.96rem;
+  line-height: 1.45;
+}
+
+/* ==============================
+   GUEST ATTIRE
+============================== */
+
+.guest-attire-card {
+  text-align: center;
+}
+
+.guest-attire-guidelines {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 14px;
+
+  margin-top: 25px;
+
+  text-align: left;
+}
+
+.guest-attire-item {
+  display: grid;
+  grid-template-columns:
+    38px minmax(0, 1fr);
+  align-items: flex-start;
+
+  gap: 11px;
+
+  padding: 15px;
+
+  border-radius: 12px;
+
+  background:
+    rgba(100, 104, 98, 0.07);
+}
+
+.guest-attire-item > i {
+  padding-top: 3px;
+
+  color: var(--sage-dark);
+
+  font-size: 18px;
+
+  text-align: center;
+}
+
+.guest-attire-item div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+.guest-attire-item span {
+  color: var(--muted);
+
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+
+  text-transform: uppercase;
+}
+
+.guest-attire-item strong {
+  color: #50544e;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.guest-color-theme {
+  margin-top: 27px;
+}
+
+.guest-color-theme h3 {
+  margin-bottom: 16px;
+
+  color: var(--sage-dark);
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.guest-color-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(5, minmax(0, 1fr));
+
+  gap: 8px;
+}
+
+.guest-color-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  min-width: 0;
+
+  gap: 7px;
+}
+
+.guest-swatch {
+  display: block;
+
+  width: 100%;
+  max-width: 72px;
+  aspect-ratio: 1;
+
+  border:
+    1px solid rgba(65, 67, 63, 0.13);
+
+  border-radius: 50%;
+
+  box-shadow:
+    0 4px 12px rgba(35, 37, 34, 0.08);
+}
+
+.guest-swatch.charcoal {
+  background: #555555;
+}
+
+.guest-swatch.dark-gray {
+  background: #808080;
+}
+
+.guest-swatch.medium-gray {
+  background: #a5a5a5;
+}
+
+.guest-swatch.silver {
+  background: #bdbdbd;
+}
+
+.guest-swatch.light-gray {
+  background: #d8d8d8;
+}
+
+.guest-color-option small {
+  color: var(--muted);
+
+  font-size: 0.56rem;
+  font-weight: 600;
+  line-height: 1.2;
+
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.attire-reminder {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 10px;
+
+  margin-top: 26px;
+  padding: 14px 15px;
+
+  border-radius: 12px;
+
+  background:
+    rgba(183, 160, 106, 0.11);
+
+  color: #6b634e;
+
+  text-align: left;
+}
+
+.attire-reminder i {
+  margin-top: 2px;
+
+  color: var(--gold);
+}
+
+.attire-reminder p {
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* ==============================
+   ATTIRE MOBILE
+============================== */
+
+@media (max-width: 600px) {
+  .attire-hero {
+    min-height: 34svh;
+  }
+
+  .attire-hero
+  .page-hero-content h1 {
+    font-size:
+      clamp(3rem, 14vw, 4.3rem);
+  }
+
+  .attire-section {
+    padding-top: 18px;
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .attire-intro-card,
+  .attire-category-card {
+    padding: 25px 16px;
+
+    border-radius: 15px;
+  }
+
+  .attire-outfit-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .attire-image-frame,
+  .attire-women-gallery
+  .attire-image-frame {
+    height: 290px;
+  }
+
+  .attire-palette {
+    height: 58px;
+  }
+
+  .guest-attire-guidelines {
+    grid-template-columns: 1fr;
+  }
+
+  .guest-color-grid {
+    gap: 5px;
+  }
+
+  .guest-color-option small {
+    font-size: 0.5rem;
+  }
+}
+
+/* ==========================================================
+   GIFT GUIDE PAGE
+   pages/gift-guide.html
+========================================================== */
+
+body[data-current-page="gift"] {
+  background: #eef2eb;
+}
+
+body[data-current-page="gift"]
+.page-container {
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  padding-bottom:
+    calc(
+      var(--nav-height) +
+      42px +
+      env(safe-area-inset-bottom)
+    );
+}
+
+/* ==============================
+   GIFT HERO
+============================== */
+
+.gift-hero {
+  min-height: 38svh;
+
+  background:
+    url("../images/rhafjeneight.webp")
+    center 42% / cover no-repeat;
+}
+
+.gift-hero
+.page-hero-overlay {
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(26, 32, 24, 0.28),
+      rgba(26, 32, 24, 0.72)
+    );
+}
+
+.gift-hero
+.page-hero-content {
+  padding: 20px;
+}
+
+.gift-hero
+.page-hero-content p {
+  margin-bottom: 5px;
+
+  color:
+    rgba(255, 255, 255, 0.94);
+
+  font-size: 1rem;
+}
+
+.gift-hero
+.page-hero-content h1 {
+  max-width: 420px;
+
+  margin-right: auto;
+  margin-left: auto;
+
+  font-size:
+    clamp(3.4rem, 15vw, 5.5rem);
+
+  line-height: 0.9;
+
+  text-shadow:
+    0 4px 18px
+    rgba(0, 0, 0, 0.35);
+}
+
+/* ==============================
+   GIFT CONTENT
+============================== */
+
+.gift-section {
+  display: grid;
+
+  gap: 18px;
+
+  padding:
+    28px 16px
+    calc(
+      var(--nav-height) +
+      38px +
+      env(safe-area-inset-bottom)
+    );
+
+  background:
+    linear-gradient(
+      180deg,
+      #eef2eb 0%,
+      #f8f5ee 100%
+    );
+}
+
+.gift-card,
+.gift-reminder-card {
+  width: min(100%, 600px);
+
+  margin: 0 auto;
+
+  border:
+    1px solid
+    rgba(111, 125, 99, 0.18);
+
+  background:
+    rgba(255, 255, 255, 0.97);
+
+  box-shadow:
+    0 14px 36px
+    rgba(58, 67, 52, 0.12);
+}
+
+.gift-card {
+  padding: 32px 24px;
+
+  border-radius: 18px;
+
+  text-align: center;
+}
+
+.gift-card-icon {
+  display: grid;
+  place-items: center;
+
+  width: 60px;
+  height: 60px;
+
+  margin: 0 auto 18px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(140, 153, 125, 0.14);
+
+  color: var(--sage-dark);
+}
+
+.gift-card-icon i {
+  font-size: 23px;
+}
+
+.gift-card-label {
+  margin-bottom: 8px;
+
+  color: var(--gold);
+
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+
+  text-transform: uppercase;
+}
+
+.gift-card-title {
+  color: var(--sage-dark);
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    clamp(2rem, 8vw, 2.8rem);
+
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.gift-message {
+  display: grid;
+
+  gap: 16px;
+
+  margin-top: 23px;
+}
+
+.gift-message p {
+  color: #5e635b;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 1.08rem;
+  line-height: 1.6;
+}
+
+.gift-divider {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    auto
+    minmax(0, 1fr);
+  align-items: center;
+
+  gap: 12px;
+
+  width: min(100%, 280px);
+
+  margin: 27px auto;
+}
+
+.gift-divider span {
+  display: block;
+
+  height: 1px;
+
+  background:
+    rgba(183, 160, 106, 0.45);
+}
+
+.gift-divider i {
+  color: var(--gold);
+
+  font-size: 0.8rem;
+}
+
+.gift-thank-you {
+  color: #54594f;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 1.1rem;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.gift-signature {
+  margin-top: 17px;
+
+  color: var(--muted);
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 0.95rem;
+}
+
+.gift-signature strong {
+  display: block;
+
+  margin-top: 4px;
+
+  color: var(--sage-dark);
+
+  font-family:
+    "Allura",
+    cursive;
+
+  font-size: 2.6rem;
+  font-weight: 400;
+  line-height: 1;
+}
+
+/* ==============================
+   GIFT REMINDER
+============================== */
+
+.gift-reminder-card {
+  display: grid;
+  grid-template-columns:
+    44px minmax(0, 1fr);
+  align-items: flex-start;
+
+  gap: 14px;
+
+  padding: 18px;
+
+  border-radius: 14px;
+}
+
+.gift-reminder-card > i {
+  display: grid;
+  place-items: center;
+
+  width: 44px;
+  height: 44px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(183, 160, 106, 0.12);
+
+  color: var(--gold);
+
+  font-size: 19px;
+}
+
+.gift-reminder-card div {
+  text-align: left;
+}
+
+.gift-reminder-card h3 {
+  color: var(--sage-dark);
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.gift-reminder-card p {
+  margin-top: 5px;
+
+  color: #686c64;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+/* ==============================
+   GIFT MOBILE
+============================== */
+
+@media (max-width: 480px) {
+  .gift-hero {
+    min-height: 34svh;
+
+    background-position:
+      center 38%;
+  }
+
+  .gift-hero
+  .page-hero-content h1 {
+    font-size:
+      clamp(3rem, 15vw, 4.3rem);
+  }
+
+  .gift-section {
+    padding-top: 18px;
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .gift-card {
+    padding: 26px 17px;
+
+    border-radius: 15px;
+  }
+
+  .gift-card-icon {
+    width: 54px;
+    height: 54px;
+
+    margin-bottom: 15px;
+  }
+
+  .gift-card-title {
+    font-size: 2rem;
+  }
+
+  .gift-message {
+    gap: 14px;
+
+    margin-top: 20px;
+  }
+
+  .gift-message p {
+    font-size: 1rem;
+  }
+
+  .gift-reminder-card {
+    grid-template-columns:
+      38px minmax(0, 1fr);
+
+    gap: 11px;
+
+    padding: 15px;
+  }
+
+  .gift-reminder-card > i {
+    width: 38px;
+    height: 38px;
+
+    font-size: 16px;
+  }
+}
+/* ==========================================================
+   CONTACT PAGE
+========================================================== */
+
+.contact-section{
+    display:grid;
+    gap:18px;
+
+    padding:28px 16px calc(var(--nav-height) + 38px);
+}
+
+.contact-intro-card,
+.contact-note-card{
+    width:min(100%,600px);
+
+    margin:0 auto;
+
+    background:#fff;
+
+    border-radius:18px;
+
+    border:1px solid rgba(111,125,99,.15);
+
+    box-shadow:0 14px 35px rgba(58,67,52,.10);
+
+    text-align:center;
+}
+
+.contact-intro-card{
+    padding:34px 24px;
+}
+
+.contact-icon{
+    width:62px;
+    height:62px;
+
+    margin:0 auto 18px;
+
+    border-radius:50%;
+
+    display:grid;
+    place-items:center;
+
+    background:rgba(140,153,125,.14);
+
+    color:var(--sage-dark);
+
+    font-size:22px;
+}
+
+.contact-label{
+
+    color:var(--gold);
+
+    font-size:.68rem;
+
+    font-weight:600;
+
+    letter-spacing:.16em;
+
+    text-transform:uppercase;
+}
+
+.contact-title{
+
+    margin-top:10px;
+
+    color:var(--sage-dark);
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:2.5rem;
+}
+
+.contact-description{
+
+    max-width:470px;
+
+    margin:18px auto 0;
+
+    color:#676b65;
+
+    line-height:1.7;
+}
+
+.contact-grid{
+
+    width:min(100%,600px);
+
+    margin:auto;
+
+    display:grid;
+
+    gap:16px;
+}
+
+.contact-card{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    padding:22px;
+
+    text-decoration:none;
+
+    color:inherit;
+
+    border-radius:16px;
+
+    background:#fff;
+
+    border:1px solid rgba(111,125,99,.15);
+
+    box-shadow:0 12px 28px rgba(58,67,52,.08);
+
+    transition:.25s;
+}
+
+.contact-card:hover{
+
+    transform:translateY(-3px);
+}
+
+.contact-avatar{
+
+    width:56px;
+    height:56px;
+
+    border-radius:50%;
+
+    display:grid;
+    place-items:center;
+
+    background:rgba(140,153,125,.14);
+
+    color:var(--sage-dark);
+
+    font-size:22px;
+}
+
+.contact-role{
+
+    display:block;
+
+    color:var(--gold);
+
+    font-size:.72rem;
+
+    letter-spacing:.12em;
+
+    text-transform:uppercase;
+}
+
+.contact-card h3{
+
+    margin-top:4px;
+
+    font-family:"Cormorant Garamond",serif;
+
+    color:var(--sage-dark);
+
+    font-size:2rem;
+}
+
+.contact-card p{
+
+    color:#666;
+
+    margin-top:4px;
+}
+
+.contact-note-card{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+    padding:20px 22px;
+
+    text-align:left;
+}
+
+.contact-note-card i{
+
+    font-size:22px;
+
+    color:var(--gold);
+}
+
+.contact-note-card p{
+
+    color:#666;
+
+    line-height:1.6;
+}
+
+@media(max-width:480px){
+
+.contact-card{
+
+    padding:18px;
+}
+
+.contact-card h3{
+
+    font-size:1.7rem;
+}
+
+.contact-title{
+
+    font-size:2rem;
+}
+
+}
 

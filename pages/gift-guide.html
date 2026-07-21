@@ -1,89 +1,126 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#8c997d" />
+<!-- =====================================================
+     GIFT GUIDE PAGE PARTIAL
 
-  <title>Gift Guide | Rhaf &amp; Jen</title>
+     Important:
+     - No <!DOCTYPE html>
+     - No <html>
+     - No <head>
+     - No <body>
+     - No navigation
+     - No scripts
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+     Loaded inside:
+     <div id="app"></div>
+====================================================== -->
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600&display=swap"
-    rel="stylesheet"
-  />
+<main class="page-container gift-page">
 
-  <link rel="stylesheet" href="css/style.css" />
-</head>
+  <!-- GIFT HERO -->
 
-<body class="" data-current-page="gift">
-  <main class="page-container">
-    
-<section class="page-hero small-hero gift-hero">
-  <div class="page-hero-overlay"></div>
-  <div class="page-hero-content">
-    <p>Your presence is our greatest gift</p>
-    <h1>Gift Guide</h1>
-  </div>
-</section>
+  <section class="page-hero small-hero gift-hero">
 
-<section class="content-section">
-  <article class="info-card centered-card">
-    <h2>A Note from the Couple</h2>
+    <div class="page-hero-overlay"></div>
 
-    <p>
-      Your love and presence are more than enough. For guests who wish
-      to give a gift, a monetary gift toward our future together would
-      be deeply appreciated.
-    </p>
-  </article>
-</section>
+    <div class="page-hero-content">
+      <p>Your presence is our greatest gift</p>
 
-  </main>
+      <h1>
+        Gift Guide
+      </h1>
+    </div>
 
-  
-  <nav class="bottom-navigation" aria-label="Wedding navigation">
-    <a class="nav-item" data-page="home" href="home.html">
-      <span class="nav-icon">⌂</span>
-      <span class="nav-label">Home</span>
-    </a>
+  </section>
 
-    <a class="nav-item" data-page="sponsors" href="sponsors.html">
-      <span class="nav-icon">♔</span>
-      <span class="nav-label">Sponsors</span>
-    </a>
+  <!-- GIFT CONTENT -->
 
-    <a class="nav-item" data-page="location" href="location.html">
-      <span class="nav-icon">⌖</span>
-      <span class="nav-label">Location</span>
-    </a>
+  <section class="content-section gift-section">
 
-    <a class="nav-item" data-page="attire" href="attire.html">
-      <span class="nav-icon">♙</span>
-      <span class="nav-label">Attire</span>
-    </a>
+    <article class="gift-card">
 
-    <a class="nav-item" data-page="gift" href="gift-guide.html">
-      <span class="nav-icon">♡</span>
-      <span class="nav-label">Gift</span>
-    </a>
+      <!-- ICON -->
 
-    <a class="nav-item" data-page="faq" href="faq.html">
-      <span class="nav-icon">?</span>
-      <span class="nav-label">FAQ</span>
-    </a>
+      <div
+        class="gift-card-icon"
+        aria-hidden="true"
+      >
+        <i class="fa-solid fa-gift"></i>
+      </div>
 
-    <a class="nav-item" data-page="contact" href="contact.html">
-      <span class="nav-icon">✆</span>
-      <span class="nav-label">Contact</span>
-    </a>
-  </nav>
+      <p class="gift-card-label">
+        A Note from the Couple
+      </p>
 
+      <h2 class="gift-card-title">
+        With Love and Gratitude
+      </h2>
 
-  <script src="js/common.js"></script>
-  
-  
-</body>
-</html>
+      <div class="gift-message">
+
+        <p>
+          Your presence at our wedding is the greatest gift
+          we could ever ask for.
+        </p>
+
+        <p>
+          However, if you wish to honor us with a gift,
+          a monetary blessing would be deeply appreciated
+          as we begin our journey together as husband and wife.
+        </p>
+
+        <p>
+          Your thoughtful contribution will help us build
+          our future, create a home filled with love,
+          and make lasting memories as newlyweds.
+        </p>
+
+      </div>
+
+      <!-- DECORATIVE DIVIDER -->
+
+      <div
+        class="gift-divider"
+        aria-hidden="true"
+      >
+        <span></span>
+        <i class="fa-solid fa-heart"></i>
+        <span></span>
+      </div>
+
+      <!-- THANK YOU MESSAGE -->
+
+      <p class="gift-thank-you">
+        Thank you for your love, prayers, and support.
+      </p>
+
+      <p class="gift-signature">
+        With love,
+        <strong>Rhaf &amp; Jen</strong>
+      </p>
+
+    </article>
+
+    <!-- OPTIONAL REMINDER -->
+
+    <article class="gift-reminder-card">
+
+      <i
+        class="fa-regular fa-envelope"
+        aria-hidden="true"
+      ></i>
+
+      <div>
+        <h3>
+          A Gentle Reminder
+        </h3>
+
+        <p>
+          Gifts are never required. Celebrating this special
+          day with you is already more than enough for us.
+        </p>
+      </div>
+
+    </article>
+
+  </section>
+
+</main>
