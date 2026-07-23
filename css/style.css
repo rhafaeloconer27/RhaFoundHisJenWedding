@@ -5184,3 +5184,9 @@ body[data-current-page="gift"]
     letter-spacing: 0.13em;
   }
 }
+
+#loaderAnimation {
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 18px;
+}

@@ -41,6 +41,8 @@
     rel="stylesheet"
     href="css/style.css"
   />
+  
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </head>
 
 <body class="invitation-intro-body">
@@ -50,7 +52,7 @@
        This remains unchanged.
   ====================================================== -->
 
-  <div
+  <!-- <div
     class="wedding-loader"
     id="weddingLoader"
   >
@@ -78,7 +80,25 @@
       </div>
 
     </div>
+  </div> -->
+
+  <div
+  class="wedding-loader"
+  id="weddingLoader"
+>
+  <div class="wedding-loader-content">
+
+    <lottie-player
+      id="loaderAnimation"
+      src="images/wedding-rings.json"
+      background="transparent"
+      speed="1"
+      loop
+      autoplay
+    ></lottie-player>
+
   </div>
+</div>
 
   <!-- =====================================================
        MAIN INVITATION INTRO
@@ -98,10 +118,6 @@
   ================================================== -->
 
   <div class="intro-message-section">
-
-    <p class="intro-message-label">
-      A Message From Us
-    </p>
 
     <div class="intro-message-card">
 
@@ -149,10 +165,6 @@
     class="intro-scripture-section"
     aria-label="Ecclesiastes 4 verses 9 to 12"
   >
-    <p class="intro-scripture-label">
-      Wedding Scripture
-    </p>
-
     <div class="intro-scripture-card">
 
       <span
@@ -290,5 +302,6 @@
 
 <!-- INTRO ANIMATION -->
 <script src="js/index-animation.js"></script>
+
 </body>
 </html>

@@ -30,9 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
       .to('.wedding-loader-content', {
         opacity: 0,
         y: -15,
-        duration: 0.5,
+        duration: 1.8,
         ease: 'power2.in',
-        delay: 0.6,
+        delay: 1.8,
       })
       .to(
         weddingLoader,
