@@ -15,8 +15,6 @@
 
   <title>RhaFoundHisJen</title>
 
-  <!-- Browser tab logo -->
-
   <link
     rel="icon"
     type="image/webp"
@@ -45,13 +43,17 @@
   />
 
   <link
-  rel="preload"
-  as="image"
-  href="images/rhafjenone.webp"
-  fetchpriority="high"
-/>
+    rel="preload"
+    as="image"
+    href="images/rhafjenone.webp"
+    fetchpriority="high"
+  />
 
-<style>
+  <!-- Lottie Player -->
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+  <!-- Critical loader CSS -->
+  <style>
   html,
   body {
     margin: 0;
@@ -82,143 +84,30 @@
     align-items: center;
     justify-content: center;
 
-    width: 100%;
-    min-height: 100vh;
-    min-height: 100dvh;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
 
-    padding: 24px;
-    box-sizing: border-box;
-
-    background: #8c997d;
-
+  .page-transition-loader.is-visible {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
   }
 
-  .page-transition-loader.is-visible {
-    opacity: 1 !important;
-    visibility: visible !important;
-    pointer-events: auto !important;
-  }
-
-  body.spa-initializing .page-transition-loader {
-    background: #8c997d !important;
-  }
-
-  body.spa-initializing
   .page-transition-loader-content {
-    display: flex !important;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    width: min(320px, 88vw);
-
-    text-align: center;
-
-    opacity: 1 !important;
-    visibility: visible !important;
-
-    transform: none !important;
-    animation: none !important;
-  }
-
-  .page-transition-loader .loader-rings {
-    position: relative;
-
-    width: 86px;
-    height: 54px;
-
-    margin: 0 auto 22px;
-  }
-
-  .page-transition-loader .loader-ring {
-    position: absolute;
-    top: 4px;
-
-    display: block;
-
-    width: 46px;
-    height: 46px;
-
-    border: 3px solid #ead59f;
-    border-radius: 50%;
-
-    box-sizing: border-box;
-
-    background: transparent;
-  }
-
-  .page-transition-loader .loader-ring-left {
-    left: 4px;
-  }
-
-  .page-transition-loader .loader-ring-right {
-    right: 4px;
-  }
-
-  .page-transition-loader .loader-names {
-    margin: 0;
-
-    color: #ffffff;
-
-    font-family:
-      "Allura",
-      "Brush Script MT",
-      cursive;
-
-    font-size: clamp(3.8rem, 17vw, 5.6rem);
-    font-weight: 400;
-    line-height: 0.8;
-
-    text-align: center;
-  }
-
-  .page-transition-loader .loader-names span {
-    display: block;
-
-    margin: 5px 0;
-
-    color: #ead59f;
-
-    font-family: Georgia, serif;
-    font-size: 0.52em;
-  }
-
-  .page-transition-loader .loader-message {
-    margin: 23px 0 0;
-
-    color: rgba(255, 255, 255, 0.94);
-
-    font-family: Georgia, serif;
-    font-size: 1rem;
-    font-style: italic;
-
-    text-align: center;
-  }
-
-  .page-transition-loader .loader-dots {
     display: flex;
     align-items: center;
     justify-content: center;
-
-    gap: 7px;
-
-    margin-top: 18px;
   }
 
-  .page-transition-loader .loader-dots span {
+  #pageLoaderAnimation {
     display: block;
-
-    width: 7px;
-    height: 7px;
-
-    border-radius: 50%;
-
-    background: rgba(255, 255, 255, 0.92);
+    width: 240px;
+    height: 240px;
   }
 </style>
+
   <link
     rel="stylesheet"
     href="css/style.css"
@@ -230,32 +119,16 @@
   class="spa-initializing"
 >
 
-  <!-- =====================================================
-       DYNAMIC PAGE CONTENT
-
-       CHANGE:
-       No temporary text is displayed here because the
-       loader already provides the initial loading state.
-  ====================================================== -->
-
+  <!-- Dynamic SPA content -->
   <div
     id="app"
     aria-busy="true"
   ></div>
 
-  <!-- =====================================================
-       PERMANENT NAVIGATION
-  ====================================================== -->
-
+  <!-- Permanent navigation -->
   <div id="globalNavigation"></div>
 
-  <!-- =====================================================
-       INITIAL AND PAGE TRANSITION LOADER
-
-       CHANGE:
-       "is-visible" makes the loader visible immediately.
-  ====================================================== -->
-
+  <!-- Single Lottie loader only -->
   <div
     class="page-transition-loader is-visible"
     id="pageTransitionLoader"
@@ -264,51 +137,27 @@
   >
     <div class="page-transition-loader-content">
 
-      <div
-        class="loader-rings"
-        aria-hidden="true"
-      >
-        <span class="loader-ring loader-ring-left"></span>
-        <span class="loader-ring loader-ring-right"></span>
-      </div>
-
-      <h1 class="loader-names">
-        Rhaf
-        <span>&amp;</span>
-        Jen
-      </h1>
-
-      <p
-        class="loader-message"
-        id="pageLoaderMessage"
-      >
-        Loading invitation...
-      </p>
-
-      <div
-        class="loader-dots"
-        aria-hidden="true"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+      <lottie-player
+        id="pageLoaderAnimation"
+        src="images/Loadingwedding.json"
+        background="transparent"
+        speed="1"
+        loop
+        autoplay
+      ></lottie-player>
 
     </div>
   </div>
 
-  <!-- PERMANENT GLOBAL SCRIPTS -->
-
+  <!-- Permanent global scripts -->
   <script src="js/common.js"></script>
   <script src="js/music.js"></script>
 
-  <!-- PAGE-SPECIFIC SCRIPTS -->
-
+  <!-- Page-specific scripts -->
   <script src="js/home.js"></script>
   <script src="js/rsvp.js"></script>
 
-  <!-- SPA SCRIPT MUST REMAIN LAST -->
-
+  <!-- SPA script must remain last -->
   <script src="js/app.js"></script>
 
 </body>

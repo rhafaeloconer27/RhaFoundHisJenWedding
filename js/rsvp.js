@@ -5,76 +5,69 @@
 const GOOGLE_APPS_SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbxuNkbTqIPVvLEB18qxM2noodhW05r4sD6rkV6ZLhWypjX8r9TsAlfucVwJDIrIIao/exec";
 
-const SUBMISSION_TIMEOUT_MS =
-  15000;
+const SUBMISSION_TIMEOUT_MS = 15000;
 
 /*
   Called by app.js after pages/rsvp.html
   is inserted inside #app.
 */
-window.initializeRsvpPage =
-  function () {
-    const form =
-      document.getElementById(
-        "rsvpForm"
-      );
+window.initializeRsvpPage = function () {
+  const form =
+    document.getElementById("rsvpForm");
 
-    const submissionFrame =
-      document.getElementById(
-        "rsvpSubmissionFrame"
-      );
-
-    const clearFormButton =
-      document.getElementById(
-        "clearFormButton"
-      );
-
-    if (!form || !submissionFrame) {
-      return;
-    }
-
-    if (
-      form.dataset.initialized ===
-      "true"
-    ) {
-      return;
-    }
-
-    form.dataset.initialized =
-      "true";
-
-    window.rsvpSubmissionPending =
-      false;
-
-    form.addEventListener(
-      "submit",
-      handleRsvpSubmission
+  const submissionFrame =
+    document.getElementById(
+      "rsvpSubmissionFrame"
     );
 
-    submissionFrame.addEventListener(
-      "load",
-      handleSubmissionFrameLoad
+  const clearFormButton =
+    document.getElementById(
+      "clearFormButton"
     );
 
-    clearFormButton?.addEventListener(
-      "click",
-      clearRsvpForm
-    );
-  };
+  if (!form || !submissionFrame) {
+    return;
+  }
 
-window.cleanupRsvpPage =
-  function () {
-    window.clearTimeout(
-      window.rsvpSubmissionTimer
-    );
+  if (
+    form.dataset.initialized ===
+    "true"
+  ) {
+    return;
+  }
 
-    window.rsvpSubmissionPending =
-      false;
-  };
+  form.dataset.initialized = "true";
+
+  window.rsvpSubmissionPending = false;
+
+  form.addEventListener(
+    "submit",
+    handleRsvpSubmission
+  );
+
+  submissionFrame.addEventListener(
+    "load",
+    handleSubmissionFrameLoad
+  );
+
+  clearFormButton?.addEventListener(
+    "click",
+    clearRsvpForm
+  );
+};
+
+window.cleanupRsvpPage = function () {
+  window.clearTimeout(
+    window.rsvpSubmissionTimer
+  );
+
+  window.rsvpSubmissionPending = false;
+
+  hideRsvpSubmitLoader();
+};
 
 function handleRsvpSubmission(event) {
-  const form =
-    event.currentTarget;
+  const form = event.currentTarget;
 
   clearFormResponse();
 
@@ -117,10 +110,11 @@ function handleRsvpSubmission(event) {
   form.action =
     GOOGLE_APPS_SCRIPT_URL;
 
-  window.rsvpSubmissionPending =
-    true;
+  window.rsvpSubmissionPending = true;
 
   setSubmittingState(true);
+
+  showRsvpSubmitLoader();
 
   showFormResponse(
     "Submitting your RSVP. Please wait...",
@@ -145,14 +139,15 @@ function handleSubmissionFrameLoad() {
     return;
   }
 
-  window.rsvpSubmissionPending =
-    false;
+  window.rsvpSubmissionPending = false;
 
   window.clearTimeout(
     window.rsvpSubmissionTimer
   );
 
   setSubmittingState(false);
+
+  hideRsvpSubmitLoader();
 
   const form =
     document.getElementById(
@@ -174,10 +169,11 @@ function handleSubmissionTimeout() {
     return;
   }
 
-  window.rsvpSubmissionPending =
-    false;
+  window.rsvpSubmissionPending = false;
 
   setSubmittingState(false);
+
+  hideRsvpSubmitLoader();
 
   showFormResponse(
     "The submission is taking longer than expected. Please check your connection and try again.",
@@ -199,9 +195,67 @@ function clearRsvpForm() {
 
   clearFormResponse();
 
+  hideRsvpSubmitLoader();
+
   document
     .getElementById("guestName")
     ?.focus();
+}
+
+function showRsvpSubmitLoader() {
+  const loader =
+    document.getElementById(
+      "rsvpSubmitLoader"
+    );
+
+  const animation =
+    document.getElementById(
+      "rsvpSubmitAnimation"
+    );
+
+  if (!loader) {
+    return;
+  }
+
+  loader.classList.add(
+    "is-visible"
+  );
+
+  loader.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
+  animation?.play();
+}
+
+function hideRsvpSubmitLoader() {
+  const loader =
+    document.getElementById(
+      "rsvpSubmitLoader"
+    );
+
+  const animation =
+    document.getElementById(
+      "rsvpSubmitAnimation"
+    );
+
+  if (!loader) {
+    return;
+  }
+
+  loader.classList.remove(
+    "is-visible"
+  );
+
+  loader.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+  window.setTimeout(function () {
+    animation?.pause();
+  }, 350);
 }
 
 function isWebAppUrlConfigured() {
@@ -268,8 +322,7 @@ function showFormResponse(
     return;
   }
 
-  formResponse.textContent =
-    message;
+  formResponse.textContent = message;
 
   formResponse.className =
     `form-response ${type}`;

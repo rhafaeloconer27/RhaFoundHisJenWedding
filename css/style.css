@@ -245,27 +245,11 @@ body.loading-active {
 
   padding: 24px;
 
-  background:
-    radial-gradient(
-      circle at center,
-      rgba(255, 255, 255, 0.95),
-      rgba(248, 245, 238, 0.98)
-    );
+  background:#f8f5ee;
 
   opacity: 1;
   visibility: visible;
-
-  transition:
-    opacity 0.7s ease,
-    visibility 0.7s ease;
 }
-
-.wedding-loader.loader-hidden {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
 .wedding-loader-content {
   animation:
     loaderContentEnter 0.8s ease both;
@@ -300,10 +284,9 @@ body.loading-active {
   text-align: center;
 }
 
-/* ==============================
+/* ==========================================================
    SPA INITIAL / TRANSITION LOADER
-   wedding.html
-============================== */
+========================================================== */
 
 body.spa-initializing,
 body.page-transition-active {
@@ -341,19 +324,23 @@ body.spa-initializing .music-button {
   height: 100vh;
   height: 100dvh;
 
-  padding: 24px;
+  margin: 0;
+  padding: 0;
 
   overflow: hidden;
 
-  background: rgba(36, 44, 34, 0.28);
+  background: rgba(0, 0, 0, 0.28);
+
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
 
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
 
   transition:
-    opacity 0.35s ease,
-    visibility 0.35s ease;
+    opacity 0.5s ease,
+    visibility 0.5s ease;
 }
 
 .page-transition-loader.is-visible {
@@ -362,53 +349,39 @@ body.spa-initializing .music-button {
   pointer-events: auto;
 }
 
-/* Solid background only during the first wedding.html load. */
-
-body.spa-initializing .page-transition-loader {
-  background: var(--sage);
-}
-
-/* Transparent background during normal SPA navigation. */
-
-body:not(.spa-initializing) .page-transition-loader {
-  background: rgba(36, 44, 34, 0.28);
-
-  -webkit-backdrop-filter: blur(3px);
-  backdrop-filter: blur(3px);
-}
-
 .page-transition-loader-content {
   position: relative;
 
-  width: min(320px, 88vw);
-  min-height: 290px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: min(300px, 76vw);
+  height: min(300px, 76vw);
 
   margin: 0;
-  padding: 24px;
+  padding: 0;
 
-  animation:
-    pageLoaderEnter 0.65s ease both;
+  background: transparent;
+
+  transform: none;
+  animation: none;
 }
 
-/* Override intro-loader colors on the SPA loader. */
+#pageLoaderAnimation {
+  display: block;
 
-.page-transition-loader .loader-names {
-  color: var(--white);
+  width: 100%;
+  height: 100%;
 
-  text-shadow:
-    0 3px 15px rgba(0, 0, 0, 0.2);
+  background: transparent;
 }
 
-.page-transition-loader .loader-names span {
-  color: #ead59f;
-}
-
-.page-transition-loader .loader-message {
-  color: rgba(255, 255, 255, 0.94);
-}
-
-.page-transition-loader .loader-dots span {
-  background: rgba(255, 255, 255, 0.92);
+@media (max-width: 480px) {
+  .page-transition-loader-content {
+    width: 240px;
+    height: 240px;
+  }
 }
 
 /* ==============================
@@ -443,27 +416,27 @@ body:not(.spa-initializing) .page-transition-loader {
 }
 
 .intro-background {
-  position: absolute;
-  inset: -5%;
+    position: fixed;
+    inset: 0;
 
-  background:
-    url("../images/rhafjeneight.webp")
-    center / cover no-repeat;
+    background:
+        linear-gradient(#8d9b83, #8d9b83)X;
 
-  transform: scale(1.05);
+    z-index: -2;
 }
 
-.intro-overlay {
-  position: absolute;
-  inset: 0;
+/* .intro-overlay {
+    position: fixed;
+    inset: 0;
 
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(24, 29, 21, 0),
-      rgba(24, 29, 21, 0)
-    );
-}
+    background:
+        radial-gradient(circle at top, rgba(255,255,255,.35), transparent 60%),
+        linear-gradient(to bottom,
+            rgba(255,255,255,.15),
+            rgba(245,239,230,.35));
+
+    z-index: -1;
+} */
 
 .invitation-stage {
   position: relative;
@@ -5186,7 +5159,106 @@ body[data-current-page="gift"]
 }
 
 #loaderAnimation {
+ width: 340px;
+  height: 340px;
+
+  margin: 0 auto;
+}
+
+.intro-scroll-lottie {
+  position: relative;
+  z-index: 3;
+
   width: 180px;
   height: 180px;
-  margin: 0 auto 18px;
+
+  margin-top: 20px;
+
+  overflow: hidden;
+
+  opacity: 1;
+}
+
+#scrollLottie {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+}
+@media (max-width: 600px) {
+  .intro-scroll-lottie {
+    width: 145px;
+    height: 145px;
+
+    margin-top: 100px;
+  }
+}
+
+/* ==========================================================
+   RSVP SUBMIT LOTTIE
+========================================================== */
+
+.rsvp-submit-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+
+  padding: 0;
+
+   background: rgba(0,0,0,.28);
+
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity 0.35s ease,
+    visibility 0.35s ease;
+}
+
+.rsvp-submit-loader.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.rsvp-submit-loader-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: min(280px, 72vw);
+  height: min(280px, 72vw);
+
+  margin: 0;
+  padding: 0;
+
+  background: transparent;
+}
+
+#rsvpSubmitAnimation {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  background: transparent;
+}
+
+@media (max-width: 480px) {
+  .rsvp-submit-loader-content {
+    width: 220px;
+    height: 220px;
+  }
 }

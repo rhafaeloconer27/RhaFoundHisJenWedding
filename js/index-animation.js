@@ -13,39 +13,42 @@ document.addEventListener('DOMContentLoaded', () => {
    * Initial loading screen
    */
   window.addEventListener('load', () => {
-    const loaderTimeline = gsap.timeline({
-      onComplete: () => {
-        weddingLoader?.classList.add('loader-hidden');
-        document.body.classList.remove('loading-active');
+  if (!weddingLoader) {
+    document.body.classList.remove('loading-active');
+    return;
+  }
 
-        /*
-         * Refresh after loader disappears so ScrollTrigger
-         * can calculate the correct element positions.
-         */
-        ScrollTrigger.refresh();
-      },
-    });
+  const loaderTimeline = gsap.timeline({
+    delay: 2.5,
 
-    loaderTimeline
-      .to('.wedding-loader-content', {
-        opacity: 0,
-        y: -15,
-        duration: 1.8,
-        ease: 'power2.in',
-        delay: 1.8,
-      })
-      .to(
-        weddingLoader,
-        {
-          opacity: 0,
-          visibility: 'hidden',
-          pointerEvents: 'none',
-          duration: 0.7,
-          ease: 'power2.out',
-        },
-        '-=0.1'
-      );
+    onComplete: () => {
+      gsap.set(weddingLoader, {
+        display: 'none',
+      });
+
+      document.body.classList.remove('loading-active');
+      ScrollTrigger.refresh();
+    },
   });
+
+  loaderTimeline
+    .to('.wedding-loader-content', {
+      autoAlpha: 0,
+      y: -10,
+      scale: 0.97,
+      duration: 0.8,
+      ease: 'power2.inOut',
+    })
+    .to(
+      weddingLoader,
+      {
+        autoAlpha: 0,
+        duration: 1.1,
+        ease: 'power2.inOut',
+      },
+      '-=0.65'
+    );
+});
 
   /*
    * Helper function:
@@ -111,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
     [
       '.intro-message-closing',
       '.intro-message-signature',
-      '.intro-scroll-note',
+      '.intro-scroll-lottie',
     ],
     {
       opacity: 0,
@@ -337,7 +340,7 @@ if (openInvitationButton) {
         '.intro-message-text',
         '.intro-message-closing',
         '.intro-message-signature',
-        '.intro-scroll-note',
+        '.intro-scroll-lottie',
         '.intro-scripture-label',
         '.intro-scripture-card',
         '.intro-scripture-mark',
