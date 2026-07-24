@@ -460,8 +460,8 @@ body:not(.spa-initializing) .page-transition-loader {
   background:
     linear-gradient(
       to bottom,
-      rgba(24, 29, 21, 0.32),
-      rgba(24, 29, 21, 0.72)
+      rgba(24, 29, 21, 0),
+      rgba(24, 29, 21, 0)
     );
 }
 
