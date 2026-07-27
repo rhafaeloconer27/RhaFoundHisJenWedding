@@ -1272,10 +1272,22 @@ body[data-current-page="rsvp"] .rsvp-section {
   background: transparent;
   color: var(--text);
 
-  font-family: "Montserrat", sans-serif;
-  font-size: 0.83rem;
+  font-family:
+    "Montserrat",
+    sans-serif;
+
+  /*
+   * Important:
+   * iPhone Safari auto-zooms form fields
+   * when the font size is below 16px.
+   */
+  font-size: 16px;
+  line-height: 1.4;
 
   outline: none;
+
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 .rsvp-field-card input::placeholder,
@@ -1472,6 +1484,25 @@ body[data-current-page="rsvp"] .rsvp-section {
 
   font-size: 0.68rem;
   line-height: 1.5;
+}
+
+/* ==========================================================
+   MOBILE INPUT ZOOM FIX
+   Prevents iPhone Safari from zooming when inputs are focused
+========================================================== */
+
+@media (max-width: 768px) {
+  .rsvp-form input[type="text"],
+  .rsvp-form input[type="tel"],
+  .rsvp-form input[type="email"],
+  .rsvp-form input[type="number"],
+  .rsvp-form input[type="password"],
+  .rsvp-form input[type="search"],
+  .rsvp-form input[type="url"],
+  .rsvp-form select,
+  .rsvp-form textarea {
+    font-size: 16px !important;
+  }
 }
 
 /* ==============================
