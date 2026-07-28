@@ -50,8 +50,6 @@ body {
 
   background: var(--sage-dark);
   color: var(--text);
-
-  font-family: "Montserrat", sans-serif;
 }
 
 body,
@@ -245,11 +243,12 @@ body.loading-active {
 
   padding: 24px;
 
-  background:#f8f5ee;
+  background: var(--cream);
 
   opacity: 1;
   visibility: visible;
 }
+
 .wedding-loader-content {
   animation:
     loaderContentEnter 0.8s ease both;
@@ -394,33 +393,31 @@ body.spa-initializing .music-button {
   min-height: 100vh;
   min-height: 100dvh;
 
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   background: #56614f;
 }
 
 .invitation-intro {
-  position: fixed;
-  inset: 0;
+  position: relative;
 
-  display: grid;
-  place-items: center;
+  display: block;
 
   width: 100%;
   min-height: 100vh;
   min-height: 100dvh;
 
-  padding: 24px 18px;
+  padding: 0;
 
-  overflow: hidden;
+  overflow: visible;
 }
 
 .intro-background {
     position: fixed;
     inset: 0;
 
-    background:
-        linear-gradient(#8d9b83, #8d9b83)X;
+    background: #8d9b83;
 
     z-index: -2;
 }
@@ -446,7 +443,8 @@ body.spa-initializing .music-button {
   flex-direction: column;
   align-items: center;
 
-  width: min(100%, 510px);
+  width: 100%;
+  margin: 0 auto;
 
   text-align: center;
 }
@@ -467,7 +465,8 @@ body.spa-initializing .music-button {
 .invitation-cover {
   position: relative;
 
-  width: min(88vw, 430px);
+  /* Same width as the scripture/quote card */
+  width: min(100%, 540px);
   aspect-ratio: 0.82 / 1;
 
   overflow: hidden;
@@ -540,6 +539,12 @@ body.spa-initializing .music-button {
   position: relative;
   z-index: 3;
 
+  width: 100%;
+  max-width: 440px;
+  padding:
+    clamp(46px, 8vw, 78px)
+    clamp(34px, 7vw, 58px);
+
   color: #5d6658;
 
   text-align: center;
@@ -549,33 +554,34 @@ body.spa-initializing .music-button {
   color: #7d7b72;
 
   font-family: "Cormorant Garamond", serif;
-  font-size: 1rem;
+  font-size: clamp(1rem, 2.4vw, 1.3rem);
   font-style: italic;
+  line-height: 1.4;
 }
 
 .reveal-divider {
-  margin: 14px 0;
+  margin: 18px 0;
 
   color: var(--gold);
 
-  font-size: 0.9rem;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
 }
 
 .reveal-content h1 {
-  margin: 12px 0;
+  margin: 14px 0;
 
   color: var(--sage-dark);
 
   font-family: "Allura", cursive;
-  font-size: 5.4rem;
+  font-size: clamp(5.4rem, 13vw, 7rem);
   font-weight: 400;
-  line-height: 0.72;
+  line-height: 0.68;
 }
 
 .reveal-content h1 span {
   display: block;
 
-  margin: 8px 0;
+  margin: 7px 0;
 
   color: var(--gold);
 
@@ -583,23 +589,24 @@ body.spa-initializing .music-button {
 }
 
 .reveal-invites {
-  margin-top: 18px;
+  max-width: 360px;
+  margin: 24px auto 0;
 
   color: #66645c;
 
   font-family: "Cormorant Garamond", serif;
-  font-size: 1.08rem;
-  line-height: 1.7;
+  font-size: clamp(1rem, 2.4vw, 1.25rem);
+  line-height: 1.55;
 }
 
 .reveal-date {
-  margin-top: 18px;
+  margin-top: 23px;
 
   color: var(--sage-dark);
 
-  font-size: 0.78rem;
+  font-size: clamp(0.74rem, 1.7vw, 0.92rem);
   font-weight: 600;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.2em;
 
   text-transform: uppercase;
 }
@@ -658,9 +665,9 @@ body.spa-initializing .music-button {
 
 .cover-title {
   position: absolute;
-  top: 18%;
-  right: 16px;
-  left: 16px;
+  top: 17%;
+  right: 7%;
+  left: 7%;
   z-index: 6;
 
   color: var(--sage-dark);
@@ -671,22 +678,22 @@ body.spa-initializing .music-button {
 }
 
 .cover-title p {
-  margin-bottom: 17px;
+  margin-bottom: 18px;
 
   color: #847b6d;
 
   font-family: "Cormorant Garamond", serif;
-  font-size: 0.78rem;
-  letter-spacing: 0.15em;
+  font-size: clamp(0.78rem, 1.8vw, 1rem);
+  letter-spacing: 0.17em;
 
   text-transform: uppercase;
 }
 
 .cover-title h2 {
   font-family: "Allura", cursive;
-  font-size: clamp(4rem, 17vw, 6rem);
+  font-size: clamp(5.6rem, 13vw, 7.4rem);
   font-weight: 400;
-  line-height: 0.7;
+  line-height: 0.68;
 }
 
 .cover-title h2 span {
@@ -711,8 +718,8 @@ body.spa-initializing .music-button {
   align-items: center;
   justify-content: center;
 
-  width: 78px;
-  height: 78px;
+  width: clamp(76px, 11vw, 94px);
+  height: clamp(76px, 11vw, 94px);
   padding: 0;
 
   border:
@@ -765,13 +772,13 @@ body.spa-initializing .music-button {
 }
 
 .gsap-wax-seal span {
-  font-size: 1.5rem;
+  font-size: clamp(1.45rem, 3vw, 1.8rem);
 }
 
 .gsap-wax-seal small {
   margin: 0 3px;
 
-  font-size: 0.9rem;
+  font-size: clamp(0.85rem, 1.8vw, 1.05rem);
 }
 
 /* ==============================
@@ -1872,21 +1879,6 @@ body[data-current-page="rsvp"] .rsvp-section {
   }
 }
 
-@keyframes pageLoaderEnter {
-  from {
-    opacity: 0;
-    transform:
-      translateY(16px)
-      scale(0.97);
-  }
-
-  to {
-    opacity: 1;
-    transform:
-      translateY(0)
-      scale(1);
-  }
-}
 
 @keyframes loaderDot {
   0%,
@@ -1960,17 +1952,8 @@ body[data-current-page="rsvp"] .rsvp-section {
 }
 
 @media (max-width: 480px) {
-  .invitation-cover {
-    width: min(82vw, 360px);
-  }
-
   .intro-label {
     margin-bottom: 17px;
-  }
-
-  .gsap-wax-seal {
-    width: 66px;
-    height: 66px;
   }
 
   .rsvp-form-header {
@@ -2002,16 +1985,6 @@ body[data-current-page="rsvp"] .rsvp-section {
     padding:
       3px 2px
       max(3px, env(safe-area-inset-bottom));
-  }
-}
-
-@media (max-height: 720px) {
-  .invitation-cover {
-    width: min(68vw, 330px);
-  }
-
-  .intro-label {
-    margin-bottom: 13px;
   }
 }
 
@@ -2111,18 +2084,9 @@ body[data-current-page="rsvp"] .rsvp-section {
 
 /* ==========================================================
    MOBILE FIX — INVITATION INTRO
-
-   Fixes:
-   - Card size on narrow phones
-   - Text overflowing outside the invitation border
-   - Wax seal covering the names
-   - Decorative borders too close to text
 ========================================================== */
 
 @media (max-width: 600px) {
-
-  /* Use the available mobile screen properly */
-
   .invitation-intro {
     padding:
       max(16px, env(safe-area-inset-top))
@@ -2135,48 +2099,18 @@ body[data-current-page="rsvp"] .rsvp-section {
     max-width: 100%;
   }
 
-  /* Keep the label close to the card */
-
   .intro-label {
     margin-bottom: 12px;
 
-    font-size: clamp(
-      0.85rem,
-      3.8vw,
-      1rem
-    );
-
+    font-size: clamp(0.85rem, 3.8vw, 1rem);
     line-height: 1.3;
   }
 
-  /* Responsive invitation card */
-
   .invitation-cover {
-    width: min(76vw, 300px);
-
-    /*
-      Keep a consistent portrait shape instead of
-      allowing the card to become too wide.
-    */
     aspect-ratio: 0.78 / 1;
 
     border-radius: 7px;
   }
-
-  /* Give the revealed text enough internal spacing */
-
-  .reveal-content {
-    width: 100%;
-    max-width: 100%;
-
-    padding:
-      36px
-      30px;
-
-    overflow: hidden;
-  }
-
-  /* Move decorative lines closer to the outer edge */
 
   .invitation-reveal::before {
     inset: 12px;
@@ -2186,118 +2120,78 @@ body[data-current-page="rsvp"] .rsvp-section {
     inset: 24px;
   }
 
-  .reveal-small {
-    font-size: clamp(
-      0.72rem,
-      3vw,
-      0.88rem
-    );
-
-    line-height: 1.3;
-  }
-
-  .reveal-divider {
-    margin: 9px 0;
-
-    font-size: 0.72rem;
-  }
-
-  /* Reduce names so they fit inside the card */
-
-  .reveal-content h1 {
-    margin: 8px 0;
-
-    font-size: clamp(
-      3.25rem,
-      17vw,
-      4.4rem
-    );
-
-    line-height: 0.68;
-  }
-
-  .reveal-content h1 span {
-    margin: 5px 0;
-
-    font-size: 0.44em;
-  }
-
-  /* Prevent invitation message from crossing the border */
-
-  .reveal-invites {
-    max-width: 210px;
-
-    margin:
-      14px auto
-      0;
-
-    font-size: clamp(
-      0.72rem,
-      3.3vw,
-      0.9rem
-    );
-
-    line-height: 1.45;
-
-    overflow-wrap: break-word;
-  }
-
-  .reveal-date {
-    margin-top: 13px;
-
-    font-size: 0.62rem;
-    letter-spacing: 0.13em;
-  }
-
-  /* Cover title before opening */
-
   .cover-title {
     top: 17%;
-    right: 24px;
-    left: 24px;
+    right: 7%;
+    left: 7%;
   }
 
   .cover-title p {
-    margin-bottom: 13px;
+    margin-bottom: 14px;
 
-    font-size: 0.62rem;
-    letter-spacing: 0.12em;
+    font-size: clamp(0.7rem, 2.8vw, 0.84rem);
   }
 
   .cover-title h2 {
-    font-size: clamp(
-      3.2rem,
-      16vw,
-      4.5rem
-    );
-
-    line-height: 0.67;
+    font-size: clamp(4.6rem, 18vw, 6.2rem);
   }
 
   .cover-title h2 span {
     margin: 5px 0;
   }
 
-  /*
-    Place seal lower, but keep it inside the card.
-    It should no longer cover "Jen".
-  */
-
   .gsap-wax-seal {
     top: 74%;
 
-    width: 62px;
-    height: 62px;
+    width: clamp(70px, 18vw, 84px);
+    height: clamp(70px, 18vw, 84px);
   }
 
   .gsap-wax-seal span {
-    font-size: 1.15rem;
+    font-size: 1.4rem;
   }
 
   .gsap-wax-seal small {
     margin: 0 2px;
 
-    font-size: 0.72rem;
+    font-size: 0.84rem;
+  }
+
+  .reveal-content {
+    max-width: 100%;
+    padding: 42px 26px;
+
+    overflow: hidden;
+  }
+
+  .reveal-small {
+    font-size: clamp(0.88rem, 3.7vw, 1.05rem);
+  }
+
+  .reveal-divider {
+    margin: 12px 0;
+  }
+
+  .reveal-content h1 {
+    margin: 10px 0;
+
+    font-size: clamp(4.5rem, 19vw, 5.8rem);
+  }
+
+  .reveal-invites {
+    max-width: 285px;
+    margin-top: 18px;
+
+    font-size: clamp(0.88rem, 3.7vw, 1.05rem);
+    line-height: 1.5;
+
+    overflow-wrap: break-word;
+  }
+
+  .reveal-date {
+    margin-top: 16px;
+
+    font-size: clamp(0.66rem, 2.7vw, 0.78rem);
   }
 }
 
@@ -2306,37 +2200,21 @@ body[data-current-page="rsvp"] .rsvp-section {
 ========================================================== */
 
 @media (max-width: 380px) {
-
-  .invitation-cover {
-    width: min(72vw, 270px);
+  .gsap-wax-seal {
+    width: 70px;
+    height: 70px;
   }
 
   .reveal-content {
-    padding:
-      32px
-      27px;
+    padding: 34px 22px;
   }
 
   .reveal-content h1 {
-    font-size: clamp(
-      3rem,
-      16vw,
-      3.9rem
-    );
+    font-size: clamp(4.1rem, 18vw, 5rem);
   }
 
   .reveal-invites {
-    max-width: 190px;
-
-    font-size: 0.7rem;
-    line-height: 1.4;
-  }
-
-  .gsap-wax-seal {
-    top: 75%;
-
-    width: 58px;
-    height: 58px;
+    max-width: 245px;
   }
 }
 
@@ -2503,18 +2381,6 @@ body[data-current-page="location"]
 
   font-weight: 600;
   line-height: 1.1;
-}
-
-.location-address {
-  margin-top: 9px;
-
-  color: var(--muted);
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size: 1.05rem;
 }
 
 .location-divider {
@@ -3314,79 +3180,54 @@ body[data-current-page="sponsors"]
     font-size: 0.95rem;
   }
   .entourage-box-item {
-  padding: 12px;
-}
+    padding: 12px;
+  }
 
-.entourage-box-icon {
-  width: 36px;
-  height: 36px;
-}
+  .entourage-box-icon {
+    width: 30px;
+    height: 30px;
+  }
 
-.entourage-box-content strong {
-  font-size: 0.95rem;
-}
-.entourage-box-list {
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
+  .entourage-box-icon i {
+    font-size: 15px;
+  }
 
-  gap: 10px;
-}
-.entourage-box-icon {
-  width: 30px;
-  height: 30px;
-}
+  .entourage-box-list,
+  .flower-girls-box-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
 
-.entourage-box-icon i {
-  font-size: 15px;
-}
+  .entourage-box-role {
+    width: 100%;
+    font-size: 0.56rem;
+    letter-spacing: 0.07em;
+  }
 
-.entourage-box-role {
-  font-size: 0.56rem;
-  letter-spacing: 0.07em;
-}
+  .entourage-box-content strong {
+    width: 100%;
+    font-size: 0.82rem;
+  }
 
-.entourage-box-content strong,
-.flower-girls-name-grid strong {
-  font-size: 0.82rem;
-}
+  .flower-girls-name-grid {
+    gap: 5px 10px;
+  }
 
-.flower-girls-name-grid {
-  gap: 5px 10px;
-}
-.flower-girls-box-grid {
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
+  .flower-girls-name-grid strong {
+    font-size: 0.82rem;
+  }
 
-  gap: 10px;
-}
+  .flower-girls-box-grid .entourage-box-icon i {
+    font-size: 14px;
+  }
 
-.entourage-box-list,
-.flower-girls-box-grid {
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
+  .flower-girls-box-grid .entourage-box-role {
+    font-size: 0.54rem;
+  }
 
-  gap: 14px;
-}
-
-.entourage-box-role,
-.entourage-box-content strong {
-  width: 100%;
-}
-
-.flower-girls-box-grid
-.entourage-box-icon i {
-  font-size: 14px;
-}
-
-.flower-girls-box-grid
-.entourage-box-role {
-  font-size: 0.54rem;
-}
-
-.flower-girls-box-grid
-.entourage-box-content strong {
-  font-size: 0.8rem;
-}
+  .flower-girls-box-grid .entourage-box-content strong {
+    font-size: 0.8rem;
+  }
 }
 /* ==========================================================
    ATTIRE PAGE
@@ -5015,42 +4856,9 @@ body[data-current-page="faq"]
    LONG SCROLL INTRO
 ========================================================== */
 
-.invitation-intro-body {
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
-.invitation-intro {
-  position: relative;
-
-  display: block;
-
-  min-height: 100vh;
-  min-height: 100dvh;
-
-  padding: 0;
-
-  overflow: visible;
-}
-
 .intro-background,
 .intro-overlay {
   position: fixed;
-}
-
-.invitation-stage {
-  position: relative;
-  z-index: 2;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  width: 100%;
-
-  margin: 0 auto;
-
-  text-align: center;
 }
 
 /* ==========================================================
@@ -5639,7 +5447,7 @@ body[data-current-page="faq"]
 }
 
 #loaderAnimation {
- width: 340px;
+  width: 340px;
   height: 340px;
 
   margin: 0 auto;
@@ -5693,10 +5501,10 @@ body[data-current-page="faq"]
 
   padding: 0;
 
-   background: rgba(0,0,0,.28);
+  background: rgba(0, 0, 0, 0.28);
 
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
 
   opacity: 0;
   visibility: hidden;
