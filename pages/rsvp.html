@@ -1,85 +1,129 @@
 <!-- =====================================================
-     RSVP PAGE PARTIAL
+     RHAF & JEN RSVP PAGE
 
-     Important:
-     - No <!DOCTYPE html>
-     - No <html>
-     - No <head>
-     - No <body>
-     - No global navigation
-     - No common.js
-     - No music.js
-     - No rsvp.js
-
-     This file will be loaded inside:
+     SPA PARTIAL
+     Loaded inside:
      <div id="app"></div>
+
+     Do NOT add:
+     <!DOCTYPE html>
+     <html>
+     <head>
+     <body>
 ====================================================== -->
 
 <main class="page-container rsvp-page">
 
-  <!-- RSVP HERO -->
+  <!-- =========================
+       RSVP HERO
+  ========================== -->
 
   <section class="page-hero small-hero rsvp-hero">
+
     <div class="page-hero-overlay"></div>
 
     <div class="page-hero-content">
+
       <p>We hope you can join us</p>
+
       <h1>RSVP</h1>
+
     </div>
+
   </section>
 
-  <!-- RSVP FORM -->
+
+  <!-- =========================
+       RSVP FORM SECTION
+  ========================== -->
 
   <section class="content-section rsvp-section">
 
+
+    <!-- FORM HEADER -->
+
     <div class="rsvp-form-header">
-      <h2>Rhaf and Jen RSVP Form</h2>
+
+      <h2>
+        Rhaf and Jen RSVP Form
+      </h2>
+
 
       <p class="rsvp-deadline">
+
         <i
           class="fa-regular fa-calendar"
           aria-hidden="true"
         ></i>
 
         Reply on or before January 4, 2027
+
       </p>
+
 
       <p class="required-fields-note">
+
         <span>*</span>
+
         Indicates a required question
+
       </p>
+
     </div>
+
+
+    <!-- RSVP REMINDER -->
 
     <div class="rsvp-reminder-card">
-      <p>
-        <strong>RSVP reminder:</strong>
-        We hope you understand that we have limited our
-        invites to the people closest to us.
-      </p>
 
       <p>
+
         <strong>
-          Unless otherwise stated, this invitation is for
-          one invited family or group only.
+          RSVP reminder:
         </strong>
+
+        We hope you understand that we have limited
+        our invites to the people closest to us.
+
       </p>
+
+
+      <p>
+
+        <strong>
+
+          Unless otherwise stated, this invitation
+          is for one invited family or group only.
+
+        </strong>
+
+      </p>
+
     </div>
+
+
+    <!-- =========================
+         RSVP FORM
+    ========================== -->
 
     <form
       class="rsvp-form"
       id="rsvpForm"
-      method="POST"
-      target="rsvpSubmissionFrame"
       autocomplete="on"
     >
 
-      <!-- HONEYPOT -->
+
+      <!-- =========================
+           HONEYPOT
+      ========================== -->
 
       <div
         class="honeypot-field"
         aria-hidden="true"
       >
+
         <label>
+
           Website
 
           <input
@@ -89,116 +133,177 @@
             tabindex="-1"
             autocomplete="off"
           />
+
         </label>
+
       </div>
 
-      <!-- NAME -->
+
+      <!-- =========================
+           NAME
+      ========================== -->
 
       <div class="rsvp-field-card">
+
         <label for="guestName">
-          Name of Guest
-          <span class="required-mark">*</span>
+
+          Name
+
+          <span class="required-mark">
+            *
+          </span>
+
         </label>
+
 
         <input
           id="guestName"
           name="guestName"
           type="text"
           maxlength="150"
-          placeholder="Your answer"
+          placeholder="Your full name"
           autocomplete="name"
           required
         />
+
       </div>
 
-      <!-- CONTACT NUMBER -->
+
+      <!-- =========================
+           CONTACT NUMBER
+      ========================== -->
 
       <div class="rsvp-field-card">
+
         <label for="contactNumber">
+
           Contact Number
-          <span class="required-mark">*</span>
+
+          <span class="required-mark">
+            *
+          </span>
+
         </label>
+
 
         <input
           id="contactNumber"
           name="contactNumber"
           type="tel"
           maxlength="30"
-          placeholder="Your answer"
+          placeholder="09XXXXXXXXX"
           autocomplete="tel"
           required
         />
+
       </div>
 
-      <!-- EMAIL -->
+
+      <!-- =========================
+           MESSENGER
+      ========================== -->
 
       <div class="rsvp-field-card">
-        <label for="emailAddress">
-          Email Address
+
+        <label for="messengerName">
+
+          Messenger Name
+
         </label>
+
 
         <input
-          id="emailAddress"
-          name="emailAddress"
-          type="email"
+          id="messengerName"
+          name="messengerName"
+          type="text"
           maxlength="150"
-          placeholder="Your answer"
-          autocomplete="email"
+          placeholder="Facebook / Messenger name"
+          autocomplete="off"
         />
+
       </div>
 
-      <!-- MESSAGE -->
+
+      <!-- =========================
+           MESSAGE
+      ========================== -->
 
       <div class="rsvp-field-card">
+
         <label for="message">
-          Message
-          <span class="required-mark">*</span>
+
+          Message to us
+
         </label>
+
 
         <textarea
           id="message"
           name="message"
           rows="3"
           maxlength="1000"
-          placeholder="Your answer"
-          required
+          placeholder="Leave us a message"
         ></textarea>
+
       </div>
 
-      <!-- ATTENDANCE -->
 
-      <fieldset class="rsvp-field-card attendance-field">
+      <!-- =========================
+           ATTENDANCE
+      ========================== -->
+
+      <fieldset
+        class="rsvp-field-card attendance-field"
+      >
+
         <legend>
+
           Can you attend?
-          <span class="required-mark">*</span>
+
+          <span class="required-mark">
+            *
+          </span>
+
         </legend>
 
+
         <label class="radio-option">
+
           <input
             type="radio"
             name="attendance"
-            value="Yes, I'll be there."
+            value="YES"
             required
           />
 
           <span>
             Yes, I'll be there.
           </span>
+
         </label>
 
+
         <label class="radio-option">
+
           <input
             type="radio"
             name="attendance"
-            value="Sorry, I can't make it."
+            value="NO"
             required
           />
 
           <span>
             Sorry, I can't make it.
           </span>
+
         </label>
+
       </fieldset>
+
+
+      <!-- =========================
+           SOURCE
+      ========================== -->
 
       <input
         id="submittedFrom"
@@ -207,23 +312,40 @@
         value="Wedding Website"
       />
 
+
+      <!-- =========================
+           BUTTONS
+      ========================== -->
+
       <div class="rsvp-submit-row">
+
         <button
           class="submit-button"
           id="submitButton"
           type="submit"
         >
+
           Submit
+
         </button>
+
 
         <button
           class="clear-form-button"
           id="clearFormButton"
           type="button"
         >
+
           Clear form
+
         </button>
+
       </div>
+
+
+      <!-- =========================
+           RESPONSE
+      ========================== -->
 
       <p
         class="form-response"
@@ -231,28 +353,33 @@
         role="status"
         aria-live="polite"
       ></p>
+
     </form>
 
-    <p class="rsvp-security-note">
-      Please do not submit passwords or other sensitive
-      information through this form.
-    </p>
 
-    <iframe
-      class="hidden-submission-frame"
-      id="rsvpSubmissionFrame"
-      name="rsvpSubmissionFrame"
-      title="RSVP submission response"
-    ></iframe>
+    <!-- SECURITY NOTE -->
+
+    <p class="rsvp-security-note">
+
+      Please do not submit passwords or other
+      sensitive information through this form.
+
+    </p>
 
   </section>
 
-   <div
+
+  <!-- =========================
+       SUBMISSION LOADER
+  ========================== -->
+
+  <div
     class="rsvp-submit-loader"
     id="rsvpSubmitLoader"
     aria-hidden="true"
     aria-label="Submitting RSVP"
   >
+
     <div class="rsvp-submit-loader-content">
 
       <lottie-player
@@ -264,6 +391,7 @@
       ></lottie-player>
 
     </div>
+
   </div>
 
 </main>
