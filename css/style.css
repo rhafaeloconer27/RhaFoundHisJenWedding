@@ -5267,7 +5267,7 @@ body[data-current-page="faq"]
     min-height: 110svh;
 
     padding:
-      70px
+      10px
       12px
       max(70px, env(safe-area-inset-bottom));
   }
@@ -5548,5 +5548,320 @@ body[data-current-page="faq"]
   .rsvp-submit-loader-content {
     width: 220px;
     height: 220px;
+  }
+}
+
+/* ==========================================================
+   THREE CIRCLE SCRATCH DATE
+========================================================== */
+
+.intro-scratch-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 85vh;
+  min-height: 85svh;
+
+  padding: 80px 18px;
+}
+
+.intro-scratch-label {
+  margin-bottom: 26px;
+
+  color: rgba(255, 255, 255, 0.94);
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    clamp(1.25rem, 4vw, 1.55rem);
+
+  font-style: italic;
+  letter-spacing: 0.04em;
+
+  text-align: center;
+
+  text-shadow:
+    0 3px 12px
+    rgba(0, 0, 0, 0.28);
+}
+
+.intro-scratch-card {
+  width: min(100%, 540px);
+
+  padding: 44px 26px 38px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.3);
+
+  border-radius: 20px;
+
+  background:
+    rgba(247, 244, 236, 0.95);
+
+  box-shadow:
+    0 25px 65px
+    rgba(0, 0, 0, 0.28);
+
+  text-align: center;
+
+  -webkit-backdrop-filter:
+    blur(10px);
+
+  backdrop-filter:
+    blur(10px);
+}
+
+
+/* ==========================================================
+   CIRCLE GRID
+========================================================== */
+
+.scratch-date-circles {
+  display: grid;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 20px;
+
+  width: 100%;
+}
+
+.scratch-circle-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 13px;
+
+  min-width: 0;
+}
+
+
+/* ==========================================================
+   SCRATCH CIRCLE
+========================================================== */
+
+.scratch-circle {
+  position: relative;
+
+  flex: 0 0 auto;
+
+  width: clamp(86px, 23vw, 125px);
+  aspect-ratio: 1;
+
+  overflow: hidden;
+
+  /* No outside border */
+  border: none;
+  border-radius: 50%;
+
+  background: #fffdf7;
+
+  box-shadow:
+    0 10px 28px
+    rgba(36, 43, 33, 0.18);
+}
+
+
+/* value underneath */
+
+.scratch-circle-value {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--sage-dark);
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    clamp(1.7rem, 6vw, 2.35rem);
+
+  font-weight: 600;
+
+  letter-spacing: 0.04em;
+}
+
+.scratch-circle-day {
+  font-size:
+    clamp(2.2rem, 7vw, 3rem);
+}
+
+.scratch-circle-year {
+  font-size:
+    clamp(1.35rem, 4vw, 1.8rem);
+
+  letter-spacing: 0.08em;
+}
+
+
+/* canvas cover */
+
+.scratch-circle-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  border-radius: 50%;
+
+  cursor: grab;
+
+  touch-action: none;
+
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.scratch-circle-canvas:active {
+  cursor: grabbing;
+}
+
+
+/* labels */
+
+.scratch-circle-label {
+  color: #777c71;
+
+  font-family:
+    "Montserrat",
+    sans-serif;
+
+  font-size: 0.62rem;
+  font-weight: 600;
+
+  letter-spacing: 0.16em;
+
+  text-transform: uppercase;
+}
+
+
+/* ==========================================================
+   COMPLETE DATE
+========================================================== */
+
+.scratch-date-complete {
+  margin-top: 32px;
+
+  opacity: 0;
+
+  transform:
+    translateY(12px);
+
+  pointer-events: none;
+}
+
+.scratch-date-complete.is-visible {
+  opacity: 1;
+
+  transform:
+    translateY(0);
+
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.scratch-date-complete span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: var(--gold);
+
+  font-size: 0.85rem;
+}
+
+.scratch-date-complete p {
+  color: var(--sage-dark);
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    clamp(1.7rem, 6vw, 2.3rem);
+
+  font-weight: 600;
+}
+
+.scratch-date-complete small {
+  display: block;
+
+  margin-top: 5px;
+
+  color: #858579;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 0.95rem;
+  font-style: italic;
+}
+
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media (max-width: 600px) {
+
+  .intro-scratch-section {
+    min-height: 78svh;
+
+    padding:
+      65px
+      12px;
+  }
+
+  .intro-scratch-card {
+    padding:
+      36px
+      16px
+      30px;
+
+    border-radius: 16px;
+  }
+
+  .scratch-date-circles {
+    gap: 10px;
+  }
+
+  .scratch-circle {
+    max-width: 100px;
+  }
+
+  .scratch-circle-label {
+    font-size: 0.56rem;
+
+    letter-spacing: 0.12em;
+  }
+
+  .scratch-circle-value {
+    font-size: 1.7rem;
+  }
+
+  .scratch-circle-day {
+    font-size: 2.25rem;
+  }
+
+  .scratch-circle-year {
+    font-size: 1.2rem;
   }
 }
