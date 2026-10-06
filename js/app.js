@@ -743,6 +743,185 @@ document.addEventListener(
     }
 
     /* ======================================================
+   PAGE-SPECIFIC CSS / JS LOADER
+====================================================== */
+
+let activePageStylesheet = null;
+
+const loadedPageScripts = new Map();
+
+/* ------------------------------------------------------
+   Load the CSS belonging to the current page.
+------------------------------------------------------ */
+
+function loadPageStylesheet(href) {
+  /*
+   * Page has no page-specific stylesheet.
+   */
+  if (!href) {
+    if (activePageStylesheet) {
+      activePageStylesheet.remove();
+      activePageStylesheet = null;
+    }
+
+    return Promise.resolve();
+  }
+
+  /*
+   * The requested stylesheet is already active.
+   */
+  if (
+    activePageStylesheet &&
+    activePageStylesheet.dataset.href === href
+  ) {
+    return Promise.resolve();
+  }
+
+  return new Promise(
+    function (resolve, reject) {
+      const link =
+        document.createElement("link");
+
+      link.rel = "stylesheet";
+      link.href = href;
+
+      link.dataset.pageStyle = "true";
+      link.dataset.href = href;
+
+      /*
+       * Avoid showing unstyled content while
+       * the new stylesheet is downloading.
+       */
+      link.media = "not all";
+
+      link.addEventListener(
+        "load",
+        function () {
+          /*
+           * Enable the new stylesheet.
+           */
+          link.media = "all";
+
+          /*
+           * Remove the previous page stylesheet.
+           */
+          if (
+            activePageStylesheet &&
+            activePageStylesheet !== link
+          ) {
+            activePageStylesheet.remove();
+          }
+
+          activePageStylesheet = link;
+
+          resolve();
+        },
+        {
+          once: true,
+        }
+      );
+
+      link.addEventListener(
+        "error",
+        function () {
+          link.remove();
+
+          reject(
+            new Error(
+              `Unable to load stylesheet: ${href}`
+            )
+          );
+        },
+        {
+          once: true,
+        }
+      );
+
+      document.head.appendChild(link);
+    }
+  );
+}
+
+/* ------------------------------------------------------
+   Load page-specific JavaScript.
+
+   Each JS file is downloaded only once during
+   the SPA session.
+------------------------------------------------------ */
+
+function loadPageScript(src) {
+  if (!src) {
+    return Promise.resolve();
+  }
+
+  /*
+   * Already loaded successfully.
+   */
+  if (loadedPageScripts.has(src)) {
+    return loadedPageScripts.get(src);
+  }
+
+  const scriptPromise =
+    new Promise(
+      function (resolve, reject) {
+        const script =
+          document.createElement(
+            "script"
+          );
+
+        script.src = src;
+        script.async = false;
+
+        script.dataset.pageScript =
+          "true";
+
+        script.addEventListener(
+          "load",
+          function () {
+            resolve();
+          },
+          {
+            once: true,
+          }
+        );
+
+        script.addEventListener(
+          "error",
+          function () {
+            script.remove();
+
+            /*
+             * Allow another attempt if
+             * loading failed.
+             */
+            loadedPageScripts.delete(src);
+
+            reject(
+              new Error(
+                `Unable to load script: ${src}`
+              )
+            );
+          },
+          {
+            once: true,
+          }
+        );
+
+        document.body.appendChild(
+          script
+        );
+      }
+    );
+
+  loadedPageScripts.set(
+    src,
+    scriptPromise
+  );
+
+  return scriptPromise;
+}
+
+    /* ======================================================
        LOAD PAGE
     ====================================================== */
 
@@ -798,26 +977,45 @@ document.addEventListener(
           );
         }
 
-        const html =
-          await response.text();
+      const html =
+              await response.text();
 
-        /*
-         * Remove page-specific listeners,
-         * GSAP contexts, intervals, and timers
-         * from the old page.
-         */
-        cleanupCurrentPage();
+            /*
+            * Clean up timers, event listeners,
+            * GSAP contexts, etc. from the old page.
+            */
+            cleanupCurrentPage();
 
-        /*
-         * Insert the new page partial.
-         */
-        app.innerHTML = html;
+            /*
+            * Insert the new HTML first.
+            *
+            * The loader is still covering the screen,
+            * so the user will not see an unstyled page.
+            */
+            app.innerHTML = html;
 
-        currentPage =
-          pageName;
+            /*
+            * Load this page's CSS.
+            */
+            await loadPageStylesheet(
+              pageConfig.css
+            );
 
-        document.title =
-          pageConfig.title;
+            /*
+            * Load this page's JavaScript.
+            *
+            * Example for Home:
+            * pages/home/home.js
+            */
+            await loadPageScript(
+              pageConfig.js
+            );
+
+            currentPage =
+              pageName;
+
+            document.title =
+              pageConfig.title;                         
 
         /*
          * Reset the browser scroll position

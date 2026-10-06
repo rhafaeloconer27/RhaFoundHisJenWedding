@@ -10,10 +10,10 @@ let homeSlideshowInterval = null;
 let homeVisibilityHandler = null;
 let homeCountdownInterval = null;
 
-/*
-  Called by app.js after pages/home.html
-  is inserted into #app.
-*/
+/* =========================================================
+   INITIALIZE HOME
+========================================================= */
+
 window.initializeHomePage = function () {
   window.cleanupHomePage();
 
@@ -21,9 +21,10 @@ window.initializeHomePage = function () {
   initializeWeddingCountdown();
 };
 
-/*
-  Called before leaving Home.
-*/
+/* =========================================================
+   CLEANUP HOME
+========================================================= */
+
 window.cleanupHomePage = function () {
   if (homeSlideshowInterval !== null) {
     window.clearInterval(
@@ -129,9 +130,6 @@ function initializeHeroSlideshow() {
       );
   }
 
-  /*
-    Ensure all images become visible after loading.
-  */
   slides.forEach(function (slide) {
     const image =
       slide.querySelector("img");
@@ -171,6 +169,7 @@ function initializeHeroSlideshow() {
   });
 
   showSlide(0);
+
   startSlideshow();
 
   homeVisibilityHandler =
@@ -200,10 +199,14 @@ function initializeWeddingCountdown() {
     document.getElementById("hours");
 
   const minutesElement =
-    document.getElementById("minutes");
+    document.getElementById(
+      "minutes"
+    );
 
   const secondsElement =
-    document.getElementById("seconds");
+    document.getElementById(
+      "seconds"
+    );
 
   if (
     !daysElement ||
@@ -253,10 +256,17 @@ function initializeWeddingCountdown() {
       weddingDate - Date.now();
 
     if (remainingTime <= 0) {
-      daysElement.textContent = "000";
-      hoursElement.textContent = "00";
-      minutesElement.textContent = "00";
-      secondsElement.textContent = "00";
+      daysElement.textContent =
+        "000";
+
+      hoursElement.textContent =
+        "00";
+
+      minutesElement.textContent =
+        "00";
+
+      secondsElement.textContent =
+        "00";
 
       if (
         homeCountdownInterval !== null
@@ -283,7 +293,8 @@ function initializeWeddingCountdown() {
 
     const hours =
       Math.floor(
-        (remainingTime % day) / hour
+        (remainingTime % day) /
+          hour
       );
 
     const minutes =
