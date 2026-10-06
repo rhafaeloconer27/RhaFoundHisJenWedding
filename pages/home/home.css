@@ -1,0 +1,352 @@
+/* ==========================================================
+   HOME PAGE
+========================================================== */
+
+/* ==============================
+   HOME HERO
+============================== */
+
+.wedding-hero {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+
+  overflow: hidden;
+
+  background: #74766d;
+  color: var(--white);
+
+  text-align: center;
+}
+
+
+/* ==============================
+   HOME SLIDESHOW
+============================== */
+
+.hero-slideshow {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+
+  overflow: hidden;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform: scale(1.06);
+
+  transition:
+    opacity 1.4s ease,
+    visibility 1.4s ease,
+    transform 7s ease;
+}
+
+.hero-slide.active {
+  opacity: 1;
+  visibility: visible;
+
+  transform: scale(1);
+}
+
+.hero-slide img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  opacity: 0;
+
+  transition:
+    opacity 0.6s ease;
+}
+
+.hero-slide img.is-loaded {
+  opacity: 1;
+}
+
+
+/* ==============================
+   HERO OVERLAY
+============================== */
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(20, 25, 19, 0.08) 0%,
+      rgba(20, 25, 19, 0.18) 42%,
+      rgba(20, 25, 19, 0.55) 78%,
+      rgba(20, 25, 19, 0.72) 100%
+    );
+}
+
+
+/* ==============================
+   HERO CONTENT
+============================== */
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+
+  padding: 160px 18px 24px;
+
+  text-align: center;
+}
+
+
+/* ==============================
+   COUPLE NAME
+============================== */
+
+.couple-name {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin: 0;
+
+  color: var(--white);
+
+  font-family:
+    "Allura",
+    cursive;
+
+  font-size:
+    clamp(4rem, 22vw, 7.2rem);
+
+  font-weight: 400;
+  line-height: 0.7;
+
+  text-shadow:
+    0 4px 18px
+    rgba(0, 0, 0, 0.35);
+}
+
+.couple-name .ampersand {
+  margin: 14px 0 10px;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 0.5em;
+  line-height: 1;
+}
+
+
+/* ==============================
+   WEDDING DATE
+============================== */
+
+.wedding-date {
+  margin: 0;
+
+  color: var(--white);
+
+  font-size: 0.87rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+
+
+/* ==============================
+   FIXED HOME LAYOUT
+============================== */
+
+body[data-current-page="home"] {
+  width: 100%;
+
+  height: 100vh;
+  height: 100dvh;
+
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  overflow: hidden;
+}
+
+body[data-current-page="home"]
+.page-container {
+  width: 100%;
+
+  height:
+    calc(
+      100dvh -
+      var(--nav-height) -
+      var(--countdown-height)
+    );
+
+  min-height: 0;
+  padding-bottom: 0;
+
+  overflow: hidden;
+}
+
+body[data-current-page="home"]
+.hero-slideshow,
+body[data-current-page="home"]
+.hero-slide,
+body[data-current-page="home"]
+.hero-slide img {
+  width: 100%;
+  height: 100%;
+}
+
+
+/* ==============================
+   COUNTDOWN
+============================== */
+
+.hero-countdown {
+  position: fixed;
+  right: 0;
+  bottom: var(--nav-height);
+  left: 0;
+  z-index: 990;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  width: 100%;
+  height: var(--countdown-height);
+
+  padding: 5px 4px 4px;
+
+  background: var(--sage-dark);
+  color: var(--white);
+
+  -webkit-backdrop-filter:
+    blur(5px);
+
+  backdrop-filter:
+    blur(5px);
+}
+
+.countdown-item {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 0;
+  padding: 0 2px;
+
+  text-align: center;
+}
+
+.countdown-item:not(:last-child)::after {
+  content: "";
+
+  position: absolute;
+  top: 2px;
+  right: 0;
+
+  width: 1px;
+  height: 28px;
+
+  background:
+    rgba(255, 255, 255, 0.3);
+}
+
+.countdown-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 24px;
+  min-height: 17px;
+
+  padding-bottom: 2px;
+
+  border-bottom:
+    1px solid
+    rgba(255, 255, 255, 0.65);
+}
+
+.countdown-number {
+  display: block;
+
+  color: var(--white);
+
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.countdown-label {
+  display: block;
+
+  margin-top: 2px;
+
+  color: var(--white);
+
+  font-size: 6px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+
+  text-transform: uppercase;
+}
+
+
+/* ==============================
+   HOME RESPONSIVE
+============================== */
+
+@media (min-width: 640px) {
+  .hero-content {
+    padding-bottom: 48px;
+  }
+}
+
+@media (min-width: 900px) {
+  body[data-current-page="home"]
+  .hero-countdown {
+    right: 50%;
+    left: auto;
+
+    width: min(100%, 680px);
+
+    transform:
+      translateX(50%);
+  }
+}
+
+
+/* ==============================
+   ACCESSIBILITY
+============================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide {
+    transform: none;
+  }
+}

@@ -1,0 +1,162 @@
+<!-- =====================================================
+     LOCATION PAGE PARTIAL
+
+     Loaded dynamically inside:
+     <div id="app"></div>
+====================================================== -->
+
+<main class="page-container location-page">
+
+  <!-- LOCATION HERO -->
+
+  <section class="page-hero small-hero location-hero">
+
+    <div class="page-hero-overlay"></div>
+
+    <div class="page-hero-content">
+      <p>Join us at</p>
+
+      <h1>
+        Wedding Location
+      </h1>
+    </div>
+
+  </section>
+
+  <!-- LOCATION DETAILS -->
+
+  <section class="content-section location-section">
+
+    <article class="location-card">
+
+      <!-- LOCATION ICON -->
+
+      <div
+        class="location-icon"
+        aria-hidden="true"
+      >
+        <i class="fa-solid fa-location-dot"></i>
+      </div>
+
+      <p class="location-label">
+        Ceremony and Reception
+      </p>
+
+      <!-- UPDATED: Actual venue name -->
+
+      <h2 class="location-name">
+        Jhaymar’s Treehouse Events Place
+      </h2>
+
+      <!-- UPDATED: Actual venue address -->
+
+      <address class="location-address">
+        29 Gloria Street, Barangay Gulod,
+        <br />
+        Novaliches, Quezon City
+      </address>
+
+      <div class="location-divider"></div>
+
+      <!-- EVENT DETAILS -->
+
+      <div class="location-details">
+
+        <div class="location-detail-item">
+          <i
+            class="fa-regular fa-calendar"
+            aria-hidden="true"
+          ></i>
+
+          <div>
+            <span>Date</span>
+
+            <strong>
+              Thursday, February 4, 2027
+            </strong>
+          </div>
+        </div>
+
+        <div class="location-detail-item">
+          <i
+            class="fa-regular fa-clock"
+            aria-hidden="true"
+          ></i>
+
+          <div>
+            <span>Time</span>
+
+            <strong>
+              3:00 in the afternoon
+            </strong>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- =================================================
+           NEW: CLICKABLE GOOGLE MAP PREVIEW
+
+           The iframe displays the map.
+
+           pointer-events are disabled through CSS so that
+           clicking anywhere on the map opens Google Maps.
+      ================================================== -->
+
+      <div class="location-map-container">
+
+        <iframe
+          class="location-map-frame"
+          src="https://www.google.com/maps?q=Jhaymar%27s%20Treehouse%20Events%20Place%2C%2029%20Gloria%20Street%2C%20Barangay%20Gulod%2C%20Novaliches%2C%20Quezon%20City&amp;output=embed"
+          title="Map showing Jhaymar’s Treehouse Events Place"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+
+        <!--
+          The transparent link covers the entire map.
+          Clicking it opens the venue in Google Maps.
+        -->
+
+        <a
+          class="location-map-overlay"
+          href="https://www.google.com/maps/search/?api=1&amp;query=Jhaymar%27s%20Treehouse%20Events%20Place%2C%2029%20Gloria%20Street%2C%20Barangay%20Gulod%2C%20Novaliches%2C%20Quezon%20City"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open Jhaymar’s Treehouse Events Place in Google Maps"
+        >
+          <span class="location-map-open-label">
+            <i
+              class="fa-solid fa-up-right-from-square"
+              aria-hidden="true"
+            ></i>
+
+            Tap map to open
+          </span>
+        </a>
+
+      </div>
+
+      <!-- OPEN GOOGLE MAPS BUTTON -->
+
+      <a
+        class="location-map-button"
+        href="https://www.google.com/maps/search/?api=1&amp;query=Jhaymar%27s%20Treehouse%20Events%20Place%2C%2029%20Gloria%20Street%2C%20Barangay%20Gulod%2C%20Novaliches%2C%20Quezon%20City"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <i
+          class="fa-solid fa-map-location-dot"
+          aria-hidden="true"
+        ></i>
+
+        <span>
+          Open in Google Maps
+        </span>
+      </a>
+
+    </article>
+
+  </section>
+
+</main>

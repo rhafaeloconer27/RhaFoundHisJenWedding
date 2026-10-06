@@ -32,48 +32,52 @@ document.addEventListener(
     ====================================================== */
 
     const pages = {
-      home: {
-        file: "pages/home.html",
+     home: {
+        file: "pages/home/home.html",
+        css: "pages/home/home.css",
+        js: "pages/home/home.js",
         title: "Home | Rhaf & Jen",
       },
 
-      sponsors: {
-        file: "pages/sponsors.html",
+     sponsors: {
+        file: "pages/sponsors/sponsors.html",
+        css: "pages/sponsors/sponsors.css",
+        js: "pages/sponsors/sponsors.js",
         title: "Sponsors | Rhaf & Jen",
       },
 
       location: {
-        file: "pages/location.html",
+        file: "pages/location/location.html",
+        css: "pages/location/location.css",
+        js: "pages/location/location.js",
         title: "Location | Rhaf & Jen",
       },
 
-      rsvp: {
-        file: "pages/rsvp.html",
+     rsvp: {
+        file: "pages/rsvp/rsvp.html",
+        css: "pages/rsvp/rsvp.css",
+        js: "pages/rsvp/rsvp.js",
         title: "RSVP | Rhaf & Jen",
       },
 
-      attire: {
-        file: "pages/attire.html",
-        title:
-          "Theme & Attire | Rhaf & Jen",
+    attire: {
+        file: "pages/attire/attire.html",
+        css: "pages/attire/attire.css",
+        js: "pages/attire/attire.js",
+        title: "Theme & Attire | Rhaf & Jen",
       },
 
       gift: {
-        file:
-          "pages/gift-guide.html",
-
-        title:
-          "Gift Guide | Rhaf & Jen",
+         file: "pages/gift/gift.html",
+          css: "pages/gift/gift.css",
+          title: "Gift Guide | Rhaf & Jen",
       },
 
       faq: {
-        file: "pages/faq.html",
-        title: "FAQ | Rhaf & Jen",
-      },
-
-      contact: {
-        file: "pages/contact.html",
-        title: "Contact | Rhaf & Jen",
+            file: "pages/faq/faq.html",
+            css: "pages/faq/faq.css",
+            js: "pages/faq/faq.js",
+            title: "FAQ | Rhaf & Jen",
       },
 
       prenup: {
@@ -732,6 +736,185 @@ document.addEventListener(
     }
 
     /* ======================================================
+   PAGE-SPECIFIC CSS / JS LOADER
+====================================================== */
+
+let activePageStylesheet = null;
+
+const loadedPageScripts = new Map();
+
+/* ------------------------------------------------------
+   Load the CSS belonging to the current page.
+------------------------------------------------------ */
+
+function loadPageStylesheet(href) {
+  /*
+   * Page has no page-specific stylesheet.
+   */
+  if (!href) {
+    if (activePageStylesheet) {
+      activePageStylesheet.remove();
+      activePageStylesheet = null;
+    }
+
+    return Promise.resolve();
+  }
+
+  /*
+   * The requested stylesheet is already active.
+   */
+  if (
+    activePageStylesheet &&
+    activePageStylesheet.dataset.href === href
+  ) {
+    return Promise.resolve();
+  }
+
+  return new Promise(
+    function (resolve, reject) {
+      const link =
+        document.createElement("link");
+
+      link.rel = "stylesheet";
+      link.href = href;
+
+      link.dataset.pageStyle = "true";
+      link.dataset.href = href;
+
+      /*
+       * Avoid showing unstyled content while
+       * the new stylesheet is downloading.
+       */
+      link.media = "not all";
+
+      link.addEventListener(
+        "load",
+        function () {
+          /*
+           * Enable the new stylesheet.
+           */
+          link.media = "all";
+
+          /*
+           * Remove the previous page stylesheet.
+           */
+          if (
+            activePageStylesheet &&
+            activePageStylesheet !== link
+          ) {
+            activePageStylesheet.remove();
+          }
+
+          activePageStylesheet = link;
+
+          resolve();
+        },
+        {
+          once: true,
+        }
+      );
+
+      link.addEventListener(
+        "error",
+        function () {
+          link.remove();
+
+          reject(
+            new Error(
+              `Unable to load stylesheet: ${href}`
+            )
+          );
+        },
+        {
+          once: true,
+        }
+      );
+
+      document.head.appendChild(link);
+    }
+  );
+}
+
+/* ------------------------------------------------------
+   Load page-specific JavaScript.
+
+   Each JS file is downloaded only once during
+   the SPA session.
+------------------------------------------------------ */
+
+function loadPageScript(src) {
+  if (!src) {
+    return Promise.resolve();
+  }
+
+  /*
+   * Already loaded successfully.
+   */
+  if (loadedPageScripts.has(src)) {
+    return loadedPageScripts.get(src);
+  }
+
+  const scriptPromise =
+    new Promise(
+      function (resolve, reject) {
+        const script =
+          document.createElement(
+            "script"
+          );
+
+        script.src = src;
+        script.async = false;
+
+        script.dataset.pageScript =
+          "true";
+
+        script.addEventListener(
+          "load",
+          function () {
+            resolve();
+          },
+          {
+            once: true,
+          }
+        );
+
+        script.addEventListener(
+          "error",
+          function () {
+            script.remove();
+
+            /*
+             * Allow another attempt if
+             * loading failed.
+             */
+            loadedPageScripts.delete(src);
+
+            reject(
+              new Error(
+                `Unable to load script: ${src}`
+              )
+            );
+          },
+          {
+            once: true,
+          }
+        );
+
+        document.body.appendChild(
+          script
+        );
+      }
+    );
+
+  loadedPageScripts.set(
+    src,
+    scriptPromise
+  );
+
+  return scriptPromise;
+}
+
+    /* ======================================================
        LOAD PAGE
     ====================================================== */
 
@@ -787,26 +970,45 @@ document.addEventListener(
           );
         }
 
-        const html =
-          await response.text();
+      const html =
+              await response.text();
 
-        /*
-         * Remove page-specific listeners,
-         * GSAP contexts, intervals, and timers
-         * from the old page.
-         */
-        cleanupCurrentPage();
+            /*
+            * Clean up timers, event listeners,
+            * GSAP contexts, etc. from the old page.
+            */
+            cleanupCurrentPage();
 
-        /*
-         * Insert the new page partial.
-         */
-        app.innerHTML = html;
+            /*
+            * Insert the new HTML first.
+            *
+            * The loader is still covering the screen,
+            * so the user will not see an unstyled page.
+            */
+            app.innerHTML = html;
 
-        currentPage =
-          pageName;
+            /*
+            * Load this page's CSS.
+            */
+            await loadPageStylesheet(
+              pageConfig.css
+            );
 
-        document.title =
-          pageConfig.title;
+            /*
+            * Load this page's JavaScript.
+            *
+            * Example for Home:
+            * pages/home/home.js
+            */
+            await loadPageScript(
+              pageConfig.js
+            );
+
+            currentPage =
+              pageName;
+
+            document.title =
+              pageConfig.title;                         
 
         /*
          * Reset the browser scroll position
