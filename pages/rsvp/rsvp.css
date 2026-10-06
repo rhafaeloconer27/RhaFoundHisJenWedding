@@ -1,0 +1,636 @@
+/* ==========================================================
+   RSVP PAGE
+========================================================== */
+
+body[data-current-page="rsvp"] {
+  background: #eef2eb;
+}
+
+body[data-current-page="rsvp"]
+.page-container {
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  padding-bottom:
+    calc(
+      var(--nav-height) +
+      50px +
+      env(safe-area-inset-bottom)
+    );
+}
+
+
+/* ==============================
+   RSVP HERO
+============================== */
+
+.rsvp-hero {
+  background:
+    url("../../images/rhafjeneight.webp")
+    center 35% / cover no-repeat;
+}
+
+
+/* ==============================
+   RSVP SECTION
+============================== */
+
+body[data-current-page="rsvp"]
+.rsvp-section {
+  padding:
+    20px 12px
+    calc(
+      var(--nav-height) +
+      52px +
+      env(safe-area-inset-bottom)
+    );
+
+  background:
+    linear-gradient(
+      rgba(242, 246, 240, 0.94),
+      rgba(242, 246, 240, 0.94)
+    ),
+    url("../../images/rsvp-background.webp")
+    center / cover fixed;
+}
+
+
+/* ==============================
+   RSVP CARDS
+============================== */
+
+.rsvp-form-header,
+.rsvp-reminder-card,
+.rsvp-field-card {
+  width: min(100%, 560px);
+
+  margin-right: auto;
+  margin-left: auto;
+
+  border:
+    1px solid #dde2da;
+
+  border-radius: 10px;
+
+  background:
+    rgba(255, 255, 255, 0.96);
+
+  box-shadow:
+    0 1px 3px
+    rgba(48, 55, 45, 0.08);
+}
+
+
+/* ==============================
+   FORM HEADER
+============================== */
+
+.rsvp-form-header {
+  position: relative;
+
+  margin-bottom: 12px;
+  padding: 25px 20px 18px;
+
+  border-top:
+    8px solid var(--sage-dark);
+}
+
+.rsvp-form-header h2 {
+  margin-bottom: 12px;
+
+  color: #353a32;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 1.75rem;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+
+/* ==============================
+   RSVP DEADLINE
+============================== */
+
+.rsvp-deadline {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 13px;
+
+  color: #42483e;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.rsvp-deadline i {
+  color: var(--sage-dark);
+}
+
+
+/* ==============================
+   REQUIRED FIELDS NOTE
+============================== */
+
+.required-fields-note {
+  padding-top: 12px;
+
+  border-top:
+    1px solid #e5e8e2;
+
+  color: #c94c42;
+
+  font-size: 0.74rem;
+}
+
+.required-fields-note span,
+.required-mark {
+  color: #d1443b;
+}
+
+
+/* ==============================
+   RSVP REMINDER
+============================== */
+
+.rsvp-reminder-card {
+  margin-bottom: 12px;
+
+  padding: 20px;
+
+  color: #45493f;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 1.05rem;
+  line-height: 1.45;
+}
+
+.rsvp-reminder-card p + p {
+  margin-top: 16px;
+}
+
+
+/* ==============================
+   RSVP FORM
+============================== */
+
+.rsvp-form {
+  display: grid;
+
+  gap: 12px;
+
+  width: 100%;
+  max-width: none;
+
+  margin: 0 auto;
+}
+
+.rsvp-field-card {
+  padding: 22px 20px;
+}
+
+.rsvp-field-card > label,
+.rsvp-field-card legend {
+  display: block;
+
+  margin-bottom: 22px;
+
+  color: #3d4239;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 1.04rem;
+  font-weight: 500;
+}
+
+
+/* ==============================
+   INPUTS
+============================== */
+
+.rsvp-field-card
+input[type="text"],
+.rsvp-field-card
+input[type="tel"],
+.rsvp-field-card
+input[type="email"],
+.rsvp-field-card
+textarea {
+  width: 100%;
+
+  padding: 8px 0;
+
+  border: 0;
+
+  border-bottom:
+    1px solid #d5dad2;
+
+  border-radius: 0;
+
+  background: transparent;
+
+  color: var(--text);
+
+  font-family:
+    "Montserrat",
+    sans-serif;
+
+  /*
+   * Keep 16px to prevent iPhone Safari
+   * from automatically zooming.
+   */
+  font-size: 16px;
+  line-height: 1.4;
+
+  outline: none;
+
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+.rsvp-field-card
+input::placeholder,
+.rsvp-field-card
+textarea::placeholder {
+  color: #8b8e87;
+}
+
+.rsvp-field-card
+input:focus,
+.rsvp-field-card
+textarea:focus {
+  border-bottom-color:
+    var(--sage-dark);
+
+  box-shadow:
+    0 1px 0
+    var(--sage-dark);
+}
+
+.rsvp-field-card textarea {
+  min-height: 54px;
+
+  resize: vertical;
+}
+
+
+/* ==============================
+   ATTENDANCE FIELD
+============================== */
+
+.attendance-field {
+  border:
+    1px solid #dde2da;
+}
+
+.attendance-field legend {
+  padding: 0;
+
+  border: 0;
+}
+
+
+/* ==============================
+   RADIO OPTIONS
+============================== */
+
+.radio-option {
+  display: flex !important;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin: 0 !important;
+  padding: 7px 0;
+
+  cursor: pointer;
+}
+
+.radio-option
+input[type="radio"] {
+  width: 18px;
+  height: 18px;
+
+  accent-color:
+    var(--sage-dark);
+}
+
+.radio-option span {
+  color: #4b5047;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 1rem;
+}
+
+
+/* ==============================
+   HONEYPOT / HIDDEN FRAME
+============================== */
+
+.honeypot-field {
+  position:
+    absolute !important;
+
+  left:
+    -10000px !important;
+
+  width:
+    1px !important;
+
+  height:
+    1px !important;
+
+  overflow:
+    hidden !important;
+}
+
+.hidden-submission-frame {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  border: 0;
+
+  opacity: 0;
+
+  pointer-events: none;
+}
+
+
+/* ==============================
+   FORM ACTIONS
+============================== */
+
+.rsvp-submit-row {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  width:
+    min(100%, 560px);
+
+  margin: 0 auto;
+
+  padding: 0 4px;
+}
+
+
+/* ==============================
+   SUBMIT BUTTON
+============================== */
+
+.submit-button {
+  min-width: 90px;
+
+  margin: 0;
+
+  padding:
+    13px 18px;
+
+  border: 0;
+
+  border-radius: 4px;
+
+  background:
+    var(--sage-dark);
+
+  color:
+    var(--white);
+
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.submit-button:hover {
+  transform:
+    translateY(-2px);
+}
+
+.submit-button:disabled {
+  cursor: wait;
+
+  opacity: 0.65;
+}
+
+
+/* ==============================
+   CLEAR BUTTON
+============================== */
+
+.clear-form-button {
+  padding:
+    10px 12px;
+
+  border: 0;
+
+  background: transparent;
+
+  color:
+    var(--sage-dark);
+
+  font-size: 0.78rem;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.clear-form-button:hover {
+  text-decoration:
+    underline;
+}
+
+.clear-form-button:disabled {
+  cursor: wait;
+
+  opacity: 0.55;
+}
+
+
+/* ==============================
+   FORM RESPONSE
+============================== */
+
+.form-response {
+  width:
+    min(100%, 560px);
+
+  min-height: 20px;
+
+  margin: 0 auto;
+  padding: 0;
+
+  border-radius: 10px;
+
+  color:
+    var(--sage-dark);
+
+  font-size: 0.82rem;
+
+  text-align: center;
+
+  transition:
+    padding 0.2s ease,
+    background 0.2s ease;
+}
+
+.form-response.success,
+.form-response.error,
+.form-response.loading {
+  padding:
+    12px 14px;
+}
+
+.form-response.success {
+  background:
+    #e8f2e4;
+
+  color:
+    #42623d;
+}
+
+.form-response.error {
+  background:
+    #f8e8e6;
+
+  color:
+    #9a4038;
+}
+
+.form-response.loading {
+  background:
+    #f2efe4;
+
+  color:
+    #75663f;
+}
+
+
+/* ==============================
+   SECURITY NOTE
+============================== */
+
+.rsvp-security-note {
+  width:
+    min(100%, 560px);
+
+  margin:
+    18px auto 0;
+
+  color:
+    #6f746c;
+
+  font-size:
+    0.68rem;
+
+  line-height:
+    1.5;
+}
+
+
+/* ==============================
+   MOBILE INPUT ZOOM FIX
+============================== */
+
+@media (max-width: 768px) {
+
+  .rsvp-form
+  input[type="text"],
+
+  .rsvp-form
+  input[type="tel"],
+
+  .rsvp-form
+  input[type="email"],
+
+  .rsvp-form
+  input[type="number"],
+
+  .rsvp-form
+  input[type="password"],
+
+  .rsvp-form
+  input[type="search"],
+
+  .rsvp-form
+  input[type="url"],
+
+  .rsvp-form
+  select,
+
+  .rsvp-form
+  textarea {
+    font-size:
+      16px !important;
+  }
+}
+
+
+/* ==============================
+   RSVP MOBILE
+============================== */
+
+@media (max-width: 480px) {
+
+  .rsvp-form-header {
+    padding:
+      21px 17px 16px;
+  }
+
+  .rsvp-form-header h2 {
+    font-size:
+      1.55rem;
+  }
+
+  .rsvp-reminder-card,
+  .rsvp-field-card {
+    padding:
+      19px 17px;
+  }
+
+  .rsvp-field-card > label,
+  .rsvp-field-card legend {
+    margin-bottom:
+      18px;
+
+    font-size:
+      1rem;
+  }
+
+  body[data-current-page="rsvp"]
+  .rsvp-section {
+    padding-right:
+      10px;
+
+    padding-left:
+      10px;
+  }
+}

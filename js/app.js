@@ -32,48 +32,59 @@ document.addEventListener(
     ====================================================== */
 
     const pages = {
-      home: {
-        file: "pages/home.html",
+     home: {
+        file: "pages/home/home.html",
+        css: "pages/home/home.css",
+        js: "pages/home/home.js",
         title: "Home | Rhaf & Jen",
       },
 
-      sponsors: {
-        file: "pages/sponsors.html",
+     sponsors: {
+        file: "pages/sponsors/sponsors.html",
+        css: "pages/sponsors/sponsors.css",
+        js: "pages/sponsors/sponsors.js",
         title: "Sponsors | Rhaf & Jen",
       },
 
       location: {
-        file: "pages/location.html",
+        file: "pages/location/location.html",
+        css: "pages/location/location.css",
+        js: "pages/location/location.js",
         title: "Location | Rhaf & Jen",
       },
 
-      rsvp: {
-        file: "pages/rsvp.html",
+     rsvp: {
+        file: "pages/rsvp/rsvp.html",
+        css: "pages/rsvp/rsvp.css",
+        js: "pages/rsvp/rsvp.js",
         title: "RSVP | Rhaf & Jen",
       },
 
-      attire: {
-        file: "pages/attire.html",
-        title:
-          "Theme & Attire | Rhaf & Jen",
+    attire: {
+        file: "pages/attire/attire.html",
+        css: "pages/attire/attire.css",
+        js: "pages/attire/attire.js",
+        title: "Theme & Attire | Rhaf & Jen",
       },
 
       gift: {
-        file:
-          "pages/gift-guide.html",
-
-        title:
-          "Gift Guide | Rhaf & Jen",
+         file: "pages/gift/gift.html",
+          css: "pages/gift/gift.css",
+          title: "Gift Guide | Rhaf & Jen",
       },
 
       faq: {
-        file: "pages/faq.html",
-        title: "FAQ | Rhaf & Jen",
+            file: "pages/faq/faq.html",
+            css: "pages/faq/faq.css",
+            js: "pages/faq/faq.js",
+            title: "FAQ | Rhaf & Jen",
       },
 
       contact: {
-        file: "pages/contact.html",
-        title: "Contact | Rhaf & Jen",
+        file: "pages/faq/faq.html",
+            css: "pages/faq/faq.css",
+            js: "pages/faq/faq.js",
+            title: "FAQ | Rhaf & Jen",
       },
 
       prenup: {
