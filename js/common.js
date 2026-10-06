@@ -50,11 +50,11 @@ const WEDDING_NAVIGATION_ITEMS = [
   },
 
   {
-    page: "contact",
-    href: "wedding.html?page=contact",
-    icon: "fa-solid fa-phone",
-    label: "Contact",
-  },
+  page: "faq",
+  href: "wedding.html?page=faq",
+  icon: "fa-solid fa-circle-question",
+  label: "FAQ",
+},
 ];
 
 document.addEventListener(

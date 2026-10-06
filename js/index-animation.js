@@ -757,6 +757,567 @@ function drawScratchSurface() {
     },
   });
 
+  /* =========================================================
+   LOCATION SECTION
+========================================================= */
+
+animateOnce(
+  ".intro-location-heading",
+  {
+    y: 25,
+    duration: 0.7,
+
+    scrollTrigger: {
+      trigger:
+        ".intro-location-section",
+
+      start:
+        "top 82%",
+
+      once: true,
+    },
+  }
+);
+
+animateOnce(
+  ".intro-location-card",
+  {
+    y: 70,
+    scale: 0.94,
+    duration: 1.05,
+
+    scrollTrigger: {
+      trigger:
+        ".intro-location-section",
+
+      start:
+        "top 76%",
+
+      once: true,
+    },
+  }
+);
+
+gsap.from(
+  [
+    ".intro-location-icon",
+    ".intro-location-label",
+    ".intro-location-name",
+    ".intro-location-address",
+    ".intro-location-divider",
+  ],
+  {
+    opacity: 0,
+
+    y: 18,
+
+    duration: 0.55,
+
+    stagger: 0.1,
+
+    ease:
+      "power2.out",
+
+    scrollTrigger: {
+      trigger:
+        ".intro-location-card",
+
+      start:
+        "top 72%",
+
+      once: true,
+    },
+  }
+);
+
+gsap.from(
+  ".intro-location-detail",
+  {
+    opacity: 0,
+
+    x: -25,
+
+    duration: 0.55,
+
+    stagger: 0.12,
+
+    ease:
+      "power2.out",
+
+    scrollTrigger: {
+      trigger:
+        ".intro-location-details",
+
+      start:
+        "top 82%",
+
+      once: true,
+    },
+  }
+);
+
+gsap.from(
+  ".intro-location-map",
+  {
+    opacity: 0,
+
+    y: 35,
+
+    scale: 0.96,
+
+    duration: 0.8,
+
+    ease:
+      "power3.out",
+
+    scrollTrigger: {
+      trigger:
+        ".intro-location-map",
+
+      start:
+        "top 85%",
+
+      once: true,
+    },
+  }
+);
+
+gsap.from(
+  ".intro-location-map-button",
+  {
+    opacity: 0,
+
+    y: 20,
+
+    scale: 0.96,
+
+    duration: 0.65,
+
+    ease:
+      "back.out(1.4)",
+
+    scrollTrigger: {
+      trigger:
+        ".intro-location-map-button",
+
+      start:
+        "top 90%",
+
+      once: true,
+    },
+  }
+);
+
+/* =========================================================
+   GUEST ATTIRE SECTION
+========================================================= */
+
+animateOnce(
+  ".intro-attire-heading",
+  {
+    y: 25,
+    duration: 0.7,
+
+    scrollTrigger: {
+      trigger:
+        ".intro-attire-section",
+
+      start:
+        "top 82%",
+
+      once: true,
+    },
+  }
+);
+
+animateOnce(
+  ".intro-attire-card",
+  {
+    y: 70,
+    scale: 0.94,
+    duration: 1.05,
+
+    scrollTrigger: {
+      trigger:
+        ".intro-attire-section",
+
+      start:
+        "top 76%",
+
+      once: true,
+    },
+  }
+);
+
+gsap.from(
+  [
+    ".intro-attire-icon",
+    ".intro-attire-eyebrow",
+    ".intro-attire-title",
+    ".intro-attire-description",
+  ],
+  {
+    opacity: 0,
+
+    y: 18,
+
+    duration: 0.55,
+
+    stagger: 0.1,
+
+    ease:
+      "power2.out",
+
+    scrollTrigger: {
+      trigger:
+        ".intro-attire-card",
+
+      start:
+        "top 72%",
+
+      once: true,
+    },
+  }
+);
+
+gsap.from(
+  ".intro-attire-guideline",
+  {
+    opacity: 0,
+
+    y: 25,
+
+    scale: 0.96,
+
+    duration: 0.55,
+
+    stagger: 0.14,
+
+    ease:
+      "power2.out",
+
+    scrollTrigger: {
+      trigger:
+        ".intro-attire-guidelines",
+
+      start:
+        "top 84%",
+
+      once: true,
+    },
+  }
+);
+
+gsap.from(
+  ".intro-attire-color-option",
+  {
+    opacity: 0,
+
+    y: 20,
+
+    scale: 0.75,
+
+    duration: 0.45,
+
+    stagger: 0.08,
+
+    ease:
+      "back.out(1.5)",
+
+    scrollTrigger: {
+      trigger:
+        ".intro-attire-colors",
+
+      start:
+        "top 85%",
+
+      once: true,
+    },
+  }
+);
+
+gsap.from(
+  ".intro-attire-reminder",
+  {
+    opacity: 0,
+
+    y: 22,
+
+    scale: 0.97,
+
+    duration: 0.6,
+
+    ease:
+      "power2.out",
+
+    scrollTrigger: {
+      trigger:
+        ".intro-attire-reminder",
+
+      start:
+        "top 90%",
+
+      once: true,
+    },
+  }
+);
+
+/* =========================================================
+   GIFT GUIDE SECTION
+========================================================= */
+
+animateOnce(
+  ".intro-gift-heading",
+  {
+    y: 25,
+    duration: 0.7,
+
+    scrollTrigger: {
+      trigger:
+        ".intro-gift-section",
+
+      start:
+        "top 82%",
+
+      once: true,
+    },
+  }
+);
+
+animateOnce(
+  ".intro-gift-card",
+  {
+    y: 70,
+    scale: 0.94,
+    duration: 1.05,
+
+    scrollTrigger: {
+      trigger:
+        ".intro-gift-section",
+
+      start:
+        "top 76%",
+
+      once: true,
+    },
+  }
+);
+
+
+/* MAIN ICON */
+
+gsap.from(
+  ".intro-gift-icon",
+  {
+    opacity: 0,
+
+    scale: 0.3,
+
+    rotation: -25,
+
+    duration: 0.65,
+
+    ease:
+      "back.out(1.8)",
+
+    scrollTrigger: {
+      trigger:
+        ".intro-gift-card",
+
+      start:
+        "top 72%",
+
+      once: true,
+    },
+  }
+);
+
+
+/* TITLE */
+
+gsap.from(
+  [
+    ".intro-gift-label",
+    ".intro-gift-title",
+  ],
+  {
+    opacity: 0,
+
+    y: 20,
+
+    duration: 0.55,
+
+    stagger: 0.12,
+
+    ease:
+      "power2.out",
+
+    scrollTrigger: {
+      trigger:
+        ".intro-gift-card",
+
+      start:
+        "top 72%",
+
+      once: true,
+    },
+  }
+);
+
+
+/* MESSAGE PARAGRAPHS */
+
+gsap.from(
+  ".intro-gift-message p",
+  {
+    opacity: 0,
+
+    y: 22,
+
+    duration: 0.6,
+
+    stagger: 0.15,
+
+    ease:
+      "power2.out",
+
+    scrollTrigger: {
+      trigger:
+        ".intro-gift-message",
+
+      start:
+        "top 84%",
+
+      once: true,
+    },
+  }
+);
+
+
+/* DIVIDER */
+
+gsap.from(
+  ".intro-gift-divider",
+  {
+    opacity: 0,
+
+    scaleX: 0,
+
+    transformOrigin:
+      "center",
+
+    duration: 0.7,
+
+    ease:
+      "power3.out",
+
+    scrollTrigger: {
+      trigger:
+        ".intro-gift-divider",
+
+      start:
+        "top 88%",
+
+      once: true,
+    },
+  }
+);
+
+
+/* THANK YOU / SIGNATURE */
+
+gsap.from(
+  [
+    ".intro-gift-thank-you",
+    ".intro-gift-signature",
+  ],
+  {
+    opacity: 0,
+
+    y: 18,
+
+    duration: 0.55,
+
+    stagger: 0.15,
+
+    ease:
+      "power2.out",
+
+    scrollTrigger: {
+      trigger:
+        ".intro-gift-thank-you",
+
+      start:
+        "top 88%",
+
+      once: true,
+    },
+  }
+);
+
+
+/* REMINDER CARD */
+
+animateOnce(
+  ".intro-gift-reminder",
+  {
+    y: 40,
+    scale: 0.96,
+    duration: 0.8,
+
+    scrollTrigger: {
+      trigger:
+        ".intro-gift-reminder",
+
+      start:
+        "top 90%",
+
+      once: true,
+    },
+  }
+);
+
+/* =========================================================
+   RSVP SECTION
+========================================================= */
+
+animateOnce(
+  ".intro-rsvp-header",
+  {
+    y: 35,
+    duration: 0.8,
+
+    scrollTrigger: {
+      trigger:
+        ".intro-rsvp-section",
+
+      start:
+        "top 80%",
+
+      once: true,
+    },
+  }
+);
+
+animateOnce(
+  ".intro-rsvp-search-card",
+  {
+    y: 55,
+    scale: 0.96,
+    duration: 0.9,
+
+    scrollTrigger: {
+      trigger:
+        ".intro-rsvp-search-card",
+
+      start:
+        "top 88%",
+
+      once: true,
+    },
+  }
+);
+
   /*
    * Open invitation animation
    */
@@ -885,37 +1446,72 @@ if (openInvitationButton) {
     });
 
    gsap.set(
-  [
-    '.intro-message-label',
-    '.intro-message-card',
-    '.intro-message-text',
-    '.intro-message-closing',
-    '.intro-message-signature',
-    '.intro-scroll-lottie',
+      [
+        '.intro-message-label',
+        '.intro-message-card',
+        '.intro-message-text',
+        '.intro-message-closing',
+        '.intro-message-signature',
+        '.intro-scroll-lottie',
 
-    '.intro-scripture-label',
-    '.intro-scripture-card',
-    '.intro-scripture-mark',
-    '.intro-scripture-quote',
-    '.intro-scripture-divider',
-    '.intro-scripture-reference',
+        '.intro-scripture-label',
+        '.intro-scripture-card',
+        '.intro-scripture-mark',
+        '.intro-scripture-quote',
+        '.intro-scripture-divider',
+        '.intro-scripture-reference',
 
-    '.intro-scratch-label',
- '.scratch-date-circles',
-    '.scratch-date-complete',
+        '.intro-scratch-label',
+        '.scratch-date-circles',
+        '.scratch-date-complete',
 
-    '.intro-cover-section .intro-label',
-    '.invitation-cover',
-    '.intro-open-note',
-  ],
-  {
-    opacity: 1,
-    x: 0,
-    y: 0,
-    scale: 1,
-    rotation: 0,
-    rotationX: 0,
-  }
-);
+        '.intro-location-heading',
+        '.intro-location-card',
+        '.intro-location-icon',
+        '.intro-location-label',
+        '.intro-location-name',
+        '.intro-location-address',
+        '.intro-location-divider',
+        '.intro-location-detail',
+        '.intro-location-map',
+        '.intro-location-map-button',
+
+        '.intro-attire-heading',
+        '.intro-attire-card',
+        '.intro-attire-icon',
+        '.intro-attire-eyebrow',
+        '.intro-attire-title',
+        '.intro-attire-description',
+        '.intro-attire-guideline',
+        '.intro-attire-color-option',
+        '.intro-attire-reminder',
+
+        '.intro-gift-heading',
+        '.intro-gift-card',
+        '.intro-gift-icon',
+        '.intro-gift-label',
+        '.intro-gift-title',
+        '.intro-gift-message p',
+        '.intro-gift-divider',
+        '.intro-gift-thank-you',
+        '.intro-gift-signature',
+        '.intro-gift-reminder',
+
+        '.intro-rsvp-header',
+'.intro-rsvp-search-card',
+
+        '.intro-cover-section .intro-label',
+        '.invitation-cover',
+        '.intro-open-note',
+      ],
+      {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        scale: 1,
+        rotation: 0,
+        rotationX: 0,
+      }
+    );
   }
 });

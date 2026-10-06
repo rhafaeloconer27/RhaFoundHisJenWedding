@@ -80,13 +80,6 @@ document.addEventListener(
             title: "FAQ | Rhaf & Jen",
       },
 
-      contact: {
-        file: "pages/faq/faq.html",
-            css: "pages/faq/faq.css",
-            js: "pages/faq/faq.js",
-            title: "FAQ | Rhaf & Jen",
-      },
-
       prenup: {
         file: "pages/prenup.html",
         title: "Prenup | Rhaf & Jen",
