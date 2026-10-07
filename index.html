@@ -536,9 +536,9 @@
 
       <span>✦</span>
 
-      <small>
+      <p class="intro-scratch-subtext">
         See? You knew it.
-      </small>
+      </p>
     </div>
 
   </div>
@@ -793,14 +793,6 @@
 
             <div class="intro-attire-guideline">
 
-              <i
-
-                class="fa-solid fa-user-tie"
-
-                aria-hidden="true"
-
-              ></i>
-
               <div>
 
                 <span>
@@ -824,14 +816,6 @@
             </div>
 
             <div class="intro-attire-guideline">
-
-              <i
-
-                class="fa-solid fa-person-dress"
-
-                aria-hidden="true"
-
-              ></i>
 
               <div>
 
@@ -1134,9 +1118,9 @@
 
         <div class="intro-rsvp-header">
 
-          <p class="intro-rsvp-eyebrow">
+           <p class="intro-gift-label">
 
-            Kindly Reply
+            RSVP
 
           </p>
 
@@ -1148,9 +1132,7 @@
 
           <p class="intro-rsvp-subtitle">
 
-            Search for your name as it appears
-
-            on your invitation.
+            Find your name below. Your seat, your food, and possibly your dance moves depend on it.
 
           </p>
 
@@ -1180,7 +1162,7 @@
 
               id="introRsvpSearch"
 
-              placeholder="Enter your name"
+              placeholder="Type your name, celebrity aliases not accepted"
 
               autocomplete="off"
 
@@ -1296,13 +1278,13 @@
 
               <h3 id="introRsvpModalTitle">
 
-                Select Your Name
+                Well, Look Who We Found
 
               </h3>
 
               <p class="intro-rsvp-modal-description">
 
-                Is this you? Select your name to continue.
+                Tap your name. This is your very unofficial background check.
 
               </p>
 
@@ -1333,64 +1315,31 @@
             >
 
               <button
+  type="button"
+  class="intro-rsvp-back"
+  data-rsvp-back="guest"
+>
+  <i class="fa-solid fa-arrow-left"></i>
 
-                type="button"
-
-                class="intro-rsvp-back"
-
-                data-rsvp-back="guest"
-
-              >
-
-                <i class="fa-solid fa-arrow-left"></i>
-
-                <span>
-
-                  Back
-
-                </span>
-
-              </button>
+  <span id="introRsvpBackLabel">
+    Wrong Turn?
+  </span>
+</button>
 
               <p class="intro-rsvp-modal-eyebrow">
+  This Is It
+</p>
 
-                Response
+              <h3 id="introRsvpResponseTitle">
+  Well, Guest...
+</h3>
 
-              </p>
-
-              <h3>
-
-                Hello,
-
-                <span id="introRsvpGuestFirstName">
-
-                  Guest
-
-                </span>
-
-              </h3>
-
-              <p class="intro-rsvp-seat-message">
-
-                You have
-
-                <strong id="introRsvpSeatCount">
-
-                  1
-
-                </strong>
-
-                reserved
-
-                <span id="introRsvpSeatWord">
-
-                  seat
-
-                </span>
-
-                in your party.
-
-              </p>
+<p
+  class="intro-rsvp-seat-message"
+  id="introRsvpRoleMessage"
+>
+  We’re happy to have you with us.
+</p>
 
               <div class="intro-rsvp-response-options">
 
@@ -1455,6 +1404,74 @@
                 </button>
 
               </div>
+
+              <!-- =========================================
+     DECLINE CONFIRMATION
+========================================== -->
+
+<div
+  class="intro-rsvp-decline-confirmation"
+  id="introRsvpDeclineConfirmation"
+  hidden
+>
+  <div
+    class="intro-rsvp-decline-confirmation-card"
+    id="introRsvpDeclineConfirmationCard"
+  >
+
+    <h4 id="introRsvpDeclineTitle">
+      Wait... Really?
+    </h4>
+
+    <div
+  class="intro-rsvp-decline-reason"
+  id="introRsvpDeclineReasonWrap"
+  hidden
+>
+  <label for="introRsvpDeclineReason">
+    Before we let you go...
+  </label>
+
+  <textarea
+    id="introRsvpDeclineReason"
+    rows="3"
+    maxlength="500"
+    placeholder="Tell us why you can't make it..."
+  ></textarea>
+
+  <p
+    class="intro-rsvp-decline-reason-error"
+    id="introRsvpDeclineReasonError"
+  ></p>
+</div>
+
+    <p id="introRsvpDeclineMessage">
+      You clicked decline. We’re giving you one free
+      chance to blame it on your finger.
+    </p>
+
+    <div class="intro-rsvp-decline-actions">
+
+      <button
+        type="button"
+        class="intro-rsvp-decline-cancel"
+        id="introRsvpDeclineCancel"
+      >
+        Never Mind
+      </button>
+
+      <button
+        type="button"
+        class="intro-rsvp-decline-confirm"
+        id="introRsvpDeclineConfirm"
+      >
+        Yes, I Meant It
+      </button>
+
+    </div>
+
+  </div>
+</div>
 
               <button
 

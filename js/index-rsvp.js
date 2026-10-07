@@ -12,6 +12,8 @@
        ↓
    Accept / Decline
        ↓
+
+   ACCEPT:
    Contact Details
        ↓
    Google Apps Script
@@ -19,8 +21,19 @@
    Google Sheet
        ↓
    Success
+
+   DECLINE:
+   Confirmation 1
        ↓
-   Falling Roses Celebration
+   Confirmation 2
+       ↓
+   Confirmation 3
+       ↓
+   Close Modal
+       ↓
+   Submit Name + Attendance Only
+       ↓
+   Success
 ========================================================= */
 
 document.addEventListener(
@@ -31,11 +44,165 @@ document.addEventListener(
        CONFIGURATION
     ===================================================== */
 
-    const SUBMISSION_TIMEOUT_MS = 20000;
+    const SUBMISSION_TIMEOUT_MS =
+      20000;
 
-    const MINIMUM_LOADER_TIME_MS = 1400;
+    const MINIMUM_LOADER_TIME_MS =
+      1400;
 
-    const SUCCESS_CELEBRATION_TIME_MS = 6500;
+    const SUCCESS_CELEBRATION_TIME_MS =
+      6500;
+
+
+    /* =====================================================
+       GUEST ROLES
+    ===================================================== */
+
+    const guestRoles = {
+
+      /* ===================================================
+         BEST MAN / MAID OF HONOR
+      =================================================== */
+
+      "JUAN MIGUEL VILLANUEVA":
+        "Best Man",
+
+      "BIANCA JOY SAMILLANO":
+        "Maid of Honor",
+
+
+      /* ===================================================
+         PRINCIPAL SPONSORS
+      =================================================== */
+
+      "PS. MANRIC TAN PASCUAL":
+        "Principal Sponsor",
+
+      "PS. ROSANNA TAN PASCUAL":
+        "Principal Sponsor",
+
+      "MR. JOSEPH EDSEL BONILLA":
+        "Principal Sponsor",
+
+      "PS. DIVINA GRACE BONILLA":
+        "Principal Sponsor",
+
+      "MR. RONALD CORTES":
+        "Principal Sponsor",
+
+      "PS. MILDRED CORTES":
+        "Principal Sponsor",
+
+      "PS. CRISALDO LEONA":
+        "Principal Sponsor",
+
+      "MRS. TESS LEONA":
+        "Principal Sponsor",
+
+      "PS. BENJAMIN CHICO":
+        "Principal Sponsor",
+
+      "PS. CHERIERINE CHICO":
+        "Principal Sponsor",
+
+      "MR. KELVIS ARCILLA":
+        "Principal Sponsor",
+
+      "MRS. LEAH ARCILLA":
+        "Principal Sponsor",
+
+      "MR. RODEL FULGENCIO":
+        "Principal Sponsor",
+
+      "MRS. SHERYL FULGENCIO":
+        "Principal Sponsor",
+
+
+      /* ===================================================
+         SECONDARY SPONSORS
+      =================================================== */
+
+      "ELAR CAMPANANO":
+        "Sand Sponsor",
+
+      "HANNAH CAMPANANO":
+        "Sand Sponsor",
+
+      "WINSEL INGLESIAS":
+        "Veil Sponsor",
+
+      "JOSEPHINE LACERNA":
+        "Veil Sponsor",
+
+      "EDNARVIN DONAIRE":
+        "Cord Sponsor",
+
+      "HAZEL ENGUITO":
+        "Cord Sponsor",
+
+
+      /* ===================================================
+         GROOMSMEN
+      =================================================== */
+
+      "KURT AXL OCONER":
+        "Groomsman",
+
+      "EMMANUEL JESUS ORIAS":
+        "Groomsman",
+
+      "ZILDJIAN FULGENCIO":
+        "Groomsman",
+
+
+      /* ===================================================
+         BRIDESMAIDS
+      =================================================== */
+
+      "TK AQUINO":
+        "Bridesmaid",
+
+      "MAE NEY ROSH BAYAGNA":
+        "Bridesmaid",
+
+      "MAE ARCY CONSTANTINO":
+        "Bridesmaid",
+
+
+      /* ===================================================
+         FLOWER GIRLS
+      =================================================== */
+
+      "EMBER VILLANUEVA":
+        "Flower Girl",
+
+      "PRINCESS BONILLA":
+        "Flower Girl",
+
+      "CASSY OCONER":
+        "Flower Girl",
+
+      "SUMMER DAWN ENGUITO":
+        "Flower Girl",
+
+      "WINTER ENGUITO (3YRS OLD)":
+        "Flower Girl",
+
+
+      /* ===================================================
+         BEARERS
+      =================================================== */
+
+      "JEDEDIAH BONILLA":
+        "Coin Bearer",
+
+      "EZEKIEL ARCILLA":
+        "Bible Bearer",
+
+      "ISAIAH PILLAS (3YRS OLD)":
+        "Ring Bearer",
+
+    };
 
 
     /* =====================================================
@@ -48,8 +215,10 @@ document.addEventListener(
       "TERESA G. APAREJADO",
       "RHAFAEL EMMANUEL OCONER",
       "JENNY VILLARUEL",
+
       "JUAN MIGUEL VILLANUEVA",
       "BIANCA JOY SAMILLANO",
+
       "PS. MANRIC TAN PASCUAL",
       "PS. ROSANNA TAN PASCUAL",
       "MR. JOSEPH EDSEL BONILLA",
@@ -64,23 +233,30 @@ document.addEventListener(
       "MRS. LEAH ARCILLA",
       "MR. RODEL FULGENCIO",
       "MRS. SHERYL FULGENCIO",
+
       "MR. ARTHUR SORIANO",
       "MRS. RODA SORIANO",
+
       "ELAR CAMPANANO",
       "WINSEL INGLESIAS",
       "EDNARVIN DONAIRE",
       "JOSEPHINE LACERNA",
       "HAZEL ENGUITO",
+
       "KURT AXL OCONER",
       "EMMANUEL JESUS ORIAS",
-      "ZILDIAN FULGENCIO",
+      "ZILDJIAN FULGENCIO",
+
       "TK AQUINO",
       "MAE NEY ROSH BAYAGNA",
       "MAE ARCY CONSTANTINO",
+
       "CASSY OCONER",
       "SUMMER DAWN ENGUITO",
+
       "JEDEDIAH BONILLA",
       "EZEKIEL ARCILLA",
+
       "SHERYL VILLARUEL",
       "JOSHUA BORNALES",
       "BRYAN BORNALES",
@@ -91,15 +267,19 @@ document.addEventListener(
       "RIEGENE MARMETO",
       "NICOLE SOLERO",
       "KRIZZA DAYON",
+
       "HANNAH CAMPANANO",
+
       "GARAE BELANO",
       "CARLA LEONA",
       "CARLO LEONA",
       "INAH REY RAMOS",
+
       "DRA. JC VEL JUMAWAN",
       "DR. CARL CHANNEL AGUILAR",
       "DRA. JANE TABUCO",
       "DR. JOHN ROGER TABUCO",
+
       "NORA BATAN",
       "PAUL KENSHEE BRIES",
       "KYALE DIDO ORGA",
@@ -112,7 +292,10 @@ document.addEventListener(
       "TERRENCE AXL OCONER",
       "DANNY NAVARRO",
       "MAT BLANCO",
+
       "EMBER VILLANUEVA",
+      "PRINCESS BONILLA",
+
       "WINTER ENGUITO (3YRS OLD)",
       "ISAIAH PILLAS (3YRS OLD)",
 
@@ -121,7 +304,10 @@ document.addEventListener(
 
         return {
           name: name,
-          reservedSeats: 1,
+
+          role:
+            guestRoles[name] ||
+            "Guest",
         };
 
       }
@@ -192,25 +378,75 @@ document.addEventListener(
        RESPONSE ELEMENTS
     ===================================================== */
 
-    const guestFirstName =
+    const responseTitle =
       document.getElementById(
-        "introRsvpGuestFirstName"
+        "introRsvpResponseTitle"
       );
 
-    const seatCount =
+    const roleMessage =
       document.getElementById(
-        "introRsvpSeatCount"
+        "introRsvpRoleMessage"
       );
 
-    const seatWord =
+    const backLabel =
       document.getElementById(
-        "introRsvpSeatWord"
+        "introRsvpBackLabel"
       );
 
     const continueButton =
       document.getElementById(
         "introRsvpContinueButton"
       );
+
+
+    /* =====================================================
+       DECLINE CONFIRMATION ELEMENTS
+    ===================================================== */
+
+    const declineConfirmation =
+      document.getElementById(
+        "introRsvpDeclineConfirmation"
+      );
+
+    const declineConfirmationCard =
+      document.getElementById(
+        "introRsvpDeclineConfirmationCard"
+      );
+
+    const declineTitle =
+      document.getElementById(
+        "introRsvpDeclineTitle"
+      );
+
+    const declineMessage =
+      document.getElementById(
+        "introRsvpDeclineMessage"
+      );
+
+    const declineConfirmButton =
+      document.getElementById(
+        "introRsvpDeclineConfirm"
+      );
+
+    const declineCancelButton =
+      document.getElementById(
+        "introRsvpDeclineCancel"
+      );
+
+      const declineReasonWrap =
+  document.getElementById(
+    "introRsvpDeclineReasonWrap"
+  );
+
+const declineReasonInput =
+  document.getElementById(
+    "introRsvpDeclineReason"
+  );
+
+const declineReasonError =
+  document.getElementById(
+    "introRsvpDeclineReasonError"
+  );
 
 
     /* =====================================================
@@ -332,24 +568,46 @@ document.addEventListener(
        STATE
     ===================================================== */
 
-    let selectedGuest = null;
+    let selectedGuest =
+      null;
 
-    let selectedResponse = null;
+    let selectedResponse =
+      null;
 
-    let submissionPending = false;
+    let declineConfirmationStep =
+      0;
 
-    let submissionStartedAt = 0;
+    let submissionPending =
+      false;
 
-    let submissionTimeout = null;
+    let submissionStartedAt =
+      0;
 
-    let successCelebrationTimeout = null;
+    let submissionTimeout =
+      null;
+
+    let successCelebrationTimeout =
+      null;
+
+    /*
+     * "full"
+     *     Accept flow with contact details.
+     *
+     * "decline-only"
+     *     Decline flow with Name + Attendance only.
+     */
+
+    let submissionMode =
+      null;
 
 
     /* =====================================================
        NORMALIZE SPACES
     ===================================================== */
 
-    function normalizeSpaces(value) {
+    function normalizeSpaces(
+      value
+    ) {
 
       return String(
         value || ""
@@ -367,35 +625,33 @@ document.addEventListener(
        NORMALIZE NAME FOR SEARCH
     ===================================================== */
 
-    function normalizeForSearch(value) {
+    function normalizeForSearch(
+      value
+    ) {
 
       return normalizeSpaces(
         value
       )
-        .normalize("NFD")
-
+        .normalize(
+          "NFD"
+        )
         .replace(
           /[\u0300-\u036f]/g,
           ""
         )
-
         .toUpperCase()
-
         .replace(
           /\b(MR|MRS|MS|DR|DRA|PS)\.?\b/g,
           " "
         )
-
         .replace(
           /[^A-Z0-9]+/g,
           " "
         )
-
         .replace(
           /\s+/g,
           " "
         )
-
         .trim();
 
     }
@@ -405,53 +661,63 @@ document.addEventListener(
        FORMAT DISPLAY NAME
     ===================================================== */
 
-    function formatDisplayName(value) {
+    function formatDisplayName(
+      value
+    ) {
 
       const words =
         normalizeSpaces(
           value
         )
           .toLowerCase()
-          .split(" ");
+          .split(
+            " "
+          );
 
 
       return words
         .map(
           function (word) {
 
-            if (!word) {
+            if (
+              !word
+            ) {
+
               return "";
+
             }
 
+
             return (
-              word.charAt(0).toUpperCase() +
-              word.slice(1)
+              word
+                .charAt(0)
+                .toUpperCase() +
+
+              word
+                .slice(1)
             );
 
           }
         )
-        .join(" ")
-
+        .join(
+          " "
+        )
         .replace(
           /^Mr\s+/,
           "Mr. "
         )
-
         .replace(
           /^Mrs\s+/,
           "Mrs. "
         )
-
         .replace(
           /^Dr\s+/,
           "Dr. "
         )
-
         .replace(
           /^Dra\s+/,
           "Dra. "
         )
-
         .replace(
           /^Ps\s+/,
           "Ps. "
@@ -480,7 +746,9 @@ document.addEventListener(
 
       const firstName =
         withoutTitle
-          .split(" ")[0] ||
+          .split(
+            " "
+          )[0] ||
         "Guest";
 
 
@@ -493,6 +761,227 @@ document.addEventListener(
           .slice(1)
           .toLowerCase()
       );
+
+    }
+
+
+    /* =====================================================
+       GET ROLE RESPONSE MESSAGE
+    ===================================================== */
+
+    function getRoleResponseMessage(
+      guest
+    ) {
+
+      const firstName =
+        getFirstName(
+          guest.name
+        );
+
+      const role =
+        guest.role ||
+        "Guest";
+
+
+      switch (
+        role
+      ) {
+
+        /* ===============================================
+           PRINCIPAL SPONSOR
+        =============================================== */
+
+        case "Principal Sponsor":
+
+          return {
+            title:
+              "We’re Truly Honored",
+
+            message:
+              "It would mean so much to us to have you stand with us as one of our Principal Sponsors.",
+          };
+
+
+        /* ===============================================
+           BEST MAN
+        =============================================== */
+
+        case "Best Man":
+
+          return {
+            title:
+              `Well, ${firstName}...`,
+
+            message:
+              "Looks like you’re not just a guest — you’re officially the Best Man. No pressure at all.",
+          };
+
+
+        /* ===============================================
+           MAID OF HONOR
+        =============================================== */
+
+        case "Maid of Honor":
+
+          return {
+            title:
+              `Well, ${firstName}...`,
+
+            message:
+              "Looks like you’re not just a guest — you’re officially the Maid of Honor. Consider this your reminder that you have responsibilities.",
+          };
+
+
+        /* ===============================================
+           GROOMSMAN
+        =============================================== */
+
+        case "Groomsman":
+
+          return {
+            title:
+              `Well, ${firstName}...`,
+
+            message:
+              "Looks like you’re not just a guest — you’re officially one of the Groomsmen.",
+          };
+
+
+        /* ===============================================
+           BRIDESMAID
+        =============================================== */
+
+        case "Bridesmaid":
+
+          return {
+            title:
+              `Well, ${firstName}...`,
+
+            message:
+              "Looks like you’re not just a guest — you’re officially one of the Bridesmaids.",
+          };
+
+
+        /* ===============================================
+           SAND SPONSOR
+        =============================================== */
+
+        case "Sand Sponsor":
+
+          return {
+            title:
+              `A Special Role, ${firstName}`,
+
+            message:
+              "We’re grateful to have you share in our ceremony as one of our Sand Sponsors.",
+          };
+
+
+        /* ===============================================
+           VEIL SPONSOR
+        =============================================== */
+
+        case "Veil Sponsor":
+
+          return {
+            title:
+              `A Special Role, ${firstName}`,
+
+            message:
+              "We’re grateful to have you share in our ceremony as one of our Veil Sponsors.",
+          };
+
+
+        /* ===============================================
+           CORD SPONSOR
+        =============================================== */
+
+        case "Cord Sponsor":
+
+          return {
+            title:
+              `A Special Role, ${firstName}`,
+
+            message:
+              "We’re grateful to have you share in our ceremony as one of our Cord Sponsors.",
+          };
+
+
+        /* ===============================================
+           FLOWER GIRL
+        =============================================== */
+
+        case "Flower Girl":
+
+          return {
+            title:
+              `Guess What, ${firstName}?`,
+
+            message:
+              "You have one of the cutest jobs of the day — you’re officially one of our Flower Girls.",
+          };
+
+
+        /* ===============================================
+           COIN BEARER
+        =============================================== */
+
+        case "Coin Bearer":
+
+          return {
+            title:
+              `Mission Accepted, ${firstName}?`,
+
+            message:
+              "You’ve got an important job on our big day — you’re officially our Coin Bearer.",
+          };
+
+
+        /* ===============================================
+           BIBLE BEARER
+        =============================================== */
+
+        case "Bible Bearer":
+
+          return {
+            title:
+              `Mission Accepted, ${firstName}?`,
+
+            message:
+              "You’ve got an important job on our big day — you’re officially our Bible Bearer.",
+          };
+
+
+        /* ===============================================
+           RING BEARER
+        =============================================== */
+
+        case "Ring Bearer":
+
+          return {
+            title:
+              `Big Mission, ${firstName}!`,
+
+            message:
+              "You’ll be carrying something very important — you’re officially our Ring Bearer. No pressure.",
+          };
+
+
+        /* ===============================================
+           NORMAL GUEST
+        =============================================== */
+
+        default:
+
+          return {
+            title:
+              `Well, ${firstName}...`,
+
+            message:
+              "You made the guest list. Now comes the part where you pretend you have a choice.",
+          };
+
+      }
 
     }
 
@@ -523,7 +1012,9 @@ document.addEventListener(
        SHOW MODAL STEP
     ===================================================== */
 
-    function showStep(step) {
+    function showStep(
+      step
+    ) {
 
       [
         guestStep,
@@ -531,8 +1022,9 @@ document.addEventListener(
         detailsStep,
         successStep,
       ]
-        .filter(Boolean)
-
+        .filter(
+          Boolean
+        )
         .forEach(
           function (element) {
 
@@ -551,8 +1043,12 @@ document.addEventListener(
 
     function openModal() {
 
-      if (!modal) {
+      if (
+        !modal
+      ) {
+
         return;
+
       }
 
 
@@ -574,13 +1070,51 @@ document.addEventListener(
 
 
     /* =====================================================
+       HIDE MODAL WITHOUT RESETTING STATE
+
+       Used when Decline is submitted.
+    ===================================================== */
+
+    function hideModalWithoutReset() {
+
+      if (
+        !modal
+      ) {
+
+        return;
+
+      }
+
+
+      modal.classList.remove(
+        "is-visible"
+      );
+
+
+      modal.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
+
+      document.body.style.overflow =
+        "";
+
+    }
+
+
+    /* =====================================================
        CLOSE RSVP MODAL
     ===================================================== */
 
     function closeModal() {
 
-      if (!modal) {
+      if (
+        !modal
+      ) {
+
         return;
+
       }
 
 
@@ -605,6 +1139,103 @@ document.addEventListener(
 
 
     /* =====================================================
+       DECLINE-ONLY FORM MODE
+
+       When enabled, ONLY these form fields are submitted:
+
+       guestName
+       attendance
+    ===================================================== */
+
+    function setDeclineOnlyFormMode(
+      enabled
+    ) {
+
+      if (
+        !submissionForm
+      ) {
+
+        return;
+
+      }
+
+
+      const allowedFields = [
+        "guestName",
+        "attendance",
+      ];
+
+
+      Array
+        .from(
+          submissionForm.elements
+        )
+        .forEach(
+          function (element) {
+
+            if (
+              !element.name
+            ) {
+
+              return;
+
+            }
+
+
+            if (
+              enabled
+            ) {
+
+              /*
+               * Remember the element's
+               * previous disabled state.
+               */
+
+              element.dataset.rsvpPreviousDisabled =
+                element.disabled
+                  ? "true"
+                  : "false";
+
+
+              element.disabled =
+                !allowedFields.includes(
+                  element.name
+                );
+
+
+              return;
+
+            }
+
+
+            /*
+             * Restore original state.
+             */
+
+            if (
+              Object.prototype.hasOwnProperty.call(
+                element.dataset,
+                "rsvpPreviousDisabled"
+              )
+            ) {
+
+              element.disabled =
+                element.dataset.rsvpPreviousDisabled ===
+                "true";
+
+
+              delete element.dataset
+                .rsvpPreviousDisabled;
+
+            }
+
+          }
+        );
+
+    }
+
+
+    /* =====================================================
        RESET RSVP STATE
     ===================================================== */
 
@@ -613,10 +1244,14 @@ document.addEventListener(
       selectedGuest =
         null;
 
-
       selectedResponse =
         null;
 
+      declineConfirmationStep =
+        0;
+
+      submissionMode =
+        null;
 
       submissionPending =
         false;
@@ -627,12 +1262,50 @@ document.addEventListener(
       );
 
 
+      setDeclineOnlyFormMode(
+        false
+      );
+
+
+      hideDeclineConfirmation();
+
+
       hideSubmitLoader();
 
 
       setSubmittingState(
         false
       );
+
+
+      if (
+        backLabel
+      ) {
+
+        backLabel.textContent =
+          "Wrong Turn?";
+
+      }
+
+
+      if (
+        responseTitle
+      ) {
+
+        responseTitle.textContent =
+          "Well, Guest...";
+
+      }
+
+
+      if (
+        roleMessage
+      ) {
+
+        roleMessage.textContent =
+          "You made the guest list. Now comes the part where you pretend you have a choice.";
+
+      }
 
 
       if (
@@ -649,7 +1322,6 @@ document.addEventListener(
         .querySelectorAll(
           ".intro-rsvp-response-option"
         )
-
         .forEach(
           function (button) {
 
@@ -667,36 +1339,6 @@ document.addEventListener(
 
         selectedGuestNameDisplay.textContent =
           "Guest Name";
-
-      }
-
-
-      if (
-        guestFirstName
-      ) {
-
-        guestFirstName.textContent =
-          "Guest";
-
-      }
-
-
-      if (
-        seatCount
-      ) {
-
-        seatCount.textContent =
-          "1";
-
-      }
-
-
-      if (
-        seatWord
-      ) {
-
-        seatWord.textContent =
-          "seat";
 
       }
 
@@ -726,6 +1368,56 @@ document.addEventListener(
       ) {
 
         wishInput.value =
+          "";
+
+      }
+
+
+      if (
+        hiddenGuestName
+      ) {
+
+        hiddenGuestName.value =
+          "";
+
+      }
+
+
+      if (
+        hiddenContactNumber
+      ) {
+
+        hiddenContactNumber.value =
+          "";
+
+      }
+
+
+      if (
+        hiddenMessengerName
+      ) {
+
+        hiddenMessengerName.value =
+          "";
+
+      }
+
+
+      if (
+        hiddenMessage
+      ) {
+
+        hiddenMessage.value =
+          "";
+
+      }
+
+
+      if (
+        hiddenAttendance
+      ) {
+
+        hiddenAttendance.value =
           "";
 
       }
@@ -785,10 +1477,9 @@ document.addEventListener(
               );
 
 
-            return searchableName
-              .includes(
-                query
-              );
+            return searchableName.includes(
+              query
+            );
 
           }
         );
@@ -829,7 +1520,7 @@ document.addEventListener(
 
 
     /* =====================================================
-       RENDER SEARCH RESULTS
+       RENDER GUEST RESULTS
     ===================================================== */
 
     function renderGuestResults(
@@ -866,6 +1557,10 @@ document.addEventListener(
             "intro-rsvp-guest-result";
 
 
+          /* ===============================================
+             NAME
+          =============================================== */
+
           const nameElement =
             document.createElement(
               "strong"
@@ -878,25 +1573,24 @@ document.addEventListener(
             );
 
 
-          const seatsElement =
+          /* ===============================================
+             ROLE
+          =============================================== */
+
+          const roleElement =
             document.createElement(
               "span"
             );
 
 
-          seatsElement.textContent =
-            guest.reservedSeats +
-            " Reserved " +
-            (
-              guest.reservedSeats === 1
-                ? "Seat"
-                : "Seats"
-            );
+          roleElement.textContent =
+            guest.role ||
+            "Guest";
 
 
           button.append(
             nameElement,
-            seatsElement
+            roleElement
           );
 
 
@@ -933,46 +1627,63 @@ document.addEventListener(
       selectedGuest =
         guest;
 
-
       selectedResponse =
         null;
 
 
+      hideDeclineConfirmation();
+
+
+      /* ===============================================
+         DYNAMIC BACK BUTTON
+      =============================================== */
+
       if (
-        guestFirstName
+        backLabel
       ) {
 
-        guestFirstName.textContent =
-          getFirstName(
-            guest.name
-          );
+        backLabel.textContent =
+          guest.role ===
+          "Principal Sponsor"
+            ? "Back"
+            : "Wrong Turn?";
+
+      }
+
+
+      /* ===============================================
+         DYNAMIC RESPONSE MESSAGE
+      =============================================== */
+
+      const response =
+        getRoleResponseMessage(
+          guest
+        );
+
+
+      if (
+        responseTitle
+      ) {
+
+        responseTitle.textContent =
+          response.title;
 
       }
 
 
       if (
-        seatCount
+        roleMessage
       ) {
 
-        seatCount.textContent =
-          String(
-            guest.reservedSeats
-          );
+        roleMessage.textContent =
+          response.message;
 
       }
 
 
-      if (
-        seatWord
-      ) {
-
-        seatWord.textContent =
-          guest.reservedSeats === 1
-            ? "seat"
-            : "seats";
-
-      }
-
+      /* ===============================================
+         SELECTED GUEST DISPLAY
+      =============================================== */
 
       if (
         selectedGuestNameDisplay
@@ -1000,7 +1711,6 @@ document.addEventListener(
         .querySelectorAll(
           ".intro-rsvp-response-option"
         )
-
         .forEach(
           function (button) {
 
@@ -1023,6 +1733,650 @@ document.addEventListener(
 
 
     /* =====================================================
+       FUNNY DECLINE CONFIRMATIONS
+    ===================================================== */
+
+    const funnyDeclineConfirmations = [
+
+      /* ===============================================
+         1
+      =============================================== */
+
+      {
+        title:
+          "Okay, Okay... Last Chance?",
+
+        message:
+          "You clicked decline. We’re giving you one free chance to blame it on your finger.",
+
+        cancelButton:
+          "I Changed My Mind",
+
+        confirmButton:
+          "Yes, I Can't Make It",
+      },
+
+
+      /* ===============================================
+         2
+      =============================================== */
+
+      {
+        title:
+          "Oh... You Really Mean It?",
+
+        message:
+          "We checked. The button works perfectly. So apparently this decision is actually yours.",
+
+        cancelButton:
+          "Fine, Count Me In",
+
+        confirmButton:
+          "Sadly, Yes",
+      },
+
+
+      /* ===============================================
+         3
+      =============================================== */
+
+      {
+        title:
+          "You Win. We Give Up.",
+
+        message:
+          "We tried guilt, persistence, and emotional damage. Nothing worked.",
+
+        cancelButton:
+          "Okay, I’ll Go",
+
+        confirmButton:
+          "Yes, I’m Sure",
+      },
+
+    ];
+
+
+    /* =====================================================
+       PRINCIPAL SPONSOR DECLINE CONFIRMATIONS
+
+       Respectful version.
+    ===================================================== */
+
+    const principalSponsorDeclineConfirmations = [
+
+      /* ===============================================
+         1
+      =============================================== */
+
+      {
+        title:
+          "Please Confirm",
+
+        message:
+          "May we confirm that you will not be able to join us on our special day?",
+
+        cancelButton:
+          "I’ll Be There",
+
+        confirmButton:
+          "Unable to Attend",
+      },
+
+
+      /* ===============================================
+         2
+      =============================================== */
+
+      {
+        title:
+          "Just to Be Certain",
+
+        message:
+          "We completely understand. We simply want to make sure we record your response correctly.",
+
+        cancelButton:
+          "I’ll Be There",
+
+        confirmButton:
+          "Yes, That Is Correct",
+      },
+
+
+      /* ===============================================
+         3
+      =============================================== */
+
+      {
+        title:
+          "Final Confirmation",
+
+        message:
+          "Would you like us to record your RSVP as unable to attend?",
+
+        cancelButton:
+          "I’ll Be There",
+
+        confirmButton:
+          "Yes, Please Confirm",
+      },
+
+    ];
+
+
+    /* =====================================================
+       GET DECLINE CONFIRMATIONS
+    ===================================================== */
+
+    function getDeclineConfirmations() {
+
+      if (
+        selectedGuest?.role ===
+        "Principal Sponsor"
+      ) {
+
+        return (
+          principalSponsorDeclineConfirmations
+        );
+
+      }
+
+
+      return (
+        funnyDeclineConfirmations
+      );
+
+    }
+
+
+    /* =====================================================
+       SET RSVP RESPONSE
+    ===================================================== */
+
+    function setRsvpResponse(
+      response
+    ) {
+
+      selectedResponse =
+        response;
+
+
+      document
+        .querySelectorAll(
+          ".intro-rsvp-response-option"
+        )
+        .forEach(
+          function (option) {
+
+            option.classList.remove(
+              "is-selected"
+            );
+
+          }
+        );
+
+
+      const selectedButton =
+        document.querySelector(
+          `.intro-rsvp-response-option[data-response="${response}"]`
+        );
+
+
+      selectedButton
+        ?.classList
+        .add(
+          "is-selected"
+        );
+
+
+      if (
+        continueButton
+      ) {
+
+        continueButton.disabled =
+          false;
+
+      }
+
+    }
+
+
+    /* =====================================================
+       CLEAR RESPONSE SELECTION
+    ===================================================== */
+
+    function clearResponseSelection() {
+
+      selectedResponse =
+        null;
+
+
+      document
+        .querySelectorAll(
+          ".intro-rsvp-response-option"
+        )
+        .forEach(
+          function (option) {
+
+            option.classList.remove(
+              "is-selected"
+            );
+
+          }
+        );
+
+
+      if (
+        continueButton
+      ) {
+
+        continueButton.disabled =
+          true;
+
+      }
+
+    }
+
+
+    /* =====================================================
+       SHOW DECLINE CONFIRMATION
+    ===================================================== */
+
+    function showDeclineConfirmation() {
+
+      if (
+        !declineConfirmation
+      ) {
+
+        return;
+
+      }
+
+
+      const confirmations =
+        getDeclineConfirmations();
+
+
+      const current =
+        confirmations[
+          declineConfirmationStep
+        ];
+
+
+      if (
+        !current
+      ) {
+
+        return;
+
+      }
+
+
+      if (
+        declineTitle
+      ) {
+
+        declineTitle.textContent =
+          current.title;
+
+      }
+
+
+      if (
+        declineMessage
+      ) {
+
+        declineMessage.textContent =
+          current.message;
+
+      }
+
+
+      if (
+        declineCancelButton
+      ) {
+
+        declineCancelButton.textContent =
+          current.cancelButton;
+
+      }
+
+
+      if (
+        declineConfirmButton
+      ) {
+
+        declineConfirmButton.textContent =
+          current.confirmButton;
+
+      }
+
+      const isFinalConfirmation =
+  declineConfirmationStep ===
+  confirmations.length - 1;
+
+
+if (
+  declineReasonWrap
+) {
+
+  declineReasonWrap.hidden =
+    !isFinalConfirmation;
+
+}
+
+
+if (
+  declineReasonError
+) {
+
+  declineReasonError.textContent =
+    "";
+
+}
+
+
+if (
+  isFinalConfirmation
+) {
+
+  window.setTimeout(
+    function () {
+
+      declineReasonInput
+        ?.focus();
+
+    },
+    150
+  );
+
+}
+
+
+      declineConfirmation.hidden =
+        false;
+
+
+      /* ===============================================
+         RESTART POPUP ANIMATION
+      =============================================== */
+
+      if (
+        declineConfirmationCard
+      ) {
+
+        declineConfirmationCard.style.animation =
+          "none";
+
+
+        void declineConfirmationCard.offsetWidth;
+
+
+        declineConfirmationCard.style.animation =
+          "";
+
+      }
+
+    }
+
+
+    /* =====================================================
+       START DECLINE CONFIRMATION
+    ===================================================== */
+
+ function startDeclineConfirmation() {
+
+  declineConfirmationStep =
+    0;
+
+
+  if (
+    declineReasonInput
+  ) {
+
+    declineReasonInput.value =
+      "";
+
+  }
+
+
+  if (
+    declineReasonError
+  ) {
+
+    declineReasonError.textContent =
+      "";
+
+  }
+
+
+  showDeclineConfirmation();
+
+}
+
+
+    /* =====================================================
+       HIDE DECLINE CONFIRMATION
+    ===================================================== */
+
+    function hideDeclineConfirmation() {
+
+      if (
+        declineConfirmation
+      ) {
+
+        declineConfirmation.hidden =
+          true;
+
+      }
+
+
+      declineConfirmationStep =
+        0;
+
+    }
+
+
+    /* =====================================================
+       SUBMIT DECLINE RSVP
+
+       IMPORTANT:
+       Sends ONLY:
+
+       guestName
+       attendance
+    ===================================================== */
+
+    /* =====================================================
+   SUBMIT DECLINED RSVP
+
+   Declined guest does not need to enter details.
+
+   Static values are submitted so the existing
+   Google Apps Script validation still succeeds.
+===================================================== */
+
+function submitDeclinedRsvp(
+  declineReason
+) {
+
+  if (
+    submissionPending
+  ) {
+
+    return;
+
+  }
+
+
+  if (
+    !selectedGuest
+  ) {
+
+    return;
+
+  }
+
+
+  if (
+    !submissionForm ||
+    !submissionFrame ||
+    !hiddenGuestName ||
+    !hiddenContactNumber ||
+    !hiddenMessengerName ||
+    !hiddenMessage ||
+    !hiddenAttendance
+  ) {
+
+    console.error(
+      "[INDEX RSVP] Decline submission form is incomplete."
+    );
+
+    return;
+
+  }
+
+
+  selectedResponse =
+    "decline";
+
+
+  /* =================================================
+     DECLINED RSVP VALUES
+  ================================================= */
+
+  hiddenGuestName.value =
+    selectedGuest.name;
+
+
+  hiddenContactNumber.value =
+    "09999999999";
+
+
+  hiddenMessengerName.value =
+    "N/A";
+
+
+  /*
+   * STORE THE ACTUAL DECLINE REASON HERE.
+   */
+
+  hiddenMessage.value =
+    declineReason;
+
+
+  /*
+   * MUST stay NO.
+   *
+   * Your backend only allows YES / NO
+   * for attendance.
+   */
+
+  hiddenAttendance.value =
+    "NO";
+
+
+  console.log(
+    "[INDEX RSVP] Submitting declined RSVP:",
+    {
+      guestName:
+        hiddenGuestName.value,
+
+      reason:
+        hiddenMessage.value,
+
+      attendance:
+        hiddenAttendance.value,
+    }
+  );
+
+
+  submissionPending =
+    true;
+
+
+  submissionStartedAt =
+    Date.now();
+
+
+  hideDeclineConfirmation();
+
+
+  hideModalWithoutReset();
+
+
+  showSubmitLoader();
+
+
+  window.clearTimeout(
+    submissionTimeout
+  );
+
+
+  submissionTimeout =
+    window.setTimeout(
+      handleSubmissionTimeout,
+      SUBMISSION_TIMEOUT_MS
+    );
+
+
+  try {
+
+    submissionForm.submit();
+
+  } catch (error) {
+
+    console.error(
+      "[INDEX RSVP] Decline submission error:",
+      error
+    );
+
+
+    submissionPending =
+      false;
+
+
+    window.clearTimeout(
+      submissionTimeout
+    );
+
+
+    hideSubmitLoader();
+
+
+    showStep(
+      responseStep
+    );
+
+
+    if (
+      responseTitle
+    ) {
+
+      responseTitle.textContent =
+        "One More Try?";
+
+    }
+
+
+    if (
+      roleMessage
+    ) {
+
+      roleMessage.textContent =
+        "We couldn't save your RSVP. Please check your connection and try again.";
+
+    }
+
+
+    openModal();
+
+  }
+
+}
+
+
+    /* =====================================================
        ACCEPT / DECLINE
     ===================================================== */
 
@@ -1030,7 +2384,6 @@ document.addEventListener(
       .querySelectorAll(
         ".intro-rsvp-response-option"
       )
-
       .forEach(
         function (button) {
 
@@ -1038,39 +2391,36 @@ document.addEventListener(
             "click",
             function () {
 
-              selectedResponse =
+              const response =
                 button.dataset.response;
 
 
-              document
-                .querySelectorAll(
-                  ".intro-rsvp-response-option"
-                )
-
-                .forEach(
-                  function (option) {
-
-                    option.classList.remove(
-                      "is-selected"
-                    );
-
-                  }
-                );
-
-
-              button.classList.add(
-                "is-selected"
-              );
-
+              /* ===========================================
+                 DECLINE
+              =========================================== */
 
               if (
-                continueButton
+                response ===
+                "decline"
               ) {
 
-                continueButton.disabled =
-                  false;
+                startDeclineConfirmation();
+
+                return;
 
               }
+
+
+              /* ===========================================
+                 ACCEPT
+              =========================================== */
+
+              hideDeclineConfirmation();
+
+
+              setRsvpResponse(
+                "accept"
+              );
 
             }
           );
@@ -1080,7 +2430,118 @@ document.addEventListener(
 
 
     /* =====================================================
+       DECLINE CONFIRM — YES
+    ===================================================== */
+
+    declineConfirmButton
+  ?.addEventListener(
+    "click",
+    function () {
+
+      const confirmations =
+        getDeclineConfirmations();
+
+
+      const isFinalConfirmation =
+        declineConfirmationStep ===
+        confirmations.length - 1;
+
+
+      /* ===============================================
+         CONFIRMATION 1 → 2 → 3
+      =============================================== */
+
+      if (
+        !isFinalConfirmation
+      ) {
+
+        declineConfirmationStep +=
+          1;
+
+
+        showDeclineConfirmation();
+
+
+        return;
+
+      }
+
+
+      /* ===============================================
+         FINAL CONFIRMATION
+
+         Reason is required.
+      =============================================== */
+
+      const declineReason =
+        declineReasonInput
+          ?.value
+          .trim() ||
+        "";
+
+
+      if (
+        !declineReason
+      ) {
+
+        if (
+          declineReasonError
+        ) {
+
+          declineReasonError.textContent =
+            "Give us a little reason before you disappear on us. 😄";
+
+        }
+
+
+        declineReasonInput
+          ?.focus();
+
+
+        return;
+
+      }
+
+
+      /* ===============================================
+         SUBMIT DECLINE
+      =============================================== */
+
+      submitDeclinedRsvp(
+        declineReason
+      );
+
+    }
+  );
+
+
+    /* =====================================================
+       DECLINE — CHANGE OF MIND
+
+       Every left button means:
+       "Actually, I'm coming."
+    ===================================================== */
+
+    declineCancelButton
+      ?.addEventListener(
+        "click",
+        function () {
+
+          hideDeclineConfirmation();
+
+
+          setRsvpResponse(
+            "accept"
+          );
+
+        }
+      );
+
+
+    /* =====================================================
        CONTINUE TO DETAILS
+
+       Accept flow only.
     ===================================================== */
 
     continueButton
@@ -1091,6 +2552,22 @@ document.addEventListener(
           if (
             !selectedGuest ||
             !selectedResponse
+          ) {
+
+            return;
+
+          }
+
+
+          /*
+           * Decline never reaches this point
+           * because decline automatically
+           * submits after confirmation #3.
+           */
+
+          if (
+            selectedResponse !==
+            "accept"
           ) {
 
             return;
@@ -1128,7 +2605,6 @@ document.addEventListener(
       .querySelectorAll(
         "[data-rsvp-back]"
       )
-
       .forEach(
         function (button) {
 
@@ -1144,7 +2620,8 @@ document.addEventListener(
 
 
               if (
-                target === "guest"
+                target ===
+                "guest"
               ) {
 
                 showStep(
@@ -1155,7 +2632,8 @@ document.addEventListener(
 
 
               if (
-                target === "response"
+                target ===
+                "response"
               ) {
 
                 showStep(
@@ -1227,7 +2705,7 @@ document.addEventListener(
 
 
     /* =====================================================
-       VALIDATE DETAILS
+       VALIDATE ACCEPT DETAILS
     ===================================================== */
 
     function validateGuestDetails() {
@@ -1249,7 +2727,8 @@ document.addEventListener(
 
 
       if (
-        !selectedResponse
+        selectedResponse !==
+        "accept"
       ) {
 
         showDetailsMessage(
@@ -1377,7 +2856,7 @@ document.addEventListener(
 
 
     /* =====================================================
-       SHOW SUBMISSION LOTTIE
+       SHOW SUBMIT LOADER
     ===================================================== */
 
     function showSubmitLoader() {
@@ -1427,7 +2906,7 @@ document.addEventListener(
 
 
     /* =====================================================
-       HIDE SUBMISSION LOTTIE
+       HIDE SUBMIT LOADER
     ===================================================== */
 
     function hideSubmitLoader() {
@@ -1480,164 +2959,215 @@ document.addEventListener(
        SHOW SUCCESS FALLING ROSES
     ===================================================== */
 
-    function showRsvpSuccessCelebration(
-      guestName,
-      attendance
+   /* =====================================================
+   SHOW RSVP SUCCESS
+===================================================== */
+
+function showRsvpSuccessCelebration(
+  guestName,
+  attendance
+) {
+
+  if (
+    !successCelebration
+  ) {
+
+    console.warn(
+      "[INDEX RSVP] Success celebration element not found."
+    );
+
+    return;
+
+  }
+
+
+  window.clearTimeout(
+    successCelebrationTimeout
+  );
+
+
+  const firstName =
+    guestName
+      ? getFirstName(
+          guestName
+        )
+      : "Guest";
+
+
+  const isAttending =
+    attendance ===
+    "YES";
+
+
+  /* =================================================
+     SUCCESS MESSAGE
+  ================================================= */
+
+  if (
+    successGuestMessage
+  ) {
+
+    if (
+      isAttending
     ) {
 
-      if (
-        !successCelebration
-      ) {
+      successGuestMessage.textContent =
+        "Thank you, " +
+        firstName +
+        "! We can't wait to celebrate with you.";
 
-        console.warn(
-          "[INDEX RSVP] Success celebration element not found."
-        );
+    } else {
 
-        return;
+      successGuestMessage.textContent =
+        "Thank you, " +
+        firstName +
+        ". We appreciate you letting us know. We'll miss you on our special day.";
 
-      }
+    }
 
-
-      window.clearTimeout(
-        successCelebrationTimeout
-      );
-
-
-      const firstName =
-        guestName
-          ? getFirstName(
-              guestName
-            )
-          : "Guest";
+  }
 
 
-      /*
-       * Different message depending
-       * on Accept / Decline.
-       */
+  /* =================================================
+     FALLING ROSES
 
-      if (
-        successGuestMessage
-      ) {
+     YES = show/play
+     NO  = completely hide
+  ================================================= */
+
+  if (
+    fallingRosesAnimation
+  ) {
+
+    if (
+      isAttending
+    ) {
+
+      fallingRosesAnimation.style.display =
+        "block";
+
+
+      try {
 
         if (
-          attendance === "YES"
+          typeof fallingRosesAnimation.stop ===
+          "function"
         ) {
 
-          successGuestMessage.textContent =
-            "Thank you, " +
-            firstName +
-            "! We can't wait to celebrate with you.";
-
-        } else {
-
-          successGuestMessage.textContent =
-            "Thank you, " +
-            firstName +
-            "! We appreciate you letting us know.";
+          fallingRosesAnimation.stop();
 
         }
 
-      }
 
-
-      successCelebration
-        .classList
-        .add(
-          "is-visible"
-        );
-
-
-      successCelebration
-        .setAttribute(
-          "aria-hidden",
-          "false"
-        );
-
-
-      document.body.style.overflow =
-        "hidden";
-
-
-      /*
-       * Restart falling roses.
-       */
-
-      if (
-        fallingRosesAnimation
-      ) {
-
-        try {
-
-          if (
-            typeof fallingRosesAnimation.stop ===
-            "function"
-          ) {
-
-            fallingRosesAnimation.stop();
-
-          }
-
-
-          /*
-           * Small timeout helps ensure
-           * the player resets before play.
-           */
-
-          window.setTimeout(
-            function () {
-
-              try {
-
-                if (
-                  typeof fallingRosesAnimation.play ===
-                    "function"
-                ) {
-
-                  fallingRosesAnimation.play();
-
-                }
-
-              } catch (error) {
-
-                console.warn(
-                  "[INDEX RSVP] Unable to play falling roses:",
-                  error
-                );
-
-              }
-
-            },
-            50
-          );
-
-        } catch (error) {
-
-          console.warn(
-            "[INDEX RSVP] Falling roses initialization error:",
-            error
-          );
-
-        }
-
-      }
-
-
-      /*
-       * Automatically hide after animation.
-       */
-
-      successCelebrationTimeout =
         window.setTimeout(
           function () {
 
-            hideRsvpSuccessCelebration();
+            try {
+
+              if (
+                typeof fallingRosesAnimation.play ===
+                "function"
+              ) {
+
+                fallingRosesAnimation.play();
+
+              }
+
+            } catch (error) {
+
+              console.warn(
+                "[INDEX RSVP] Unable to play falling roses:",
+                error
+              );
+
+            }
 
           },
-          SUCCESS_CELEBRATION_TIME_MS
+          50
         );
 
+      } catch (error) {
+
+        console.warn(
+          "[INDEX RSVP] Falling roses initialization error:",
+          error
+        );
+
+      }
+
+    } else {
+
+      /*
+       * DECLINED:
+       * no falling roses.
+       */
+
+      fallingRosesAnimation.style.display =
+        "none";
+
+
+      try {
+
+        if (
+          typeof fallingRosesAnimation.stop ===
+          "function"
+        ) {
+
+          fallingRosesAnimation.stop();
+
+        }
+
+      } catch (error) {
+
+        console.warn(
+          "[INDEX RSVP] Unable to stop falling roses:",
+          error
+        );
+
+      }
+
     }
+
+  }
+
+
+  /* =================================================
+     SHOW SUCCESS MESSAGE
+  ================================================= */
+
+  successCelebration
+    .classList
+    .add(
+      "is-visible"
+    );
+
+
+  successCelebration
+    .setAttribute(
+      "aria-hidden",
+      "false"
+    );
+
+
+  document.body.style.overflow =
+    "hidden";
+
+
+  /* =================================================
+     AUTO HIDE
+  ================================================= */
+
+  successCelebrationTimeout =
+    window.setTimeout(
+      function () {
+
+        hideRsvpSuccessCelebration();
+
+      },
+      SUCCESS_CELEBRATION_TIME_MS
+    );
+
+}
 
 
     /* =====================================================
@@ -1678,7 +3208,7 @@ document.addEventListener(
         if (
           fallingRosesAnimation &&
           typeof fallingRosesAnimation.stop ===
-            "function"
+          "function"
         ) {
 
           fallingRosesAnimation.stop();
@@ -1698,7 +3228,9 @@ document.addEventListener(
 
 
     /* =====================================================
-       POPULATE GOOGLE FORM
+       POPULATE ACCEPT FORM
+
+       Used only when attendance = YES.
     ===================================================== */
 
     function populateSubmissionForm() {
@@ -1724,10 +3256,19 @@ document.addEventListener(
           "[INDEX RSVP] Hidden RSVP fields are missing."
         );
 
-
         return false;
 
       }
+
+
+      /*
+       * Make sure all normal fields
+       * are enabled for Accept.
+       */
+
+      setDeclineOnlyFormMode(
+        false
+      );
 
 
       hiddenGuestName.value =
@@ -1755,10 +3296,7 @@ document.addEventListener(
 
 
       hiddenAttendance.value =
-        selectedResponse ===
-        "accept"
-          ? "YES"
-          : "NO";
+        "YES";
 
 
       return true;
@@ -1767,7 +3305,7 @@ document.addEventListener(
 
 
     /* =====================================================
-       SUBMIT RSVP
+       SUBMIT ACCEPT RSVP
     ===================================================== */
 
     function submitRsvp() {
@@ -1824,11 +3362,19 @@ document.addEventListener(
       }
 
 
+      submissionMode =
+        "full";
+
+
       console.log(
-        "[INDEX RSVP] Submitting:",
+        "[INDEX RSVP] Submitting accepted RSVP:",
         {
           guestName:
             hiddenGuestName.value,
+
+          role:
+            selectedGuest?.role ||
+            "Guest",
 
           contactNumber:
             hiddenContactNumber.value,
@@ -1892,6 +3438,10 @@ document.addEventListener(
           false;
 
 
+        submissionMode =
+          null;
+
+
         window.clearTimeout(
           submissionTimeout
         );
@@ -1929,8 +3479,21 @@ document.addEventListener(
       }
 
 
+      const failedMode =
+        submissionMode;
+
+
       submissionPending =
         false;
+
+
+      submissionMode =
+        null;
+
+
+      setDeclineOnlyFormMode(
+        false
+      );
 
 
       hideSubmitLoader();
@@ -1940,6 +3503,57 @@ document.addEventListener(
         false
       );
 
+
+      /* ===============================================
+         DECLINE FAILED
+      =============================================== */
+
+      if (
+        failedMode ===
+        "decline-only"
+      ) {
+
+        showStep(
+          responseStep
+        );
+
+
+        if (
+          responseTitle
+        ) {
+
+          responseTitle.textContent =
+            "One More Try?";
+
+        }
+
+
+        if (
+          roleMessage
+        ) {
+
+          roleMessage.textContent =
+            "We couldn't send your RSVP. Please check your connection and try again.";
+
+        }
+
+
+        openModal();
+
+
+        console.warn(
+          "[INDEX RSVP] Declined RSVP timed out."
+        );
+
+
+        return;
+
+      }
+
+
+      /* ===============================================
+         ACCEPT FAILED
+      =============================================== */
 
       showStep(
         detailsStep
@@ -1968,7 +3582,8 @@ document.addEventListener(
 
       if (
         !origin ||
-        origin === "null"
+        origin ===
+        "null"
       ) {
 
         return true;
@@ -2046,7 +3661,7 @@ document.addEventListener(
         if (
           !data ||
           typeof data !==
-            "object"
+          "object"
         ) {
 
           return;
@@ -2090,6 +3705,10 @@ document.addEventListener(
         }
 
 
+        const completedMode =
+          submissionMode;
+
+
         submissionPending =
           false;
 
@@ -2099,10 +3718,9 @@ document.addEventListener(
         );
 
 
-        /*
-         * Keep submission loader visible
-         * for minimum duration.
-         */
+        /* ===============================================
+           MINIMUM LOADER DURATION
+        =============================================== */
 
         const elapsed =
           Date.now() -
@@ -2116,7 +3734,7 @@ document.addEventListener(
 
           await delay(
             MINIMUM_LOADER_TIME_MS -
-              elapsed
+            elapsed
           );
 
         }
@@ -2130,12 +3748,23 @@ document.addEventListener(
         );
 
 
+        /*
+         * Restore all form fields after
+         * decline submission has completed.
+         */
+
+        setDeclineOnlyFormMode(
+          false
+        );
+
+
         /* =================================================
            BACKEND ERROR
         ================================================= */
 
         if (
-          data.success !== true
+          data.success !==
+          true
         ) {
 
           console.error(
@@ -2144,6 +3773,57 @@ document.addEventListener(
           );
 
 
+          submissionMode =
+            null;
+
+
+          /* =============================================
+             DECLINE ERROR
+          ============================================= */
+
+          if (
+            completedMode ===
+            "decline-only"
+          ) {
+
+            showStep(
+              responseStep
+            );
+
+
+            if (
+              responseTitle
+            ) {
+
+              responseTitle.textContent =
+                "One More Try?";
+
+            }
+
+
+            if (
+              roleMessage
+            ) {
+
+              roleMessage.textContent =
+                data.message ||
+                "We couldn't save your RSVP. Please try again.";
+
+            }
+
+
+            openModal();
+
+
+            return;
+
+          }
+
+
+          /* =============================================
+             ACCEPT ERROR
+          ============================================= */
+
           showStep(
             detailsStep
           );
@@ -2151,7 +3831,7 @@ document.addEventListener(
 
           showDetailsMessage(
             data.message ||
-              "Unable to submit your RSVP. Please try again."
+            "Unable to submit your RSVP. Please try again."
           );
 
 
@@ -2163,7 +3843,6 @@ document.addEventListener(
         /* =================================================
            SUCCESS
 
-           IMPORTANT:
            Store values BEFORE closeModal()
            because closeModal() resets state.
         ================================================= */
@@ -2186,8 +3865,15 @@ document.addEventListener(
             guestName:
               submittedGuestName,
 
+            role:
+              selectedGuest?.role ||
+              "Guest",
+
             attendance:
               submittedAttendance,
+
+            submissionMode:
+              completedMode,
 
             backendMessage:
               data.message,
@@ -2195,9 +3881,13 @@ document.addEventListener(
         );
 
 
-        /*
-         * Clear search field.
-         */
+        submissionMode =
+          null;
+
+
+        /* ===============================================
+           CLEAR SEARCH
+        =============================================== */
 
         if (
           searchInput
@@ -2208,10 +3898,6 @@ document.addEventListener(
 
         }
 
-
-        /*
-         * Remove old text messages.
-         */
 
         if (
           searchMessage
@@ -2224,16 +3910,16 @@ document.addEventListener(
 
 
         /*
-         * Close RSVP modal first.
+         * This also resets all temporary
+         * RSVP state.
          */
 
         closeModal();
 
 
-        /*
-         * Play falling roses after
-         * modal is closed.
-         */
+        /* ===============================================
+           SUCCESS CELEBRATION
+        =============================================== */
 
         window.setTimeout(
           function () {
@@ -2252,7 +3938,7 @@ document.addEventListener(
 
 
     /* =====================================================
-       SEND RSVP BUTTON
+       SEND ACCEPT RSVP
     ===================================================== */
 
     submitButton
@@ -2268,6 +3954,9 @@ document.addEventListener(
 
     /* =====================================================
        SKIP MESSAGE & SEND
+
+       Contact number still required.
+       Only the optional message is skipped.
     ===================================================== */
 
     skipButton
@@ -2386,7 +4075,6 @@ document.addEventListener(
       .querySelectorAll(
         "[data-rsvp-close]"
       )
-
       .forEach(
         function (element) {
 
@@ -2453,9 +4141,9 @@ document.addEventListener(
         }
 
 
-        /*
-         * Close success celebration first.
-         */
+        /* ===============================================
+           CLOSE SUCCESS FIRST
+        =============================================== */
 
         if (
           successCelebration
@@ -2478,9 +4166,26 @@ document.addEventListener(
         }
 
 
-        /*
-         * Then RSVP modal.
-         */
+        /* ===============================================
+           CLOSE DECLINE CONFIRMATION FIRST
+        =============================================== */
+
+        if (
+          declineConfirmation &&
+          !declineConfirmation.hidden
+        ) {
+
+          hideDeclineConfirmation();
+
+
+          return;
+
+        }
+
+
+        /* ===============================================
+           THEN RSVP MODAL
+        =============================================== */
 
         if (
           !modal
