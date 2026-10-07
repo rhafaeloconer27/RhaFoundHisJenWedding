@@ -9,14 +9,13 @@
    - music.js
 ========================================================== */
 
-
 /* ==========================================================
    VARIABLES
 ========================================================== */
 
 :root {
   --sage: #8c997d;
-  --sage-dark: #6f7d63;
+  --sage-dark: rgb(95, 95, 95);
 
   --cream: #f8f5ee;
   --white: #ffffff;
@@ -32,7 +31,6 @@
     0 8px 26px
     rgba(58, 67, 52, 0.12);
 }
-
 
 /* ==========================================================
    RESET
@@ -94,7 +92,6 @@ img {
   max-width: 100%;
 }
 
-
 /* ==========================================================
    SHARED PAGE CONTAINER
 ========================================================== */
@@ -109,7 +106,6 @@ img {
       env(safe-area-inset-bottom)
     );
 }
-
 
 /* ==========================================================
    INDEX LOADER
@@ -170,7 +166,6 @@ body.loading-active {
 
   margin: 0 auto;
 }
-
 
 /* ==========================================================
    SPA INITIAL / PAGE TRANSITION
@@ -294,7 +289,6 @@ body.spa-initializing .music-button {
   }
 }
 
-
 /* ==========================================================
    INDEX / INVITATION BASE
 ========================================================== */
@@ -378,7 +372,6 @@ body.spa-initializing .music-button {
   text-align: center;
 }
 
-
 /* ==========================================================
    INVITATION COVER
 ========================================================== */
@@ -439,7 +432,6 @@ body.spa-initializing .music-button {
   perspective:
     1200px;
 }
-
 
 /* ==========================================================
    REVEALED INVITATION
@@ -636,7 +628,6 @@ body.spa-initializing .music-button {
     uppercase;
 }
 
-
 /* ==========================================================
    INVITATION PANELS
 ========================================================== */
@@ -697,7 +688,6 @@ body.spa-initializing .music-button {
 .cover-decoration {
   border-left: 0;
 }
-
 
 /* ==========================================================
    COVER TITLE
@@ -773,7 +763,6 @@ body.spa-initializing .music-button {
   font-size:
     0.5em;
 }
-
 
 /* ==========================================================
    WAX SEAL
@@ -898,7 +887,6 @@ body.spa-initializing .music-button {
     );
 }
 
-
 /* ==========================================================
    SHARED PAGE HERO
 
@@ -986,7 +974,6 @@ body.spa-initializing .music-button {
   padding:
     54px 20px;
 }
-
 
 /* ==========================================================
    GLOBAL NAVIGATION
@@ -1165,7 +1152,6 @@ body.spa-initializing .music-button {
     var(--sage-dark);
 }
 
-
 /* ==========================================================
    FEATURED RSVP NAV ITEM
 ========================================================== */
@@ -1236,7 +1222,6 @@ body.spa-initializing .music-button {
     var(--sage-dark);
 }
 
-
 /* ==========================================================
    MUSIC BUTTON
 ========================================================== */
@@ -1296,7 +1281,6 @@ body.spa-initializing .music-button {
   font-size: 19px;
 }
 
-
 /* ==========================================================
    SPA PAGE ENTER ANIMATION
 ========================================================== */
@@ -1353,7 +1337,6 @@ body.spa-initializing .music-button {
   animation-duration:
     0.65s;
 }
-
 
 /* ==========================================================
    GLOBAL KEYFRAMES
@@ -1447,7 +1430,6 @@ body.spa-initializing .music-button {
   }
 }
 
-
 /* ==========================================================
    GLOBAL RESPONSIVE
 ========================================================== */
@@ -1537,7 +1519,6 @@ body.spa-initializing .music-button {
   }
 }
 
-
 /* ==========================================================
    ACCESSIBILITY
 ========================================================== */
@@ -1583,7 +1564,6 @@ body.spa-initializing .music-button {
       auto;
   }
 }
-
 
 /* ==========================================================
    INDEX MOBILE FIX
@@ -1764,7 +1744,6 @@ body.spa-initializing .music-button {
   }
 }
 
-
 /* ==========================================================
    EXTRA SMALL PHONES
 ========================================================== */
@@ -1795,7 +1774,6 @@ body.spa-initializing .music-button {
   }
 }
 
-
 /* ==========================================================
    LONG SCROLL INTRO
 ========================================================== */
@@ -1803,7 +1781,6 @@ body.spa-initializing .music-button {
 .intro-overlay {
   position: fixed;
 }
-
 
 /* ==========================================================
    MESSAGE SECTION
@@ -1838,24 +1815,12 @@ body.spa-initializing .music-button {
   padding:
     40px 32px;
 
-  border:
+    border:
     1px solid
-    rgba(
-      255,
-      255,
-      255,
-      0.3
-    );
-
-  border-radius: 20px;
+    rgba(255, 255, 255, 0.42);
 
   background:
-    rgba(
-      247,
-      244,
-      236,
-      0.94
-    );
+    rgba(255, 255, 255, 0.84);
 
   color:
     #5d6258;
@@ -1896,7 +1861,7 @@ body.spa-initializing .music-button {
   margin-bottom: 8px;
 
   color:
-    #73776e;
+    #707070;
 
   font-family:
     "Cormorant Garamond",
@@ -1943,7 +1908,6 @@ body.spa-initializing .music-button {
   font-size:
     0.48em;
 }
-
 
 /* ==========================================================
    INVITATION COVER SECTION
@@ -1995,7 +1959,6 @@ body.spa-initializing .music-button {
     rgba(0, 0, 0, 0.34);
 }
 
-
 /* ==========================================================
    MESSAGE / COVER MOBILE
 ========================================================== */
@@ -2015,8 +1978,6 @@ body.spa-initializing .music-button {
   .intro-message-card {
     padding:
       30px 20px;
-
-    border-radius: 16px;
   }
 
   .intro-message-text {
@@ -2044,7 +2005,6 @@ body.spa-initializing .music-button {
   }
 }
 
-
 /* ==========================================================
    WEDDING SCRIPTURE SECTION
 ========================================================== */
@@ -2066,47 +2026,37 @@ body.spa-initializing .music-button {
     90px 18px;
 }
 
+/* ==========================================================
+   SCRIPTURE CARD
+   Match Intro Message Card
+========================================================== */
+
 .intro-scripture-card {
   position: relative;
 
-  width:
-    min(100%, 540px);
+  width: min(100%, 520px);
 
   padding:
-    52px
-    40px
-    42px;
-
-  border:
-    1px solid
-    rgba(
-      255,
-      255,
-      255,
-      0.3
-    );
-
-  border-radius: 20px;
-
-  background:
-    rgba(
-      247,
-      244,
-      236,
-      0.94
-    );
-
-  box-shadow:
-    0 25px 65px
-    rgba(0, 0, 0, 0.28);
+    44px 36px;
 
   overflow: hidden;
 
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.48);
+
+  background:
+    rgba(255, 255, 255, 0.86);
+
+  box-shadow:
+    0 20px 50px
+    rgba(45, 45, 45, 0.16);
+
   -webkit-backdrop-filter:
-    blur(10px);
+    blur(12px);
 
   backdrop-filter:
-    blur(10px);
+    blur(12px);
 }
 
 .intro-scripture-mark {
@@ -2141,8 +2091,7 @@ body.spa-initializing .music-button {
 
   margin: 0;
 
-  color:
-    #5d6258;
+  color: #5d6258;
 
   font-family:
     "Cormorant Garamond",
@@ -2152,15 +2101,23 @@ body.spa-initializing .music-button {
     clamp(
       1.2rem,
       4vw,
-      1.5rem
+      1.45rem
     );
 
   font-style: italic;
 
-  line-height: 1.65;
+  line-height: 3;
 
-  white-space:
-    pre-line;
+  /* Important */
+  white-space: normal;
+}
+
+.intro-scripture-quote p {
+  margin-bottom: 24px;
+}
+
+.intro-scripture-quote p:last-child {
+  margin-bottom: 0;
 }
 
 .intro-scripture-divider {
@@ -2196,19 +2153,37 @@ body.spa-initializing .music-button {
 @media (max-width: 600px) {
 
   .intro-scripture-section {
-    min-height: 85svh;
+    min-height: 100svh;
 
     padding:
-      70px 12px;
+      55px
+      14px;
   }
 
   .intro-scripture-card {
+    width: 100%;
+
     padding:
-      44px
-      22px
-      34px;
+      30px 21px;
 
     border-radius: 16px;
+
+    background:
+      rgba(248, 245, 238, 0.92);
+
+    border:
+      1px solid
+      rgba(255, 255, 255, 0.52);
+
+    box-shadow:
+      0 14px 34px
+      rgba(45, 45, 45, 0.14);
+
+    -webkit-backdrop-filter:
+      blur(9px);
+
+    backdrop-filter:
+      blur(9px);
   }
 
   .intro-scripture-mark {
@@ -2227,11 +2202,9 @@ body.spa-initializing .music-button {
   .intro-scripture-reference {
     font-size: 0.63rem;
 
-    letter-spacing:
-      0.13em;
+    letter-spacing: 0.13em;
   }
 }
-
 
 /* ==========================================================
    INTRO SCROLL LOTTIE
@@ -2268,7 +2241,6 @@ body.spa-initializing .music-button {
     margin-top: 100px;
   }
 }
-
 
 /* ==========================================================
    RSVP SUBMIT LOTTIE
@@ -2362,130 +2334,58 @@ body.spa-initializing .music-button {
   }
 }
 
-
 /* ==========================================================
-   THREE CIRCLE SCRATCH DATE
+   SCRATCH DATE SECTION
 ========================================================== */
 
 .intro-scratch-section {
   display: flex;
-
-  flex-direction: column;
-
   align-items: center;
   justify-content: center;
 
   width: 100%;
 
-  min-height: 85vh;
-  min-height: 85svh;
+  min-height: 100vh;
+  min-height: 100svh;
+
+  padding: 80px 18px;
+}
+
+/* ==========================================================
+   SCRATCH CARD
+========================================================== */
+
+.intro-scratch-card {
+  width: min(100%, 520px);
 
   padding:
-    80px 18px;
-}
+    54px
+    36px
+    48px;
 
-.intro-scratch-label {
-  margin-bottom: 26px;
+  border:
+    1px solid
+    rgba(110, 110, 105, 0.14);
 
-  color:
-    rgba(
-      255,
-      255,
-      255,
-      0.94
-    );
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    clamp(
-      1.25rem,
-      4vw,
-      1.55rem
-    );
-
-  font-style: italic;
-
-  letter-spacing:
-    0.04em;
-
-  text-align: center;
-
-  text-shadow:
-    0 3px 12px
-    rgba(0, 0, 0, 0.28);
-}
-
-
-/* ==========================================================
-   SCRATCH CIRCLE GRID
-========================================================== */
-
-.scratch-date-circles {
-  display: grid;
-
-  grid-template-columns:
-    repeat(3, minmax(0, 1fr));
-
-  justify-items: center;
-  align-items: center;
-
-  gap: 20px;
-
-  width: min(100%, 430px);
-
-  margin: 0 auto;
-}
-
-/* ==========================================================
-   SCRATCH CIRCLE
-========================================================== */
-
-.scratch-circle {
-  position: relative;
-
-  flex:
-    0 0 auto;
-
-  width:
-    clamp(
-      86px,
-      23vw,
-      125px
-    );
-
-  aspect-ratio: 1;
-
-  overflow: hidden;
-
-  border: none;
-
-  border-radius: 50%;
+  /* NO RADIUS */
+  border-radius: 0;
 
   background:
-    #fffdf7;
+    #ffffff;
 
   box-shadow:
-    0 10px 28px
-    rgba(
-      36,
-      43,
-      33,
-      0.18
-    );
+    0 24px 60px
+    rgba(45, 45, 45, 0.18);
+
+  text-align: center;
 }
 
-.scratch-circle-value {
-  position: absolute;
+/* ==========================================================
+   LABEL
+========================================================== */
 
-  inset: 0;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
+.intro-scratch-label {
+  margin-bottom: 8px;
 
   color:
     var(--sage-dark);
@@ -2496,38 +2396,153 @@ body.spa-initializing .music-button {
 
   font-size:
     clamp(
-      1.7rem,
-      6vw,
-      2.35rem
+      1.8rem,
+      5vw,
+      2.4rem
     );
 
   font-weight: 600;
 
-  letter-spacing:
-    0.04em;
+  line-height: 1.1;
+
+  text-align: center;
+}
+
+/* ==========================================================
+   FUNNY TEXT
+========================================================== */
+
+.intro-scratch-subtext {
+  max-width: 430px;
+
+  margin:
+    0 auto
+    38px;
+
+  color:
+    #74736c;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    clamp(
+      1rem,
+      3vw,
+      1.18rem
+    );
+
+  font-style: italic;
+
+  line-height: 1.5;
+
+  text-align: center;
+}
+
+/* ==========================================================
+   SCRATCH CIRCLE GRID
+========================================================== */
+
+.scratch-date-circles {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      3,
+      minmax(0, 1fr)
+    );
+
+  align-items: center;
+  justify-items: center;
+
+  gap: 22px;
+
+  width: min(100%, 520px);
+
+  margin: 0 auto;
+}
+
+/* ==========================================================
+   BIG SCRATCH CIRCLES
+========================================================== */
+
+.scratch-circle {
+  position: relative;
+  flex: 0 0 auto;
+
+  width: clamp(86px, 23vw, 125px);
+  aspect-ratio: 1;
+
+  overflow: hidden;
+  border: none;
+  border-radius: 50%;
+
+  background: #dc4844;
+  box-shadow: 0 10px 28px rgba(36, 43, 33, 0.18);
+}
+
+.scratch-circle-value {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #ffffff;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.7rem, 6vw, 2.35rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
 }
 
 .scratch-circle-day {
-  font-size:
-    clamp(
-      2.2rem,
-      7vw,
-      3rem
-    );
+  font-size: clamp(2.2rem, 7vw, 3rem);
+  color: #ffffff;
 }
 
 .scratch-circle-year {
-  font-size:
-    clamp(
-      1.35rem,
-      4vw,
-      1.8rem
-    );
-
-  letter-spacing:
-    0.08em;
+  font-size: clamp(1.35rem, 4vw, 1.8rem);
+  letter-spacing: 0.08em;
+  color: #ffffff;
 }
 
+/* ==========================================================
+   SAVE THE DATE LOTTIE
+========================================================== */
+
+.scratch-save-date-animation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+
+  margin:
+    0 auto
+    16px;
+}
+
+#saveTheDateAnimation {
+  display: block;
+
+  width: min(100%, 320px);
+  height: 240px;
+
+  margin: 0 auto;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+  #saveTheDateAnimation {
+    width: min(100%, 270px);
+    height: 210px;
+  }
+
+}
 
 /* ==========================================================
    SCRATCH CANVAS
@@ -2552,113 +2567,114 @@ body.spa-initializing .music-button {
   touch-action: none;
 
   user-select: none;
-
-  -webkit-user-select:
-    none;
+  -webkit-user-select: none;
 }
 
 .scratch-circle-canvas:active {
   cursor: grabbing;
 }
 
-
 /* ==========================================================
-   SCRATCH COMPLETE MESSAGE
+   COMPLETED DATE
 ========================================================== */
 
 .scratch-date-complete {
-  margin-top: 32px;
-
+  display: none;
+  margin-top: 38px;
   opacity: 0;
-
-  transform:
-    translateY(12px);
-
   pointer-events: none;
 }
 
 .scratch-date-complete.is-visible {
-  opacity: 1;
-
-  transform:
-    translateY(0);
-
-  transition:
-    opacity 0.7s ease,
-    transform 0.7s ease;
+  display: block;
 }
 
 .scratch-date-complete span {
   display: block;
-
-  margin-bottom: 8px;
-
-  color:
-    var(--gold);
-
-  font-size: 0.85rem;
-}
-
-.scratch-date-complete p {
-  color:
-    var(--sage-dark);
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    clamp(
-      1.7rem,
-      6vw,
-      2.3rem
-    );
-
-  font-weight: 600;
+  margin-bottom: 7px;
+  color: var(--gold);
+  font-size: 0.9rem;
 }
 
 .scratch-date-complete small {
   display: block;
-
   margin-top: 5px;
-
-  color:
-    #858579;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size: 0.95rem;
-
+  color: #858579;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1rem;
   font-style: italic;
 }
 
+.scratch-save-date-animation,
+.scratch-date-complete > span,
+.scratch-date-complete > small {
+  will-change: opacity, transform;
+}
 
 /* ==========================================================
-   SCRATCH MOBILE
+   MOBILE
 ========================================================== */
 
 @media (max-width: 600px) {
 
+  .intro-scratch-section {
+    min-height: 100svh;
+
+    padding:
+      55px
+      12px;
+  }
+
+  .intro-scratch-card {
+    width: 100%;
+
+    padding:
+      38px
+      14px
+      36px;
+
+    border-radius: 0;
+  }
+
+  .intro-scratch-label {
+    font-size: 1.9rem;
+  }
+
+  .intro-scratch-subtext {
+    max-width: 300px;
+
+    margin-bottom: 32px;
+
+    font-size: 1rem;
+  }
+
   .scratch-date-circles {
-    width: min(100%, 340px);
-
-    margin: 0 auto;
-
     gap: 10px;
 
-    justify-items: center;
+    width: 100%;
   }
 
   .scratch-circle {
     width:
       clamp(
-        82px,
-        25vw,
-        100px
+        92px,
+        27vw,
+        110px
       );
   }
+
+  .scratch-circle-value {
+    font-size: 1.9rem;
+  }
+
+  .scratch-circle-day {
+    font-size: 2.5rem;
+  }
+
+  .scratch-circle-year {
+    font-size: 1.45rem;
+  }
+
 }
 
 /* ==========================================================
@@ -2707,7 +2723,6 @@ body.spa-initializing .music-button {
     rgba(0, 0, 0, 0.28);
 }
 
-
 /* ==============================
    CARD
 ============================== */
@@ -2737,7 +2752,6 @@ body.spa-initializing .music-button {
   text-align: center;
 }
 
-
 /* ==============================
    LOCATION ICON
 ============================== */
@@ -2764,7 +2778,6 @@ body.spa-initializing .music-button {
 .intro-location-icon i {
   font-size: 24px;
 }
-
 
 /* ==============================
    LABEL / NAME
@@ -2825,7 +2838,6 @@ body.spa-initializing .music-button {
   text-align: center;
 }
 
-
 /* ==============================
    DIVIDER
 ============================== */
@@ -2840,7 +2852,6 @@ body.spa-initializing .music-button {
   background:
     rgba(183, 160, 106, 0.55);
 }
-
 
 /* ==============================
    DATE / TIME
@@ -2919,7 +2930,6 @@ body.spa-initializing .music-button {
 
   line-height: 1.25;
 }
-
 
 /* ==============================
    MAP
@@ -3033,7 +3043,6 @@ body.spa-initializing .music-button {
     rgba(45, 54, 41, 0.92);
 }
 
-
 /* ==============================
    GOOGLE MAP BUTTON
 ============================== */
@@ -3095,7 +3104,6 @@ body.spa-initializing .music-button {
 
   outline-offset: 3px;
 }
-
 
 /* ==============================
    MOBILE
@@ -3162,7 +3170,6 @@ body.spa-initializing .music-button {
   }
 }
 
-
 /* ==========================================================
    INDEX — GUEST ATTIRE
 ========================================================== */
@@ -3209,7 +3216,6 @@ body.spa-initializing .music-button {
     rgba(0, 0, 0, 0.28);
 }
 
-
 /* ==============================
    CARD
 ============================== */
@@ -3239,7 +3245,6 @@ body.spa-initializing .music-button {
   text-align: center;
 }
 
-
 /* ==============================
    ICON
 ============================== */
@@ -3267,7 +3272,6 @@ body.spa-initializing .music-button {
 .intro-attire-icon i {
   font-size: 22px;
 }
-
 
 /* ==============================
    HEADING
@@ -3326,7 +3330,6 @@ body.spa-initializing .music-button {
 
   line-height: 1.55;
 }
-
 
 /* ==============================
    GENTLEMEN / LADIES
@@ -3413,7 +3416,6 @@ body.spa-initializing .music-button {
 
   line-height: 1.4;
 }
-
 
 /* ==============================
    RECOMMENDED COLORS
@@ -3520,7 +3522,6 @@ body.spa-initializing .music-button {
     uppercase;
 }
 
-
 /* ==============================
    REMINDER
 ============================== */
@@ -3564,7 +3565,6 @@ body.spa-initializing .music-button {
 
   line-height: 1.4;
 }
-
 
 /* ==============================
    MOBILE
@@ -3676,7 +3676,6 @@ body.spa-initializing .music-button {
     rgba(0, 0, 0, 0.28);
 }
 
-
 /* ==============================
    MAIN GIFT CARD
 ============================== */
@@ -3706,7 +3705,6 @@ body.spa-initializing .music-button {
   text-align: center;
 }
 
-
 /* ==============================
    ICON
 ============================== */
@@ -3734,7 +3732,6 @@ body.spa-initializing .music-button {
 .intro-gift-icon i {
   font-size: 23px;
 }
-
 
 /* ==============================
    LABEL / TITLE
@@ -3776,7 +3773,6 @@ body.spa-initializing .music-button {
   line-height: 1.1;
 }
 
-
 /* ==============================
    MESSAGE
 ============================== */
@@ -3801,7 +3797,6 @@ body.spa-initializing .music-button {
 
   line-height: 1.6;
 }
-
 
 /* ==============================
    DIVIDER
@@ -3841,7 +3836,6 @@ body.spa-initializing .music-button {
 
   font-size: 0.8rem;
 }
-
 
 /* ==============================
    THANK YOU / SIGNATURE
@@ -3893,7 +3887,6 @@ body.spa-initializing .music-button {
 
   line-height: 1;
 }
-
 
 /* ==============================
    REMINDER CARD
@@ -3982,7 +3975,6 @@ body.spa-initializing .music-button {
 
   line-height: 1.45;
 }
-
 
 /* ==============================
    MOBILE
@@ -4120,7 +4112,6 @@ body.spa-initializing .music-button {
   line-height: 1.5;
 }
 
-
 /* ==============================
    SEARCH CARD
 ============================== */
@@ -4225,7 +4216,6 @@ body.spa-initializing .music-button {
   font-size: 0.95rem;
 }
 
-
 /* ==========================================================
    RSVP MODAL
 ========================================================== */
@@ -4298,7 +4288,6 @@ body.spa-initializing .music-button {
     rgba(0, 0, 0, 0.3);
 }
 
-
 /* ==============================
    CLOSE
 ============================== */
@@ -4325,7 +4314,6 @@ body.spa-initializing .music-button {
 
   cursor: pointer;
 }
-
 
 /* ==============================
    MODAL TYPOGRAPHY
@@ -4362,7 +4350,6 @@ body.spa-initializing .music-button {
 
   line-height: 1.45;
 }
-
 
 /* ==============================
    SEARCH RESULTS
@@ -4432,7 +4419,6 @@ body.spa-initializing .music-button {
   text-transform: uppercase;
 }
 
-
 /* ==============================
    BACK BUTTON
 ============================== */
@@ -4461,7 +4447,6 @@ body.spa-initializing .music-button {
 
   cursor: pointer;
 }
-
 
 /* ==============================
    RESPONSE OPTIONS
@@ -4540,7 +4525,6 @@ body.spa-initializing .music-button {
   text-transform: uppercase;
 }
 
-
 /* ==============================
    BUTTONS
 ============================== */
@@ -4587,7 +4571,6 @@ body.spa-initializing .music-button {
 
   color: #655e55;
 }
-
 
 /* ==============================
    WISH
@@ -4639,7 +4622,6 @@ body.spa-initializing .music-button {
   color: #aaa39b;
 }
 
-
 /* ==============================
    SUCCESS
 ============================== */
@@ -4688,7 +4670,6 @@ body.spa-initializing .music-button {
 
   font-size: 1.2rem;
 }
-
 
 /* ==============================
    MOBILE
@@ -4860,7 +4841,6 @@ body.spa-initializing .music-button {
   line-height: 1.25;
 }
 
-
 /* ==============================
    DETAIL FIELDS
 ============================== */
@@ -4959,7 +4939,6 @@ body.spa-initializing .music-button {
     var(--sage-dark);
 }
 
-
 /* ==============================
    VALIDATION MESSAGE
 ============================== */
@@ -4979,7 +4958,6 @@ body.spa-initializing .music-button {
 
   font-size: 0.95rem;
 }
-
 
 /* ==============================
    HIDDEN SUBMISSION
@@ -5028,7 +5006,6 @@ body.spa-initializing .music-button {
     visibility 0.45s ease;
 }
 
-
 /* NORMAL PRODUCTION VISIBILITY */
 
 .rsvp-success-celebration.is-visible {
@@ -5037,7 +5014,6 @@ body.spa-initializing .music-button {
   pointer-events: auto;
 }
 
-
 /* TEMPORARY TEST ONLY */
 
 .rsvp-success-celebration.test-visible {
@@ -5045,7 +5021,6 @@ body.spa-initializing .music-button {
   visibility: visible;
   pointer-events: auto;
 }
-
 
 /* ==============================
    FALLING ROSES
@@ -5063,7 +5038,6 @@ body.spa-initializing .music-button {
 
   pointer-events: none;
 }
-
 
 /* ==============================
    SUCCESS MESSAGE
@@ -5102,7 +5076,6 @@ body.spa-initializing .music-button {
     blur(5px);
 }
 
-
 .rsvp-success-label {
   display: block;
 
@@ -5118,7 +5091,6 @@ body.spa-initializing .music-button {
 
   text-transform: uppercase;
 }
-
 
 .rsvp-success-message h2 {
   margin: 0;
@@ -5142,7 +5114,6 @@ body.spa-initializing .music-button {
   line-height: 1;
 }
 
-
 .rsvp-success-message p {
   max-width: 300px;
 
@@ -5161,7 +5132,6 @@ body.spa-initializing .music-button {
   line-height: 1.5;
 }
 
-
 .rsvp-success-signature {
   display: block;
 
@@ -5177,7 +5147,6 @@ body.spa-initializing .music-button {
   font-size: 2.5rem;
 }
 
-
 /* ==============================
    MOBILE
 ============================== */
@@ -5192,4 +5161,42 @@ body.spa-initializing .music-button {
       30px 20px;
   }
 
+}
+
+/* ==========================================================
+   CONSISTENT INTRO SECTION SPACING
+========================================================== */
+
+:root {
+  --intro-section-spacing: clamp(120px, 15svh, 160px);
+}
+
+.intro-message-section,
+.intro-scripture-section,
+.intro-scratch-section,
+.intro-location-section,
+.intro-attire-section,
+.intro-gift-section,
+.intro-rsvp-section {
+  width: 100%;
+  min-height: auto;
+  padding: var(--intro-section-spacing) 12px;
+}
+
+/* ==========================================================
+   SCRIPTURE — SLIGHTLY HIGHER ONLY
+========================================================== */
+
+.intro-scripture-card {
+  top: -40px;
+}
+
+@media (max-width: 600px) {
+  :root {
+    --intro-section-spacing: 115px;
+  }
+
+  .intro-scripture-card {
+    top: -30px;
+  }
 }
