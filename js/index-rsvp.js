@@ -2999,6 +2999,7 @@ function showRsvpSuccessCelebration(
     "YES";
 
 
+
   /* =================================================
      SUCCESS MESSAGE
   ================================================= */
@@ -3157,15 +3158,68 @@ function showRsvpSuccessCelebration(
      AUTO HIDE
   ================================================= */
 
-  successCelebrationTimeout =
-    window.setTimeout(
-      function () {
+  /* =================================================
+   AUTO HIDE
+   THEN SHOW FINAL INVITATION
+================================================= */
 
-        hideRsvpSuccessCelebration();
+successCelebrationTimeout =
+  window.setTimeout(
+    function () {
 
-      },
-      SUCCESS_CELEBRATION_TIME_MS
+      /*
+       * Close RSVP Received message.
+       */
+      hideRsvpSuccessCelebration();
+
+
+      /*
+       * Give the overlay a moment to close
+       * before scrolling.
+       */
+      window.setTimeout(
+        function () {
+
+          scrollToInvitationCard();
+
+        },
+        250
+      );
+
+    },
+    SUCCESS_CELEBRATION_TIME_MS
+  );
+
+}
+
+/* =====================================================
+   SCROLL TO FINAL INVITATION
+===================================================== */
+
+function scrollToInvitationCard() {
+
+  const invitationCover =
+    document.getElementById(
+      "invitationCover"
     );
+
+
+  if (
+    !invitationCover
+  ) {
+
+    return;
+
+  }
+
+
+  invitationCover.scrollIntoView({
+    behavior:
+      "smooth",
+
+    block:
+      "center",
+  });
 
 }
 
