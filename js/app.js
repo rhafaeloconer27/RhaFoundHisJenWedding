@@ -32,6 +32,9 @@ document.addEventListener(
     ====================================================== */
 
     const pages = {
+       invitation: {
+    title: "Invitation | Rhaf & Jen",
+  },
      home: {
         file: "pages/home/home.html",
         css: "pages/home/home.css",
@@ -93,6 +96,8 @@ document.addEventListener(
 
     let initialLoadCompleted =
       false;
+
+      let invitationScrollY = 0;
 
       const isInvitationHost =
   document.body.classList.contains(
@@ -641,41 +646,45 @@ if (
     ====================================================== */
 
     function getPageFromUrl() {
-      const parameters =
-        new URLSearchParams(
-          window.location.search
-        );
+  const params = new URLSearchParams(
+    window.location.search
+  );
 
-      const requestedPage =
-        parameters.get("page");
+  const requestedPage = params.get("page");
 
-      if (
-        requestedPage &&
-        Object.prototype
-          .hasOwnProperty.call(
-            pages,
-            requestedPage
-          )
-      ) {
-        return requestedPage;
-      }
+  if (
+    requestedPage &&
+    Object.prototype.hasOwnProperty.call(
+      pages,
+      requestedPage
+    )
+  ) {
+    return requestedPage;
+  }
 
-      return "home";
-    }
+  const isIndexUrl =
+    /(?:\/|\/index\.html)$/i.test(
+      window.location.pathname
+    );
 
-    function createPageUrl(
-      pageName
-    ) {
-      if (
-        pageName === "home"
-      ) {
-        return "wedding.html";
-      }
+  if (isInvitationHost && isIndexUrl) {
+    return "invitation";
+  }
 
-      return `wedding.html?page=${encodeURIComponent(
-        pageName
-      )}`;
-    }
+  return "home";
+}
+
+function createPageUrl(pageName) {
+  if (pageName === "invitation") {
+    return "index.html";
+  }
+
+  if (pageName === "home") {
+    return "wedding.html";
+  }
+
+  return `wedding.html?page=${encodeURIComponent(pageName)}`;
+}
 
     /* ======================================================
        PAGE CLEANUP
@@ -999,34 +1008,122 @@ function loadPageScript(src) {
       const pageConfig =
         pages[pageName];
 
-      if (
-        pageName === currentPage ||
-        navigationInProgress
-      ) {
-        return;
-      }
-
-      navigationInProgress = true;
-
-    const isFirstLoadInsideInvitation =
-  isInvitationHost &&
-  !initialLoadCompleted;
-
-
-if (
-  (
-    showTransition ||
-    !initialLoadCompleted
-  ) &&
-  !isFirstLoadInsideInvitation
+     if (
+  pageName === currentPage ||
+  navigationInProgress
 ) {
+  return;
+}
 
+// Return to the original Invitation.
+if (pageName === "invitation") {
+  if (!isInvitationHost) {
+    window.location.href = "index.html";
+    return;
+  }
+
+  cleanupCurrentPage();
+
+  currentPage = "invitation";
+  initialLoadCompleted = true;
+
+  document.title = pageConfig.title;
+  document.body.dataset.currentPage = "invitation";
+
+  document.body.classList.remove(
+    "wedding-spa-active",
+    "spa-initializing",
+    "page-transition-active"
+  );
+
+  document.body.classList.add(
+    "invitation-intro-body"
+  );
+
+  document
+    .getElementById("weddingSpaShell")
+    ?.setAttribute("aria-hidden", "true");
+
+  const continueButton = document.getElementById(
+    "openWeddingPagesButton"
+  );
+
+  if (continueButton) {
+    continueButton.disabled = false;
+  }
+
+  window.gsap?.set(
+    [
+      ".intro-rsvp-section",
+      ".intro-wedding-pages-section",
+    ],
+    {
+      clearProps: "opacity,visibility,transform",
+    }
+  );
+
+  hideLoader();
+
+  if (updateHistory) {
+    window.history.pushState(
+      { page: "invitation" },
+      "",
+      createPageUrl("invitation")
+    );
+  }
+
+  window.requestAnimationFrame(() => {
+    window.scrollTo({
+      top: invitationScrollY,
+      behavior: "auto",
+    });
+
+    refreshScrollTrigger();
+  });
+
+  return;
+}
+
+navigationInProgress = true;
+
+// Save the current Invitation scroll position.
+if (isInvitationHost) {
+  if (currentPage === "invitation") {
+    invitationScrollY = window.scrollY;
+  }
+
+  // Activate the Wedding SPA.
+  document.body.classList.add(
+    "wedding-spa-active"
+  );
+
+  document.body.classList.remove(
+    "invitation-intro-body",
+    "loading-active",
+    "invitation-gate-active"
+  );
+
+  // Show the Wedding SPA container.
+  const weddingSpaShell =
+    document.getElementById("weddingSpaShell");
+
+  if (weddingSpaShell) {
+    weddingSpaShell.setAttribute(
+      "aria-hidden",
+      "false"
+    );
+  }
+}
+
+    if (
+  showTransition ||
+  !initialLoadCompleted
+) {
   showLoader(
     initialLoadCompleted
       ? "Loading..."
-      : "Loading invitation..."
+      : "Loading wedding page..."
   );
-
 }
 
       try {
@@ -1289,60 +1386,37 @@ if (
     );
 
     /* ======================================================
-       INITIAL LOAD
-    ====================================================== */
-
-   /* ======================================================
    INITIAL LOAD
 ====================================================== */
 
-if (
-  isInvitationHost
+window.startWeddingSpa = function (
+  pageName = "home"
 ) {
+  return loadPage(pageName, {
+    updateHistory: true,
+    showTransition: true,
+  });
+};
 
-  /*
-   * index.html owns the initial invitation.
-   *
-   * Do NOT load Home yet.
-   *
-   * Expose a function that index-animation.js
-   * can call after the guest presses
-   * "Continue to Our Wedding".
-   */
-  window.startWeddingSpa =
-    function (
-      pageName = "home"
-    ) {
+if (isInvitationHost) {
+  currentPage = "invitation";
 
-      return loadPage(
-        pageName,
-        {
-          updateHistory:
-            false,
+  document.body.dataset.currentPage =
+    "invitation";
 
-          showTransition:
-            false,
-        }
-      );
+  const initialPage = getPageFromUrl();
 
-    };
-
+  if (initialPage !== "invitation") {
+    loadPage(initialPage, {
+      updateHistory: false,
+      showTransition: true,
+    });
+  }
 } else {
-
-  /*
-   * Normal direct visit to wedding.html.
-   */
-  loadPage(
-    getPageFromUrl(),
-    {
-      updateHistory:
-        false,
-
-      showTransition:
-        true,
-    }
-  );
-
+  loadPage(getPageFromUrl(), {
+    updateHistory: false,
+    showTransition: true,
+  });
 }
   }
 );

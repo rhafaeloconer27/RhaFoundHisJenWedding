@@ -512,7 +512,9 @@ if (
     'click',
     () => {
 
-         window.startWeddingMusic?.();
+        window.startWeddingMusic?.({
+  restart: true,
+});
 
 
       /*
@@ -3120,33 +3122,17 @@ if (
         true;
 
 
-      /*
-       * Tell wedding.html to play
-       * the incoming flip animation.
-       */
-      try {
 
-        sessionStorage.setItem(
-          'weddingDirectEntry',
-          '1'
-        );
+     const goToWeddingPage = () => {
+  if (typeof window.startWeddingSpa !== "function") {
+    console.error("Wedding SPA router is unavailable.");
 
-      } catch {
+    openWeddingPagesButton.disabled = false;
+    return;
+  }
 
-        // Continue normally.
-
-      }
-
-
-      const goToWeddingPage =
-        () => {
-
-              window.saveWeddingMusicState?.();
-
-          window.location.href =
-            'wedding.html';
-
-        };
+  window.startWeddingSpa("home");
+};
 
 
       /*
