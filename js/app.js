@@ -94,6 +94,11 @@ document.addEventListener(
     let initialLoadCompleted =
       false;
 
+      const isInvitationHost =
+  document.body.classList.contains(
+    "invitation-intro-body"
+  );
+
     if (!app) {
       console.error(
         'SPA initialization failed: "#app" was not found.'
@@ -152,36 +157,74 @@ document.addEventListener(
       animation?.play?.();
     }
 
-    function hideLoader() {
-      if (!pageLoader) {
-        return;
-      }
+   function hideLoader() {
+  if (!pageLoader) {
+    return;
+  }
 
-      pageLoader.classList.remove(
-        "is-visible"
+  pageLoader.classList.remove(
+    "is-visible"
+  );
+
+  pageLoader.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+  document.body.classList.remove(
+    "page-transition-active"
+  );
+
+  const animation =
+    document.getElementById(
+      "pageLoaderAnimation"
+    );
+
+ const isWeddingDirectEntry =
+  document.documentElement.classList.contains(
+    "wedding-direct-entry"
+  );
+
+
+if (
+  isWeddingDirectEntry
+) {
+
+  window.setTimeout(
+    function () {
+
+      document.documentElement.classList.remove(
+        "wedding-direct-entry"
       );
 
-      pageLoader.setAttribute(
-        "aria-hidden",
-        "true"
-      );
 
-      document.body.classList.remove(
-        "page-transition-active"
-      );
+      document.documentElement.style.overflow =
+        "";
 
-      const animation =
-        document.getElementById(
-          "pageLoaderAnimation"
+
+      document.body.style.overflow =
+        "";
+
+
+      try {
+
+        sessionStorage.removeItem(
+          "weddingDirectEntry"
         );
 
-      window.setTimeout(
-        function () {
-          animation?.pause?.();
-        },
-        500
-      );
-    }
+      } catch {
+
+        // Ignore unavailable storage.
+
+      }
+
+    },
+
+    1000
+  );
+
+}
+   }
 
     /* ======================================================
        IMAGE WAITING
@@ -522,55 +565,76 @@ document.addEventListener(
     ====================================================== */
 
     function revealLoadedPage(
-      pageName
-    ) {
-      app.setAttribute(
-        "aria-busy",
-        "false"
-      );
+  pageName
+) {
 
-      document.body.classList.remove(
-        "spa-initializing"
-      );
+  const isWeddingDirectEntry =
+    document.documentElement.classList.contains(
+      "wedding-direct-entry"
+    );
 
-      initialLoadCompleted = true;
 
-      window.requestAnimationFrame(
+  app.setAttribute(
+    "aria-busy",
+    "false"
+  );
+
+
+  document.body.classList.remove(
+    "spa-initializing"
+  );
+
+
+  initialLoadCompleted =
+    true;
+
+
+  window.requestAnimationFrame(
+    function () {
+
+      window.setTimeout(
         function () {
+
+          hideLoader();
+
+
           window.setTimeout(
             function () {
-              hideLoader();
 
               /*
-               * Wait until the loader is hidden
-               * and body scrolling is restored.
+               * Normal SPA navigation:
+               * play the regular content animations.
+               *
+               * Direct entry from index:
+               * page flip is already the animation.
                */
-              window.setTimeout(
-                function () {
-                  playPageContentAnimation(
-                    pageName
-                  );
+              if (
+                !isWeddingDirectEntry
+              ) {
 
-                  /*
-                   * Refresh all GSAP ScrollTriggers.
-                   *
-                   * This supports:
-                   * - Sponsors
-                   * - Location
-                   * - Attire
-                   * - FAQ
-                   * - future pages using ScrollTrigger
-                   */
-                  refreshScrollTrigger();
-                },
-                150
-              );
+                playPageContentAnimation(
+                  pageName
+                );
+
+              }
+
+
+              refreshScrollTrigger();
+
             },
-            250
+
+            150
           );
-        }
+
+        },
+
+        250
       );
+
     }
+  );
+
+}
 
     /* ======================================================
        URL HANDLING
@@ -944,16 +1008,26 @@ function loadPageScript(src) {
 
       navigationInProgress = true;
 
-      if (
-        showTransition ||
-        !initialLoadCompleted
-      ) {
-        showLoader(
-          initialLoadCompleted
-            ? "Loading..."
-            : "Loading invitation..."
-        );
-      }
+    const isFirstLoadInsideInvitation =
+  isInvitationHost &&
+  !initialLoadCompleted;
+
+
+if (
+  (
+    showTransition ||
+    !initialLoadCompleted
+  ) &&
+  !isFirstLoadInsideInvitation
+) {
+
+  showLoader(
+    initialLoadCompleted
+      ? "Loading..."
+      : "Loading invitation..."
+  );
+
+}
 
       try {
         const response =
@@ -1218,12 +1292,57 @@ function loadPageScript(src) {
        INITIAL LOAD
     ====================================================== */
 
-    loadPage(
-      getPageFromUrl(),
-      {
-        updateHistory: false,
-        showTransition: true,
-      }
-    );
+   /* ======================================================
+   INITIAL LOAD
+====================================================== */
+
+if (
+  isInvitationHost
+) {
+
+  /*
+   * index.html owns the initial invitation.
+   *
+   * Do NOT load Home yet.
+   *
+   * Expose a function that index-animation.js
+   * can call after the guest presses
+   * "Continue to Our Wedding".
+   */
+  window.startWeddingSpa =
+    function (
+      pageName = "home"
+    ) {
+
+      return loadPage(
+        pageName,
+        {
+          updateHistory:
+            false,
+
+          showTransition:
+            false,
+        }
+      );
+
+    };
+
+} else {
+
+  /*
+   * Normal direct visit to wedding.html.
+   */
+  loadPage(
+    getPageFromUrl(),
+    {
+      updateHistory:
+        false,
+
+      showTransition:
+        true,
+    }
+  );
+
+}
   }
 );

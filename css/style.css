@@ -373,521 +373,6 @@ body.spa-initializing .music-button {
 }
 
 /* ==========================================================
-   INVITATION COVER
-========================================================== */
-
-.intro-label {
-  margin-bottom: 23px;
-
-  color:
-    rgba(255, 255, 255, 0.94);
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    clamp(
-      1rem,
-      3.5vw,
-      1.25rem
-    );
-
-  font-style: italic;
-
-  text-shadow:
-    0 3px 12px
-    rgba(0, 0, 0, 0.3);
-}
-
-.invitation-cover {
-  position: relative;
-
-  width:
-    min(100%, 540px);
-
-  aspect-ratio:
-    0.82 / 1;
-
-  overflow: hidden;
-
-  border:
-    1px solid
-    rgba(
-      255,
-      255,
-      255,
-      0.42
-    );
-
-  border-radius: 8px;
-
-  background:
-    #f5f0e6;
-
-  box-shadow:
-    0 30px 70px
-    rgba(0, 0, 0, 0.36);
-
-  perspective:
-    1200px;
-}
-
-/* ==========================================================
-   REVEALED INVITATION
-========================================================== */
-
-.invitation-reveal {
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 1;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  overflow: hidden;
-
-  background:
-    radial-gradient(
-      circle at top,
-      rgba(255, 255, 255, 0.9),
-      rgba(255, 255, 255, 0) 55%
-    ),
-    linear-gradient(
-      180deg,
-      #faf6ee 0%,
-      #f4efe5 100%
-    );
-}
-
-.reveal-photo {
-  display: none;
-}
-
-.invitation-reveal::before,
-.invitation-reveal::after {
-  content: "";
-
-  position: absolute;
-
-  pointer-events: none;
-}
-
-.invitation-reveal::before {
-  inset: 18px;
-
-  border:
-    1px solid
-    rgba(183, 160, 106, 0.55);
-}
-
-.invitation-reveal::after {
-  inset: 34px;
-
-  border:
-    1px solid
-    rgba(183, 160, 106, 0.18);
-}
-
-.reveal-content {
-  position: relative;
-
-  z-index: 3;
-
-  width: 100%;
-
-  max-width: 440px;
-
-  padding:
-    clamp(46px, 8vw, 78px)
-    clamp(34px, 7vw, 58px);
-
-  color:
-    #5d6658;
-
-  text-align: center;
-}
-
-.reveal-small {
-  color:
-    #7d7b72;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    clamp(
-      1rem,
-      2.4vw,
-      1.3rem
-    );
-
-  font-style: italic;
-
-  line-height: 1.4;
-}
-
-.reveal-divider {
-  margin:
-    18px 0;
-
-  color:
-    var(--gold);
-
-  font-size:
-    clamp(
-      0.9rem,
-      2vw,
-      1.1rem
-    );
-}
-
-.reveal-content h1 {
-  margin:
-    14px 0;
-
-  color:
-    var(--sage-dark);
-
-  font-family:
-    "Allura",
-    cursive;
-
-  font-size:
-    clamp(
-      5.4rem,
-      13vw,
-      7rem
-    );
-
-  font-weight: 400;
-
-  line-height: 0.68;
-}
-
-.reveal-content h1 span {
-  display: block;
-
-  margin:
-    7px 0;
-
-  color:
-    var(--gold);
-
-  font-size:
-    0.48em;
-}
-
-.reveal-invites {
-  max-width: 360px;
-
-  margin:
-    24px auto 0;
-
-  color:
-    #66645c;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    clamp(
-      1rem,
-      2.4vw,
-      1.25rem
-    );
-
-  line-height: 1.55;
-}
-
-.reveal-date {
-  margin-top: 23px;
-
-  color:
-    var(--sage-dark);
-
-  font-size:
-    clamp(
-      0.74rem,
-      1.7vw,
-      0.92rem
-    );
-
-  font-weight: 600;
-
-  letter-spacing:
-    0.2em;
-
-  text-transform:
-    uppercase;
-}
-
-/* ==========================================================
-   INVITATION PANELS
-========================================================== */
-
-.cover-panel {
-  position: absolute;
-
-  top: 0;
-  bottom: 0;
-
-  z-index: 4;
-
-  width: 51%;
-
-  background:
-    linear-gradient(
-      145deg,
-      #f7f2e8,
-      #e1d6c4
-    );
-
-  will-change:
-    transform;
-}
-
-.cover-panel-left {
-  left: 0;
-
-  border-right:
-    1px solid
-    rgba(183, 160, 106, 0.35);
-}
-
-.cover-panel-right {
-  right: 0;
-
-  border-left:
-    1px solid
-    rgba(183, 160, 106, 0.35);
-}
-
-.cover-decoration {
-  position: absolute;
-
-  inset: 17px;
-
-  border:
-    1px solid
-    rgba(183, 160, 106, 0.42);
-}
-
-.cover-panel-left
-.cover-decoration {
-  border-right: 0;
-}
-
-.cover-panel-right
-.cover-decoration {
-  border-left: 0;
-}
-
-/* ==========================================================
-   COVER TITLE
-========================================================== */
-
-.cover-title {
-  position: absolute;
-
-  top: 17%;
-  right: 7%;
-  left: 7%;
-
-  z-index: 6;
-
-  color:
-    var(--sage-dark);
-
-  text-align: center;
-
-  pointer-events: none;
-}
-
-.cover-title p {
-  margin-bottom: 18px;
-
-  color:
-    #847b6d;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    clamp(
-      0.78rem,
-      1.8vw,
-      1rem
-    );
-
-  letter-spacing:
-    0.17em;
-
-  text-transform:
-    uppercase;
-}
-
-.cover-title h2 {
-  font-family:
-    "Allura",
-    cursive;
-
-  font-size:
-    clamp(
-      5.6rem,
-      13vw,
-      7.4rem
-    );
-
-  font-weight: 400;
-
-  line-height: 0.68;
-}
-
-.cover-title h2 span {
-  display: block;
-
-  margin:
-    8px 0;
-
-  color:
-    var(--gold);
-
-  font-size:
-    0.5em;
-}
-
-/* ==========================================================
-   WAX SEAL
-========================================================== */
-
-.gsap-wax-seal {
-  position: absolute;
-
-  top: 74%;
-  left: 50%;
-
-  z-index: 8;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  width:
-    clamp(
-      76px,
-      11vw,
-      94px
-    );
-
-  height:
-    clamp(
-      76px,
-      11vw,
-      94px
-    );
-
-  padding: 0;
-
-  border:
-    2px solid
-    rgba(
-      255,
-      255,
-      255,
-      0.3
-    );
-
-  border-radius: 50%;
-
-  background:
-    radial-gradient(
-      circle at 35% 30%,
-      #9fac94,
-      #627058 72%
-    );
-
-  color:
-    var(--white);
-
-  box-shadow:
-    0 10px 26px
-    rgba(62, 68, 56, 0.38),
-    inset 0 0 0 5px
-    rgba(255, 255, 255, 0.08);
-
-  cursor: pointer;
-
-  transform:
-    translate(
-      -50%,
-      -50%
-    );
-
-  will-change:
-    transform,
-    opacity;
-
-  animation:
-    sealFloat
-    2.8s
-    ease-in-out
-    infinite;
-
-  transition:
-    transform 0.35s ease,
-    box-shadow 0.35s ease;
-}
-
-.gsap-wax-seal:hover {
-  transform:
-    translate(-50%, -50%)
-    scale(1.08);
-
-  box-shadow:
-    0 16px 40px
-    rgba(0, 0, 0, 0.28);
-}
-
-.gsap-wax-seal span,
-.gsap-wax-seal small {
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-weight: 600;
-}
-
-.gsap-wax-seal span {
-  font-size:
-    clamp(
-      1.45rem,
-      3vw,
-      1.8rem
-    );
-}
-
-.gsap-wax-seal small {
-  margin:
-    0 3px;
-
-  font-size:
-    clamp(
-      0.85rem,
-      1.8vw,
-      1.05rem
-    );
-}
-
-/* ==========================================================
    SHARED PAGE HERO
 
    Used by:
@@ -1414,22 +899,6 @@ body.spa-initializing .music-button {
   }
 }
 
-@keyframes sealFloat {
-
-  0%,
-  100% {
-    transform:
-      translate(-50%, -50%)
-      scale(1);
-  }
-
-  50% {
-    transform:
-      translate(-50%, -50%)
-      scale(1.04);
-  }
-}
-
 /* ==========================================================
    GLOBAL RESPONSIVE
 ========================================================== */
@@ -1444,10 +913,6 @@ body.spa-initializing .music-button {
 }
 
 @media (max-width: 480px) {
-
-  .intro-label {
-    margin-bottom: 17px;
-  }
 
   .bottom-navigation {
     padding:
@@ -1589,159 +1054,6 @@ body.spa-initializing .music-button {
 
     max-width: 100%;
   }
-
-  .intro-label {
-    margin-bottom: 12px;
-
-    font-size:
-      clamp(
-        0.85rem,
-        3.8vw,
-        1rem
-      );
-
-    line-height: 1.3;
-  }
-
-  .invitation-cover {
-    aspect-ratio:
-      0.78 / 1;
-
-    border-radius: 7px;
-  }
-
-  .invitation-reveal::before {
-    inset: 12px;
-  }
-
-  .invitation-reveal::after {
-    inset: 24px;
-  }
-
-  .cover-title {
-    top: 17%;
-    right: 7%;
-    left: 7%;
-  }
-
-  .cover-title p {
-    margin-bottom: 14px;
-
-    font-size:
-      clamp(
-        0.7rem,
-        2.8vw,
-        0.84rem
-      );
-  }
-
-  .cover-title h2 {
-    font-size:
-      clamp(
-        4.6rem,
-        18vw,
-        6.2rem
-      );
-  }
-
-  .cover-title h2 span {
-    margin:
-      5px 0;
-  }
-
-  .gsap-wax-seal {
-    top: 74%;
-
-    width:
-      clamp(
-        70px,
-        18vw,
-        84px
-      );
-
-    height:
-      clamp(
-        70px,
-        18vw,
-        84px
-      );
-  }
-
-  .gsap-wax-seal span {
-    font-size: 1.4rem;
-  }
-
-  .gsap-wax-seal small {
-    margin:
-      0 2px;
-
-    font-size:
-      0.84rem;
-  }
-
-  .reveal-content {
-    max-width: 100%;
-
-    padding:
-      42px 26px;
-
-    overflow: hidden;
-  }
-
-  .reveal-small {
-    font-size:
-      clamp(
-        0.88rem,
-        3.7vw,
-        1.05rem
-      );
-  }
-
-  .reveal-divider {
-    margin:
-      12px 0;
-  }
-
-  .reveal-content h1 {
-    margin:
-      10px 0;
-
-    font-size:
-      clamp(
-        4.5rem,
-        19vw,
-        5.8rem
-      );
-  }
-
-  .reveal-invites {
-    max-width: 285px;
-
-    margin-top: 18px;
-
-    font-size:
-      clamp(
-        0.88rem,
-        3.7vw,
-        1.05rem
-      );
-
-    line-height: 1.5;
-
-    overflow-wrap:
-      break-word;
-  }
-
-  .reveal-date {
-    margin-top: 16px;
-
-    font-size:
-      clamp(
-        0.66rem,
-        2.7vw,
-        0.78rem
-      );
-  }
 }
 
 /* ==========================================================
@@ -1750,10 +1062,6 @@ body.spa-initializing .music-button {
 
 @media (max-width: 380px) {
 
-  .gsap-wax-seal {
-    width: 70px;
-    height: 70px;
-  }
 
   .reveal-content {
     padding:
@@ -1913,27 +1221,6 @@ body.spa-initializing .music-button {
    INVITATION COVER SECTION
 ========================================================== */
 
-.intro-cover-section {
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-  justify-content: center;
-
-  width: 100%;
-
-  min-height: 115vh;
-  min-height: 115svh;
-
-  padding:
-    90px
-    18px
-    max(
-      90px,
-      env(safe-area-inset-bottom)
-    );
-}
 
 .intro-open-note {
   margin-top: 20px;
@@ -1990,18 +1277,6 @@ body.spa-initializing .music-button {
 
   .intro-message-signature {
     font-size: 4rem;
-  }
-
-  .intro-cover-section {
-    min-height: 110svh;
-
-    padding:
-      10px
-      12px
-      max(
-        70px,
-        env(safe-area-inset-bottom)
-      );
   }
 }
 
@@ -6501,4 +5776,1077 @@ background:
     serif;
 
   font-size: 0.9rem;
+}
+/* ==========================================================
+   VIDEO-STYLE WEDDING INVITATION ENTRY
+========================================================== */
+
+body.invitation-gate-active {
+  overflow:
+    hidden;
+}
+
+
+/* ==========================================================
+   FULL-SCREEN ENTRY GATE
+========================================================== */
+
+.invitation-entry-gate {
+  position:
+    fixed;
+
+  inset:
+    0;
+
+  z-index:
+    9000;
+
+  display:
+    flex;
+
+  align-items:
+    stretch;
+
+  justify-content:
+    stretch;
+
+  width:
+    100%;
+
+  height:
+    100vh;
+
+  height:
+    100dvh;
+
+  /*
+   * IMPORTANT
+   * No outer spacing anymore.
+   */
+  padding:
+    0;
+
+  overflow:
+    hidden;
+
+  /*
+   * Envelope itself now covers
+   * the entire screen.
+   */
+  background:
+    transparent;
+}
+
+
+/* ==========================================================
+   WRAPPER
+========================================================== */
+
+.video-invitation-wrap {
+  position:
+    relative;
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  height:
+    100vh;
+
+  height:
+    100dvh;
+
+  min-height:
+    100dvh;
+
+  overflow:
+    hidden;
+}
+
+
+/* ==========================================================
+   MAIN INVITATION / ENVELOPE
+========================================================== */
+
+.video-invitation-cover {
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  max-width:
+    none;
+
+  max-height:
+    none;
+
+  overflow:
+    hidden;
+
+  border:
+    0;
+
+  border-radius:
+    0;
+
+  background:
+  transparent;
+
+  box-shadow:
+    none;
+
+  isolation:
+    isolate;
+}
+
+/* ==========================================================
+   INVITATION UNDER THE ENVELOPE
+========================================================== */
+
+.video-invitation-card {
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  z-index:
+    1;
+
+  overflow:
+    hidden;
+
+  background:
+    #f8f4ec;
+
+  transform-origin:
+    center center;
+
+  will-change:
+    transform;
+}
+
+/* ==========================================================
+   INVITATION CONTENT
+========================================================== */
+
+.video-invitation-card-content {
+  position:
+    absolute;
+
+  right:
+    0;
+
+  bottom:
+    0;
+
+  left:
+    0;
+
+  z-index:
+    2;
+
+  padding:
+    22px
+    24px
+    27px;
+
+  color:
+    #373431;
+
+  text-align:
+    center;
+}
+/* ==========================================================
+   ENVELOPE PAPER — SHARED
+
+   Texture similar to kraft paper in the video.
+========================================================== */
+
+.video-envelope-piece {
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  z-index:
+    5;
+
+  /*
+   * Replace beige / #caad86-style
+   * envelope paper with the same
+   * background used by the index.
+   */
+  background-color:
+    #f7f2e8;
+
+  background-image:
+    url("../images/indexBackground.png");
+
+  background-repeat:
+    repeat;
+
+  background-size:
+    680px auto;
+
+  background-position:
+    center top;
+
+  will-change:
+    transform;
+}
+
+
+/* ==========================================================
+   TOP / LEFT KRAFT FOLD
+
+   The point meets near the wax seal.
+========================================================== */
+
+.video-envelope-top {
+  clip-path:
+    polygon(
+      0 0,
+      100% 0,
+      45% 49%,
+      0 60%
+    );
+
+  filter:
+    drop-shadow(
+      3px
+      4px
+      4px
+      rgba(
+        62,
+        43,
+        28,
+        0.2
+      )
+    );
+}
+
+
+/* ==========================================================
+   BOTTOM KRAFT FOLD
+========================================================== */
+
+.video-envelope-bottom {
+  clip-path:
+    polygon(
+      0 42%,
+      45% 49%,
+      100% 100%,
+      0 100%
+    );
+
+  filter:
+    drop-shadow(
+      2px
+      -3px
+      4px
+      rgba(
+        62,
+        43,
+        28,
+        0.18
+      )
+    );
+}
+
+
+/* ==========================================================
+   RIGHT DARK FLAP GROUP
+
+   Contains both black flap + seal.
+========================================================== */
+
+.video-envelope-right {
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  z-index:
+    7;
+
+  pointer-events:
+    none;
+
+  will-change:
+    transform;
+}
+
+
+/* ==========================================================
+   BLACK ENVELOPE FLAP + REAL DIAGONAL SHADOW
+========================================================== */
+
+.video-envelope-dark {
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  z-index:
+    1;
+
+  /*
+   * Do NOT clip this wrapper.
+   * The shadow needs room to render.
+   */
+  overflow:
+    visible;
+
+  background:
+    transparent;
+
+  /*
+   * Shadow is applied to the clipped
+   * image inside ::before.
+   */
+  filter:
+    drop-shadow(
+      -16px 0 20px
+      rgba(0, 0, 0, 0.42)
+    )
+    drop-shadow(
+      -4px 0 5px
+      rgba(0, 0, 0, 0.45)
+    );
+}
+
+
+/* ==========================================================
+   ACTUAL BLACK COVER IMAGE
+========================================================== */
+
+.video-envelope-dark::before {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  background-image:
+    url("../images/invitationBalckCover.png");
+
+  background-repeat:
+    no-repeat;
+
+  background-position:
+    center;
+
+  background-size:
+    100% 100%;
+
+  /*
+   * Only the image is clipped.
+   */
+  clip-path:
+    polygon(
+      100% 0,
+      100% 100%,
+      45% 49%
+    );
+}
+
+
+/* ==========================================================
+   OPEN NOTE
+========================================================== */
+
+.video-invitation-wrap
+.intro-open-note {
+  position:
+    absolute;
+
+  right:
+    20px;
+
+  bottom:
+    max(
+      22px,
+      env(safe-area-inset-bottom)
+    );
+
+  left:
+    20px;
+
+  z-index:
+    20;
+
+  margin:
+    0;
+
+  color:
+    #5d6258;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    1rem;
+
+  font-style:
+    italic;
+
+  line-height:
+    1.3;
+
+  text-align:
+    center;
+
+  pointer-events:
+    none;
+}
+
+
+/* ==========================================================
+   TABLET / SHORTER SCREENS
+========================================================== */
+
+  .video-invitation-wrap
+  .intro-open-note {
+    margin-top:
+      10px;
+  }
+
+
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media (
+  max-width:
+  600px
+) {
+
+
+  .video-invitation-card-content {
+    padding:
+      20px
+      17px
+      23px;
+  }
+  .video-invitation-wrap
+  .intro-open-note {
+    margin-top:
+      12px;
+
+    font-size:
+      0.92rem;
+  }
+
+}
+
+
+/* ==========================================================
+   EXTRA SMALL PHONES
+========================================================== */
+
+@media (
+  max-width:
+  380px
+) {
+
+
+  .video-invitation-script {
+    font-size:
+      2.65rem;
+  }
+
+}
+/* ==========================================================
+   RHAF & JEN IMAGE SEAL
+========================================================== */
+
+.video-invitation-seal {
+  position: absolute;
+  top: 49%;
+  left: 45%;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+   width: 150px;
+  height: 150px;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+  transform: translate(-50%, -50%);
+  animation: none;
+  will-change: transform;
+}
+
+.video-invitation-seal-image {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  pointer-events: none;
+
+  user-select: none;
+
+  -webkit-user-drag: none;
+
+  /*
+   * Breathing animation.
+   * Keep the 90deg rotation.
+   */
+  animation:
+    sealBreathing
+    5s
+    ease-in-out
+    infinite;
+
+  will-change:
+    transform,
+    filter;
+}
+
+.video-invitation-seal:focus-visible {
+  outline: 2px solid rgba(183, 160, 106, 0.7);
+  outline-offset: 5px;
+  border-radius: 50%;
+}
+
+@media (max-width: 600px) {
+  .video-invitation-seal {
+      width: 130px;
+    height: 130px;
+  }
+}
+
+@media (max-width: 380px) {
+  .video-invitation-seal {
+      width: 115px;
+    height: 115px;
+  }
+}
+
+/* ==========================================================
+   SEAL BREATHING
+========================================================== */
+
+@keyframes sealBreathing {
+
+  0%,
+  100% {
+    transform:
+      rotate(90deg)
+      scale(1);
+
+    filter:
+      drop-shadow(
+        0 7px 12px
+        rgba(0, 0, 0, 0.3)
+      )
+      drop-shadow(
+        0 0 0
+        rgba(183, 160, 106, 0)
+      );
+  }
+
+
+  50% {
+    transform:
+      rotate(90deg)
+      scale(1.08);
+
+    filter:
+      drop-shadow(
+        0 10px 16px
+        rgba(0, 0, 0, 0.36)
+      )
+      drop-shadow(
+        0 0 16px
+        rgba(183, 160, 106, 0.42)
+      );
+  }
+
+}
+
+.video-invitation-seal:disabled
+.video-invitation-seal-image {
+  animation:
+    none;
+
+  transform:
+    rotate(90deg)
+    scale(1);
+}
+
+
+.video-invitation-seal:disabled::after {
+  display:
+    none;
+}
+
+/* ==========================================================
+   CLICK HINT HALO
+========================================================== */
+
+.video-invitation-seal::after {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  inset:
+    12%;
+
+  z-index:
+    -1;
+
+  border:
+    2px solid
+    rgba(183, 160, 106, 0.5);
+
+  border-radius:
+    50%;
+
+  pointer-events:
+    none;
+
+  animation:
+    sealHalo
+     5s
+    ease-out
+    infinite;
+}
+
+
+@keyframes sealHalo {
+
+  0% {
+    opacity:
+      0.65;
+
+    transform:
+      scale(0.88);
+  }
+
+
+  65% {
+    opacity:
+      0;
+
+    transform:
+      scale(1.35);
+  }
+
+
+  100% {
+    opacity:
+      0;
+
+    transform:
+      scale(1.35);
+  }
+
+}
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
+
+  .video-invitation-seal-image,
+  .video-invitation-seal::after {
+    animation:
+      none;
+  }
+
+}
+
+/* ==========================================================
+   CONTINUE TO WEDDING PAGES
+========================================================== */
+
+.intro-wedding-pages-section {
+  position:
+    relative;
+
+  z-index:
+    3;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  width:
+    100%;
+
+  padding:
+    100px
+    12px
+    150px;
+}
+
+
+.intro-wedding-pages-card {
+  width:
+    min(
+      100%,
+      520px
+    );
+
+  padding:
+    42px
+    30px;
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.42
+    );
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.84
+    );
+
+  color:
+    #5d6258;
+
+  box-shadow:
+    0 25px 65px
+    rgba(
+      0,
+      0,
+      0,
+      0.18
+    );
+
+  text-align:
+    center;
+
+  -webkit-backdrop-filter:
+    blur(10px);
+
+  backdrop-filter:
+    blur(10px);
+}
+
+
+.intro-wedding-pages-eyebrow {
+  margin-bottom:
+    10px;
+
+  color:
+    #b7a06a;
+
+  font-family:
+    "Montserrat",
+    sans-serif;
+
+  font-size:
+    0.7rem;
+
+  font-weight:
+    600;
+
+  letter-spacing:
+    0.2em;
+
+  text-transform:
+    uppercase;
+}
+
+
+.intro-wedding-pages-card h2 {
+  margin:
+    0;
+
+  color:
+    #4b4844;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    clamp(
+      2.1rem,
+      8vw,
+      3.2rem
+    );
+
+  font-weight:
+    500;
+
+  line-height:
+    1;
+}
+
+
+.intro-wedding-pages-description {
+  max-width:
+    390px;
+
+  margin:
+    18px auto
+    28px;
+
+  color:
+    #77716b;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    1.08rem;
+
+  line-height:
+    1.55;
+}
+
+
+.intro-wedding-pages-button {
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    14px;
+
+  min-height:
+    54px;
+
+  padding:
+    0 26px;
+
+  border:
+    1px solid
+    #4d4945;
+
+  border-radius:
+    0;
+
+  background:
+    #4d4945;
+
+  color:
+    #ffffff;
+
+  font-family:
+    "Montserrat",
+    sans-serif;
+
+  font-size:
+    0.72rem;
+
+  font-weight:
+    600;
+
+  letter-spacing:
+    0.12em;
+
+  text-transform:
+    uppercase;
+
+  cursor:
+    pointer;
+
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+
+.intro-wedding-pages-button:hover {
+  background:
+    #3e3a37;
+
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 12px 26px
+    rgba(
+      0,
+      0,
+      0,
+      0.18
+    );
+}
+
+
+.intro-wedding-pages-button i {
+  transition:
+    transform
+    0.25s
+    ease;
+}
+
+
+.intro-wedding-pages-button:hover i {
+  transform:
+    translateX(4px);
+}
+
+
+.intro-wedding-pages-button:disabled {
+  cursor:
+    default;
+
+  pointer-events:
+    none;
+}
+
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media (max-width: 600px) {
+
+  .intro-wedding-pages-section {
+    padding:
+      90px
+      12px
+      120px;
+  }
+
+
+  .intro-wedding-pages-card {
+    padding:
+      36px
+      22px;
+  }
+
+
+  .intro-wedding-pages-button {
+    width:
+      100%;
+
+    min-height:
+      56px;
+  }
+
+}
+
+/* ==========================================================
+   WEDDING SPA INSIDE INDEX.HTML
+
+   Keep the Wedding SPA prepared but invisible
+   until the invitation is finished.
+========================================================== */
+
+.wedding-spa-shell {
+  position:
+    absolute;
+
+  top:
+    0;
+
+  left:
+    0;
+
+  z-index:
+    -1;
+
+  width:
+    100%;
+
+  min-height:
+    100vh;
+
+  min-height:
+    100dvh;
+
+  background:
+    var(--sage-dark);
+
+  opacity:
+    0;
+
+  visibility:
+    hidden;
+
+  pointer-events:
+    none;
+}
+
+
+/* ==========================================================
+   WEDDING EXPERIENCE ACTIVE
+========================================================== */
+
+body.wedding-spa-active
+.wedding-spa-shell {
+  position:
+    relative;
+
+  z-index:
+    1;
+
+  opacity:
+    1;
+
+  visibility:
+    visible;
+
+  pointer-events:
+    auto;
+}
+
+
+/*
+ * Invitation is completely removed once
+ * the Wedding SPA takes over.
+ */
+body.wedding-spa-active
+#invitationIntro,
+
+body.wedding-spa-active
+#invitationEntryGate,
+
+body.wedding-spa-active
+#weddingLoader {
+  display:
+    none !important;
 }

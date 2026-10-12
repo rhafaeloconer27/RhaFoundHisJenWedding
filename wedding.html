@@ -2,10 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-
+<script>
+    (() => {
+      try {
+        if (
+          sessionStorage.getItem(
+            "weddingDirectEntry"
+          ) === "1"
+        ) {
+          document.documentElement.classList.add(
+            "wedding-direct-entry"
+          );
+        }
+      } catch {
+        // Continue normally.
+      }
+    })();
+  </script>
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1.0-, viewport-fit=cover"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
   />
 
   <meta
@@ -106,6 +122,178 @@
     width: 240px;
     height: 240px;
   }
+html.wedding-direct-entry
+.page-transition-loader {
+  display:
+    none !important;
+}
+
+/* ==========================================================
+   WEDDING.HTML — MATCHING PAGE FLIP IN
+========================================================== */
+
+html.wedding-direct-entry,
+html.wedding-direct-entry body {
+  overflow:
+    hidden;
+
+ background-image:
+    url("../images/indexBackground.png");
+
+  background-repeat: repeat;
+
+  /* Adjust this to control diamond size */
+  background-size: 680px auto;
+
+  background-position:
+    center top;
+
+  pointer-events: none;
+
+  perspective:
+    1600px;
+}
+
+
+/*
+ * ACTUAL wedding Home page.
+ *
+ * Starts edge-on and flips toward user.
+ */
+html.wedding-direct-entry
+body:not(.spa-initializing)
+#app {
+  animation:
+    weddingDirectPageFlipIn
+    0.85s
+    cubic-bezier(
+      0.77,
+      0,
+      0.18,
+      1
+    )
+    both;
+
+  transform-origin:
+    right center;
+
+  backface-visibility:
+    hidden;
+
+  will-change:
+    transform,
+    opacity;
+}
+
+
+/*
+ * Navigation appears near the end
+ * so it doesn't float around during flip.
+ */
+html.wedding-direct-entry
+body:not(.spa-initializing)
+#globalNavigation {
+  animation:
+    weddingDirectNavigationEnter
+    0.45s
+    ease-out
+    0.62s
+    both;
+}
+
+
+/* ==========================================================
+   ACTUAL PAGE FLIP
+========================================================== */
+
+@keyframes weddingDirectPageFlipIn {
+
+  0% {
+    opacity:
+      0.35;
+
+    transform:
+      perspective(1600px)
+      rotateY(90deg)
+      translateX(8%)
+      scale(0.98);
+  }
+
+
+  35% {
+    opacity:
+      1;
+  }
+
+
+  100% {
+    opacity:
+      1;
+
+    transform:
+      perspective(1600px)
+      rotateY(0deg)
+      translateX(0)
+      scale(1);
+  }
+
+}
+
+
+/* ==========================================================
+   NAVIGATION
+========================================================== */
+
+@keyframes weddingDirectNavigationEnter {
+
+  from {
+    opacity:
+      0;
+
+    transform:
+      translateY(28px);
+  }
+
+
+  to {
+    opacity:
+      1;
+
+    transform:
+      translateY(0);
+  }
+
+}
+
+
+/* ==========================================================
+   REDUCED MOTION
+========================================================== */
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
+
+  html.wedding-direct-entry
+  body:not(.spa-initializing)
+  #app,
+
+  html.wedding-direct-entry
+  body:not(.spa-initializing)
+  #globalNavigation {
+    animation:
+      none !important;
+
+    opacity:
+      1 !important;
+
+    transform:
+      none !important;
+  }
+
+}
+
 </style>
 
   <link
