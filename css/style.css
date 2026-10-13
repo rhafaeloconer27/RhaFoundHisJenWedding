@@ -6917,3 +6917,280 @@ body.wedding-flip-active #pageTransitionLoader {
     transition: none !important;
   }
 }
+
+
+/* ==========================================================
+   GLOBAL WEDDING NAVIGATION
+========================================================== */
+
+:root {
+  --nav-height: 76px;
+  --nav-active-size: 54px;
+  --nav-bg: #ffffff;
+  --nav-active: #8c997d;
+  --nav-muted: #aeb2b5;
+  --nav-bottom: 12px;
+}
+
+/* GLOBAL NAVIGATION WRAPPER */
+
+#globalNavigation {
+  position: relative;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+/* MAIN NAVIGATION */
+
+.bottom-navigation.curved-nav {
+  position: fixed;
+  bottom: calc(
+    var(--nav-bottom) + env(safe-area-inset-bottom)
+  );
+  left: 50%;
+
+  z-index: 10000;
+
+  display: grid;
+  grid-template-columns:
+    repeat(var(--nav-count), minmax(0, 1fr));
+
+  width: min(calc(100% - 24px), 680px);
+  height: var(--nav-height);
+
+  padding: 0;
+  margin: 0;
+
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  box-shadow: none;
+
+  overflow: visible;
+  isolation: isolate;
+
+  transform: translateX(-50%);
+  pointer-events: auto;
+}
+
+/* CURVED BACKGROUND */
+
+.curved-nav .nav-background {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+
+  filter:
+    drop-shadow(0 3px 8px rgba(0, 0, 0, 0.10));
+}
+
+.curved-nav .nav-background-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.curved-nav .nav-background-path {
+  fill: var(--nav-bg);
+}
+
+/* NAVIGATION ITEMS */
+
+.curved-nav .nav-item {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 7px;
+
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+
+  padding: 0 0 12px;
+  margin: 0;
+
+  border: 0;
+  border-radius: 0;
+
+  background: transparent;
+  box-shadow: none;
+
+  color: var(--nav-muted);
+  text-decoration: none;
+  text-align: center;
+
+  transform: none;
+  z-index: 1;
+}
+
+/* ICON */
+
+.curved-nav .nav-icon {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 24px;
+  height: 26px;
+
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+  border-radius: 0;
+
+  background: transparent;
+  color: var(--nav-muted);
+  box-shadow: none;
+
+  transform: none;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.curved-nav .nav-icon i {
+  font-size: 17px;
+  line-height: 1;
+}
+
+/* LABEL */
+
+.curved-nav .nav-label {
+  display: block;
+
+  width: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  line-height: 1.2;
+
+  color: var(--nav-muted);
+  white-space: nowrap;
+
+  transform: none;
+}
+
+/* ==========================================================
+   ACTIVE NAVIGATION ITEM
+========================================================== */
+
+.curved-nav .nav-item.active {
+  color: var(--nav-active);
+  z-index: 5;
+}
+
+/* RAISED ACTIVE CIRCLE */
+
+.curved-nav .nav-item.active .nav-icon {
+  position: absolute;
+
+  top: calc(var(--nav-active-size) / -2);
+  left: 50%;
+
+  width: var(--nav-active-size);
+  height: var(--nav-active-size);
+
+  margin: 0;
+  padding: 0;
+
+  border-radius: 50%;
+  border: 0;
+
+  background: var(--nav-bg);
+  color: var(--nav-active);
+
+  box-shadow:
+    0 4px 0 rgba(140, 153, 125, 0.14);
+
+  transform: translateX(-50%);
+}
+
+.curved-nav .nav-item.active .nav-icon i {
+  font-size: 23px;
+}
+
+/* ACTIVE LABEL */
+
+.curved-nav .nav-item.active .nav-label {
+  color: var(--nav-active);
+  font-weight: 600;
+}
+
+/* HOVER */
+
+.curved-nav .nav-item:not(.active):hover .nav-icon {
+  color: var(--nav-active);
+  transform: translateY(-2px);
+}
+
+.curved-nav .nav-item:not(.active):hover .nav-label {
+  color: var(--nav-active);
+}
+
+/* FOCUS */
+
+.curved-nav .nav-item:focus-visible {
+  outline: 2px solid var(--nav-active);
+  outline-offset: -3px;
+  border-radius: 8px;
+}
+
+/* ==========================================================
+   MOBILE RESPONSIVE
+========================================================== */
+
+@media (max-width: 480px) {
+  :root {
+    --nav-height: 68px;
+    --nav-active-size: 46px;
+    --nav-bottom: 8px;
+  }
+
+  .bottom-navigation.curved-nav {
+    width: calc(100% - 16px);
+  }
+
+  .curved-nav .nav-item {
+    gap: 6px;
+    padding-bottom: 10px;
+  }
+
+  .curved-nav .nav-icon {
+    width: 22px;
+    height: 24px;
+  }
+
+  .curved-nav .nav-icon i {
+    font-size: 15px;
+  }
+
+  .curved-nav .nav-label {
+    font-size: 7px;
+  }
+
+  .curved-nav .nav-item.active .nav-icon i {
+    font-size: 20px;
+  }
+}
+
+/* REDUCED MOTION */
+
+@media (prefers-reduced-motion: reduce) {
+  .curved-nav .nav-icon {
+    transition: none;
+  }
+}
