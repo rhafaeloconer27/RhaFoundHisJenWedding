@@ -15,9 +15,13 @@
 
   overflow: hidden;
 
-  background: #74766d;
-  color: var(--white);
+  background-image: url("../../images/indexBackground.png");
+  background-repeat: repeat;
+  background-size: 680px auto;
+  background-position: center top;
+  background-color: #f7f2e8;
 
+  color: var(--white);
   text-align: center;
 }
 
@@ -247,6 +251,13 @@ body[data-current-page="home"]
 
   backdrop-filter:
     blur(5px);
+
+      /* Wedding invitation background */
+  background-color: #f7f2e8;
+  background-image: url("../../images/indexBackground.png");
+  background-repeat: repeat;
+  background-size: 680px auto;
+  background-position: center;
 }
 
 .countdown-item {
