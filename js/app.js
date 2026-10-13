@@ -1389,9 +1389,143 @@ if (isInvitationHost) {
    INITIAL LOAD
 ====================================================== */
 
-window.startWeddingSpa = function (
-  pageName = "home"
-) {
+/* ==========================================================
+   INDEX → HOME PAGE FLIP
+========================================================== */
+
+async function flipInvitationToHome() {
+  if (window.weddingFlipInProgress) return;
+
+  window.weddingFlipInProgress = true;
+
+  const invitation =
+    document.getElementById("invitationIntro");
+
+  const spaShell =
+    document.getElementById("weddingSpaShell");
+
+  if (!invitation || !spaShell) {
+    window.weddingFlipInProgress = false;
+    return loadPage("home", {
+      updateHistory: true,
+      showTransition: false,
+    });
+  }
+
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  const stage = document.createElement("div");
+  stage.className = "wedding-flip-stage";
+
+  const cover = document.createElement("div");
+  cover.className = "wedding-flip-cover";
+
+  const coverInner = document.createElement("div");
+  coverInner.className = "wedding-flip-cover-inner";
+
+  // Keep the current invitation viewport visible during
+  // the flip instead of jumping to the top of the page.
+  const invitationClone = invitation.cloneNode(true);
+
+  invitationClone.removeAttribute("id");
+  invitationClone.style.position = "absolute";
+  invitationClone.style.left = "0";
+  invitationClone.style.top = `${-window.scrollY}px`;
+  invitationClone.style.width = "100%";
+  invitationClone.style.pointerEvents = "none";
+
+  // Avoid duplicate IDs in the temporary visual clone.
+  invitationClone.querySelectorAll("[id]").forEach((element) => {
+    element.removeAttribute("id");
+  });
+
+  coverInner.appendChild(invitationClone);
+  cover.appendChild(coverInner);
+  stage.appendChild(cover);
+
+  document.body.appendChild(stage);
+  document.body.classList.add("wedding-flip-active");
+
+  try {
+
+    document.documentElement.classList.remove("wedding-direct-entry");
+sessionStorage.removeItem("weddingDirectEntry");
+    // Load the actual Home partial through your SPA router.
+    await loadPage("home", {
+      updateHistory: true,
+      showTransition: false,
+    });
+
+    // Make sure the Home page is fully visible
+// before the invitation flips away.
+const spaShell = document.getElementById("weddingSpaShell");
+const homeApp = document.getElementById("app");
+
+if (spaShell) {
+  spaShell.hidden = false;
+  spaShell.inert = false;
+}
+
+document.body.classList.add("wedding-spa-active");
+
+if (homeApp) {
+  homeApp.style.visibility = "visible";
+  homeApp.style.opacity = "1";
+}
+
+// Give the browser time to render the Home page
+// before starting the flip.
+await new Promise((resolve) => {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(resolve);
+  });
+});
+
+    if (!document.querySelector("#app .wedding-hero")) {
+      throw new Error("Wedding Home content was not loaded.");
+    }
+
+    // The Home page is now ready beneath the turning page.
+    gsap.set(cover, {
+      rotationY: 0,
+      transformPerspective: 1800,
+      transformOrigin: "left center",
+    });
+
+    if (!reduceMotion) {
+      await new Promise((resolve) => {
+        gsap.to(cover, {
+          rotationY: -105,
+          opacity: 9,
+          duration: 1.1,
+          ease: "power3.inOut",
+          onComplete: resolve,
+        });
+      });
+    }
+  } catch (error) {
+    console.error("Wedding flip failed:", error);
+  } finally {
+    stage.remove();
+
+    document.body.classList.remove(
+      "wedding-flip-active"
+    );
+
+    window.weddingFlipInProgress = false;
+  }
+}
+
+window.startWeddingSpa = function (pageName = "home") {
+  if (
+    pageName === "home" &&
+    document.body.classList.contains("invitation-intro-body")
+  ) {
+    return flipInvitationToHome();
+  }
+
   return loadPage(pageName, {
     updateHistory: true,
     showTransition: true,

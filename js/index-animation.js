@@ -3103,129 +3103,32 @@ function initMessageAnimations() {
 
   }
 
- /* =========================================================
-   CONTINUE TO WEDDING PAGES
 
-   Fade out RSVP + Explore content first.
-   wedding.html owns the incoming page flip.
-========================================================= */
+/* ==========================================================
+   CONTINUE TO OUR WEDDING — PAGE FLIP
+========================================================== */
 
-if (
-  openWeddingPagesButton
-) {
-
+if (openWeddingPagesButton) {
   openWeddingPagesButton.addEventListener(
-    'click',
-    () => {
+    "click",
+    async () => {
+      if (openWeddingPagesButton.disabled) return;
 
-      openWeddingPagesButton.disabled =
-        true;
+      openWeddingPagesButton.disabled = true;
 
-
-
-     const goToWeddingPage = () => {
-  if (typeof window.startWeddingSpa !== "function") {
-    console.error("Wedding SPA router is unavailable.");
-
-    openWeddingPagesButton.disabled = false;
-    return;
-  }
-
-  window.startWeddingSpa("home");
-};
-
-
-      /*
-       * Reduced motion:
-       * navigate immediately.
-       */
-      if (
-        reducedMotionQuery.matches
-      ) {
-
-        goToWeddingPage();
-
-        return;
-
-      }
-
-
-      /*
-       * Elements that disappear before
-       * entering wedding.html.
-       */
-      const leavingSections = [
-        '.intro-rsvp-section',
-        '.intro-wedding-pages-section',
-      ];
-
-
-      const transitionTimeline =
-        gsap.timeline({
-
-          onComplete:
-            goToWeddingPage,
-
-        });
-
-
-      /*
-       * Small button press.
-       */
-      transitionTimeline.to(
-        openWeddingPagesButton,
-        {
-          scale:
-            0.96,
-
-          duration:
-            0.12,
-
-          ease:
-            'power2.out',
+      try {
+        if (typeof window.startWeddingSpa !== "function") {
+          throw new Error("Wedding SPA router is unavailable.");
         }
-      );
 
-
-      /*
-       * Fade RSVP + Explore section.
-       *
-       * Slight upward movement makes
-       * the transition feel softer.
-       */
-      transitionTimeline.to(
-        leavingSections,
-        {
-          autoAlpha:
-            0,
-
-          y:
-            -24,
-
-          scale:
-            0.985,
-
-          duration:
-            0.48,
-
-          ease:
-            'power2.inOut',
-
-          stagger:
-            0.06,
-        },
-
-        '-=0.02'
-      );
-
-    },
-
-    {
-      once:
-        true,
+        await window.startWeddingSpa("home");
+      } catch (error) {
+        console.error("Unable to open Wedding Home:", error);
+      } finally {
+        openWeddingPagesButton.disabled = false;
+      }
     }
   );
-
 }
 
 

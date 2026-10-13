@@ -6850,3 +6850,70 @@ body.wedding-spa-active
   display:
     none !important;
 }
+
+/* ==========================================================
+   INDEX → WEDDING HOME: 3D BOOK PAGE FLIP
+========================================================== */
+
+body.wedding-flip-active {
+  overflow: hidden !important;
+}
+/* INDEX → HOME FLIP */
+
+.wedding-flip-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 999998;
+  overflow: hidden;
+  perspective: 1800px;
+
+  /* Fallback only — Home should be visible underneath */
+  background: transparent;;
+}
+
+.wedding-flip-cover {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+
+  background: #f7f2e8;
+  transform-origin: left center;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+.wedding-flip-cover-inner {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+body.wedding-flip-active {
+  overflow: hidden !important;
+}
+
+/* Ensure Wedding Home is visible behind the turning page */
+body.wedding-flip-active #weddingSpaShell {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+body.wedding-flip-active #app {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Prevent the loader from covering the Home page */
+body.wedding-flip-active #pageTransitionLoader {
+  display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wedding-flip-cover,
+  .wedding-flip-home {
+    transform: none !important;
+    transition: none !important;
+  }
+}
