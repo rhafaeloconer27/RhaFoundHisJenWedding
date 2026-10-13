@@ -178,26 +178,37 @@
 }
 
 
-/* ==============================
-   FIXED HOME LAYOUT
-============================== */
+
+/* ==========================================
+   HOME - FULL SCREEN SLIDESHOW
+========================================== */
 
 body[data-current-page="home"] {
+  width: 100%;
+  height: 100dvh;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* Full screen SPA container */
+body[data-current-page="home"] #app {
+  position: relative;
   width: 100%;
   height: 100dvh;
   overflow: hidden;
 }
 
+
 body[data-current-page="home"]
 .page-container {
   width: 100%;
 
-  height:
+  /* height:
     calc(
       100dvh -
       var(--nav-height) -
       var(--countdown-height)
-    );
+    ); */
 
   min-height: 0;
   padding-bottom: 0;
@@ -245,13 +256,6 @@ body[data-current-page="home"]
 
   backdrop-filter:
     blur(5px);
-
-      /* Wedding invitation background */
-  background-color: #f7f2e8;
-  background-image: url("../../images/indexBackground.png");
-  background-repeat: repeat;
-  background-size: 680px auto;
-  background-position: center;
 }
 
 .countdown-item {
@@ -358,20 +362,86 @@ body[data-current-page="home"]
 
 /* Keep Home content above the countdown */
 
+/* No height subtraction for countdown/nav */
 body[data-current-page="home"] .page-container {
+  position: relative;
   width: 100%;
+  height: 100dvh;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
 
-  height: calc(
-    100dvh -
-    var(--nav-height) -
-    var(--countdown-height) -
-    var(--nav-bottom) -
-    env(safe-area-inset-bottom)
+body[data-current-page="home"] .wedding-hero {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+body[data-current-page="home"] .hero-slideshow {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  overflow: hidden;
+}
+
+body[data-current-page="home"] .hero-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body[data-current-page="home"] .hero-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+body[data-current-page="home"] .hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(20, 25, 19, 0.08) 0%,
+    rgba(20, 25, 19, 0.15) 40%,
+    rgba(20, 25, 19, 0.35) 65%,
+    rgba(20, 25, 19, 0.65) 100%
+  );
+}
+
+body[data-current-page="home"] .hero-content {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+
+  width: 100%;
+  height: 100%;
+
+  padding: 100px 18px calc(
+    var(--nav-height) +
+    var(--countdown-height) +
+    env(safe-area-inset-bottom, 0px) +
+    45px
   );
 
-  min-height: 0;
-  padding-bottom: 0;
-  overflow: hidden;
+  text-align: center;
+  pointer-events: none;
 }
 
 /* ==========================================================
@@ -379,35 +449,47 @@ body[data-current-page="home"] .page-container {
 ========================================================== */
 
 body[data-current-page="home"] .hero-countdown {
-  position: fixed;
+  position: absolute;
 
-  left: 0;
+  left: 20%;
   right: 0;
 
   bottom: calc(
     var(--nav-height) +
-    var(--nav-bottom) +
-    env(safe-area-inset-bottom)
+    env(safe-area-inset-bottom, 0px) +
+    40px
   );
 
-  z-index: 990;
+  z-index: 10;
 
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
 
-  width: 100%;
+  width: 60%;
   height: var(--countdown-height);
 
   padding: 5px 4px 4px;
 
-  color: var(--white);
+  background: transparent;
+  color: #ffffff;
 
-  background-color: #f7f2e8;
-  background-image: url("../../images/indexBackground.png");
-  background-repeat: repeat;
-  background-size: 680px auto;
-  background-position: center;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
 
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+body[data-current-page="home"] .countdown-number,
+body[data-current-page="home"] .countdown-label {
+  color: #ffffff;
+}
+
+/* Countdown separators */
+body[data-current-page="home"]
+.countdown-item:not(:last-child)::after {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Countdown underline */
+body[data-current-page="home"] .countdown-line {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.65);
 }
