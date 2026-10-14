@@ -464,17 +464,6 @@
 
         <div class="intro-scripture-card">
 
-          <span
-
-            class="intro-scripture-mark"
-
-            aria-hidden="true"
-
-          >
-
-            “
-
-          </span>
 
           <blockquote class="intro-scripture-quote">
 
@@ -519,6 +508,10 @@
 >
 
   <div class="intro-scratch-card">
+    
+<div class="intro-calendar-icon" aria-hidden="true">
+  <i class="fa-solid fa-calendar-days"></i>
+</div>
 
     <p class="intro-scratch-label">
 
@@ -628,8 +621,6 @@
         ></lottie-player>
       </div>
 
-      <span>✦</span>
-
       <p class="intro-scratch-subtext">
         See? You knew it.
       </p>
@@ -684,75 +675,6 @@
 
           </address>
 
-          <div
-
-            class="intro-location-divider"
-
-            aria-hidden="true"
-
-          ></div>
-
-          <!-- DATE / TIME -->
-
-          <div class="intro-location-details">
-
-            <div class="intro-location-detail">
-
-              <i
-
-                class="fa-regular fa-calendar"
-
-                aria-hidden="true"
-
-              ></i>
-
-              <div>
-
-                <span>
-
-                  Date
-
-                </span>
-
-                <strong>
-
-                  Thursday, February 4, 2027
-
-                </strong>
-
-              </div>
-
-            </div>
-
-            <div class="intro-location-detail">
-
-              <i
-
-                class="fa-regular fa-clock"
-
-                aria-hidden="true"
-
-              ></i>
-
-              <div>
-
-                <span>
-
-                  Time
-
-                </span>
-
-                <strong>
-
-                  3:00 in the afternoon
-
-                </strong>
-
-              </div>
-
-            </div>
-
-          </div>
 
           <!-- MAP -->
 
@@ -897,11 +819,9 @@
 
                 <strong>
 
-                  Formal shirt, long-sleeve polo,
-
-                  Barong, suit, or coat with
-
-                  formal trousers
+                  Long-sleeve polo,
+  short-sleeve formal polo,
+  or smart casual blazer ensemble
 
                 </strong>
 
@@ -921,9 +841,10 @@
 
                 <strong>
 
-                  Formal dress, gown, cocktail dress,
+                  Formal dress, semi-formal dress,
+  cocktail dress, long dress,
+  or blazer with formal trousers
 
-                  or elegant pantsuit
 
                 </strong>
 
@@ -1102,21 +1023,8 @@
 
             <p>
 
-              However, if you wish to honor us with a gift,
-
-              a monetary blessing would be deeply appreciated
-
-              as we begin our journey together as husband and wife.
-
-            </p>
-
-            <p>
-
-              Your thoughtful contribution will help us build
-
-              our future, create a home filled with love,
-
-              and make lasting memories as newlyweds.
+             As we begin our journey as husband and wife, your love, prayers, and support mean so much to us.
+Should you wish to honor us with a gift, a monetary blessing would be sincerely appreciated as we build our future together.
 
             </p>
 
@@ -1140,21 +1048,23 @@
 
           <p class="intro-gift-thank-you">
 
-            Thank you for your love, prayers, and support.
+         Thank you for celebrating this beautiful chapter of our lives.
 
           </p>
 
           <p class="intro-gift-signature">
 
             With love,
+</p>
+            
+  <h1 class="intro-message-signature-name">
+              Rhaf 
+              <span>&amp;
+              </span> Jen
 
-            <strong>
+          </h1>
 
-              Rhaf &amp; Jen
-
-            </strong>
-
-          </p>
+          
 
         </article>
 
@@ -1697,7 +1607,7 @@
 
                   autocomplete="off"
 
-                  placeholder="Facebook / Messenger name"
+                  placeholder="Messenger Name (Optional)"
 
                 />
 
@@ -1719,6 +1629,15 @@
 
                 </label>
 
+           <div
+  id="rsvpMessageTooltip"
+  class="rsvp-message-tooltip"
+  role="status"
+  hidden
+>
+💌 **Optional? Nice try!** 😂 You can't submit your RSVP without leaving us a little love first! 💌
+</div>
+
                 <textarea
 
                   id="introRsvpWish"
@@ -1727,7 +1646,7 @@
 
                   maxlength="1000"
 
-                  placeholder="Wishing you a lifetime of joy..."
+                  placeholder="Free marriage advice? Sweet wishes? Gossip? We're listening!"
 
                 ></textarea>
 
@@ -1776,6 +1695,16 @@
                 Skip Message &amp; Send
 
               </button>
+
+              <p
+  id="introRsvpSkipTooltip"
+  class="intro-rsvp-skip-tooltip"
+  role="status"
+  aria-live="polite"
+  hidden
+>
+  Oops! 😂 Did you really think you could skip this part? Not so fast! We want a sweet message from you before you go! 💌💕
+</p>
 
             </div>
 
@@ -2097,7 +2026,8 @@
 
     <span class="rsvp-success-signature">
 
-      Rhaf &amp; Jen
+      Rhaf <span>&amp;
+              </span> Jen
 
     </span>
 

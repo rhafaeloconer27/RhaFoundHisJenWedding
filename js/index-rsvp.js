@@ -473,6 +473,14 @@ const declineReasonError =
         "introRsvpWish"
       );
 
+      wishInput?.addEventListener("input", function () {
+  const messageTooltip = document.getElementById("rsvpMessageTooltip");
+
+  if (messageTooltip) {
+    messageTooltip.hidden = true;
+  }
+});
+
     const detailsMessage =
       document.getElementById(
         "introRsvpDetailsMessage"
@@ -1421,7 +1429,13 @@ const declineReasonError =
           "";
 
       }
+const messageTooltip = document.getElementById(
+  "rsvpMessageTooltip"
+);
 
+if (messageTooltip) {
+  messageTooltip.hidden = true;
+}
 
       clearDetailsMessage();
 
@@ -1461,6 +1475,8 @@ const declineReasonError =
 
         searchMessage.textContent =
           "Please enter at least 2 characters of your name.";
+
+           searchMessage.style.color = "#e74c3c";
 
         return;
 
@@ -2705,88 +2721,68 @@ function submitDeclinedRsvp(
 
 
     /* =====================================================
-       VALIDATE ACCEPT DETAILS
-    ===================================================== */
+   VALIDATE ACCEPT DETAILS
+===================================================== */
 
-    function validateGuestDetails() {
+function validateGuestDetails() {
+  clearDetailsMessage();
 
-      clearDetailsMessage();
+  if (!selectedGuest) {
+    showDetailsMessage(
+      "Please select your invited name first."
+    );
+    return false;
+  }
 
+  if (selectedResponse !== "accept") {
+    showDetailsMessage(
+      "Please select whether you can attend."
+    );
+    return false;
+  }
 
-      if (
-        !selectedGuest
-      ) {
+  const contactNumber = normalizeContactNumber(
+    contactInput?.value
+  );
 
-        showDetailsMessage(
-          "Please select your invited name first."
-        );
+  if (!contactNumber) {
+    showDetailsMessage(
+      "Please enter your contact number."
+    );
+    contactInput?.focus();
+    return false;
+  }
 
-        return false;
+  if (!/^[0-9+\-\s()]{7,30}$/.test(contactNumber)) {
+    showDetailsMessage(
+      "Please enter a valid contact number."
+    );
+    contactInput?.focus();
+    return false;
+  }
 
-      }
+  /* =================================================
+     MESSAGE TO US - REQUIRED
+     SHOW TOOLTIP ONLY IF EMPTY
+  ================================================= */
 
+ const messageTooltip = document.getElementById("rsvpMessageTooltip");
+const messageToUs = wishInput?.value.trim() || "";
 
-      if (
-        selectedResponse !==
-        "accept"
-      ) {
+if (!messageToUs) {
+  if (messageTooltip) {
+    messageTooltip.hidden = false;
+  }
 
-        showDetailsMessage(
-          "Please select whether you can attend."
-        );
+  return false;
+}
 
-        return false;
+if (messageTooltip) {
+  messageTooltip.hidden = true;
+}
 
-      }
-
-
-      const contactNumber =
-        normalizeContactNumber(
-          contactInput?.value
-        );
-
-
-      if (
-        !contactNumber
-      ) {
-
-        showDetailsMessage(
-          "Please enter your contact number."
-        );
-
-
-        contactInput
-          ?.focus();
-
-
-        return false;
-
-      }
-
-
-      if (
-        !/^[0-9+\-\s()]{7,30}$/.test(
-          contactNumber
-        )
-      ) {
-
-        showDetailsMessage(
-          "Please enter a valid contact number."
-        );
-
-
-        contactInput
-          ?.focus();
-
-
-        return false;
-
-      }
-
-
-      return true;
-
-    }
+  return true;
+}
 
 
     /* =====================================================
@@ -2809,16 +2805,6 @@ function submitDeclinedRsvp(
           isSubmitting
             ? "Sending..."
             : "Send RSVP";
-
-      }
-
-
-      if (
-        skipButton
-      ) {
-
-        skipButton.disabled =
-          isSubmitting;
 
       }
 
@@ -4006,32 +3992,29 @@ function scrollToInvitationCard() {
       );
 
 
-    /* =====================================================
-       SKIP MESSAGE & SEND
+   
+/* =====================================================
+   SKIP MESSAGE - JUST KIDDING!
+===================================================== */
 
-       Contact number still required.
-       Only the optional message is skipped.
-    ===================================================== */
+const skipTooltip = document.getElementById(
+  "introRsvpSkipTooltip"
+);
 
-    skipButton
-      ?.addEventListener(
-        "click",
-        function () {
+skipButton?.addEventListener("click", function () {
+  // Disable the skip button after the first click
+  skipButton.disabled = true;
 
-          if (
-            wishInput
-          ) {
+  // Change button text
+  skipButton.textContent = "Nice Try! 😂";
 
-            wishInput.value =
-              "";
+  // Show the funny message
+  if (skipTooltip) {
+    skipTooltip.hidden = false;
+  }
 
-          }
-
-
-          submitRsvp();
-
-        }
-      );
+  // Do NOT submit the RSVP
+});
 
 
     /* =====================================================
@@ -4114,11 +4097,32 @@ function scrollToInvitationCard() {
       );
 
 
-    wishInput
-      ?.addEventListener(
-        "input",
-        clearDetailsMessage
-      );
+   /* =====================================================
+   MESSAGE TO US - HIDE TOOLTIP
+   WHEN USER CLICKS OR TYPES
+===================================================== */
+
+function hideMessageTooltip() {
+  const tooltip = document.getElementById(
+    "rsvpMessageTooltip"
+  );
+
+  if (tooltip) {
+    tooltip.hidden = true;
+  }
+
+  clearDetailsMessage();
+}
+
+wishInput?.addEventListener(
+  "focus",
+  hideMessageTooltip
+);
+
+wishInput?.addEventListener(
+  "input",
+  hideMessageTooltip
+);
 
 
     /* =====================================================

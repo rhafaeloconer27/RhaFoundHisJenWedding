@@ -1277,6 +1277,17 @@ function initMessageAnimations() {
       }
     );
 
+      animateOnce(
+      '.intro-calendar-icon',
+      {
+        y:
+          25,
+
+        duration:
+          0.7,
+      }
+    );
+
 
     animateOnce(
       '.scratch-date-circles',
@@ -3040,6 +3051,7 @@ function initMessageAnimations() {
         '.intro-gift-thank-you',
 
         '.intro-gift-signature',
+        '.intro-message-signature-name',
       ],
       {
         opacity:

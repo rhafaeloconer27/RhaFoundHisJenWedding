@@ -1181,8 +1181,12 @@ body.spa-initializing .music-button {
 }
 
 .intro-message-signature {
-  color:
-    var(--sage-dark);
+    margin-top:
+    20px;
+
+    color:
+    #74736c;
+
 
   font-family:
     "Allura",
@@ -1190,15 +1194,16 @@ body.spa-initializing .music-button {
 
   font-size:
     clamp(
-      3.8rem,
-      13vw,
-      5.3rem
+          2.5rem,
+          8vw,
+          3.5rem
     );
 
   font-weight: 400;
 
   line-height: 0.9;
 }
+
 
 .intro-message-signature span {
   display: inline-block;
@@ -1210,11 +1215,12 @@ body.spa-initializing .music-button {
     var(--gold);
 
   font-family:
-    "Cormorant Garamond",
-    serif;
+    "Allura",
+    cursive;
 
   font-size:
-    0.48em;
+    3.2rem;
+    
 }
 
 /* ==========================================================
@@ -1341,7 +1347,7 @@ body.spa-initializing .music-button {
   left: 8px;
 
  color:
-    #5d6258;
+    #797979;
 
   font-family:
     "Cormorant Garamond",
@@ -1396,21 +1402,21 @@ body.spa-initializing .music-button {
     28px 0 16px;
 
   color:
-    #b79d63;
+    #dc4844;
 
   font-size:
     0.85rem;
 }
 
 .intro-scripture-reference {
-  color:
-    #747b6b;
+ color:
+    #dc4844;
 
   font-family:
     "Montserrat",
     sans-serif;
 
-  font-size: 0.72rem;
+  font-size: 1rem;
 
   font-weight: 600;
 
@@ -1681,6 +1687,30 @@ body.spa-initializing .music-button {
   text-align: center;
 }
 
+.intro-calendar-icon {
+  display: grid;
+  place-items: center;
+
+  width: 52px;
+  height: 52px;
+
+  margin:
+    0 auto 20px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(220, 72, 68, 0.1);
+
+  color:
+    #dc4844;
+}
+
+.intro-calendar-icon i {
+  font-size: 21px;
+}
+
+
 /* ==========================================================
    LABEL
 ========================================================== */
@@ -1688,25 +1718,30 @@ body.spa-initializing .music-button {
 .intro-scratch-label {
   margin-bottom: 8px;
 
-  color:
-    var(--sage-dark);
+ color:
+    #dc4844;
+
 
   font-family:
-    "Cormorant Garamond",
-    serif;
+    "Montserrat",
+    sans-serif;
+
 
   font-size:
-    clamp(
-      1.8rem,
-      5vw,
-      2.4rem
-    );
+    1rem;
+
 
   font-weight: 600;
 
-  line-height: 1.1;
 
   text-align: center;
+  
+  letter-spacing:
+    0.18em;
+
+     text-transform:
+    uppercase;
+
 }
 
 /* ==========================================================
@@ -2107,13 +2142,16 @@ body.spa-initializing .music-button {
   margin-bottom: 10px;
 
   color:
-    #b7a06a;
+    #dc4844;
+
 
   font-family:
     "Montserrat",
     sans-serif;
 
-  font-size: 0.67rem;
+  font-size:
+    1rem;
+
   font-weight: 600;
 
   letter-spacing: 0.18em;
@@ -2188,7 +2226,7 @@ body.spa-initializing .music-button {
     28px auto;
 
   background:
-    rgba(183, 160, 106, 0.65);
+    #dc4844
 }
 
 
@@ -2285,7 +2323,7 @@ body.spa-initializing .music-button {
   height: 250px;
 
   margin:
-    0 0 22px;
+    22px 0 22px;
 
   overflow: hidden;
 
@@ -2636,14 +2674,14 @@ body.spa-initializing .music-button {
     10px;
 
   color:
-    #b7a06a;
+    #dc4844;
 
   font-family:
     "Montserrat",
     sans-serif;
 
   font-size:
-    0.67rem;
+    1rem;
 
   font-weight:
     600;
@@ -3281,7 +3319,7 @@ body.spa-initializing .music-button {
     sans-serif;
 
   font-size:
-    0.67rem;
+    1rem;
 
   font-weight:
     600;
@@ -3479,6 +3517,49 @@ body.spa-initializing .music-button {
 
   line-height:
     1;
+}
+
+.intro-message-signature-name {
+    margin-top:
+    20px;
+
+    color:
+    #74736c;
+
+
+  font-family:
+    "Allura",
+    cursive;
+
+  font-size:
+    clamp(
+          2.5rem,
+          8vw,
+          3.5rem
+    );
+
+  font-weight: 400;
+
+  line-height: 0.9;
+}
+
+
+.intro-message-signature-name span {
+  display: inline-block;
+
+  margin:
+    0 6px;
+
+  color:
+    var(--gold);
+
+  font-family:
+    "Allura",
+    cursive;
+
+  font-size:
+    3.2rem;
+    
 }
 
 
@@ -3944,7 +4025,7 @@ body.spa-initializing .music-button {
     16px;
 
   color:
-    #8a877f;
+    #dc4844;
 
   font-family:
     "Montserrat",
@@ -5506,8 +5587,13 @@ background:
   color:
     var(--gold);
 
+      font-family:
+    "Montserrat",
+    sans-serif;
+
+
   font-size:
-    0.67rem;
+    1rem;
 
   font-weight:
     600;
@@ -5518,6 +5604,25 @@ background:
   text-transform:
     uppercase;
 }
+
+.rsvp-success-label span {
+  display: inline-block;
+
+  margin:
+    0 6px;
+
+  color:
+    var(--gold);
+
+  font-family:
+    "Allura",
+    cursive;
+
+  font-size:
+    3.2rem;
+    
+}
+
 
 
 /* ==========================================================
@@ -5602,6 +5707,24 @@ background:
 
   line-height:
     1;
+}
+
+.rsvp-success-signature span {
+  display: inline-block;
+
+  margin:
+    0 6px;
+
+  color:
+    var(--gold);
+
+  font-family:
+    "Allura",
+    cursive;
+
+  font-size:
+    3.2rem;
+    
 }
 
 
@@ -6569,15 +6692,15 @@ body.invitation-gate-active {
   margin-bottom:
     10px;
 
-  color:
-    #b7a06a;
+   color:
+    #dc4844;
 
   font-family:
     "Montserrat",
     sans-serif;
 
   font-size:
-    0.7rem;
+    1rem;
 
   font-weight:
     600;
@@ -7193,4 +7316,104 @@ body.wedding-flip-active #pageTransitionLoader {
   .curved-nav .nav-icon {
     transition: none;
   }
+}
+
+
+
+/* RSVP SKIP MESSAGE - FUN TOOLTIP */
+
+.intro-rsvp-skip-tooltip {
+  margin-top: 12px;
+  padding: 14px 18px;
+
+  background: #fff0f0;
+  border: 1px solid #f1c5c5;
+  border-radius: 12px;
+
+  color: #b84a4a;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  line-height: 1.7;
+  text-align: center;
+
+  animation: skipTooltipPop 0.3s ease-out;
+}
+
+.intro-rsvp-skip-tooltip[hidden] {
+  display: none;
+}
+
+#introRsvpSkipButton:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+@keyframes skipTooltipPop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+/* MESSAGE TO US - FLOATING TOOLTIP */
+
+.intro-rsvp-details-field:has(#rsvpMessageTooltip) {
+  position: relative;
+}
+
+.rsvp-message-tooltip {
+  position: absolute;
+  z-index: 100;
+
+  bottom: calc(145% - 45px);
+  left: 50%;
+
+  width: max-content;
+  max-width: 100%;
+
+  padding: 14px 18px;
+
+  background: #ffffff;
+  border: 1px solid #555555;
+  border-radius: 12px;
+
+  color: #555555;
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px;
+  line-height: 1.6;
+  text-align: center;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  transform: translateX(-50%);
+}
+
+/* HIDE TOOLTIP */
+.rsvp-message-tooltip[hidden] {
+  display: none !important;
+}
+
+/* TOOLTIP ARROW */
+.rsvp-message-tooltip::after {
+  content: "";
+  position: absolute;
+
+  bottom: -8px;
+  left: 50%;
+
+  width: 14px;
+  height: 14px;
+
+  background: #ffffff;
+  border-right: 1px solid #555555;
+  border-bottom: 1px solid #555555;
+
+  transform: translateX(-50%) rotate(45deg);
 }
