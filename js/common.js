@@ -1,299 +1,147 @@
-/* =========================================================
-   GLOBAL NAVIGATION — SPA COMPATIBLE
-
-   IMPORTANT:
-   The page values must match the keys in app.js.
-========================================================= */
-
+/* Shared wedding navigation. Page keys must match js/app.js. */
 const WEDDING_NAVIGATION_ITEMS = [
-  {
-    page: "home",
-    href: "wedding.html",
-    icon: "fa-solid fa-house",
-    label: "Home",
-  },
-
-  {
-    page: "sponsors",
-    href: "wedding.html?page=sponsors",
-    icon: "fa-solid fa-crown",
-    label: "Sponsors",
-  },
-
-  {
-    page: "location",
-    href: "wedding.html?page=location",
-    icon: "fa-solid fa-location-dot",
-    label: "Location",
-  },
-
-  {
-    page: "rsvp",
-    href: "wedding.html?page=rsvp",
-    icon: "fa-solid fa-envelope-open-text",
-    label: "RSVP",
-    featured: true,
-  },
-
-  {
-    page: "attire",
-    href: "wedding.html?page=attire",
-    icon: "fa-solid fa-shirt",
-    label: "Attire",
-  },
-
-  {
-    page: "gift",
-    href: "wedding.html?page=gift",
-    icon: "fa-solid fa-gift",
-    label: "Gift",
-  },
-
-  {
-  page: "faq",
-  href: "wedding.html?page=faq",
-  icon: "fa-solid fa-circle-question",
-  label: "FAQ",
-},
+  { page: "home", icon: "fa-house", label: "Home" },
+  { page: "sponsors", icon: "fa-crown", label: "Sponsors" },
+  { page: "location", icon: "fa-location-dot", label: "Location" },
+  { page: "attire", icon: "fa-shirt", label: "Attire" },
+  { page: "gift", icon: "fa-gift", label: "Gift" },
+  { page: "faq", icon: "fa-circle-question", label: "FAQ" },
 ];
 
-document.addEventListener(
-  "DOMContentLoaded",
-  initializeCommonNavigation
-);
+(() => {
+  let nav = null;
+  let svg = null;
+  let shape = null;
+  let links = [];
+  let currentPage = "home";
+  let resizeObserver = null;
+  let frameId = 0;
 
-function initializeCommonNavigation() {
-  const currentPage =
-    document.body.dataset.currentPage ||
-    "home";
-
-  renderCommonNavigation(currentPage);
-}
-
-/*
-  Called by app.js every time a new page
-  is loaded.
-*/
-window.updateCommonNavigation =
-  function (currentPage) {
-    renderCommonNavigation(currentPage);
-  };
-
-  let navigationResizeObserver = null;
-
-function renderCommonNavigation(currentPage) {
-  let container = document.getElementById("globalNavigation");
-
-  if (!container) {
-    container = document.createElement("div");
-    container.id = "globalNavigation";
-    document.body.appendChild(container);
-  }
-
-  if (navigationResizeObserver) {
-    navigationResizeObserver.disconnect();
-    navigationResizeObserver = null;
-  }
-
-  container.innerHTML = createNavigationMarkup(currentPage);
-
-  const nav = container.querySelector(".curved-nav");
-
-  if (!nav) return;
-
-const updateShape = () => {
-  const width = nav.clientWidth;
-  const height = nav.clientHeight;
-
-  if (!width || !height) return;
-
-  const count = WEDDING_NAVIGATION_ITEMS.length;
-
-  const index = Math.max(
-    WEDDING_NAVIGATION_ITEMS.findIndex(
-      (item) => item.page === currentPage
-    ),
-    0
-  );
-
-  const slotWidth = width / count;
-  const center = slotWidth * (index + 0.5);
-
-  // Match active circle size from CSS
-  const circleSize = Math.min(
-    window.innerWidth <= 480 ? 46 : 54,
-    slotWidth * 0.9
-  );
-
-  const radius = circleSize / 2;
-
-  const notchDepth = 25;
-  const shoulder = Math.min(12, slotWidth * 0.16);
-
-  // Pill-shaped outer corners
-  const corner = height / 2;
-
-  const start = center - radius - shoulder;
-  const end = center + radius + shoulder;
-
-  // The notch must remain within the top edge.
-  // It cannot overlap the rounded end caps.
-  const safeStart = Math.max(
-  corner - 8,
-  start
-);
-
-const safeEnd = Math.min(
-  width - corner + 8,
-  end
-);
-
-  const isFirst = index === 0;
-  const isLast = index === count - 1;
-
-  let path = "";
-
-  // LEFT CORNER
-  if (isFirst) {
-    // Start from left side and merge into the notch
-    path = `
-  M 0 ${corner}
-
-  Q 0 4
-    ${safeStart} 0
-`;
-  } else {
-    // Normal rounded left corner
-    path = `
-      M ${corner} 0
-      H ${safeStart}
-    `;
-  }
-
-  // ACTIVE NOTCH
-  path += `
-    C ${center - radius} 0,
-      ${center - radius} ${notchDepth},
-      ${center} ${notchDepth}
-
-    C ${center + radius} ${notchDepth},
-      ${center + radius} 0,
-      ${safeEnd} 0
-  `;
-
-  // RIGHT CORNER
-  if (isLast) {
-   path += `
-  Q ${width} 4
-    ${width} ${corner}
-`;
-  } else {
-    path += `
-      H ${width - corner}
-
-      A ${corner} ${corner}
-        0 0 1
-        ${width} ${corner}
-    `;
-  }
-
-  // BOTTOM CURVES
-  path += `
-    V ${height - corner}
-
-    A ${corner} ${corner}
-      0 0 1
-      ${width - corner} ${height}
-
-    H ${corner}
-
-    A ${corner} ${corner}
-      0 0 1
-      0 ${height - corner}
-
-    V ${corner}
-
-    ${isFirst ? "" : `
-      A ${corner} ${corner}
-        0 0 1
-        ${corner} 0
-    `}
-
-    Z
-  `;
-
-  const svg = nav.querySelector(
-    ".nav-background-svg"
-  );
-
-  const shape = nav.querySelector(
-    ".nav-background-path"
-  );
-
-  if (!svg || !shape) return;
-
-  svg.setAttribute(
-    "viewBox",
-    `0 0 ${width} ${height}`
-  );
-
-  shape.setAttribute("d", path);
-};
-
-
-
-  updateShape();
-
-  if (typeof ResizeObserver !== "undefined") {
-    navigationResizeObserver = new ResizeObserver(updateShape);
-    navigationResizeObserver.observe(nav);
-  } else {
-    window.addEventListener("resize", updateShape, { once: true });
-  }
-}
-
-
-
-function createNavigationMarkup(currentPage) {
-
-  const navigationItems = WEDDING_NAVIGATION_ITEMS.map((item) => {
-    const isActive = item.page === currentPage;
+  function createNavigationMarkup() {
+    const items = WEDDING_NAVIGATION_ITEMS.map(({ page, icon, label }) => {
+      const href = page === "home" ? "wedding.html" : `wedding.html?page=${page}`;
+      return `
+        <a class="nav-item" href="${href}" data-page="${page}">
+          <span class="nav-icon"><i class="fa-solid ${icon}" aria-hidden="true"></i></span>
+          <span class="nav-label">${label}</span>
+        </a>`;
+    }).join("");
 
     return `
-      <a
-        class="nav-item ${isActive ? "active" : ""}"
-        data-page="${item.page}"
-        href="${item.href}"
-        ${isActive ? 'aria-current="page"' : ""}
-      >
-        <span class="nav-icon">
-          <i class="${item.icon}" aria-hidden="true"></i>
-        </span>
+      <nav class="bottom-navigation curved-nav" aria-label="Wedding navigation"
+           style="--nav-count: ${WEDDING_NAVIGATION_ITEMS.length}">
+        <div class="nav-background" aria-hidden="true">
+          <svg class="nav-background-svg" preserveAspectRatio="none" aria-hidden="true">
+            <path class="nav-background-path"></path>
+          </svg>
+        </div>
+        ${items}
+      </nav>`;
+  }
 
-        <span class="nav-label">${item.label}</span>
-      </a>
-    `;
-  }).join("");
+  function ensureNavigation() {
+    let container = document.getElementById("globalNavigation");
+    if (!container) {
+      container = document.createElement("div");
+      container.id = "globalNavigation";
+      document.body.appendChild(container);
+    }
 
-  return `
-    <nav
-      class="bottom-navigation curved-nav"
-      aria-label="Wedding navigation"
-      style="
-        --nav-count: ${WEDDING_NAVIGATION_ITEMS.length};
-      "
-    >
-      <div class="nav-background" aria-hidden="true">
-        <svg
-          class="nav-background-svg"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-        >
-          <path class="nav-background-path"></path>
-        </svg>
-      </div>
+    // Rebuild only if another script replaced or removed the navigation.
+    if (nav && container.contains(nav)) return true;
 
-      ${navigationItems}
-    </nav>
-  `;
-}
+    resizeObserver?.disconnect();
+    if (frameId) cancelAnimationFrame(frameId);
+    frameId = 0;
+
+    container.innerHTML = createNavigationMarkup();
+    nav = container.querySelector(".curved-nav");
+    svg = nav?.querySelector(".nav-background-svg");
+    shape = nav?.querySelector(".nav-background-path");
+    links = nav ? [...nav.querySelectorAll(".nav-item")] : [];
+
+    if (nav && typeof ResizeObserver !== "undefined") {
+      resizeObserver = new ResizeObserver(scheduleShapeUpdate);
+      resizeObserver.observe(nav);
+    }
+
+    return Boolean(nav && svg && shape);
+  }
+
+  function updateShape() {
+    if (!nav || !svg || !shape) return;
+
+    const width = nav.clientWidth;
+    const height = nav.clientHeight;
+    if (!width || !height) return; // Hidden SPA shell: redraw when visible.
+
+    const count = WEDDING_NAVIGATION_ITEMS.length;
+    const index = Math.max(0, WEDDING_NAVIGATION_ITEMS.findIndex(
+      ({ page }) => page === currentPage
+    ));
+    const slot = width / count;
+    const center = slot * (index + 0.5);
+    const radius = Math.min(window.innerWidth <= 480 ? 46 : 54, slot * 0.9) / 2;
+    const shoulder = Math.min(12, slot * 0.16);
+    const corner = height / 2;
+    const start = Math.max(corner - 8, center - radius - shoulder);
+    const end = Math.min(width - corner + 8, center + radius + shoulder);
+    const depth = 25;
+    const first = index === 0;
+    const last = index === count - 1;
+
+    // Preserve the original SVG notch and rounded end-cap geometry.
+    const path = [
+      first ? `M 0 ${corner} Q 0 4 ${start} 0` : `M ${corner} 0 H ${start}`,
+      `C ${center - radius} 0 ${center - radius} ${depth} ${center} ${depth}`,
+      `C ${center + radius} ${depth} ${center + radius} 0 ${end} 0`,
+      last ? `Q ${width} 4 ${width} ${corner}` : `H ${width - corner} A ${corner} ${corner} 0 0 1 ${width} ${corner}`,
+      `V ${height - corner}`,
+      `A ${corner} ${corner} 0 0 1 ${width - corner} ${height}`,
+      `H ${corner}`,
+      `A ${corner} ${corner} 0 0 1 0 ${height - corner}`,
+      `V ${corner}`,
+      first ? "" : `A ${corner} ${corner} 0 0 1 ${corner} 0`,
+      "Z",
+    ].join(" ");
+
+    svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+    shape.setAttribute("d", path);
+  }
+
+  function scheduleShapeUpdate() {
+    if (frameId) return;
+    frameId = requestAnimationFrame(() => {
+      frameId = 0;
+      updateShape();
+    });
+  }
+
+  function renderCommonNavigation(pageName = "home") {
+    currentPage = pageName;
+    if (!ensureNavigation()) return;
+
+    for (const link of links) {
+      const active = link.dataset.page === currentPage;
+      link.classList.toggle("active", active);
+      if (active) link.setAttribute("aria-current", "page");
+      else link.removeAttribute("aria-current");
+    }
+
+    updateShape();
+  }
+
+  // app.js calls this after each SPA page change.
+  window.updateCommonNavigation = renderCommonNavigation;
+  window.addEventListener("resize", scheduleShapeUpdate, { passive: true });
+
+  function initialize() {
+    renderCommonNavigation(document.body.dataset.currentPage || "home");
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initialize, { once: true });
+  } else {
+    initialize();
+  }
+})();

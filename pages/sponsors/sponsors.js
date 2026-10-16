@@ -1,429 +1,153 @@
-/* =========================================================
-   SPONSORS PAGE — GSAP SCROLL ANIMATION
+
+/* ==========================================================
+   SPONSORS PAGE — GSAP ANIMATIONS
    SPA COMPATIBLE
-========================================================= */
+========================================================== */
 
 window.initializeSponsorsPage = function () {
-  const sponsorsPage =
-    document.querySelector(
-      ".sponsors-page"
+  const page = document.querySelector(".sponsors-page");
+
+  if (!page || page.dataset.gsapInitialized === "true") {
+    return;
+  }
+
+  if (!window.gsap || !window.ScrollTrigger) {
+    console.warn("GSAP or ScrollTrigger is not loaded.");
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  window.sponsorsGsapContext?.revert();
+
+  window.sponsorsGsapContext = gsap.context(() => {
+    if (reduceMotion) return;
+
+    const cards = gsap.utils.toArray(
+      page.querySelectorAll(".sponsors-card")
     );
 
-  if (!sponsorsPage) {
-    return;
-  }
+    cards.forEach((card, index) => {
+      const timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: card,
+          start: "top 84%",
+          once: true
+        }
+      });
 
-  if (
-    sponsorsPage.dataset.gsapInitialized ===
-    "true"
-  ) {
-    return;
-  }
+      // Main card entrance
+      timeline.from(card, {
+        opacity: 0,
+        y: 70,
+        scale: 0.96,
+        duration: 0.9,
+        ease: "power3.out"
+      });
 
-  if (
-    typeof window.gsap === "undefined" ||
-    typeof window.ScrollTrigger ===
-      "undefined"
-  ) {
-    console.warn(
-      "GSAP or ScrollTrigger is not loaded."
-    );
-
-    return;
-  }
-
-  sponsorsPage.dataset.gsapInitialized =
-    "true";
-
-  gsap.registerPlugin(
-    ScrollTrigger
-  );
-
-  window.sponsorsGsapContext =
-    gsap.context(function () {
-
-      /*
-       * Hero animation
-       */
-
-      const heroTimeline =
-        gsap.timeline({
-          defaults: {
-            ease: "power3.out",
-          },
-        });
-
-      heroTimeline
-        .from(
-          ".sponsors-hero .page-hero-overlay",
-          {
-            opacity: 0,
-            duration: 0.8,
-          }
-        )
-        .from(
-          ".sponsors-hero .page-hero-content p",
-          {
-            opacity: 0,
-            y: 24,
-            duration: 0.65,
-          },
-          "-=0.4"
-        )
-        .from(
-          ".sponsors-hero .page-hero-content h1",
-          {
-            opacity: 0,
-            y: 38,
-            scale: 0.94,
-            duration: 0.85,
-          },
-          "-=0.4"
-        );
-
-      /*
-       * Decorative divider
-       */
-
-      gsap.from(
-        ".sponsors-section-divider",
+      // Card icon
+      timeline.from(
+        card.querySelector(".sponsors-card-icon"),
         {
           opacity: 0,
-          scale: 0,
-          rotation: -90,
-          duration: 0.7,
-          ease: "back.out(1.8)",
-
-          scrollTrigger: {
-            trigger:
-              ".sponsors-section-divider",
-
-            start: "top 90%",
-
-            once: true,
-          },
-        }
+          scale: 0.35,
+          rotation: -25,
+          duration: 0.65,
+          ease: "back.out(1.7)"
+        },
+        "-=0.55"
       );
 
-      /*
-       * Animate each Sponsors card
-       */
-
-      const cards =
-        gsap.utils.toArray(
-          ".sponsors-card"
-        );
-
-      cards.forEach(
-        function (card, cardIndex) {
-          const cardTimeline =
-            gsap.timeline({
-              scrollTrigger: {
-                trigger: card,
-
-                start: "top 84%",
-
-                once: true,
-              },
-            });
-
-          /*
-           * Main card entrance
-           */
-
-          cardTimeline.from(
-            card,
-            {
-              opacity: 0,
-              y: 70,
-              scale: 0.96,
-
-              duration: 0.9,
-
-              ease: "power3.out",
-            }
-          );
-
-          /*
-           * Icon
-           */
-
-          const icon =
-            card.querySelector(
-              ".sponsors-card-icon"
-            );
-
-          if (icon) {
-            cardTimeline.from(
-              icon,
-              {
-                opacity: 0,
-                scale: 0.35,
-                rotation: -25,
-
-                duration: 0.65,
-
-                ease:
-                  "back.out(1.7)",
-              },
-              "-=0.55"
-            );
-          }
-
-          /*
-           * Label and heading
-           */
-
-          const headings =
-            card.querySelectorAll(
-              [
-                ".sponsors-card-label",
-                ".sponsors-card-title",
-              ].join(",")
-            );
-
-          if (headings.length) {
-            cardTimeline.from(
-              headings,
-              {
-                opacity: 0,
-                y: 20,
-
-                duration: 0.55,
-
-                stagger: 0.12,
-
-                ease: "power2.out",
-              },
-              "-=0.42"
-            );
-          }
-
-          /*
-           * Principal Sponsor names
-           */
-
-          const principalNames =
-            card.querySelectorAll(
-              ".sponsors-name-list > p"
-            );
-
-          if (
-            principalNames.length
-          ) {
-            cardTimeline.from(
-              principalNames,
-              {
-                opacity: 0,
-
-                x:
-                  cardIndex % 2 === 0
-                    ? -28
-                    : 28,
-
-                duration: 0.5,
-
-                stagger: 0.09,
-
-                ease: "power2.out",
-              },
-              "-=0.25"
-            );
-          }
-
-          /*
-           * Secondary Sponsor and Bearer items
-           */
-
-          const secondaryItems =
-            card.querySelectorAll(
-              ".secondary-sponsor-item"
-            );
-
-          if (
-            secondaryItems.length
-          ) {
-            cardTimeline.from(
-              secondaryItems,
-              {
-                opacity: 0,
-                y: 26,
-                scale: 0.97,
-
-                duration: 0.5,
-
-                stagger: 0.12,
-
-                ease: "power2.out",
-              },
-              "-=0.25"
-            );
-          }
-
-          /*
-           * Honor Attendants
-           */
-
-          const honorAttendants =
-            card.querySelectorAll(
-              ".honor-attendants-grid .entourage-group"
-            );
-
-          if (
-            honorAttendants.length
-          ) {
-            cardTimeline.from(
-              honorAttendants,
-              {
-                opacity: 0,
-                y: 25,
-                scale: 0.96,
-
-                duration: 0.55,
-
-                stagger: 0.15,
-
-                ease: "power2.out",
-              },
-              "-=0.25"
-            );
-          }
-
-          /*
-           * Entourage boxes
-           */
-
-          const entourageBoxes =
-            card.querySelectorAll(
-              ".entourage-box-item"
-            );
-
-          if (
-            entourageBoxes.length
-          ) {
-            cardTimeline.from(
-              entourageBoxes,
-              {
-                opacity: 0,
-                y: 30,
-                scale: 0.95,
-
-                duration: 0.6,
-
-                stagger: 0.15,
-
-                ease: "power2.out",
-              },
-              "-=0.25"
-            );
-          }
-
-          /*
-           * Names inside entourage boxes
-           */
-
-          const entourageNames =
-            card.querySelectorAll(
-              ".entourage-box-content strong"
-            );
-
-          if (
-            entourageNames.length
-          ) {
-            cardTimeline.from(
-              entourageNames,
-              {
-                opacity: 0,
-                x: -15,
-
-                duration: 0.4,
-
-                stagger: 0.07,
-
-                ease: "power2.out",
-              },
-              "-=0.3"
-            );
-          }
-        }
-      );
-
-      /*
-       * Hero parallax while scrolling
-       */
-
-      gsap.to(
-        ".sponsors-hero",
+      // Card label and heading
+      timeline.from(
+        card.querySelectorAll(
+          ".sponsors-card-label, .sponsors-card-title"
+        ),
         {
-          backgroundPosition:
-            "center 52%",
-
-          ease: "none",
-
-          scrollTrigger: {
-            trigger:
-              ".sponsors-hero",
-
-            start: "top top",
-            end: "bottom top",
-
-            scrub: 1,
-          },
-        }
+          opacity: 0,
+          y: 20,
+          duration: 0.55,
+          stagger: 0.12,
+          ease: "power2.out"
+        },
+        "-=0.42"
       );
 
-    }, sponsorsPage);
-
-  /*
-   * Refresh after SPA rendering
-   */
-
-  requestAnimationFrame(
-    function () {
-      requestAnimationFrame(
-        function () {
-          ScrollTrigger.refresh();
-        }
+      // Animate principal sponsor names
+      const principalNames = card.querySelectorAll(
+        ".sponsors-name-list > p"
       );
-    }
-  );
+
+      if (principalNames.length) {
+        timeline.from(principalNames, {
+          opacity: 0,
+          x: index % 2 === 0 ? -28 : 28,
+          duration: 0.5,
+          stagger: 0.09,
+          ease: "power2.out"
+        }, "-=0.25");
+      }
+
+      // Animate secondary sponsors, bearers and honor attendants
+      const groupItems = card.querySelectorAll(
+        ".secondary-sponsor-item, .entourage-group, .entourage-box-item"
+      );
+
+      if (groupItems.length) {
+        timeline.from(groupItems, {
+          opacity: 0,
+          y: 28,
+          scale: 0.96,
+          duration: 0.55,
+          stagger: 0.12,
+          ease: "power2.out"
+        }, "-=0.25");
+      }
+
+      // Animate entourage names
+      const entourageNames = card.querySelectorAll(
+        ".entourage-box-content strong"
+      );
+
+      if (entourageNames.length) {
+        timeline.from(entourageNames, {
+          opacity: 0,
+          x: -15,
+          duration: 0.4,
+          stagger: 0.07,
+          ease: "power2.out"
+        }, "-=0.3");
+      }
+    });
+  }, page);
+
+  page.dataset.gsapInitialized = "true";
+
+  // Refresh ScrollTrigger after SPA rendering
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      if (page.isConnected) {
+        ScrollTrigger.refresh();
+      }
+    });
+  });
 };
 
-/* =========================================================
-   CLEANUP BEFORE LEAVING THE PAGE
-========================================================= */
+/* ==========================================================
+   CLEANUP BEFORE SPA NAVIGATION
+========================================================== */
 
 window.cleanupSponsorsPage = function () {
-  if (
-    window.sponsorsGsapContext
-  ) {
-    window.sponsorsGsapContext.revert();
+  window.sponsorsGsapContext?.revert();
+  window.sponsorsGsapContext = null;
 
-    window.sponsorsGsapContext =
-      null;
-  }
+  const page = document.querySelector(".sponsors-page");
 
-  if (
-    typeof window.ScrollTrigger !==
-    "undefined"
-  ) {
-    ScrollTrigger
-      .getAll()
-      .forEach(
-        function (trigger) {
-          const triggerElement =
-            trigger.trigger;
-
-          if (
-            triggerElement &&
-            triggerElement.closest &&
-            triggerElement.closest(
-              ".sponsors-page"
-            )
-          ) {
-            trigger.kill();
-          }
-        }
-      );
+  if (page) {
+    delete page.dataset.gsapInitialized;
   }
 };

@@ -1,1556 +1,588 @@
 /* ==========================================================
-   SINGLE PAGE APPLICATION NAVIGATION
+   RHAF & JEN — SPA ROUTER
 
-   PURPOSE:
-   - Load page partials without refreshing wedding.html
-   - Keep background music playing
-   - Show the loader until important assets are ready
-   - Animate page content after every page transition
-   - Initialize and clean up page-specific scripts
+   Shared by index.html and wedding.html.
+   Keeps music alive while switching pages, loads each page's
+   CSS/JS, supports browser history, and preserves the
+   invitation-to-home page-flip transition.
 ========================================================== */
 
-document.addEventListener(
-  "DOMContentLoaded",
-  function () {
-    const app =
-      document.getElementById(
-        "app"
-      );
+document.addEventListener("DOMContentLoaded", () => {
+  const app = document.getElementById("app");
+  if (!app) {
+    console.error('SPA initialization failed: "#app" was not found.');
+    return;
+  }
 
-    const pageLoader =
-      document.getElementById(
-        "pageTransitionLoader"
-      );
+  const body = document.body;
+  const root = document.documentElement;
+  const pageLoader = document.getElementById("pageTransitionLoader");
+  const pageLoaderMessage = document.getElementById("pageLoaderMessage");
+  const pageLoaderAnimation = document.getElementById("pageLoaderAnimation");
+  const spaShell = document.getElementById("weddingSpaShell");
+  const isInvitationHost = body.classList.contains("invitation-intro-body");
 
-    const pageLoaderMessage =
-      document.getElementById(
-        "pageLoaderMessage"
-      );
-
-    /* ======================================================
-       PAGE CONFIGURATION
-    ====================================================== */
-
-    const pages = {
-       invitation: {
-    title: "Invitation | Rhaf & Jen",
-  },
-     home: {
-        file: "pages/home/home.html",
-        css: "pages/home/home.css",
-        js: "pages/home/home.js",
-        title: "Home | Rhaf & Jen",
-      },
-
-     sponsors: {
-        file: "pages/sponsors/sponsors.html",
-        css: "pages/sponsors/sponsors.css",
-        js: "pages/sponsors/sponsors.js",
-        title: "Sponsors | Rhaf & Jen",
-      },
-
-      location: {
-        file: "pages/location/location.html",
-        css: "pages/location/location.css",
-        js: "pages/location/location.js",
-        title: "Location | Rhaf & Jen",
-      },
-
-     rsvp: {
-        file: "pages/rsvp/rsvp.html",
-        css: "pages/rsvp/rsvp.css",
-        js: "pages/rsvp/rsvp.js",
-        title: "RSVP | Rhaf & Jen",
-      },
-
+  // Keep route names consistent with common.js and data-page links.
+  const pages = {
+    invitation: { title: "Invitation | Rhaf & Jen" },
+    home: {
+      file: "pages/home/home.html",
+      css: "pages/home/home.css",
+      js: "pages/home/home.js",
+      title: "Home | Rhaf & Jen",
+      hook: "Home",
+    },
+    sponsors: {
+      file: "pages/sponsors/sponsors.html",
+      css: "pages/sponsors/sponsors.css",
+      js: "pages/sponsors/sponsors.js",
+      title: "Sponsors | Rhaf & Jen",
+      hook: "Sponsors",
+    },
+    location: {
+      file: "pages/location/location.html",
+      css: "pages/location/location.css",
+      js: "pages/location/location.js",
+      title: "Location | Rhaf & Jen",
+      hook: "Location",
+    },
+    rsvp: {
+      file: "pages/rsvp/rsvp.html",
+      css: "pages/rsvp/rsvp.css",
+      js: "pages/rsvp/rsvp.js",
+      title: "RSVP | Rhaf & Jen",
+      hook: "Rsvp",
+    },
     attire: {
-        file: "pages/attire/attire.html",
-        css: "pages/attire/attire.css",
-        js: "pages/attire/attire.js",
-        title: "Theme & Attire | Rhaf & Jen",
-      },
+      file: "pages/attire/attire.html",
+      css: "pages/attire/attire.css",
+      js: "pages/attire/attire.js",
+      title: "Theme & Attire | Rhaf & Jen",
+      hook: "Attire",
+    },
+    gift: {
+      file: "pages/gift/gift.html",
+      css: "pages/gift/gift.css",
+      title: "Gift Guide | Rhaf & Jen",
+    },
+    faq: {
+      file: "pages/faq/faq.html",
+      css: "pages/faq/faq.css",
+      js: "pages/faq/faq.js",
+      title: "FAQ | Rhaf & Jen",
+      hook: "Faq",
+    },
+    prenup: { file: "pages/prenup.html", title: "Prenup | Rhaf & Jen" },
+  };
 
-      gift: {
-         file: "pages/gift/gift.html",
-          css: "pages/gift/gift.css",
-          title: "Gift Guide | Rhaf & Jen",
-      },
+  const defaultAnimationSelectors = [
+    ".hero-content",
+    ".hero-countdown",
+    ".page-hero-content",
+    ".rsvp-section > *",
+    ".gift-section > *",
+  ];
+  const ownScrollAnimationPages = new Set(["sponsors", "location", "attire", "faq"]);
+  const sectionAnimationSelectors = {
+    sponsors: [".sponsors-section > *"],
+    location: [".location-section > *"],
+    attire: [".attire-section > *", ".attire-poster > *"],
+    faq: [".faq-section > *"],
+  };
 
-      faq: {
-            file: "pages/faq/faq.html",
-            css: "pages/faq/faq.css",
-            js: "pages/faq/faq.js",
-            title: "FAQ | Rhaf & Jen",
-      },
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 
-      prenup: {
-        file: "pages/prenup.html",
-        title: "Prenup | Rhaf & Jen",
-      },
-    };
+  let currentPage = isInvitationHost ? "invitation" : null;
+  let navigationInProgress = false;
+  let queuedNavigation = null;
+  let initialLoadCompleted = false;
+  let invitationScrollY = 0;
+  let activeStylesheet = null;
+  let revealTimer = null;
+  let animationTimer = null;
+  let directEntryTimer = null;
+  let revealVersion = 0;
+  let navigationVersion = 0;
+  const loadedScripts = new Map();
 
-    let currentPage = null;
+  // --- Loader ----------------------------------------------------
+  function setLoaderVisible(visible, message = "Loading...") {
+    app.setAttribute("aria-busy", String(visible));
+    if (pageLoaderMessage && visible) pageLoaderMessage.textContent = message;
 
-    let navigationInProgress =
-      false;
+    pageLoader?.classList.toggle("is-visible", visible);
+    pageLoader?.setAttribute("aria-hidden", String(!visible));
+    body.classList.toggle("page-transition-active", visible);
 
-    let initialLoadCompleted =
-      false;
+    if (visible) pageLoaderAnimation?.play?.();
+    else if (root.classList.contains("wedding-direct-entry") && !directEntryTimer) {
+      // The page-flip entry has its own animation; release its
+      // temporary scroll/pointer lock only after it has finished.
+      directEntryTimer = window.setTimeout(() => {
+        root.classList.remove("wedding-direct-entry");
+        root.style.overflow = "";
+        body.style.overflow = "";
+        try {
+          sessionStorage.removeItem("weddingDirectEntry");
+        } catch (_) {
+          // Storage can be disabled by the browser.
+        }
+        directEntryTimer = null;
+      }, 1000);
+    }
+  }
 
-      let invitationScrollY = 0;
+  function clearRevealTimers() {
+    revealVersion++;
+    if (revealTimer !== null) window.clearTimeout(revealTimer);
+    if (animationTimer !== null) window.clearTimeout(animationTimer);
+    revealTimer = null;
+    animationTimer = null;
+  }
 
-      const isInvitationHost =
-  document.body.classList.contains(
-    "invitation-intro-body"
-  );
+  // --- Scroll / ScrollTrigger -----------------------------------
+  function resetPageScroll() {
+    // style.css uses smooth scrolling: override it synchronously
+    // during the programmatic top reset.
+    const rootBehavior = root.style.scrollBehavior;
+    const bodyBehavior = body.style.scrollBehavior;
+    root.style.scrollBehavior = "auto";
+    body.style.scrollBehavior = "auto";
 
-    if (!app) {
-      console.error(
-        'SPA initialization failed: "#app" was not found.'
-      );
+    window.scrollTo(0, 0);
+    if (document.scrollingElement) document.scrollingElement.scrollTop = 0;
+    const pageContainer = app.querySelector(".page-container");
+    if (pageContainer) pageContainer.scrollTop = 0;
 
+    root.style.scrollBehavior = rootBehavior;
+    body.style.scrollBehavior = bodyBehavior;
+  }
+
+  function refreshScrollTrigger() {
+    if (!window.ScrollTrigger) return;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => window.ScrollTrigger.refresh(true));
+    });
+  }
+
+  // --- Home image readiness -------------------------------------
+  function markImageReady(image) {
+    image.classList.add("is-loaded");
+  }
+
+  function waitForImage(image, timeoutMs = 10000) {
+    if (!image) return Promise.resolve();
+    if (image.complete) {
+      markImageReady(image);
+      return Promise.resolve();
+    }
+
+    return new Promise((resolve) => {
+      let timeoutId;
+      const finish = () => {
+        window.clearTimeout(timeoutId);
+        image.removeEventListener("load", finish);
+        image.removeEventListener("error", finish);
+        markImageReady(image);
+        resolve();
+      };
+      image.addEventListener("load", finish, { once: true });
+      image.addEventListener("error", finish, { once: true });
+      timeoutId = window.setTimeout(finish, timeoutMs);
+    });
+  }
+
+  async function waitForPageAssets(pageName) {
+    if (pageName !== "home") return;
+    if (pageLoaderMessage) pageLoaderMessage.textContent = "Preparing your photos...";
+
+    const firstImage = app.querySelector(".hero-slide.active img, .hero-slide img");
+    await waitForImage(firstImage);
+
+    app.querySelectorAll(".hero-slide img").forEach((image) => {
+      if (image.complete) markImageReady(image);
+      else {
+        image.addEventListener("load", () => markImageReady(image), { once: true });
+        image.addEventListener("error", () => markImageReady(image), { once: true });
+      }
+    });
+  }
+
+  // --- Default page-entry animations ----------------------------
+  function getAnimatedElements(pageName) {
+    const selectors = [...defaultAnimationSelectors];
+    if (!ownScrollAnimationPages.has(pageName)) {
+      selectors.push(".content-section > *");
+    }
+    for (const [section, sectionSelectors] of Object.entries(sectionAnimationSelectors)) {
+      if (pageName !== section) selectors.push(...sectionSelectors);
+    }
+
+    return [...new Set(selectors.flatMap((selector) =>
+      Array.from(app.querySelectorAll(selector))
+    ))];
+  }
+
+  function preparePageAnimation(pageName) {
+    const elements = getAnimatedElements(pageName);
+    elements.forEach((element, index) => {
+      element.classList.remove("page-content-visible");
+      element.classList.add("page-content-animate");
+      element.style.setProperty("--page-animation-delay", `${Math.min(index * 70, 420)}ms`);
+    });
+    return elements;
+  }
+
+  function playPageAnimation(elements) {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        elements.forEach((element) => {
+          if (element.isConnected) element.classList.add("page-content-visible");
+        });
+      });
+    });
+  }
+
+  // --- URLs and page hooks --------------------------------------
+  function getPageFromUrl() {
+    const requested = new URLSearchParams(location.search).get("page");
+    if (requested && Object.hasOwn(pages, requested)) return requested;
+
+    const isIndexUrl = /(?:\/|\/index\.html)$/i.test(location.pathname);
+    return isInvitationHost && isIndexUrl ? "invitation" : "home";
+  }
+
+  function createPageUrl(pageName) {
+    if (pageName === "invitation") return "index.html";
+    return pageName === "home"
+      ? "wedding.html"
+      : `wedding.html?page=${encodeURIComponent(pageName)}`;
+  }
+
+  function callPageHook(action, pageName) {
+    const hook = pages[pageName]?.hook;
+    const fn = hook && window[`${action}${hook}Page`];
+    if (typeof fn === "function") fn();
+  }
+
+  function initializePage(pageName) {
+    body.dataset.currentPage = pageName;
+    callPageHook("initialize", pageName);
+    window.updateCommonNavigation?.(pageName);
+  }
+
+  // --- Page-specific asset loading ------------------------------
+  function loadPageStylesheet(href) {
+    if (!href) {
+      activeStylesheet?.remove();
+      activeStylesheet = null;
+      return Promise.resolve();
+    }
+    if (activeStylesheet?.dataset.href === href) return Promise.resolve();
+
+    return new Promise((resolve, reject) => {
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = href;
+      link.dataset.href = href;
+      link.dataset.pageStyle = "true";
+      link.media = "not all"; // Keep the page covered until the new CSS is ready.
+
+      link.addEventListener("load", () => {
+        link.media = "all";
+        activeStylesheet?.remove();
+        activeStylesheet = link;
+        resolve();
+      }, { once: true });
+      link.addEventListener("error", () => {
+        link.remove();
+        reject(new Error(`Unable to load stylesheet: ${href}`));
+      }, { once: true });
+      document.head.appendChild(link);
+    });
+  }
+
+  function loadPageScript(src) {
+    if (!src) return Promise.resolve();
+    if (loadedScripts.has(src)) return loadedScripts.get(src);
+
+    const promise = new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.async = false;
+      script.dataset.pageScript = "true";
+      script.addEventListener("load", resolve, { once: true });
+      script.addEventListener("error", () => {
+        script.remove();
+        loadedScripts.delete(src); // Permit retries when a download fails.
+        reject(new Error(`Unable to load script: ${src}`));
+      }, { once: true });
+      document.body.appendChild(script);
+    });
+
+    loadedScripts.set(src, promise);
+    return promise;
+  }
+
+  // --- Invitation / SPA layout ----------------------------------
+  function showInvitation({ updateHistory }) {
+    if (!isInvitationHost) {
+      location.href = "index.html";
       return;
     }
 
-    /* ======================================================
-       LOADER
-    ====================================================== */
+    const version = ++navigationVersion;
+    clearRevealTimers();
+    callPageHook("cleanup", currentPage);
+    currentPage = "invitation";
+    initialLoadCompleted = true;
+    document.title = pages.invitation.title;
+    body.dataset.currentPage = "invitation";
+    body.classList.remove("wedding-spa-active", "spa-initializing", "page-transition-active");
+    body.classList.add("invitation-intro-body");
+    spaShell?.setAttribute("aria-hidden", "true");
 
-    function setLoaderMessage(
-      message
-    ) {
-      if (!pageLoaderMessage) {
-        return;
-      }
-
-      pageLoaderMessage.textContent =
-        message;
-    }
-
-    function showLoader(
-      message = "Loading..."
-    ) {
-      setLoaderMessage(message);
-
-      app.setAttribute(
-        "aria-busy",
-        "true"
-      );
-
-      if (!pageLoader) {
-        return;
-      }
-
-      pageLoader.classList.add(
-        "is-visible"
-      );
-
-      pageLoader.setAttribute(
-        "aria-hidden",
-        "false"
-      );
-
-      document.body.classList.add(
-        "page-transition-active"
-      );
-
-      const animation =
-        document.getElementById(
-          "pageLoaderAnimation"
-        );
-
-      animation?.play?.();
-    }
-
-   function hideLoader() {
-  if (!pageLoader) {
-    return;
-  }
-
-  pageLoader.classList.remove(
-    "is-visible"
-  );
-
-  pageLoader.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-
-  document.body.classList.remove(
-    "page-transition-active"
-  );
-
-  const animation =
-    document.getElementById(
-      "pageLoaderAnimation"
+    const continueButton = document.getElementById("openWeddingPagesButton");
+    if (continueButton) continueButton.disabled = false;
+    window.gsap?.set?.(
+      [".intro-rsvp-section", ".intro-wedding-pages-section"],
+      { clearProps: "opacity,visibility,transform" }
     );
 
- const isWeddingDirectEntry =
-  document.documentElement.classList.contains(
-    "wedding-direct-entry"
-  );
-
-
-if (
-  isWeddingDirectEntry
-) {
-
-  window.setTimeout(
-    function () {
-
-      document.documentElement.classList.remove(
-        "wedding-direct-entry"
-      );
-
-
-      document.documentElement.style.overflow =
-        "";
-
-
-      document.body.style.overflow =
-        "";
-
-
-      try {
-
-        sessionStorage.removeItem(
-          "weddingDirectEntry"
-        );
-
-      } catch {
-
-        // Ignore unavailable storage.
-
-      }
-
-    },
-
-    1000
-  );
-
-}
-   }
-
-    /* ======================================================
-       IMAGE WAITING
-    ====================================================== */
-
-    function waitForImage(
-      image,
-      timeout = 10000
-    ) {
-      return new Promise(
-        function (resolve) {
-          if (!image) {
-            resolve();
-
-            return;
-          }
-
-          if (
-            image.complete &&
-            image.naturalWidth > 0
-          ) {
-            image.classList.add(
-              "is-loaded"
-            );
-
-            resolve();
-
-            return;
-          }
-
-          let completed = false;
-          let timeoutId = null;
-
-          function finish() {
-            if (completed) {
-              return;
-            }
-
-            completed = true;
-
-            if (
-              timeoutId !== null
-            ) {
-              window.clearTimeout(
-                timeoutId
-              );
-            }
-
-            image.classList.add(
-              "is-loaded"
-            );
-
-            image.removeEventListener(
-              "load",
-              finish
-            );
-
-            image.removeEventListener(
-              "error",
-              finish
-            );
-
-            resolve();
-          }
-
-          image.addEventListener(
-            "load",
-            finish,
-            {
-              once: true,
-            }
-          );
-
-          image.addEventListener(
-            "error",
-            finish,
-            {
-              once: true,
-            }
-          );
-
-          timeoutId =
-            window.setTimeout(
-              finish,
-              timeout
-            );
-        }
-      );
-    }
-
-    function markRemainingImagesWhenLoaded() {
-      const images =
-        document.querySelectorAll(
-          ".hero-slide img"
-        );
-
-      images.forEach(
-        function (image) {
-          if (
-            image.complete &&
-            image.naturalWidth > 0
-          ) {
-            image.classList.add(
-              "is-loaded"
-            );
-
-            return;
-          }
-
-          image.addEventListener(
-            "load",
-            function () {
-              image.classList.add(
-                "is-loaded"
-              );
-            },
-            {
-              once: true,
-            }
-          );
-
-          image.addEventListener(
-            "error",
-            function () {
-              image.classList.add(
-                "is-loaded"
-              );
-            },
-            {
-              once: true,
-            }
-          );
-        }
-      );
-    }
-
-    async function waitForPageAssets(
-      pageName
-    ) {
-      if (pageName !== "home") {
-        return;
-      }
-
-      setLoaderMessage(
-        "Preparing your photos..."
-      );
-
-      const firstHomeImage =
-        document.querySelector(
-          ".hero-slide.active img"
-        ) ||
-        document.querySelector(
-          ".hero-slide img"
-        );
-
-      await waitForImage(
-        firstHomeImage
-      );
-
-      markRemainingImagesWhenLoaded();
-    }
-
-    /* ======================================================
-       DEFAULT CSS PAGE CONTENT ANIMATION
-    ====================================================== */
-
-    function getAnimatedPageElements(
-      pageName
-    ) {
-      const selectors = [
-        ".hero-content",
-        ".hero-countdown",
-        ".page-hero-content",
-        ".rsvp-section > *",
-        ".gift-section > *",
-      ];
-
-      /*
-       * These pages have their own GSAP
-       * ScrollTrigger animations.
-       *
-       * Do not apply the default CSS animation
-       * to their content cards.
-       */
-      if (
-        pageName !== "sponsors" &&
-        pageName !== "location" &&
-        pageName !== "attire" &&
-        pageName !== "faq"
-      ) {
-        selectors.push(
-          ".content-section > *"
-        );
-      }
-
-      if (
-        pageName !== "sponsors"
-      ) {
-        selectors.push(
-          ".sponsors-section > *"
-        );
-      }
-
-      if (
-        pageName !== "location"
-      ) {
-        selectors.push(
-          ".location-section > *"
-        );
-      }
-
-      if (
-        pageName !== "attire"
-      ) {
-        selectors.push(
-          ".attire-section > *",
-          ".attire-poster > *"
-        );
-      }
-
-      if (
-        pageName !== "faq"
-      ) {
-        selectors.push(
-          ".faq-section > *"
-        );
-      }
-
-      const elements =
-        selectors.flatMap(
-          function (selector) {
-            return Array.from(
-              app.querySelectorAll(
-                selector
-              )
-            );
-          }
-        );
-
-      return Array.from(
-        new Set(elements)
-      );
-    }
-
-    function preparePageContentAnimation(
-      pageName
-    ) {
-      const animatedElements =
-        getAnimatedPageElements(
-          pageName
-        );
-
-      animatedElements.forEach(
-        function (
-          element,
-          index
-        ) {
-          element.classList.remove(
-            "page-content-visible"
-          );
-
-          element.classList.add(
-            "page-content-animate"
-          );
-
-          const delay =
-            Math.min(
-              index * 70,
-              420
-            );
-
-          element.style.setProperty(
-            "--page-animation-delay",
-            `${delay}ms`
-          );
-        }
-      );
-    }
-
-    function playPageContentAnimation(
-      pageName
-    ) {
-      const animatedElements =
-        getAnimatedPageElements(
-          pageName
-        );
-
-      if (
-        !animatedElements.length
-      ) {
-        return;
-      }
-
-      window.requestAnimationFrame(
-        function () {
-          window.requestAnimationFrame(
-            function () {
-              animatedElements.forEach(
-                function (element) {
-                  element.classList.add(
-                    "page-content-visible"
-                  );
-                }
-              );
-            }
-          );
-        }
-      );
-    }
-
-    /* ======================================================
-       SCROLLTRIGGER REFRESH
-    ====================================================== */
-
-    function refreshScrollTrigger() {
-      if (
-        typeof window.ScrollTrigger ===
-        "undefined"
-      ) {
-        return;
-      }
-
-      window.requestAnimationFrame(
-        function () {
-          window.requestAnimationFrame(
-            function () {
-              window.ScrollTrigger.refresh(
-                true
-              );
-            }
-          );
-        }
-      );
-    }
-
-    /* ======================================================
-       PAGE REVEAL
-    ====================================================== */
-
-    function revealLoadedPage(
-  pageName
-) {
-
-  const isWeddingDirectEntry =
-    document.documentElement.classList.contains(
-      "wedding-direct-entry"
-    );
-
-
-  app.setAttribute(
-    "aria-busy",
-    "false"
-  );
-
-
-  document.body.classList.remove(
-    "spa-initializing"
-  );
-
-
-  initialLoadCompleted =
-    true;
-
-
-  window.requestAnimationFrame(
-    function () {
-
-      window.setTimeout(
-        function () {
-
-          hideLoader();
-
-
-          window.setTimeout(
-            function () {
-
-              /*
-               * Normal SPA navigation:
-               * play the regular content animations.
-               *
-               * Direct entry from index:
-               * page flip is already the animation.
-               */
-              if (
-                !isWeddingDirectEntry
-              ) {
-
-                playPageContentAnimation(
-                  pageName
-                );
-
-              }
-
-
-              refreshScrollTrigger();
-
-            },
-
-            150
-          );
-
-        },
-
-        250
-      );
-
-    }
-  );
-
-}
-
-    /* ======================================================
-       URL HANDLING
-    ====================================================== */
-
-    function getPageFromUrl() {
-  const params = new URLSearchParams(
-    window.location.search
-  );
-
-  const requestedPage = params.get("page");
-
-  if (
-    requestedPage &&
-    Object.prototype.hasOwnProperty.call(
-      pages,
-      requestedPage
-    )
-  ) {
-    return requestedPage;
-  }
-
-  const isIndexUrl =
-    /(?:\/|\/index\.html)$/i.test(
-      window.location.pathname
-    );
-
-  if (isInvitationHost && isIndexUrl) {
-    return "invitation";
-  }
-
-  return "home";
-}
-
-function createPageUrl(pageName) {
-  if (pageName === "invitation") {
-    return "index.html";
-  }
-
-  if (pageName === "home") {
-    return "wedding.html";
-  }
-
-  return `wedding.html?page=${encodeURIComponent(pageName)}`;
-}
-
-    /* ======================================================
-       PAGE CLEANUP
-    ====================================================== */
-
-    function cleanupCurrentPage() {
-      if (
-        currentPage === "home" &&
-        typeof window.cleanupHomePage ===
-          "function"
-      ) {
-        window.cleanupHomePage();
-      }
-
-      if (
-        currentPage === "rsvp" &&
-        typeof window.cleanupRsvpPage ===
-          "function"
-      ) {
-        window.cleanupRsvpPage();
-      }
-
-      if (
-        currentPage === "sponsors" &&
-        typeof window.cleanupSponsorsPage ===
-          "function"
-      ) {
-        window.cleanupSponsorsPage();
-      }
-
-      if (
-        currentPage === "location" &&
-        typeof window.cleanupLocationPage ===
-          "function"
-      ) {
-        window.cleanupLocationPage();
-      }
-
-      if (
-        currentPage === "attire" &&
-        typeof window.cleanupAttirePage ===
-          "function"
-      ) {
-        window.cleanupAttirePage();
-      }
-
-      if (
-        currentPage === "faq" &&
-        typeof window.cleanupFaqPage ===
-          "function"
-      ) {
-        window.cleanupFaqPage();
-      }
-    }
-
-    /* ======================================================
-       PAGE INITIALIZATION
-    ====================================================== */
-
-    function initializePage(
-      pageName
-    ) {
-      document.body.dataset.currentPage =
-        pageName;
-
-      if (
-        pageName === "home" &&
-        typeof window.initializeHomePage ===
-          "function"
-      ) {
-        window.initializeHomePage();
-      }
-
-      if (
-        pageName === "rsvp" &&
-        typeof window.initializeRsvpPage ===
-          "function"
-      ) {
-        window.initializeRsvpPage();
-      }
-
-      if (
-        pageName === "sponsors" &&
-        typeof window.initializeSponsorsPage ===
-          "function"
-      ) {
-        window.initializeSponsorsPage();
-      }
-
-      if (
-        pageName === "location" &&
-        typeof window.initializeLocationPage ===
-          "function"
-      ) {
-        window.initializeLocationPage();
-      }
-
-      if (
-        pageName === "attire" &&
-        typeof window.initializeAttirePage ===
-          "function"
-      ) {
-        window.initializeAttirePage();
-      }
-
-      if (
-        pageName === "faq" &&
-        typeof window.initializeFaqPage ===
-          "function"
-      ) {
-        window.initializeFaqPage();
-      }
-
-      if (
-        typeof window.updateCommonNavigation ===
-          "function"
-      ) {
-        window.updateCommonNavigation(
-          pageName
-        );
-      }
-    }
-
-    /* ======================================================
-   PAGE-SPECIFIC CSS / JS LOADER
-====================================================== */
-
-let activePageStylesheet = null;
-
-const loadedPageScripts = new Map();
-
-/* ------------------------------------------------------
-   Load the CSS belonging to the current page.
------------------------------------------------------- */
-
-function loadPageStylesheet(href) {
-  /*
-   * Page has no page-specific stylesheet.
-   */
-  if (!href) {
-    if (activePageStylesheet) {
-      activePageStylesheet.remove();
-      activePageStylesheet = null;
-    }
-
-    return Promise.resolve();
-  }
-
-  /*
-   * The requested stylesheet is already active.
-   */
-  if (
-    activePageStylesheet &&
-    activePageStylesheet.dataset.href === href
-  ) {
-    return Promise.resolve();
-  }
-
-  return new Promise(
-    function (resolve, reject) {
-      const link =
-        document.createElement("link");
-
-      link.rel = "stylesheet";
-      link.href = href;
-
-      link.dataset.pageStyle = "true";
-      link.dataset.href = href;
-
-      /*
-       * Avoid showing unstyled content while
-       * the new stylesheet is downloading.
-       */
-      link.media = "not all";
-
-      link.addEventListener(
-        "load",
-        function () {
-          /*
-           * Enable the new stylesheet.
-           */
-          link.media = "all";
-
-          /*
-           * Remove the previous page stylesheet.
-           */
-          if (
-            activePageStylesheet &&
-            activePageStylesheet !== link
-          ) {
-            activePageStylesheet.remove();
-          }
-
-          activePageStylesheet = link;
-
-          resolve();
-        },
-        {
-          once: true,
-        }
-      );
-
-      link.addEventListener(
-        "error",
-        function () {
-          link.remove();
-
-          reject(
-            new Error(
-              `Unable to load stylesheet: ${href}`
-            )
-          );
-        },
-        {
-          once: true,
-        }
-      );
-
-      document.head.appendChild(link);
-    }
-  );
-}
-
-/* ------------------------------------------------------
-   Load page-specific JavaScript.
-
-   Each JS file is downloaded only once during
-   the SPA session.
------------------------------------------------------- */
-
-function loadPageScript(src) {
-  if (!src) {
-    return Promise.resolve();
-  }
-
-  /*
-   * Already loaded successfully.
-   */
-  if (loadedPageScripts.has(src)) {
-    return loadedPageScripts.get(src);
-  }
-
-  const scriptPromise =
-    new Promise(
-      function (resolve, reject) {
-        const script =
-          document.createElement(
-            "script"
-          );
-
-        script.src = src;
-        script.async = false;
-
-        script.dataset.pageScript =
-          "true";
-
-        script.addEventListener(
-          "load",
-          function () {
-            resolve();
-          },
-          {
-            once: true,
-          }
-        );
-
-        script.addEventListener(
-          "error",
-          function () {
-            script.remove();
-
-            /*
-             * Allow another attempt if
-             * loading failed.
-             */
-            loadedPageScripts.delete(src);
-
-            reject(
-              new Error(
-                `Unable to load script: ${src}`
-              )
-            );
-          },
-          {
-            once: true,
-          }
-        );
-
-        document.body.appendChild(
-          script
-        );
-      }
-    );
-
-  loadedPageScripts.set(
-    src,
-    scriptPromise
-  );
-
-  return scriptPromise;
-}
-
-    /* ======================================================
-       LOAD PAGE
-    ====================================================== */
-
-    async function loadPage(
-      requestedPageName,
-      options = {}
-    ) {
-      const {
-        updateHistory = true,
-        showTransition = true,
-      } = options;
-
-      const pageName =
-        pages[requestedPageName]
-          ? requestedPageName
-          : "home";
-
-      const pageConfig =
-        pages[pageName];
-
-     if (
-  pageName === currentPage ||
-  navigationInProgress
-) {
-  return;
-}
-
-// Return to the original Invitation.
-if (pageName === "invitation") {
-  if (!isInvitationHost) {
-    window.location.href = "index.html";
-    return;
-  }
-
-  cleanupCurrentPage();
-
-  currentPage = "invitation";
-  initialLoadCompleted = true;
-
-  document.title = pageConfig.title;
-  document.body.dataset.currentPage = "invitation";
-
-  document.body.classList.remove(
-    "wedding-spa-active",
-    "spa-initializing",
-    "page-transition-active"
-  );
-
-  document.body.classList.add(
-    "invitation-intro-body"
-  );
-
-  document
-    .getElementById("weddingSpaShell")
-    ?.setAttribute("aria-hidden", "true");
-
-  const continueButton = document.getElementById(
-    "openWeddingPagesButton"
-  );
-
-  if (continueButton) {
-    continueButton.disabled = false;
-  }
-
-  window.gsap?.set(
-    [
-      ".intro-rsvp-section",
-      ".intro-wedding-pages-section",
-    ],
-    {
-      clearProps: "opacity,visibility,transform",
-    }
-  );
-
-  hideLoader();
-
-  if (updateHistory) {
-    window.history.pushState(
-      { page: "invitation" },
-      "",
-      createPageUrl("invitation")
-    );
-  }
-
-  window.requestAnimationFrame(() => {
-    window.scrollTo({
-      top: invitationScrollY,
-      behavior: "auto",
-    });
-
-    refreshScrollTrigger();
-  });
-
-  return;
-}
-
-navigationInProgress = true;
-
-// Save the current Invitation scroll position.
-if (isInvitationHost) {
-  if (currentPage === "invitation") {
-    invitationScrollY = window.scrollY;
-  }
-
-  // Activate the Wedding SPA.
-  document.body.classList.add(
-    "wedding-spa-active"
-  );
-
-  document.body.classList.remove(
-    "invitation-intro-body",
-    "loading-active",
-    "invitation-gate-active"
-  );
-
-  // Show the Wedding SPA container.
-  const weddingSpaShell =
-    document.getElementById("weddingSpaShell");
-
-  if (weddingSpaShell) {
-    weddingSpaShell.setAttribute(
-      "aria-hidden",
-      "false"
-    );
-  }
-}
-
-    if (
-  showTransition ||
-  !initialLoadCompleted
-) {
-  showLoader(
-    initialLoadCompleted
-      ? "Loading..."
-      : "Loading wedding page..."
-  );
-}
-
-      try {
-        const response =
-          await fetch(
-            pageConfig.file,
-            {
-              cache: "no-cache",
-            }
-          );
-
-        if (!response.ok) {
-          throw new Error(
-            `HTTP ${response.status}: Unable to load ${pageConfig.file}`
-          );
-        }
-
-      const html =
-              await response.text();
-
-            /*
-            * Clean up timers, event listeners,
-            * GSAP contexts, etc. from the old page.
-            */
-            cleanupCurrentPage();
-
-            /*
-            * Insert the new HTML first.
-            *
-            * The loader is still covering the screen,
-            * so the user will not see an unstyled page.
-            */
-            app.innerHTML = html;
-
-            /*
-            * Load this page's CSS.
-            */
-            await loadPageStylesheet(
-              pageConfig.css
-            );
-
-            /*
-            * Load this page's JavaScript.
-            *
-            * Example for Home:
-            * pages/home/home.js
-            */
-            await loadPageScript(
-              pageConfig.js
-            );
-
-            currentPage =
-              pageName;
-
-            document.title =
-              pageConfig.title;                         
-
-        /*
-         * Reset the browser scroll position
-         * before creating ScrollTriggers.
-         */
-        window.scrollTo({
-          top: 0,
-          left: 0,
-          behavior: "auto",
-        });
-
-        /*
-         * Prepare default CSS animation classes.
-         *
-         * Pages with their own GSAP scroll animation
-         * are excluded in getAnimatedPageElements().
-         */
-        preparePageContentAnimation(
-          pageName
-        );
-
-        /*
-         * Wait for important assets before page
-         * initialization.
-         */
-        await waitForPageAssets(
-          pageName
-        );
-
-        /*
-         * Initialize the page after:
-         * - HTML insertion
-         * - scroll reset
-         * - important assets are ready
-         */
-        initializePage(
-          pageName
-        );
-
-        if (updateHistory) {
-          window.history.pushState(
-            {
-              page: pageName,
-            },
-            "",
-            createPageUrl(
-              pageName
-            )
-          );
-        }
-
-        revealLoadedPage(
-          pageName
-        );
-      } catch (error) {
-        console.error(
-          "Page loading error:",
-          error
-        );
-
-        document.body.classList.remove(
-          "spa-initializing"
-        );
-
-        app.setAttribute(
-          "aria-busy",
-          "false"
-        );
-
-        app.innerHTML = `
-          <main class="page-load-error">
-
-            <h1>
-              Unable to load the page
-            </h1>
-
-            <p>
-              Please check your connection
-              and try again.
-            </p>
-
-            <button
-              type="button"
-              id="retryPageButton"
-            >
-              Try again
-            </button>
-
-          </main>
-        `;
-
-        hideLoader();
-
-        const retryButton =
-          document.getElementById(
-            "retryPageButton"
-          );
-
-        retryButton?.addEventListener(
-          "click",
-          function () {
-            navigationInProgress =
-              false;
-
-            loadPage(
-              pageName,
-              {
-                updateHistory:
-                  false,
-              }
-            );
-          }
-        );
-      } finally {
-        navigationInProgress =
-          false;
-      }
-    }
-
-    /* ======================================================
-       NAVIGATION
-    ====================================================== */
-
-    document.addEventListener(
-      "click",
-      function (event) {
-        const pageLink =
-          event.target.closest(
-            "a[data-page]"
-          );
-
-        if (!pageLink) {
-          return;
-        }
-
-        if (
-          event.button !== 0 ||
-          event.ctrlKey ||
-          event.metaKey ||
-          event.shiftKey ||
-          event.altKey
-        ) {
-          return;
-        }
-
-        const pageName =
-          pageLink.dataset.page;
-
-        if (!pages[pageName]) {
-          return;
-        }
-
-        event.preventDefault();
-
-        loadPage(
-          pageName
-        );
-      }
-    );
-
-    /* ======================================================
-       BROWSER BACK AND FORWARD
-    ====================================================== */
-
-    window.addEventListener(
-      "popstate",
-      function () {
-        loadPage(
-          getPageFromUrl(),
-          {
-            updateHistory:
-              false,
-          }
-        );
-      }
-    );
-
-    /* ======================================================
-       PAGE RESTORE / RESIZE SUPPORT
-    ====================================================== */
-
-    window.addEventListener(
-      "pageshow",
-      function () {
-        refreshScrollTrigger();
-      }
-    );
-
-    window.addEventListener(
-      "resize",
-      function () {
-        refreshScrollTrigger();
-      }
-    );
-
-    window.addEventListener(
-      "orientationchange",
-      function () {
-        window.setTimeout(
-          refreshScrollTrigger,
-          250
-        );
-      }
-    );
-
-    /* ======================================================
-   INITIAL LOAD
-====================================================== */
-
-/* ==========================================================
-   INDEX → HOME PAGE FLIP
-========================================================== */
-
-async function flipInvitationToHome() {
-  if (window.weddingFlipInProgress) return;
-
-  window.weddingFlipInProgress = true;
-
-  const invitation =
-    document.getElementById("invitationIntro");
-
-  const spaShell =
-    document.getElementById("weddingSpaShell");
-
-  if (!invitation || !spaShell) {
-    window.weddingFlipInProgress = false;
-    return loadPage("home", {
-      updateHistory: true,
-      showTransition: false,
+    setLoaderVisible(false);
+    if (updateHistory) history.pushState({ page: "invitation" }, "", createPageUrl("invitation"));
+    requestAnimationFrame(() => {
+      if (version !== navigationVersion) return;
+      window.scrollTo({ top: invitationScrollY, behavior: "auto" });
+      refreshScrollTrigger();
     });
   }
 
-  const reduceMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
+  function activateSpaLayout() {
+    if (!isInvitationHost) return;
+    if (currentPage === "invitation") invitationScrollY = window.scrollY;
 
-  const stage = document.createElement("div");
-  stage.className = "wedding-flip-stage";
+    body.classList.add("wedding-spa-active");
+    body.classList.remove("invitation-intro-body", "loading-active", "invitation-gate-active");
+    spaShell?.setAttribute("aria-hidden", "false");
+  }
 
-  const cover = document.createElement("div");
-  cover.className = "wedding-flip-cover";
+  // --- SPA navigation -------------------------------------------
+  function revealPage(elements) {
+    const directEntry = root.classList.contains("wedding-direct-entry");
+    app.setAttribute("aria-busy", "false");
+    body.classList.remove("spa-initializing");
+    initialLoadCompleted = true;
 
-  const coverInner = document.createElement("div");
-  coverInner.className = "wedding-flip-cover-inner";
-
-  // Keep the current invitation viewport visible during
-  // the flip instead of jumping to the top of the page.
-  const invitationClone = invitation.cloneNode(true);
-
-  invitationClone.removeAttribute("id");
-  invitationClone.style.position = "absolute";
-  invitationClone.style.left = "0";
-  invitationClone.style.top = `${-window.scrollY}px`;
-  invitationClone.style.width = "100%";
-  invitationClone.style.pointerEvents = "none";
-
-  // Avoid duplicate IDs in the temporary visual clone.
-  invitationClone.querySelectorAll("[id]").forEach((element) => {
-    element.removeAttribute("id");
-  });
-
-  coverInner.appendChild(invitationClone);
-  cover.appendChild(coverInner);
-  stage.appendChild(cover);
-
-  document.body.appendChild(stage);
-  document.body.classList.add("wedding-flip-active");
-
-  try {
-
-    document.documentElement.classList.remove("wedding-direct-entry");
-sessionStorage.removeItem("weddingDirectEntry");
-    // Load the actual Home partial through your SPA router.
-    await loadPage("home", {
-      updateHistory: true,
-      showTransition: false,
+    clearRevealTimers();
+    const version = revealVersion;
+    requestAnimationFrame(() => {
+      if (version !== revealVersion) return;
+      revealTimer = window.setTimeout(() => {
+        if (version !== revealVersion) return;
+        revealTimer = null;
+        setLoaderVisible(false);
+        animationTimer = window.setTimeout(() => {
+          if (version !== revealVersion) return;
+          animationTimer = null;
+          if (!directEntry) playPageAnimation(elements);
+          refreshScrollTrigger();
+        }, 150);
+      }, 250);
     });
+  }
 
-    // Make sure the Home page is fully visible
-// before the invitation flips away.
-const spaShell = document.getElementById("weddingSpaShell");
-const homeApp = document.getElementById("app");
+  async function loadPage(requestedPageName, options = {}) {
+    const { updateHistory = true, showTransition = true } = options;
+    const pageName = Object.hasOwn(pages, requestedPageName) ? requestedPageName : "home";
 
-if (spaShell) {
-  spaShell.hidden = false;
-  spaShell.inert = false;
-}
-
-document.body.classList.add("wedding-spa-active");
-
-if (homeApp) {
-  homeApp.style.visibility = "visible";
-  homeApp.style.opacity = "1";
-}
-
-// Give the browser time to render the Home page
-// before starting the flip.
-await new Promise((resolve) => {
-  requestAnimationFrame(() => {
-    requestAnimationFrame(resolve);
-  });
-});
-
-    if (!document.querySelector("#app .wedding-hero")) {
-      throw new Error("Wedding Home content was not loaded.");
+    // Serializing loads avoids two pages/stylesheets racing each other.
+    if (navigationInProgress) {
+      queuedNavigation = { pageName, options };
+      return false;
+    }
+    if (pageName === currentPage) return true;
+    if (pageName === "invitation") {
+      showInvitation({ updateHistory });
+      return true;
     }
 
-    // The Home page is now ready beneath the turning page.
-    gsap.set(cover, {
-      rotationY: 0,
-      transformPerspective: 1800,
-      transformOrigin: "left center",
-    });
+    navigationInProgress = true;
+    const version = ++navigationVersion;
+    clearRevealTimers();
+    activateSpaLayout();
+    if (showTransition) setLoaderVisible(true,
+      initialLoadCompleted ? "Loading..." : "Loading wedding page...");
 
-    if (!reduceMotion) {
-      await new Promise((resolve) => {
-        gsap.to(cover, {
+    let mountedNewPage = false;
+    try {
+      const config = pages[pageName];
+      const response = await fetch(config.file, { cache: "no-cache" });
+      if (!response.ok) throw new Error(`HTTP ${response.status}: Unable to load ${config.file}`);
+      const html = await response.text();
+
+      callPageHook("cleanup", currentPage);
+      app.innerHTML = html;
+      mountedNewPage = true;
+      resetPageScroll();
+
+      await loadPageStylesheet(config.css);
+      await loadPageScript(config.js);
+
+      currentPage = pageName;
+      document.title = config.title;
+      resetPageScroll(); // Before initializing GSAP ScrollTriggers.
+      const elements = preparePageAnimation(pageName);
+      await waitForPageAssets(pageName);
+      initializePage(pageName);
+
+      if (updateHistory) history.pushState({ page: pageName }, "", createPageUrl(pageName));
+      revealPage(elements);
+
+      // A second reset after layout/animation setup keeps new pages at the top.
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        if (version === navigationVersion && currentPage === pageName) resetPageScroll();
+      }));
+      return true;
+    } catch (error) {
+      console.error("Page loading error:", error);
+      if (mountedNewPage) {
+        try { callPageHook("cleanup", currentPage); } catch (cleanupError) {
+          console.warn("Page cleanup failed:", cleanupError);
+        }
+      }
+      currentPage = null; // Allow the same page to be retried.
+      body.classList.remove("spa-initializing");
+      app.setAttribute("aria-busy", "false");
+      app.innerHTML = `
+        <main class="page-load-error" role="alert">
+          <h1>Unable to load the page</h1>
+          <p>Please check your connection and try again.</p>
+          <button type="button" id="retryPageButton">Try again</button>
+        </main>`;
+      setLoaderVisible(false);
+      app.querySelector("#retryPageButton")?.addEventListener("click", () => {
+        void loadPage(pageName, { updateHistory: false });
+      }, { once: true });
+      return false;
+    } finally {
+      navigationInProgress = false;
+      if (queuedNavigation) {
+        const next = queuedNavigation;
+        queuedNavigation = null;
+        if (next.pageName !== currentPage) void loadPage(next.pageName, next.options);
+      }
+    }
+  }
+
+  // --- Index invitation page flip -------------------------------
+  async function flipInvitationToHome() {
+    if (window.weddingFlipInProgress) return false;
+    window.weddingFlipInProgress = true;
+
+    const invitation = document.getElementById("invitationIntro");
+    if (!invitation || !spaShell || !window.gsap) {
+      window.weddingFlipInProgress = false;
+      return loadPage("home", { showTransition: false });
+    }
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const stage = document.createElement("div");
+    stage.className = "wedding-flip-stage";
+    stage.innerHTML = '<div class="wedding-flip-cover"><div class="wedding-flip-cover-inner"></div></div>';
+    const cover = stage.querySelector(".wedding-flip-cover");
+    const coverInner = stage.querySelector(".wedding-flip-cover-inner");
+
+    // Keep the visible portion of the invitation steady during the flip.
+    const clone = invitation.cloneNode(true);
+    clone.removeAttribute("id");
+    clone.querySelectorAll("[id]").forEach((node) => node.removeAttribute("id"));
+    Object.assign(clone.style, {
+      position: "absolute",
+      left: "0",
+      top: `${-window.scrollY}px`,
+      width: "100%",
+      pointerEvents: "none",
+    });
+    coverInner.appendChild(clone);
+    document.body.appendChild(stage);
+    body.classList.add("wedding-flip-active");
+
+    try {
+      root.classList.remove("wedding-direct-entry");
+      try { sessionStorage.removeItem("weddingDirectEntry"); } catch (_) { /* Optional. */ }
+      const loaded = await loadPage("home", { showTransition: false });
+      if (!loaded) return false;
+
+      spaShell.hidden = false;
+      spaShell.inert = false;
+      body.classList.add("wedding-spa-active");
+      app.style.visibility = "visible";
+      app.style.opacity = "1";
+
+      await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+      if (!app.querySelector(".wedding-hero")) {
+        throw new Error("Wedding Home content was not loaded.");
+      }
+
+      window.gsap.set(cover, {
+        rotationY: 0,
+        transformPerspective: 1800,
+        transformOrigin: "left center",
+      });
+      if (!reduceMotion) {
+        await new Promise((resolve) => window.gsap.to(cover, {
           rotationY: -105,
-          opacity: 9,
+          opacity: 1,
           duration: 1.1,
           ease: "power3.inOut",
           onComplete: resolve,
-        });
-      });
+        }));
+      }
+      return true;
+    } catch (error) {
+      console.error("Wedding flip failed:", error);
+      return false;
+    } finally {
+      stage.remove();
+      body.classList.remove("wedding-flip-active");
+      window.weddingFlipInProgress = false;
     }
-  } catch (error) {
-    console.error("Wedding flip failed:", error);
-  } finally {
-    stage.remove();
-
-    document.body.classList.remove(
-      "wedding-flip-active"
-    );
-
-    window.weddingFlipInProgress = false;
-  }
-}
-
-window.startWeddingSpa = function (pageName = "home") {
-  if (
-    pageName === "home" &&
-    document.body.classList.contains("invitation-intro-body")
-  ) {
-    return flipInvitationToHome();
   }
 
-  return loadPage(pageName, {
-    updateHistory: true,
-    showTransition: true,
+  window.startWeddingSpa = (pageName = "home") => {
+    return pageName === "home" && body.classList.contains("invitation-intro-body")
+      ? flipInvitationToHome()
+      : loadPage(pageName);
+  };
+
+  // --- Events ----------------------------------------------------
+  document.addEventListener("click", (event) => {
+    if (!(event.target instanceof Element)) return;
+    const link = event.target.closest("a[data-page]");
+    if (!link || event.defaultPrevented || event.button !== 0 ||
+        event.ctrlKey || event.metaKey || event.shiftKey || event.altKey ||
+        link.hasAttribute("download") || (link.target && link.target !== "_self")) return;
+
+    const pageName = link.dataset.page;
+    if (!Object.hasOwn(pages, pageName)) return;
+    event.preventDefault();
+    void loadPage(pageName);
   });
-};
 
-if (isInvitationHost) {
-  currentPage = "invitation";
+  window.addEventListener("popstate", () => {
+    void loadPage(getPageFromUrl(), { updateHistory: false });
+  });
+  window.addEventListener("pageshow", refreshScrollTrigger);
+  window.addEventListener("resize", refreshScrollTrigger, { passive: true });
+  window.addEventListener("orientationchange", () => {
+    window.setTimeout(refreshScrollTrigger, 250);
+  });
 
-  document.body.dataset.currentPage =
-    "invitation";
-
+  // --- Initial route ---------------------------------------------
+  if (isInvitationHost) body.dataset.currentPage = "invitation";
   const initialPage = getPageFromUrl();
-
-  if (initialPage !== "invitation") {
-    loadPage(initialPage, {
-      updateHistory: false,
-      showTransition: true,
-    });
+  if (!isInvitationHost || initialPage !== "invitation") {
+    void loadPage(initialPage, { updateHistory: false });
   }
-} else {
-  loadPage(getPageFromUrl(), {
-    updateHistory: false,
-    showTransition: true,
-  });
-}
-  }
-);
+});

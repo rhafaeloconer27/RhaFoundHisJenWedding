@@ -1,44 +1,24 @@
-/* ==========================================================
-   RHAF & JEN — GLOBAL / SHARED STYLESHEET
+/* Rhaf & Jen — shared styles for index.html, wedding.html and the SPA. */
 
-   Used by:
-   - index.html
-   - wedding.html
-   - SPA shared layout
-   - common.js navigation
-   - music.js
-========================================================== */
-
-/* ==========================================================
-   VARIABLES
-========================================================== */
+/* VARIABLES */
 
 :root {
   --sage: #8c997d;
   --sage-dark: rgb(95, 95, 95);
-
   --cream: #f8f5ee;
   --white: #ffffff;
-
   --text: #4b4b43;
   --muted: #7b7a70;
   --gold: #b7a06a;
-
   --nav-height: 68px;
   --countdown-height: 48px;
-
-  --soft-shadow:
-    0 8px 26px
-    rgba(58, 67, 52, 0.12);
+  --soft-shadow: 0 8px 26px rgba(58, 67, 52, 0.12);
 }
 
-/* ==========================================================
-   RESET
-========================================================== */
+/* RESET */
 
 * {
   box-sizing: border-box;
-
   margin: 0;
   padding: 0;
 }
@@ -49,37 +29,21 @@ html {
 
 body {
   min-height: 100vh;
-
   overflow-x: hidden;
-
-  background:
-    var(--sage-dark);
-
-  color:
-    var(--text);
+  background: var(--sage-dark);
+  color: var(--text);
 }
 
-body,
-button,
-input,
-select,
-textarea {
-  font-family:
-    "Montserrat",
-    sans-serif;
+body, button, input, select, textarea {
+  font-family: "Montserrat", sans-serif;
 }
 
-button,
-input,
-select,
-textarea {
+button, input, select, textarea {
   font: inherit;
 }
 
-button,
-a {
-  -webkit-tap-highlight-color:
-    transparent;
+button, a {
+  -webkit-tap-highlight-color: transparent;
 }
 
 a {
@@ -88,28 +52,17 @@ a {
 
 img {
   display: block;
-
   max-width: 100%;
 }
 
-/* ==========================================================
-   SHARED PAGE CONTAINER
-========================================================== */
+/* SHARED PAGE CONTAINER */
 
 .page-container {
   min-height: 100vh;
-
-  padding-bottom:
-    calc(
-      var(--nav-height) +
-      18px +
-      env(safe-area-inset-bottom)
-    );
+  padding-bottom: calc( var(--nav-height) + 18px + env(safe-area-inset-bottom) );
 }
 
-/* ==========================================================
-   INDEX LOADER
-========================================================== */
+/* INDEX LOADER */
 
 body.loading-active {
   overflow: hidden;
@@ -117,480 +70,253 @@ body.loading-active {
 
 .wedding-loader {
   position: fixed;
-
   inset: 0;
-
   z-index: 99999;
-
   display: flex;
-
   align-items: center;
   justify-content: center;
-
   width: 100%;
-
   min-height: 100vh;
   min-height: 100dvh;
-
   padding: 24px;
-
-  background:
-    var(--cream);
-
+  background: var(--cream);
   opacity: 1;
   visibility: visible;
 }
 
 .wedding-loader-content {
   display: flex;
-
   flex-direction: column;
-
   align-items: center;
   justify-content: center;
-
   overflow: visible;
-
   text-align: center;
-
-  animation:
-    loaderContentEnter
-    0.8s
-    ease
-    both;
+  animation: loaderContentEnter 0.8s ease both;
 }
 
 #loaderAnimation {
   width: 340px;
   height: 340px;
-
   margin: 0 auto;
 }
 
-/* ==========================================================
-   SPA INITIAL / PAGE TRANSITION
-========================================================== */
+/* SPA INITIAL / PAGE TRANSITION */
 
-body.spa-initializing,
-body.page-transition-active {
+body.spa-initializing, body.page-transition-active {
   overflow: hidden;
 }
 
-body.spa-initializing #app,
-body.spa-initializing #globalNavigation,
-body.spa-initializing #musicButton,
-body.spa-initializing .music-button {
+body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-initializing #musicButton, body.spa-initializing .music-button {
   opacity: 0;
-
   visibility: hidden;
-
   pointer-events: none;
 }
 
-#app,
-#globalNavigation,
-#musicButton,
-.music-button {
-  transition:
-    opacity 0.5s ease,
-    visibility 0.5s ease;
+#app, #globalNavigation, #musicButton, .music-button {
+  transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 
 .page-transition-loader {
   position: fixed;
-
   inset: 0;
-
   z-index: 999999;
-
   display: flex;
-
   align-items: center;
   justify-content: center;
-
   width: 100%;
-
   height: 100vh;
   height: 100dvh;
-
   margin: 0;
   padding: 0;
-
   overflow: hidden;
-
-  background:
-    rgba(0, 0, 0, 0.28);
-
-  -webkit-backdrop-filter:
-    blur(3px);
-
-  backdrop-filter:
-    blur(3px);
-
+  background: rgba(0, 0, 0, 0.28);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
   opacity: 0;
-
   visibility: hidden;
-
   pointer-events: none;
-
-  transition:
-    opacity 0.5s ease,
-    visibility 0.5s ease;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 
 .page-transition-loader.is-visible {
   opacity: 1;
-
   visibility: visible;
-
   pointer-events: auto;
 }
 
 .page-transition-loader-content {
   position: relative;
-
   display: flex;
-
   align-items: center;
   justify-content: center;
-
-  width:
-    min(300px, 76vw);
-
-  height:
-    min(300px, 76vw);
-
+  width: min(300px, 76vw);
+  height: min(300px, 76vw);
   margin: 0;
   padding: 0;
-
-  background:
-    transparent;
-
+  background: transparent;
   transform: none;
-
   animation: none;
 }
 
 #pageLoaderAnimation {
   display: block;
-
   width: 100%;
   height: 100%;
-
-  background:
-    transparent;
+  background: transparent;
 }
 
 @media (max-width: 480px) {
-
   .page-transition-loader-content {
     width: 240px;
     height: 240px;
   }
 }
 
-/* ==========================================================
-   INDEX / INVITATION BASE
-========================================================== */
+/* INDEX / INVITATION BASE */
 
 .invitation-intro-body {
   width: 100%;
-
   min-height: 100vh;
   min-height: 100dvh;
-
   overflow-x: hidden;
   overflow-y: auto;
-
-  background:
-    #56614f;
+  background: #56614f;
 }
 
 .invitation-intro {
   position: relative;
-
   display: block;
-
   width: 100%;
-
   min-height: 100vh;
   min-height: 100dvh;
-
   padding: 0;
-
   overflow: visible;
 }
-
-/* ==========================================================
-   INDEX BACKGROUND — ELEGANT DIAMOND PATTERN
-========================================================== */
-
-/* ==========================================================
-   INDEX BACKGROUND — SCROLLING DIAMOND PATTERN
-========================================================== */
 
 .intro-background {
   position: absolute;
   inset: 0;
-
   z-index: 0;
-
   width: 100%;
   height: 100%;
-
   background-color: #f7f2e8;
-
-  background-image:
-    url("../images/indexBackground.png");
-
+  background-image: url("../images/indexBackground.png");
   background-repeat: repeat;
-
-  /* Adjust this to control diamond size */
   background-size: 680px auto;
-
-  background-position:
-    center top;
-
+  background-position: center top;
   pointer-events: none;
 }
 
 .invitation-stage {
   position: relative;
-
   z-index: 2;
-
   display: flex;
-
   flex-direction: column;
-
   align-items: center;
-
   width: 100%;
-
   margin: 0 auto;
-
   text-align: center;
 }
 
-/* ==========================================================
-   SHARED PAGE HERO
-
-   Used by:
-   - RSVP
-   - Location
-   - Sponsors
-   - Attire
-   - Gift
-   - FAQ
-========================================================== */
+/* SHARED PAGE HERO */
 
 .page-hero {
   position: relative;
-
   display: grid;
-
   place-items: center;
-
   min-height: 42svh;
-
-  padding:
-    50px 22px;
-
+  padding: 50px 22px;
   overflow: hidden;
-
-  color:
-    var(--white);
-
+  color: var(--white);
   text-align: center;
 }
 
 .page-hero-overlay {
   position: absolute;
-
   inset: 0;
-
   z-index: 1;
-
-  background:
-    rgba(
-      35,
-      42,
-      32,
-      0.58
-    );
+  background: rgba( 35, 42, 32, 0.58 );
 }
 
 .page-hero-content {
   position: relative;
-
   z-index: 2;
 }
 
 .page-hero-content p {
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
+  font-family: "Cormorant Garamond", serif;
   font-size: 1rem;
-
   font-style: italic;
 }
 
 .page-hero-content h1 {
   margin-top: 4px;
-
-  font-family:
-    "Allura",
-    cursive;
-
-  font-size:
-    clamp(
-      3.4rem,
-      16vw,
-      5.6rem
-    );
-
+  font-family: "Allura", cursive;
+  font-size: clamp( 3.4rem, 16vw, 5.6rem );
   font-weight: 400;
-
   line-height: 1;
 }
 
 .content-section {
-  padding:
-    54px 20px;
+  padding: 54px 20px;
 }
 
-/* ==========================================================
-   GLOBAL NAVIGATION
-========================================================== */
+/* GLOBAL NAVIGATION */
 
 #globalNavigation {
   position: relative;
-
   z-index: 1000;
 }
 
 .bottom-navigation {
   position: fixed;
-
   right: 0;
   bottom: 0;
   left: 0;
-
   z-index: 1000;
-
   display: grid;
-
-  grid-template-columns:
-    repeat(
-      7,
-      minmax(0, 1fr)
-    );
-
+  grid-template-columns: repeat( 7, minmax(0, 1fr) );
   align-items: end;
-
   width: 100%;
-
-  height:
-    var(--nav-height);
-
-  min-height:
-    var(--nav-height);
-
+  height: var(--nav-height);
+  min-height: var(--nav-height);
   margin: 0;
-
-  padding:
-    3px 4px
-    max(
-      3px,
-      env(safe-area-inset-bottom)
-    );
-
-  border-top:
-    1px solid
-    rgba(
-      111,
-      125,
-      99,
-      0.18
-    );
-
-  background:
-    rgba(
-      255,
-      255,
-      255,
-      0.97
-    );
-
-  box-shadow:
-    var(--soft-shadow);
-
-  -webkit-backdrop-filter:
-    blur(12px);
-
-  backdrop-filter:
-    blur(12px);
+  padding: 3px 4px max( 3px, env(safe-area-inset-bottom) );
+  border-top: 1px solid rgba( 111, 125, 99, 0.18 );
+  background: rgba( 255, 255, 255, 0.97 );
+  box-shadow: var(--soft-shadow);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
 }
 
 .nav-item {
   position: relative;
-
   display: flex;
-
   flex-direction: column;
-
   align-items: center;
   justify-content: flex-end;
-
   gap: 3px;
-
   min-width: 0;
-
   height: 58px;
-
   padding: 0;
-
   overflow: visible;
-
-  color:
-    var(--muted);
-
+  color: var(--muted);
   text-align: center;
-
   text-decoration: none;
-
-  transform:
-    translateY(-24px);
+  transform: translateY(-24px);
 }
 
 .nav-icon {
   display: grid;
-
   place-items: center;
-
-  flex:
-    0 0 38px;
-
+  flex: 0 0 38px;
   width: 38px;
   height: 38px;
-
-  border:
-    1px solid
-    #c5ccbf;
-
+  border: 1px solid #c5ccbf;
   border-radius: 50%;
-
-  background:
-    #fafbf8;
-
-  color:
-    var(--sage-dark);
-
-  transition:
-    transform 0.2s ease,
-    background-color 0.2s ease,
-    color 0.2s ease;
+  background: #fafbf8;
+  color: var(--sage-dark);
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
 }
 
 .nav-icon i {
@@ -599,333 +325,154 @@ body.spa-initializing .music-button {
 
 .nav-label {
   display: block;
-
   width: 100%;
-
   max-width: 58px;
-
   overflow: hidden;
-
-  color:
-    #7d8577;
-
+  color: #7d8577;
   font-size: 0.6rem;
-
   font-weight: 700;
-
   line-height: 1.1;
-
   text-align: center;
-
   text-overflow: ellipsis;
-
   white-space: nowrap;
 }
 
-.nav-item.active
-.nav-icon {
-  background:
-    var(--sage);
-
-  color:
-    var(--white);
+.nav-item.active .nav-icon {
+  background: var(--sage);
+  color: var(--white);
 }
 
-.nav-item.active
-.nav-label {
-  color:
-    var(--sage-dark);
+.nav-item.active .nav-label {
+  color: var(--sage-dark);
 }
 
-/* ==========================================================
-   FEATURED RSVP NAV ITEM
-========================================================== */
+/* MUSIC BUTTON */
 
-.nav-item-featured {
-  z-index: 1002;
-
-  justify-content:
-    flex-start;
-
-  height: 78px;
-
-  transform:
-    translateY(-34px);
-}
-
-.nav-item-featured
-.nav-icon {
-  flex:
-    0 0 62px;
-
-  width: 62px;
-  height: 62px;
-
-  border:
-    4px solid
-    var(--sage-dark);
-
-  background:
-    var(--white);
-
-  color:
-    var(--sage);
-}
-
-.nav-item-featured
-.nav-icon i {
-  font-size: 23px;
-}
-
-.nav-item-featured
-.nav-label {
-  width: 100%;
-
-  max-width: 64px;
-
-  margin-top: 1px;
-
-  color:
-    var(--sage-dark);
-
-  font-size: 0.58rem;
-
-  font-weight: 700;
-
-  line-height: 1;
-}
-
-.nav-item-featured:hover
-.nav-icon {
-  transform:
-    scale(1.06);
-}
-
-.nav-item-featured.active
-.nav-icon {
-  background:
-    var(--sage-dark);
-}
-
-/* ==========================================================
-   MUSIC BUTTON
-========================================================== */
-
-#musicButton,
-.music-button {
+#musicButton, .music-button {
   position: fixed;
-
   top: 18px;
   right: 18px;
-
   z-index: 1001;
-
   display: flex;
-
   align-items: center;
   justify-content: center;
-
   width: 40px;
   height: 40px;
-
   padding: 0;
-
   border: 0;
-
   outline: 0;
-
-  background:
-    transparent;
-
-  color:
-    var(--white);
-
+  background: transparent;
+  color: var(--white);
   cursor: pointer;
-
-  transition:
-    transform 0.2s ease,
-    opacity 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-#musicButton:hover,
-.music-button:hover {
+#musicButton:hover, .music-button:hover {
   opacity: 0.85;
-
-  transform:
-    scale(1.1);
+  transform: scale(1.1);
 }
 
-#musicButton:active,
-.music-button:active {
-  transform:
-    scale(0.95);
+#musicButton:active, .music-button:active {
+  transform: scale(0.95);
 }
 
-#musicButton i,
-.music-button i {
+#musicButton i, .music-button i {
   font-size: 19px;
 }
 
-/* ==========================================================
-   SPA PAGE ENTER ANIMATION
-========================================================== */
+/* SPA PAGE ENTER ANIMATION */
 
 .page-content-animate {
   opacity: 0;
-
-  transform:
-    translateY(24px)
-    scale(0.985);
-
-  will-change:
-    opacity,
-    transform;
+  transform: translateY(24px) scale(0.985);
+  will-change: opacity, transform;
 }
 
 .page-content-animate.page-content-visible {
-  animation:
-    pageContentEnter
-    0.72s
-    cubic-bezier(
-      0.22,
-      1,
-      0.36,
-      1
-    )
-    both;
-
-  animation-delay:
-    var(
-      --page-animation-delay,
-      0ms
-    );
+  animation: pageContentEnter 0.72s cubic-bezier( 0.22, 1, 0.36, 1 ) both;
+  animation-delay: var( --page-animation-delay, 0ms );
 }
 
-.page-hero-content.page-content-animate.page-content-visible,
-.hero-content.page-content-animate.page-content-visible {
-  animation-name:
-    pageHeroContentEnter;
-
-  animation-duration:
-    0.85s;
+.page-hero-content.page-content-animate.page-content-visible, .hero-content.page-content-animate.page-content-visible {
+  animation-name: pageHeroContentEnter;
+  animation-duration: 0.85s;
 }
 
 .hero-countdown.page-content-animate {
-  transform:
-    translateY(18px);
+  transform: translateY(18px);
 }
 
 .hero-countdown.page-content-animate.page-content-visible {
-  animation-name:
-    pageCountdownEnter;
-
-  animation-duration:
-    0.65s;
+  animation-name: pageCountdownEnter;
+  animation-duration: 0.65s;
 }
 
-/* ==========================================================
-   GLOBAL KEYFRAMES
-========================================================== */
+/* GLOBAL KEYFRAMES */
 
 @keyframes pageContentEnter {
-
   from {
     opacity: 0;
-
-    transform:
-      translateY(24px)
-      scale(0.985);
+    transform: translateY(24px) scale(0.985);
   }
 
   to {
     opacity: 1;
-
-    transform:
-      translateY(0)
-      scale(1);
+    transform: translateY(0) scale(1);
   }
 }
 
 @keyframes pageHeroContentEnter {
-
   from {
     opacity: 0;
-
-    transform:
-      translateY(20px)
-      scale(0.96);
+    transform: translateY(20px) scale(0.96);
   }
 
   to {
     opacity: 1;
-
-    transform:
-      translateY(0)
-      scale(1);
+    transform: translateY(0) scale(1);
   }
 }
 
 @keyframes pageCountdownEnter {
-
   from {
     opacity: 0;
-
-    transform:
-      translateY(18px);
+    transform: translateY(18px);
   }
 
   to {
     opacity: 1;
-
-    transform:
-      translateY(0);
+    transform: translateY(0);
   }
 }
 
 @keyframes loaderContentEnter {
-
   from {
     opacity: 0;
-
-    transform:
-      translateY(18px);
+    transform: translateY(18px);
   }
 
   to {
     opacity: 1;
-
-    transform:
-      translateY(0);
+    transform: translateY(0);
   }
 }
 
-/* ==========================================================
-   GLOBAL RESPONSIVE
-========================================================== */
+/* GLOBAL RESPONSIVE */
 
 @media (max-width: 639px) {
-
-  #musicButton,
-  .music-button {
+  #musicButton, .music-button {
     top: 14px;
     right: 13px;
   }
 }
 
 @media (max-width: 480px) {
-
   .bottom-navigation {
-    padding:
-      3px 2px
-      max(
-        3px,
-        env(safe-area-inset-bottom)
-      );
+    padding: 3px 2px max( 3px, env(safe-area-inset-bottom) );
   }
 }
 
 @media (min-width: 640px) {
-
   :root {
     --nav-height: 72px;
     --countdown-height: 54px;
@@ -938,13 +485,11 @@ body.spa-initializing .music-button {
 
   .nav-label {
     max-width: 66px;
-
     font-size: 0.55rem;
   }
 }
 
 @media (min-width: 900px) {
-
   :root {
     --nav-height: 72px;
     --countdown-height: 56px;
@@ -953,128 +498,62 @@ body.spa-initializing .music-button {
   .bottom-navigation {
     right: 50%;
     left: auto;
-
-    width:
-      min(100%, 680px);
-
-    transform:
-      translateX(50%);
-
-    border:
-      1px solid
-      rgba(
-        111,
-        125,
-        99,
-        0.22
-      );
-
+    width: min(100%, 680px);
+    transform: translateX(50%);
+    border: 1px solid rgba( 111, 125, 99, 0.22 );
     border-bottom: 0;
-
-    border-radius:
-      20px 20px 0 0;
+    border-radius: 20px 20px 0 0;
   }
 
-  #musicButton,
-  .music-button {
-    right:
-      calc(
-        50% - 330px
-      );
+  #musicButton, .music-button {
+    right: calc( 50% - 330px );
   }
 }
 
-/* ==========================================================
-   ACCESSIBILITY
-========================================================== */
+/* ACCESSIBILITY */
 
-@media (
-  prefers-reduced-motion:
-  reduce
-) {
-
+@media ( prefers-reduced-motion: reduce ) {
   html {
-    scroll-behavior:
-      auto;
+    scroll-behavior: auto;
   }
 
-  *,
-  *::before,
-  *::after {
-    scroll-behavior:
-      auto !important;
-
-    animation-duration:
-      0.01ms !important;
-
-    animation-iteration-count:
-      1 !important;
-
-    transition-duration:
-      0.01ms !important;
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 
-  .page-content-animate,
-  .page-content-animate.page-content-visible {
-    opacity:
-      1 !important;
-
-    transform:
-      none !important;
-
-    animation:
-      none !important;
-
-    will-change:
-      auto;
+  .page-content-animate, .page-content-animate.page-content-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    will-change: auto;
   }
 }
 
-/* ==========================================================
-   INDEX MOBILE FIX
-========================================================== */
+/* INDEX MOBILE FIX */
 
 @media (max-width: 600px) {
-
   .invitation-intro {
-    padding:
-      max(
-        16px,
-        env(safe-area-inset-top)
-      )
-      12px
-      max(
-        16px,
-        env(safe-area-inset-bottom)
-      );
+    padding: max( 16px, env(safe-area-inset-top) ) 12px max( 16px, env(safe-area-inset-bottom) );
   }
 
   .invitation-stage {
     width: 100%;
-
     max-width: 100%;
   }
 }
 
-/* ==========================================================
-   EXTRA SMALL PHONES
-========================================================== */
+/* EXTRA SMALL PHONES */
 
 @media (max-width: 380px) {
-
-
   .reveal-content {
-    padding:
-      34px 22px;
+    padding: 34px 22px;
   }
 
   .reveal-content h1 {
-    font-size:
-      clamp(
-        4.1rem,
-        18vw,
-        5rem
-      );
+    font-size: clamp( 4.1rem, 18vw, 5rem );
   }
 
   .reveal-invites {
@@ -1082,82 +561,40 @@ body.spa-initializing .music-button {
   }
 }
 
-/* ==========================================================
-   LONG SCROLL INTRO
-========================================================== */
+/* LONG SCROLL INTRO */
 
 .intro-overlay {
   position: fixed;
 }
 
-/* ==========================================================
-   MESSAGE SECTION
-========================================================== */
+/* MESSAGE SECTION */
 
 .intro-message-section {
   display: flex;
-
   flex-direction: column;
-
   align-items: center;
   justify-content: center;
-
   width: 100%;
-
   min-height: 100vh;
   min-height: 100svh;
-
-  padding:
-    max(
-      80px,
-      env(safe-area-inset-top)
-    )
-    18px
-    70px;
+  padding: max( 80px, env(safe-area-inset-top) ) 18px 70px;
 }
 
 .intro-message-card {
-  width:
-    min(100%, 520px);
-
-  padding:
-    40px 32px;
-
-    border:
-    1px solid
-    rgba(255, 255, 255, 0.42);
-
-  background:
-    rgba(255, 255, 255, 0.84);
-
-  color:
-    #5d6258;
-
-  box-shadow:
-    0 25px 65px
-    rgba(0, 0, 0, 0.28);
-
-  -webkit-backdrop-filter:
-    blur(10px);
-
-  backdrop-filter:
-    blur(10px);
+  width: min(100%, 520px);
+  padding: 40px 32px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, 0.84);
+  color: #5d6258;
+  box-shadow: 0 25px 65px rgba(0, 0, 0, 0.28);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
 .intro-message-text {
   margin-bottom: 24px;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    clamp(
-      1.2rem,
-      4vw,
-      1.45rem
-    );
-
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp( 1.2rem, 4vw, 1.45rem );
   line-height: 1.65;
 }
 
@@ -1167,117 +604,41 @@ body.spa-initializing .music-button {
 
 .intro-message-closing {
   margin-bottom: 8px;
-
-  color:
-    #707070;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
+  color: #707070;
+  font-family: "Cormorant Garamond", serif;
   font-size: 1.08rem;
-
   font-style: italic;
 }
 
 .intro-message-signature {
-    margin-top:
-    20px;
-
-    color:
-    #74736c;
-
-
-  font-family:
-    "Allura",
-    cursive;
-
-  font-size:
-    clamp(
-          2.5rem,
-          8vw,
-          3.5rem
-    );
-
+  margin-top: 20px;
+  color: #74736c;
+  font-family: "Allura", cursive;
+  font-size: clamp( 2.5rem, 8vw, 3.5rem );
   font-weight: 400;
-
   line-height: 0.9;
 }
 
-
 .intro-message-signature span {
   display: inline-block;
-
-  margin:
-    0 6px;
-
-  color:
-    var(--gold);
-
-  font-family:
-    "Allura",
-    cursive;
-
-  font-size:
-    3.2rem;
-    
+  margin: 0 6px;
+  color: var(--gold);
+  font-family: "Allura", cursive;
+  font-size: 3.2rem;
 }
-
-/* ==========================================================
-   INVITATION COVER SECTION
-========================================================== */
-
-
-.intro-open-note {
-  margin-top: 20px;
-
-  color:
-    rgba(
-      255,
-      255,
-      255,
-      0.92
-    );
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size: 1rem;
-
-  font-style: italic;
-
-  text-shadow:
-    0 3px 10px
-    rgba(0, 0, 0, 0.34);
-}
-
-/* ==========================================================
-   MESSAGE / COVER MOBILE
-========================================================== */
 
 @media (max-width: 600px) {
-
   .intro-message-section {
-    padding:
-      max(
-        55px,
-        env(safe-area-inset-top)
-      )
-      12px
-      55px;
+    padding: max( 55px, env(safe-area-inset-top) ) 12px 55px;
   }
 
   .intro-message-card {
-    padding:
-      30px 20px;
+    padding: 30px 20px;
   }
 
   .intro-message-text {
     margin-bottom: 20px;
-
     font-size: 1.08rem;
-
     line-height: 1.58;
   }
 
@@ -1286,106 +647,50 @@ body.spa-initializing .music-button {
   }
 }
 
-/* ==========================================================
-   WEDDING SCRIPTURE SECTION
-========================================================== */
+/* WEDDING SCRIPTURE SECTION */
 
 .intro-scripture-section {
   display: flex;
-
   flex-direction: column;
-
   align-items: center;
   justify-content: center;
-
   width: 100%;
-
   min-height: 90vh;
   min-height: 90svh;
-
-  padding:
-    90px 18px;
+  padding: 90px 18px;
 }
-
-/* ==========================================================
-   SCRIPTURE CARD
-   Match Intro Message Card
-========================================================== */
 
 .intro-scripture-card {
   position: relative;
-
   width: min(100%, 520px);
-
-  padding:
-    44px 36px;
-
+  padding: 44px 36px;
   overflow: hidden;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.48);
-
-  background:
-    rgba(255, 255, 255, 0.84);
-
-  box-shadow:
-    0 20px 50px
-    rgba(45, 45, 45, 0.16);
-
-  -webkit-backdrop-filter:
-    blur(12px);
-
-  backdrop-filter:
-    blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.48);
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow: 0 20px 50px rgba(45, 45, 45, 0.16);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
 }
 
 .intro-scripture-mark {
   position: absolute;
-
   top: 6px;
   left: 8px;
-
- color:
-    #797979;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
+  color: #797979;
+  font-family: "Cormorant Garamond", serif;
   font-size: 5rem;
-
   line-height: 1;
-
   pointer-events: none;
 }
 
 .intro-scripture-quote {
   position: relative;
-
   z-index: 1;
-
   margin: 0;
-
-  color:
-    #5d6258;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    clamp(
-      1.2rem,
-      4vw,
-      1.45rem
-    );
-
-  /* font-style: italic; */
-
+  color: #5d6258;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp( 1.2rem, 4vw, 1.45rem );
   line-height: 2;
-
-  /* Important */
   white-space: normal;
 }
 
@@ -1398,95 +703,51 @@ body.spa-initializing .music-button {
 }
 
 .intro-scripture-divider {
-  margin:
-    28px 0 16px;
-
-  color:
-    #dc4844;
-
-  font-size:
-    0.85rem;
+  margin: 28px 0 16px;
+  color: #dc4844;
+  font-size: 0.85rem;
 }
 
 .intro-scripture-reference {
- color:
-    #dc4844;
-
-  font-family:
-    "Montserrat",
-    sans-serif;
-
+  color: #dc4844;
+  font-family: "Montserrat", sans-serif;
   font-size: 1rem;
-
   font-weight: 600;
-
-  letter-spacing:
-    0.18em;
-
-  text-transform:
-    uppercase;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
 }
 
 @media (max-width: 600px) {
-
   .intro-scripture-section {
     width: 100%;
     min-height: auto;
-
-    padding:
-      var(--intro-section-spacing)
-      12px;
+    padding: var(--intro-section-spacing) 12px;
   }
 
   .intro-scripture-card {
     position: relative;
-
     width: 100%;
-
-    padding:
-      46px
-      20px
-      34px;
-
-    border:
-      1px solid
-      rgba(255, 255, 255, 0.48);
-
+    padding: 46px 20px 34px;
+    border: 1px solid rgba(255, 255, 255, 0.48);
     border-radius: 0;
-
-    background:
-      rgba(255, 255, 255, 0.84);
-
-    box-shadow:
-      0 20px 50px
-      rgba(45, 45, 45, 0.16);
-
-    -webkit-backdrop-filter:
-      blur(10px);
-
-    backdrop-filter:
-      blur(10px);
+    background: rgba(255, 255, 255, 0.84);
+    box-shadow: 0 20px 50px rgba(45, 45, 45, 0.16);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
   }
 
   .intro-scripture-mark {
     top: 8px;
     left: 12px;
-
     font-size: 4.3rem;
-
     line-height: 1;
   }
 
   .intro-scripture-quote {
     margin: 0;
-
-    color:
-      #5d6258;
-
+    color: #5d6258;
     font-size: 1.05rem;
-
     line-height: 1.7;
-
     white-space: normal;
   }
 
@@ -1499,321 +760,168 @@ body.spa-initializing .music-button {
   }
 
   .intro-scripture-divider {
-    margin:
-      24px
-      0
-      14px;
+    margin: 24px 0 14px;
   }
 
   .intro-scripture-reference {
     font-size: 0.62rem;
-
     letter-spacing: 0.12em;
   }
 }
 
-
-/* ==========================================================
-   INTRO SCROLL LOTTIE
-========================================================== */
+/* INTRO SCROLL LOTTIE */
 
 .intro-scroll-lottie {
   position: relative;
-
   z-index: 3;
-
   width: 180px;
   height: 180px;
-
   margin-top: 20px;
-
   overflow: hidden;
-
   opacity: 1;
 }
 
 #scrollLottie {
   display: block;
-
   width: 100%;
   height: 100%;
 }
 
 @media (max-width: 600px) {
-
   .intro-scroll-lottie {
     width: 145px;
     height: 145px;
-
     margin-top: 100px;
   }
 }
 
-/* ==========================================================
-   RSVP SUBMIT LOTTIE
-
-   Keep here for now until moved into:
-   pages/rsvp/rsvp.css
-========================================================== */
-
 .rsvp-submit-loader {
   position: fixed;
-
   inset: 0;
-
   z-index: 999999;
-
   display: flex;
-
   align-items: center;
   justify-content: center;
-
   width: 100%;
-
   height: 100vh;
   height: 100dvh;
-
   padding: 0;
-
-  background:
-    rgba(0, 0, 0, 0.28);
-
-  -webkit-backdrop-filter:
-    blur(3px);
-
-  backdrop-filter:
-    blur(3px);
-
+  background: rgba(0, 0, 0, 0.28);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
   opacity: 0;
-
   visibility: hidden;
-
   pointer-events: none;
-
-  transition:
-    opacity 0.35s ease,
-    visibility 0.35s ease;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
 }
 
 .rsvp-submit-loader.is-visible {
   opacity: 1;
-
   visibility: visible;
-
   pointer-events: auto;
 }
 
 .rsvp-submit-loader-content {
   display: flex;
-
   align-items: center;
   justify-content: center;
-
-  width:
-    min(280px, 72vw);
-
-  height:
-    min(280px, 72vw);
-
+  width: min(280px, 72vw);
+  height: min(280px, 72vw);
   margin: 0;
-
   padding: 0;
-
-  background:
-    transparent;
+  background: transparent;
 }
 
 #rsvpSubmitAnimation {
   display: block;
-
   width: 100%;
   height: 100%;
-
-  background:
-    transparent;
+  background: transparent;
 }
 
 @media (max-width: 480px) {
-
   .rsvp-submit-loader-content {
     width: 220px;
     height: 220px;
   }
 }
 
-/* ==========================================================
-   SCRATCH DATE SECTION
-========================================================== */
+/* SCRATCH DATE SECTION */
 
 .intro-scratch-section {
   display: flex;
   align-items: center;
   justify-content: center;
-
   width: 100%;
-
   min-height: 100vh;
   min-height: 100svh;
-
   padding: 80px 18px;
 }
 
-/* ==========================================================
-   SCRATCH CARD
-========================================================== */
-
 .intro-scratch-card {
   width: min(100%, 520px);
-
-  padding:
-    54px
-    36px
-    48px;
-
-  border:
-    1px solid
-    rgba(110, 110, 105, 0.14);
-
-  /* NO RADIUS */
+  padding: 54px 36px 48px;
+  border: 1px solid rgba(110, 110, 105, 0.14);
   border-radius: 0;
-
-  background:
-    #ffffff;
-
-  box-shadow:
-    0 24px 60px
-    rgba(45, 45, 45, 0.18);
-
+  background: #ffffff;
+  box-shadow: 0 24px 60px rgba(45, 45, 45, 0.18);
   text-align: center;
 }
 
 .intro-calendar-icon {
   display: grid;
   place-items: center;
-
   width: 52px;
   height: 52px;
-
-  margin:
-    0 auto 20px;
-
+  margin: 0 auto 20px;
   border-radius: 50%;
-
-  background:
-    rgba(220, 72, 68, 0.1);
-
-  color:
-    #dc4844;
+  background: rgba(220, 72, 68, 0.1);
+  color: #dc4844;
 }
 
 .intro-calendar-icon i {
   font-size: 21px;
 }
 
-
-/* ==========================================================
-   LABEL
-========================================================== */
-
 .intro-scratch-label {
   margin-bottom: 8px;
-
- color:
-    #dc4844;
-
-
-  font-family:
-    "Montserrat",
-    sans-serif;
-
-
-  font-size:
-    1rem;
-
-
+  color: #dc4844;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
   font-weight: 600;
-
-
   text-align: center;
-  
-  letter-spacing:
-    0.18em;
-
-     text-transform:
-    uppercase;
-
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
 }
-
-/* ==========================================================
-   FUNNY TEXT
-========================================================== */
 
 .intro-scratch-subtext {
   max-width: 430px;
-
-  margin:
-    0 auto
-    38px;
-
-  color:
-    #74736c;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-   font-size:
-    clamp(
-      1.2rem,
-      4vw,
-      1.45rem
-    );
-
-  /* font-style: italic; */
-
+  margin: 0 auto 38px;
+  color: #74736c;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp( 1.2rem, 4vw, 1.45rem );
   line-height: 1.5;
-
   text-align: center;
 }
 
-/* ==========================================================
-   SCRATCH CIRCLE GRID
-========================================================== */
-
 .scratch-date-circles {
   display: grid;
-
-  grid-template-columns:
-    repeat(
-      3,
-      minmax(0, 1fr)
-    );
-
+  grid-template-columns: repeat( 3, minmax(0, 1fr) );
   align-items: center;
   justify-items: center;
-
   gap: 22px;
-
   width: min(100%, 520px);
-
   margin: 0 auto;
 }
-
-/* ==========================================================
-   BIG SCRATCH CIRCLES
-========================================================== */
 
 .scratch-circle {
   position: relative;
   flex: 0 0 auto;
-
   width: clamp(86px, 23vw, 125px);
   aspect-ratio: 1;
-
   overflow: hidden;
   border: none;
   border-radius: 50%;
-
   background: #dc4844;
   box-shadow: 0 10px 28px rgba(36, 43, 33, 0.18);
 }
@@ -1821,11 +929,9 @@ body.spa-initializing .music-button {
 .scratch-circle-value {
   position: absolute;
   inset: 0;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   color: #ffffff;
   font-family: "Cormorant Garamond", serif;
   font-size: clamp(1.7rem, 6vw, 2.35rem);
@@ -1844,64 +950,38 @@ body.spa-initializing .music-button {
   color: #ffffff;
 }
 
-/* ==========================================================
-   SAVE THE DATE LOTTIE
-========================================================== */
-
 .scratch-save-date-animation {
   display: flex;
   align-items: center;
   justify-content: center;
-
   width: 100%;
-
-  margin:
-    0 auto
-    16px;
+  margin: 0 auto 16px;
 }
 
 #saveTheDateAnimation {
   display: block;
-
   width: min(100%, 320px);
   height: 240px;
-
   margin: 0 auto;
 }
 
-/* Mobile */
-
 @media (max-width: 600px) {
-
   #saveTheDateAnimation {
     width: min(100%, 270px);
     height: 210px;
   }
-
 }
-
-/* ==========================================================
-   SCRATCH CANVAS
-========================================================== */
 
 .scratch-circle-canvas {
   position: absolute;
-
   inset: 0;
-
   z-index: 2;
-
   display: block;
-
   width: 100%;
   height: 100%;
-
   border-radius: 50%;
-
   cursor: grab;
-
   touch-action: none;
-
   user-select: none;
   -webkit-user-select: none;
 }
@@ -1909,10 +989,6 @@ body.spa-initializing .music-button {
 .scratch-circle-canvas:active {
   cursor: grabbing;
 }
-
-/* ==========================================================
-   COMPLETED DATE
-========================================================== */
 
 .scratch-date-complete {
   display: none;
@@ -1941,85 +1017,48 @@ body.spa-initializing .music-button {
   font-style: italic;
 }
 
-.scratch-save-date-animation,
-.scratch-date-complete > span,
-.scratch-date-complete > small {
+.scratch-save-date-animation, .scratch-date-complete > span, .scratch-date-complete > small {
   will-change: opacity, transform;
 }
 
-/* ==========================================================
-   SCRATCH DATE - MOBILE
-========================================================== */
-
 @media (max-width: 600px) {
-
   .intro-scratch-section {
     width: 100%;
     min-height: auto;
-
-    padding:
-      var(--intro-section-spacing)
-      12px;
+    padding: var(--intro-section-spacing) 12px;
   }
 
   .intro-scratch-card {
     width: 100%;
-
-    padding:
-      34px
-      14px
-      32px;
-
+    padding: 34px 14px 32px;
     border-radius: 0;
   }
 
   .intro-scratch-label {
-    font-size: 1.9rem;
-
+    font-size: 0.61rem;
     line-height: 1.1;
   }
 
   .intro-scratch-subtext {
     max-width: 310px;
-
-    margin:
-      10px
-      auto
-      30px;
-
+    margin: 10px auto 30px;
     font-size: 1rem;
-
     line-height: 1.5;
   }
 
   .scratch-date-circles {
     display: grid;
-
-    grid-template-columns:
-      repeat(
-        3,
-        minmax(0, 1fr)
-      );
-
+    grid-template-columns: repeat( 3, minmax(0, 1fr) );
     align-items: center;
     justify-items: center;
-
     width: 100%;
-
     gap: 7px;
-
     margin: 0 auto;
   }
 
   .scratch-circle {
-    width:
-      min(
-        100%,
-        104px
-      );
-
+    width: min( 100%, 104px );
     aspect-ratio: 1;
-
     border-radius: 50%;
   }
 
@@ -2036,12 +1075,7 @@ body.spa-initializing .music-button {
   }
 
   #saveTheDateAnimation {
-    width:
-      min(
-        100%,
-        250px
-      );
-
+    width: min( 100%, 250px );
     height: 190px;
   }
 
@@ -2050,460 +1084,223 @@ body.spa-initializing .music-button {
   }
 }
 
-
-/* ==========================================================
-   INDEX - WEDDING LOCATION
-========================================================== */
+/* INDEX - WEDDING LOCATION */
 
 .intro-location-section {
   display: flex;
   flex-direction: column;
-
   align-items: center;
   justify-content: center;
-
   width: 100%;
 }
 
-
-/* ==========================================================
-   LOCATION CARD
-========================================================== */
-
 .intro-location-card {
-  width:
-    min(100%, 520px);
-
-  margin:
-    0 auto;
-
-  padding:
-    40px 32px;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.42);
-
+  width: min(100%, 520px);
+  margin: 0 auto;
+  padding: 40px 32px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
   border-radius: 0;
-
-  background:
-    rgba(255, 255, 255, 0.84);
-
-  color:
-    #5d6258;
-
-  box-shadow:
-    0 25px 65px
-    rgba(0, 0, 0, 0.18);
-
+  background: rgba(255, 255, 255, 0.84);
+  color: #5d6258;
+  box-shadow: 0 25px 65px rgba(0, 0, 0, 0.18);
   text-align: center;
-
-  -webkit-backdrop-filter:
-    blur(10px);
-
-  backdrop-filter:
-    blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
-
-
-/* ==========================================================
-   LOCATION ICON
-========================================================== */
 
 .intro-location-icon {
   display: grid;
   place-items: center;
-
   width: 52px;
   height: 52px;
-
-  margin:
-    0 auto 20px;
-
+  margin: 0 auto 20px;
   border-radius: 50%;
-
-  background:
-    rgba(220, 72, 68, 0.1);
-
-  color:
-    #dc4844;
+  background: rgba(220, 72, 68, 0.1);
+  color: #dc4844;
 }
 
 .intro-location-icon i {
   font-size: 21px;
 }
 
-
-/* ==========================================================
-   CEREMONY LABEL
-========================================================== */
-
 .intro-location-label {
   margin-bottom: 10px;
-
-  color:
-    #dc4844;
-
-
-  font-family:
-    "Montserrat",
-    sans-serif;
-
-  font-size:
-    1rem;
-
+  color: #dc4844;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
   font-weight: 600;
-
   letter-spacing: 0.18em;
-
   text-transform: uppercase;
 }
 
-
-/* ==========================================================
-   LOCATION NAME
-========================================================== */
-
 .intro-location-name {
   max-width: 440px;
-
-  margin:
-    0 auto;
-
-  color:
-    #5d6258;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    clamp(
-      2rem,
-      7vw,
-      2.6rem
-    );
-
+  margin: 0 auto;
+  color: #5d6258;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp( 2rem, 7vw, 2.6rem );
   font-weight: 500;
-
   line-height: 1.08;
 }
 
-
-/* ==========================================================
-   ADDRESS
-========================================================== */
-
 .intro-location-address {
   margin-top: 14px;
-
-  color:
-    #74736c;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
+  color: #74736c;
+  font-family: "Cormorant Garamond", serif;
   font-size: 1.08rem;
-
   font-style: normal;
-
   line-height: 1.55;
-
   text-align: center;
 }
-
-
-/* ==========================================================
-   DIVIDER
-========================================================== */
 
 .intro-location-divider {
   width: 46px;
   height: 1px;
-
-  margin:
-    28px auto;
-
-  background:
-    #dc4844
+  margin: 28px auto;
+  background: #dc4844;
 }
-
-
-/* ==========================================================
-   DATE / TIME
-========================================================== */
 
 .intro-location-details {
   display: grid;
-
   gap: 12px;
-
   margin-bottom: 28px;
-
   text-align: left;
 }
 
 .intro-location-detail {
   display: grid;
-
-  grid-template-columns:
-    38px
-    minmax(0, 1fr);
-
+  grid-template-columns: 38px minmax(0, 1fr);
   align-items: center;
-
   gap: 13px;
-
-  padding:
-    14px 15px;
-
+  padding: 14px 15px;
   border-radius: 0;
-
-  background:
-    rgba(255, 255, 255, 0.46);
+  background: rgba(255, 255, 255, 0.46);
 }
 
 .intro-location-detail > i {
-  color:
-    #dc4844;
-
+  color: #dc4844;
   font-size: 17px;
-
   text-align: center;
 }
 
 .intro-location-detail div {
   display: flex;
-
   flex-direction: column;
-
   gap: 5px;
 }
 
 .intro-location-detail span {
-  color:
-    #8a877f;
-
-  font-family:
-    "Montserrat",
-    sans-serif;
-
+  color: #8a877f;
+  font-family: "Montserrat", sans-serif;
   font-size: 0.61rem;
   font-weight: 600;
-
   letter-spacing: 0.14em;
-
   text-transform: uppercase;
 }
 
 .intro-location-detail strong {
-  color:
-    #5d6258;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
+  color: #5d6258;
+  font-family: "Cormorant Garamond", serif;
   font-size: 1.05rem;
   font-weight: 500;
-
   line-height: 1.35;
 }
 
-
-/* ==========================================================
-   MAP
-========================================================== */
-
 .intro-location-map {
   position: relative;
-
   width: 100%;
   height: 250px;
-
-  margin:
-    22px 0 22px;
-
+  margin: 22px 0 22px;
   overflow: hidden;
-
-  border:
-    1px solid
-    rgba(93, 98, 88, 0.15);
-
+  border: 1px solid rgba(93, 98, 88, 0.15);
   border-radius: 0;
-
-  background:
-    #eeeeeb;
-
+  background: #eeeeeb;
   box-shadow: none;
 }
 
 .intro-location-map-frame {
   display: block;
-
   width: 100%;
   height: 100%;
-
   border: 0;
-
   pointer-events: none;
 }
 
-
-/* ==========================================================
-   CLICKABLE MAP OVERLAY
-========================================================== */
-
 .intro-location-map-overlay {
   position: absolute;
-
   inset: 0;
-
   z-index: 2;
-
   display: flex;
-
   align-items: flex-end;
   justify-content: center;
-
   padding: 14px;
-
   text-decoration: none;
-
   cursor: pointer;
 }
 
 .intro-location-map-label {
   display: inline-flex;
-
   align-items: center;
   justify-content: center;
-
   gap: 7px;
-
-  padding:
-    9px 14px;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.32);
-
+  padding: 9px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.32);
   border-radius: 999px;
-
-  background:
-    rgba(73, 73, 70, 0.82);
-
-  color:
-    #ffffff;
-
+  background: rgba(73, 73, 70, 0.82);
+  color: #ffffff;
   font-size: 0.66rem;
   font-weight: 600;
-
   letter-spacing: 0.05em;
-
-  box-shadow:
-    0 5px 16px
-    rgba(0, 0, 0, 0.18);
-
-  -webkit-backdrop-filter:
-    blur(5px);
-
-  backdrop-filter:
-    blur(5px);
-
-  transition:
-    transform 0.2s ease,
-    background-color 0.2s ease;
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.18);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
-.intro-location-map-overlay:hover
-.intro-location-map-label {
-  background:
-    rgba(73, 73, 70, 0.94);
-
-  transform:
-    translateY(-2px);
+.intro-location-map-overlay:hover .intro-location-map-label {
+  background: rgba(73, 73, 70, 0.94);
+  transform: translateY(-2px);
 }
-
-
-/* ==========================================================
-   GOOGLE MAP BUTTON
-========================================================== */
 
 .intro-location-map-button {
   display: inline-flex;
-
   align-items: center;
   justify-content: center;
-
   gap: 9px;
-
   width: 100%;
-
-  padding:
-    14px 18px;
-
+  padding: 14px 18px;
   border-radius: 0;
-
-  background:
-    #dc4844;
-
-  color:
-    #ffffff;
-
+  background: #dc4844;
+  color: #ffffff;
   font-size: 0.7rem;
   font-weight: 600;
-
   letter-spacing: 0.12em;
-
   text-decoration: none;
-
   text-transform: uppercase;
-
-  transition:
-    opacity 0.2s ease,
-    transform 0.2s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .intro-location-map-button:hover {
-  background:
-    #dc4844;
-
+  background: #dc4844;
   opacity: 0.9;
-
-  transform:
-    translateY(-2px);
+  transform: translateY(-2px);
 }
 
 .intro-location-map-button:focus-visible {
-  outline:
-    3px solid
-    rgba(220, 72, 68, 0.24);
-
+  outline: 3px solid rgba(220, 72, 68, 0.24);
   outline-offset: 3px;
 }
 
-
-/* ==========================================================
-   LOCATION MOBILE
-========================================================== */
-
 @media (max-width: 600px) {
-
   .intro-location-card {
     width: 100%;
-
-    padding:
-      30px 20px;
-
+    padding: 30px 20px;
     border-radius: 0;
   }
 
   .intro-location-icon {
     width: 48px;
     height: 48px;
-
     margin-bottom: 17px;
   }
 
@@ -2513,44 +1310,33 @@ body.spa-initializing .music-button {
 
   .intro-location-label {
     margin-bottom: 9px;
-
     font-size: 0.61rem;
   }
 
   .intro-location-name {
     font-size: 2rem;
-
     line-height: 1.08;
   }
 
   .intro-location-address {
     margin-top: 12px;
-
     font-size: 1rem;
-
     line-height: 1.5;
   }
 
   .intro-location-divider {
-    margin:
-      24px auto;
+    margin: 24px auto;
   }
 
   .intro-location-details {
     gap: 10px;
-
     margin-bottom: 24px;
   }
 
   .intro-location-detail {
-    grid-template-columns:
-      32px
-      minmax(0, 1fr);
-
+    grid-template-columns: 32px minmax(0, 1fr);
     gap: 10px;
-
-    padding:
-      12px 10px;
+    padding: 12px 10px;
   }
 
   .intro-location-detail strong {
@@ -2559,2028 +1345,901 @@ body.spa-initializing .music-button {
 
   .intro-location-map {
     height: 220px;
-
     margin-bottom: 18px;
-
     border-radius: 0;
   }
 
   .intro-location-map-button {
-    padding:
-      13px 14px;
-
+    padding: 13px 14px;
     font-size: 0.65rem;
   }
 }
 
-/* ==========================================================
-   INDEX — GUEST ATTIRE
-========================================================== */
+/* INDEX — GUEST ATTIRE */
 
 .intro-attire-section {
   display: flex;
   flex-direction: column;
-
   align-items: center;
   justify-content: center;
-
   width: 100%;
 }
 
-
-/* ==========================================================
-   ATTIRE CARD
-========================================================== */
-
 .intro-attire-card {
-  width:
-    min(100%, 680px);
-
-  margin:
-    0 auto;
-
-  padding:
-    40px 32px;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.42);
-
-  /* Square / stationery look */
-  border-radius:
-    0;
-
-  background:
-    rgba(255, 255, 255, 0.84);
-
-  color:
-    #5d6258;
-
-  box-shadow:
-    0 25px 65px
-    rgba(0, 0, 0, 0.18);
-
-  text-align:
-    center;
-
-  -webkit-backdrop-filter:
-    blur(10px);
-
-  backdrop-filter:
-    blur(10px);
+  width: min(100%, 680px);
+  margin: 0 auto;
+  padding: 40px 32px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.84);
+  color: #5d6258;
+  box-shadow: 0 25px 65px rgba(0, 0, 0, 0.18);
+  text-align: center;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
-
-
-/* ==========================================================
-   ATTIRE ICON
-========================================================== */
 
 .intro-attire-icon {
   display: grid;
-
   place-items: center;
-
-  width:
-    52px;
-
-  height:
-    52px;
-
-  margin:
-    0 auto 20px;
-
-  border-radius:
-    50%;
-
-  background:
-    rgba(220, 72, 68, 0.1);
-
-  color:
-    #dc4844;
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: rgba(220, 72, 68, 0.1);
+  color: #dc4844;
 }
 
 .intro-attire-icon i {
-  font-size:
-    20px;
+  font-size: 20px;
 }
-
-
-/* ==========================================================
-   EYEBROW
-========================================================== */
 
 .intro-attire-eyebrow {
-  margin-bottom:
-    10px;
-
-  color:
-    #dc4844;
-
-  font-family:
-    "Montserrat",
-    sans-serif;
-
-  font-size:
-    1rem;
-
-  font-weight:
-    600;
-
-  letter-spacing:
-    0.18em;
-
-  text-transform:
-    uppercase;
-}
-
-
-/* ==========================================================
-   TITLE
-========================================================== */
-
-.intro-attire-title {
-  color:
-    #5d6258;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    clamp(
-      2rem,
-      7vw,
-      2.7rem
-    );
-
-  font-weight:
-    500;
-
-  line-height:
-    1.08;
-}
-
-
-/* ==========================================================
-   DESCRIPTION
-========================================================== */
-
-.intro-attire-description {
-  max-width:
-    540px;
-
-  margin:
-    14px auto 0;
-
-  color:
-    #74736c;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    1.08rem;
-
-  line-height:
-    1.55;
-}
-
-
-/* ==========================================================
-   GENTLEMEN / LADIES
-========================================================== */
-
-.intro-attire-guidelines {
-  display: grid;
-
-  grid-template-columns:
-    repeat(
-      2,
-      minmax(0, 1fr)
-    );
-
-  gap: 12px;
-
-  margin-top: 30px;
-
-  text-align: left;
-}
-
-
-.intro-attire-guideline {
-  display: block;
-
-  width: 100%;
-
-  padding:
-    16px 18px;
-
-  border-radius: 0;
-
-  background:
-    rgba(255, 255, 255, 0.46);
-
-  text-align: left;
-}
-
-
-.intro-attire-guideline div {
-  display: flex;
-
-  flex-direction: column;
-
-  width: 100%;
-
-  gap: 6px;
-}
-
-
-.intro-attire-guideline span {
-  color:
-    #8a877f;
-
-  font-family:
-    "Montserrat",
-    sans-serif;
-
-  font-size: 0.61rem;
-
+  margin-bottom: 10px;
+  color: #dc4844;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
   font-weight: 600;
-
-  letter-spacing: 0.14em;
-
+  letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
+.intro-attire-title {
+  color: #5d6258;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp( 2rem, 7vw, 2.7rem );
+  font-weight: 500;
+  line-height: 1.08;
+}
+
+.intro-attire-description {
+  max-width: 540px;
+  margin: 14px auto 0;
+  color: #74736c;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.08rem;
+  line-height: 1.55;
+}
+
+.intro-attire-guidelines {
+  display: grid;
+  grid-template-columns: repeat( 2, minmax(0, 1fr) );
+  gap: 12px;
+  margin-top: 30px;
+  text-align: left;
+}
+
+.intro-attire-guideline {
+  display: block;
+  width: 100%;
+  padding: 16px 18px;
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.46);
+  text-align: left;
+}
+
+.intro-attire-guideline div {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 6px;
+}
+
+.intro-attire-guideline span {
+  color: #8a877f;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.61rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
 
 .intro-attire-guideline strong {
   display: block;
-
   width: 100%;
-
-  color:
-    #5d6258;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    1rem;
-
+  color: #5d6258;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1rem;
   font-weight: 500;
-
   line-height: 1.45;
-
   white-space: normal;
-
   word-break: normal;
-
   overflow-wrap: normal;
 }
 
-
-/* ==========================================================
-   RECOMMENDED COLORS
-========================================================== */
-
 .intro-attire-colors {
-  margin-top:
-    32px;
+  margin-top: 32px;
 }
-
 
 .intro-attire-colors h3 {
-  margin-bottom:
-    20px;
-
-  color:
-    #5d6258;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    1.35rem;
-
-  font-weight:
-    500;
+  margin-bottom: 20px;
+  color: #5d6258;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.35rem;
+  font-weight: 500;
 }
-
-
-/* ==========================================================
-   COLOR GRID
-========================================================== */
 
 .intro-attire-color-grid {
   display: grid;
-
-  grid-template-columns:
-    repeat(
-      5,
-      minmax(0, 1fr)
-    );
-
-  align-items:
-    start;
-
-  gap:
-    12px;
+  grid-template-columns: repeat( 5, minmax(0, 1fr) );
+  align-items: start;
+  gap: 12px;
 }
-
 
 .intro-attire-color-option {
   display: flex;
-
-  flex-direction:
-    column;
-
-  align-items:
-    center;
-
-  min-width:
-    0;
-
-  gap:
-    9px;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  gap: 9px;
 }
-
-
-/* ==========================================================
-   COLOR SWATCHES
-========================================================== */
 
 .intro-attire-swatch {
-  display:
-    block;
-
-  width:
-    100%;
-
-  max-width:
-    72px;
-
-  aspect-ratio:
-    1;
-
-  border:
-    1px solid
-    rgba(65, 67, 63, 0.13);
-
-  /* Keep swatches circular */
-  border-radius:
-    50%;
-
-  box-shadow:
-    0 4px 12px
-    rgba(35, 37, 34, 0.08);
+  display: block;
+  width: 100%;
+  max-width: 72px;
+  aspect-ratio: 1;
+  border: 1px solid rgba(65, 67, 63, 0.13);
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(35, 37, 34, 0.08);
 }
-
 
 .intro-attire-swatch.charcoal {
-  background:
-    #555555;
+  background: #555555;
 }
-
 
 .intro-attire-swatch.dark-gray {
-  background:
-    #808080;
+  background: #808080;
 }
-
 
 .intro-attire-swatch.gray {
-  background:
-    #a5a5a5;
+  background: #a5a5a5;
 }
-
 
 .intro-attire-swatch.silver {
-  background:
-    #bdbdbd;
+  background: #bdbdbd;
 }
-
 
 .intro-attire-swatch.light-gray {
-  background:
-    #d8d8d8;
+  background: #d8d8d8;
 }
-
-
-/* ==========================================================
-   COLOR LABEL
-========================================================== */
 
 .intro-attire-color-option small {
-  color:
-    #74736c;
-
-  font-family:
-    "Montserrat",
-    sans-serif;
-
-  font-size:
-    0.55rem;
-
-  font-weight:
-    600;
-
-  line-height:
-    1.2;
-
-  letter-spacing:
-    0.03em;
-
-  text-align:
-    center;
-
-  text-transform:
-    uppercase;
+  color: #74736c;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.55rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.03em;
+  text-align: center;
+  text-transform: uppercase;
 }
-
-
-/* ==========================================================
-   REMINDER
-========================================================== */
 
 .intro-attire-reminder {
   display: flex;
-
-  align-items:
-    flex-start;
-
-  gap:
-    11px;
-
-  margin-top:
-    30px;
-
-  padding:
-    15px 16px;
-
-  border-radius:
-    0;
-
-  background:
-    rgba(183, 160, 106, 0.1);
-
-  color:
-    #6b665e;
-
-  text-align:
-    left;
+  align-items: flex-start;
+  gap: 11px;
+  margin-top: 30px;
+  padding: 15px 16px;
+  border-radius: 0;
+  background: rgba(183, 160, 106, 0.1);
+  color: #6b665e;
+  text-align: left;
 }
-
 
 .intro-attire-reminder i {
-  margin-top:
-    3px;
-
-  color:
-    #dc4844;
-
-  font-size:
-    15px;
+  margin-top: 3px;
+  color: #dc4844;
+  font-size: 15px;
 }
-
 
 .intro-attire-reminder p {
-  color:
-    #66645e;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    0.98rem;
-
-  line-height:
-    1.5;
+  color: #66645e;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 0.98rem;
+  line-height: 1.5;
 }
 
-
-/* ==========================================================
-   ATTIRE MOBILE
-========================================================== */
-
 @media (max-width: 600px) {
-
   .intro-attire-card {
-    width:
-      100%;
-
-    padding:
-      30px 20px;
-
-    border-radius:
-      0;
-  }
-
-
-  .intro-attire-icon {
-    width:
-      48px;
-
-    height:
-      48px;
-
-    margin-bottom:
-      17px;
-  }
-
-
-  .intro-attire-icon i {
-    font-size:
-      18px;
-  }
-
-
-  .intro-attire-eyebrow {
-    margin-bottom:
-      9px;
-
-    font-size:
-      0.61rem;
-  }
-
-
-  .intro-attire-title {
-    font-size:
-      2rem;
-
-    line-height:
-      1.08;
-  }
-
-
-  .intro-attire-description {
-    margin-top:
-      12px;
-
-    font-size:
-      1rem;
-  }
-
-
-  .intro-attire-guidelines {
-    grid-template-columns:
-      1fr;
-
-    gap:
-      10px;
-
-    margin-top:
-      26px;
-  }
-
-
-  .intro-attire-guideline {
-    display: block;
-
     width: 100%;
-
-    padding:
-      14px 15px;
-
+    padding: 30px 20px;
     border-radius: 0;
   }
 
+  .intro-attire-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 17px;
+  }
+
+  .intro-attire-icon i {
+    font-size: 18px;
+  }
+
+  .intro-attire-eyebrow {
+    margin-bottom: 9px;
+    font-size: 0.61rem;
+  }
+
+  .intro-attire-title {
+    font-size: 2rem;
+    line-height: 1.08;
+  }
+
+  .intro-attire-description {
+    margin-top: 12px;
+    font-size: 1rem;
+  }
+
+  .intro-attire-guidelines {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 26px;
+  }
+
+  .intro-attire-guideline {
+    display: block;
+    width: 100%;
+    padding: 14px 15px;
+    border-radius: 0;
+  }
 
   .intro-attire-guideline strong {
-    font-size:
-      0.98rem;
+    font-size: 0.98rem;
   }
-
 
   .intro-attire-colors {
-    margin-top:
-      28px;
+    margin-top: 28px;
   }
-
 
   .intro-attire-colors h3 {
-    margin-bottom:
-      18px;
-
-    font-size:
-      1.25rem;
+    margin-bottom: 18px;
+    font-size: 1.25rem;
   }
-
 
   .intro-attire-color-grid {
-    gap:
-      6px;
+    gap: 6px;
   }
-
 
   .intro-attire-swatch {
-    max-width:
-      58px;
+    max-width: 58px;
   }
-
 
   .intro-attire-color-option {
-    gap:
-      7px;
+    gap: 7px;
   }
-
 
   .intro-attire-color-option small {
-    font-size:
-      0.47rem;
+    font-size: 0.47rem;
   }
-
 
   .intro-attire-reminder {
-    margin-top:
-      26px;
-
-    padding:
-      13px 12px;
-
-    border-radius:
-      0;
+    margin-top: 26px;
+    padding: 13px 12px;
+    border-radius: 0;
   }
-
 
   .intro-attire-reminder p {
-    font-size:
-      0.94rem;
+    font-size: 0.94rem;
   }
-
 }
-/* ==========================================================
-   INDEX — GIFT GUIDE
-========================================================== */
+
+/* INDEX — GIFT GUIDE */
 
 .intro-gift-section {
   display: flex;
   flex-direction: column;
-
   align-items: center;
   justify-content: center;
-
   width: 100%;
 }
 
-
-/* ==========================================================
-   MAIN GIFT CARD
-========================================================== */
-
 .intro-gift-card {
-  width:
-    min(100%, 520px);
-
-  margin:
-    0 auto;
-
-  padding:
-    40px 32px;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.42);
-
-  border-radius:
-    0;
-
-  background:
-    rgba(255, 255, 255, 0.84);
-
-  color:
-    #5d6258;
-
-  box-shadow:
-    0 25px 65px
-    rgba(0, 0, 0, 0.18);
-
-  text-align:
-    center;
-
-  -webkit-backdrop-filter:
-    blur(10px);
-
-  backdrop-filter:
-    blur(10px);
+  width: min(100%, 520px);
+  margin: 0 auto;
+  padding: 40px 32px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.84);
+  color: #5d6258;
+  box-shadow: 0 25px 65px rgba(0, 0, 0, 0.18);
+  text-align: center;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
-
-
-/* ==========================================================
-   GIFT ICON
-========================================================== */
 
 .intro-gift-icon {
   display: grid;
-
   place-items: center;
-
-  width:
-    52px;
-
-  height:
-    52px;
-
-  margin:
-    0 auto 20px;
-
-  border-radius:
-    50%;
-
-  background:
-    rgba(220, 72, 68, 0.1);
-
-  color:
-    #dc4844;
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: rgba(220, 72, 68, 0.1);
+  color: #dc4844;
 }
 
 .intro-gift-icon i {
-  font-size:
-    20px;
+  font-size: 20px;
 }
-
-
-/* ==========================================================
-   EYEBROW
-========================================================== */
 
 .intro-gift-label {
-  margin-bottom:
-    10px;
-
-  color:
-    #dc4844;
-
-  font-family:
-    "Montserrat",
-    sans-serif;
-
-  font-size:
-    1rem;
-
-  font-weight:
-    600;
-
-  letter-spacing:
-    0.18em;
-
-  text-transform:
-    uppercase;
+  margin-bottom: 10px;
+  color: #dc4844;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
 }
-
-
-/* ==========================================================
-   TITLE
-========================================================== */
 
 .intro-gift-title {
-  max-width:
-    440px;
-
-  margin:
-    0 auto;
-
-  color:
-    #5d6258;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    clamp(
-      2rem,
-      7vw,
-      2.7rem
-    );
-
-  font-weight:
-    500;
-
-  line-height:
-    1.08;
+  max-width: 440px;
+  margin: 0 auto;
+  color: #5d6258;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp( 2rem, 7vw, 2.7rem );
+  font-weight: 500;
+  line-height: 1.08;
 }
-
-
-/* ==========================================================
-   MESSAGE
-========================================================== */
 
 .intro-gift-message {
   display: grid;
-
-  gap:
-    20px;
-
-  max-width:
-    440px;
-
-  margin:
-    30px auto 0;
+  gap: 20px;
+  max-width: 440px;
+  margin: 30px auto 0;
 }
-
 
 .intro-gift-message p {
-  margin:
-    0;
-
-  color:
-    #5d6258;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    1.08rem;
-
-  line-height:
-    1.65;
+  margin: 0;
+  color: #5d6258;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.08rem;
+  line-height: 1.65;
 }
-
-
-/* ==========================================================
-   DIVIDER
-========================================================== */
 
 .intro-gift-divider {
   display: grid;
-
-  grid-template-columns:
-    minmax(0, 1fr)
-    auto
-    minmax(0, 1fr);
-
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-
-  gap:
-    14px;
-
-  width:
-    min(100%, 300px);
-
-  margin:
-    30px auto;
+  gap: 14px;
+  width: min(100%, 300px);
+  margin: 30px auto;
 }
-
 
 .intro-gift-divider span {
   display: block;
-
-  height:
-    1px;
-
-  background:
-    rgba(183, 160, 106, 0.55);
+  height: 1px;
+  background: rgba(183, 160, 106, 0.55);
 }
-
 
 .intro-gift-divider i {
-  color:
-    #dc4844;
-
-  font-size:
-    0.8rem;
+  color: #dc4844;
+  font-size: 0.8rem;
 }
-
-
-/* ==========================================================
-   THANK YOU
-========================================================== */
 
 .intro-gift-thank-you {
-  max-width:
-    400px;
-
-  margin:
-    0 auto;
-
-  color:
-    #5d6258;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    1.08rem;
-
-  font-style:
-    italic;
-
-  line-height:
-    1.55;
+  max-width: 400px;
+  margin: 0 auto;
+  color: #5d6258;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.08rem;
+  font-style: italic;
+  line-height: 1.55;
 }
-
-
-/* ==========================================================
-   SIGNATURE
-========================================================== */
 
 .intro-gift-signature {
-  margin-top:
-    20px;
-
-  color:
-    #74736c;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    1rem;
+  margin-top: 20px;
+  color: #74736c;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1rem;
 }
-
 
 .intro-gift-signature strong {
   display: block;
-
-  margin-top:
-    5px;
-
-  color:
-    #5d6258;
-
-  font-family:
-    "Allura",
-    cursive;
-
-  font-size:
-    3.2rem;
-
-  font-weight:
-    400;
-
-  line-height:
-    1;
+  margin-top: 5px;
+  color: #5d6258;
+  font-family: "Allura", cursive;
+  font-size: 3.2rem;
+  font-weight: 400;
+  line-height: 1;
 }
 
 .intro-message-signature-name {
-    margin-top:
-    20px;
-
-    color:
-    #74736c;
-
-
-  font-family:
-    "Allura",
-    cursive;
-
-  font-size:
-    clamp(
-          2.5rem,
-          8vw,
-          3.5rem
-    );
-
+  margin-top: 20px;
+  color: #74736c;
+  font-family: "Allura", cursive;
+  font-size: clamp( 2.5rem, 8vw, 3.5rem );
   font-weight: 400;
-
   line-height: 0.9;
 }
 
-
 .intro-message-signature-name span {
   display: inline-block;
-
-  margin:
-    0 6px;
-
-  color:
-    var(--gold);
-
-  font-family:
-    "Allura",
-    cursive;
-
-  font-size:
-    3.2rem;
-    
+  margin: 0 6px;
+  color: var(--gold);
+  font-family: "Allura", cursive;
+  font-size: 3.2rem;
 }
-
-
-/* ==========================================================
-   GENTLE REMINDER
-========================================================== */
 
 .intro-gift-reminder {
   display: grid;
-
-  grid-template-columns:
-    40px
-    minmax(0, 1fr);
-
-  align-items:
-    flex-start;
-
-  gap:
-    14px;
-
-  width:
-    min(100%, 520px);
-
-  margin:
-    18px auto 0;
-
-  padding:
-    18px 20px;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.42);
-
-  border-radius:
-    0;
-
-  background:
-    rgba(255, 255, 255, 0.84);
-
-  box-shadow:
-    0 18px 44px
-    rgba(0, 0, 0, 0.14);
-
-  -webkit-backdrop-filter:
-    blur(10px);
-
-  backdrop-filter:
-    blur(10px);
+  grid-template-columns: 40px minmax(0, 1fr);
+  align-items: flex-start;
+  gap: 14px;
+  width: min(100%, 520px);
+  margin: 18px auto 0;
+  padding: 18px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.14);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
-
-
-/* ==========================================================
-   REMINDER ICON
-========================================================== */
 
 .intro-gift-reminder > i {
   display: grid;
-
   place-items: center;
-
-  width:
-    40px;
-
-  height:
-    40px;
-
-  border-radius:
-    50%;
-
-  background:
-    rgba(220, 72, 68, 0.1);
-
-  color:
-    #dc4844;
-
-  font-size:
-    17px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(220, 72, 68, 0.1);
+  color: #dc4844;
+  font-size: 17px;
 }
-
-
-/* ==========================================================
-   REMINDER TEXT
-========================================================== */
 
 .intro-gift-reminder div {
-  text-align:
-    left;
+  text-align: left;
 }
-
 
 .intro-gift-reminder h3 {
-  color:
-    #5d6258;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    1.2rem;
-
-  font-weight:
-    500;
-
-  line-height:
-    1.2;
+  color: #5d6258;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.2;
 }
-
 
 .intro-gift-reminder p {
-  margin-top:
-    6px;
-
-  color:
-    #74736c;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    0.98rem;
-
-  line-height:
-    1.5;
+  margin-top: 6px;
+  color: #74736c;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 0.98rem;
+  line-height: 1.5;
 }
-
-
-/* ==========================================================
-   GIFT MOBILE
-========================================================== */
 
 @media (max-width: 600px) {
-
   .intro-gift-card {
-    width:
-      100%;
-
-    padding:
-      34px
-      20px;
-
-    border-radius:
-      0;
+    width: 100%;
+    padding: 34px 20px;
+    border-radius: 0;
   }
-
 
   .intro-gift-icon {
-    width:
-      48px;
-
-    height:
-      48px;
-
-    margin-bottom:
-      17px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 17px;
   }
-
 
   .intro-gift-icon i {
-    font-size:
-      18px;
+    font-size: 18px;
   }
-
 
   .intro-gift-label {
-    margin-bottom:
-      9px;
-
-    font-size:
-      0.61rem;
+    margin-bottom: 9px;
+    font-size: 0.61rem;
   }
-
 
   .intro-gift-title {
-    font-size:
-      2rem;
-
-    line-height:
-      1.08;
+    font-size: 2rem;
+    line-height: 1.08;
   }
-
 
   .intro-gift-message {
-    gap:
-      18px;
-
-    margin-top:
-      26px;
+    gap: 18px;
+    margin-top: 26px;
   }
-
 
   .intro-gift-message p {
-    font-size:
-      1rem;
-
-    line-height:
-      1.6;
+    font-size: 1rem;
+    line-height: 1.6;
   }
-
 
   .intro-gift-divider {
-    width:
-      min(100%, 260px);
-
-    margin:
-      27px auto;
+    width: min(100%, 260px);
+    margin: 27px auto;
   }
-
 
   .intro-gift-thank-you {
-    font-size:
-      1rem;
+    font-size: 1rem;
   }
-
 
   .intro-gift-signature {
-    margin-top:
-      17px;
+    margin-top: 17px;
   }
-
 
   .intro-gift-signature strong {
-    font-size:
-      3rem;
+    font-size: 3rem;
   }
-
 
   .intro-gift-reminder {
-    grid-template-columns:
-      38px
-      minmax(0, 1fr);
-
-    gap:
-      12px;
-
-    width:
-      100%;
-
-    padding:
-      16px;
-
-    border-radius:
-      0;
+    grid-template-columns: 38px minmax(0, 1fr);
+    gap: 12px;
+    width: 100%;
+    padding: 16px;
+    border-radius: 0;
   }
-
 
   .intro-gift-reminder > i {
-    width:
-      38px;
-
-    height:
-      38px;
-
-    font-size:
-      16px;
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
   }
-
 
   .intro-gift-reminder h3 {
-    font-size:
-      1.1rem;
+    font-size: 1.1rem;
   }
-
 
   .intro-gift-reminder p {
-    font-size:
-      0.94rem;
+    font-size: 0.94rem;
   }
-
 }
-/* ==========================================================
-   INDEX — RSVP GUEST SEARCH
-========================================================== */
+
+/* INDEX — RSVP GUEST SEARCH */
 
 .intro-rsvp-section {
   display: flex;
   flex-direction: column;
-
   align-items: center;
   justify-content: center;
-
   width: 100%;
-
-  color:
-    #5d6258;
+  color: #5d6258;
 }
-
-
-/* ==========================================================
-   RSVP HEADER CARD
-========================================================== */
 
 .intro-rsvp-header {
-  width:
-    min(100%, 520px);
-
-    margin:
-    0 auto 18px;
-
-  padding:
-    40px 28px;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.42);
-
-  border-radius:
-    0;
-
-  background:
-    rgba(255, 255, 255, 0.84);
-
-  color:
-    #5d6258;
-
-  box-shadow:
-    0 25px 65px
-    rgba(0, 0, 0, 0.18);
-
-  text-align:
-    center;
-
-  -webkit-backdrop-filter:
-    blur(10px);
-
-  backdrop-filter:
-    blur(10px);
+  width: min(100%, 520px);
+  margin: 0 auto 18px;
+  padding: 40px 28px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.84);
+  color: #5d6258;
+  box-shadow: 0 25px 65px rgba(0, 0, 0, 0.18);
+  text-align: center;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
-
-
-/* ==========================================================
-   EYEBROW
-========================================================== */
 
 .intro-rsvp-modal-eyebrow {
-  margin-bottom:
-    12px;
-
-  color:
-    #dc4844;
-
-  font-family:
-    "Montserrat",
-    sans-serif;
-
-  font-size:
-    0.67rem;
-
-  font-weight:
-    600;
-
-  letter-spacing:
-    0.22em;
-
-  text-transform:
-    uppercase;
+  margin-bottom: 12px;
+  color: #dc4844;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.67rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
 }
-
-
-/* ==========================================================
-   TITLE
-========================================================== */
 
 .intro-rsvp-header h2 {
-  color:
-    #5d6258;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    clamp(
-      2.5rem,
-      9vw,
-      3.8rem
-    );
-
-  font-weight:
-    500;
-
-  line-height:
-    1;
+  color: #5d6258;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp( 2.5rem, 9vw, 3.8rem );
+  font-weight: 500;
+  line-height: 1;
 }
-
-
-/* ==========================================================
-   SUBTITLE
-========================================================== */
 
 .intro-rsvp-subtitle {
-  max-width:
-    420px;
-
-  margin:
-    22px auto 0;
-
-  color:
-    #74736c;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    clamp(
-      1.05rem,
-      4vw,
-      1.25rem
-    );
-
-  line-height:
-    1.55;
+  max-width: 420px;
+  margin: 22px auto 0;
+  color: #74736c;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp( 1.05rem, 4vw, 1.25rem );
+  line-height: 1.55;
 }
-
-
-/* ==========================================================
-   SEARCH CARD
-========================================================== */
 
 .intro-rsvp-search-card {
-  width:
-    min(100%, 520px);
-
-  padding:
-    32px;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.42);
-
-  border-radius:
-    0;
-
-  background:
-    rgba(255, 255, 255, 0.84);
-
-  color:
-    #5d6258;
-
-  box-shadow:
-    0 25px 65px
-    rgba(0, 0, 0, 0.18);
-
-  -webkit-backdrop-filter:
-    blur(10px);
-
-  backdrop-filter:
-    blur(10px);
+  width: min(100%, 520px);
+  padding: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.84);
+  color: #5d6258;
+  box-shadow: 0 25px 65px rgba(0, 0, 0, 0.18);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
-
-
-/* ==========================================================
-   SEARCH LABEL
-========================================================== */
 
 .intro-rsvp-search-label {
-  display:
-    block;
-
-  margin-bottom:
-    16px;
-
-  color:
-    #dc4844;
-
-  font-family:
-    "Montserrat",
-    sans-serif;
-
-  font-size:
-    0.9rem;
-
-  font-weight:
-    600;
-
-  letter-spacing:
-    0.18em;
-
-  text-transform:
-    uppercase;
+  display: block;
+  margin-bottom: 16px;
+  color: #dc4844;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
 }
-
-
-/* ==========================================================
-   SEARCH INPUT
-========================================================== */
 
 .intro-rsvp-search-box {
   display: grid;
-
-  grid-template-columns:
-    minmax(0, 1fr)
-    48px;
-
-  align-items:
-    center;
-
-  border-bottom:
-    1px solid
-    rgba(93, 98, 88, 0.5);
+  grid-template-columns: minmax(0, 1fr) 48px;
+  align-items: center;
+  border-bottom: 1px solid rgba(93, 98, 88, 0.5);
 }
-
 
 .intro-rsvp-search-box input {
-  width:
-    100%;
-
-  padding:
-    14px 2px;
-
-  border:
-    0;
-
-  outline:
-    0;
-
-  background:
-    transparent;
-
-  color:
-    #5d6258;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    1.35rem;
+  width: 100%;
+  padding: 14px 2px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #5d6258;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.35rem;
 }
-
 
 .intro-rsvp-search-box input::placeholder {
-  color:
-    #aaa6a0;
-
-    font-size:
-    .9rem;
+  color: #aaa6a0;
+  font-size: .9rem;
 }
-
-
-/* ==========================================================
-   SEARCH BUTTON
-========================================================== */
 
 .intro-rsvp-search-box button {
-  display:
-    grid;
-
-  place-items:
-    center;
-
-  width:
-    48px;
-
-  height:
-    48px;
-
-  padding:
-    0;
-
-  border:
-    0;
-
-  background:
-    transparent;
-
-  color:
-    #dc4844;
-
-  font-size:
-    1.15rem;
-
-  cursor:
-    pointer;
-
-  transition:
-    transform 0.2s ease,
-    opacity 0.2s ease;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #dc4844;
+  font-size: 1.15rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
-
 
 .intro-rsvp-search-box button:hover {
-  opacity:
-    0.85;
-
-  transform:
-    scale(1.06);
+  opacity: 0.85;
+  transform: scale(1.06);
 }
-
-
-/* ==========================================================
-   SEARCH MESSAGE
-========================================================== */
 
 .intro-rsvp-search-message {
-  min-height:
-    20px;
-
-  margin-top:
-    12px;
-
-  color:
-    #9b5149;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    0.95rem;
-
-  line-height:
-    1.4;
+  min-height: 20px;
+  margin-top: 12px;
+  color: #9b5149;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 0.95rem;
+  line-height: 1.4;
 }
-
-
-/* ==========================================================
-   RSVP SEARCH MOBILE
-========================================================== */
 
 @media (max-width: 600px) {
-
   .intro-rsvp-header {
-    width:
-      100%;
-
-    margin-bottom:
-      26px;
+    width: 100%;
+    margin-bottom: 26px;
   }
-
 
   .intro-rsvp-header h2 {
-    font-size:
-      2.7rem;
+    font-size: 2.7rem;
   }
-
 
   .intro-rsvp-subtitle {
-    max-width:
-      310px;
-
-    margin-top:
-      18px;
-
-    font-size:
-      1rem;
-
-    line-height:
-      1.5;
+    max-width: 310px;
+    margin-top: 18px;
+    font-size: 1rem;
+    line-height: 1.5;
   }
-
 
   .intro-rsvp-search-card {
-    width:
-      100%;
-
-    padding:
-      28px 20px;
-
-    border-radius:
-      0;
+    width: 100%;
+    padding: 28px 20px;
+    border-radius: 0;
   }
-
 
   .intro-rsvp-search-label {
-    margin-bottom:
-      13px;
-
-    font-size:
-      0.9rem;
+    margin-bottom: 13px;
+    font-size: 0.61rem;
   }
-
 
   .intro-rsvp-search-box {
-    grid-template-columns:
-      minmax(0, 1fr)
-      44px;
+    grid-template-columns: minmax(0, 1fr) 44px;
   }
-
 
   .intro-rsvp-search-box input {
-    padding:
-      13px 2px;
-
-    font-size:
-      1.2rem;
+    padding: 13px 2px;
+    font-size: 1.2rem;
   }
-
 
   .intro-rsvp-search-box button {
-    width:
-      44px;
-
-    height:
-      44px;
-
-    font-size:
-      1.05rem;
+    width: 44px;
+    height: 44px;
+    font-size: 1.05rem;
   }
-
 }
 
-/* ==========================================================
-   RSVP MODAL
-========================================================== */
+/* RSVP MODAL */
 
 .intro-rsvp-modal {
   position: fixed;
-
   inset: 0;
-
   z-index: 999999;
-
   display: grid;
   place-items: center;
-
   padding: 20px;
-
   opacity: 0;
   visibility: hidden;
-
   pointer-events: none;
-
-  transition:
-    opacity 0.3s ease,
-    visibility 0.3s ease;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .intro-rsvp-modal.is-visible {
   opacity: 1;
   visibility: visible;
-
   pointer-events: auto;
 }
 
 .intro-rsvp-modal-backdrop {
   position: absolute;
-
   inset: 0;
-
-  background:
-    rgba(36, 31, 27, 0.66);
-
-  -webkit-backdrop-filter:
-    blur(5px);
-
-  backdrop-filter:
-    blur(5px);
+  background: rgba(36, 31, 27, 0.66);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
 }
 
 .intro-rsvp-modal-card {
   position: relative;
-
   z-index: 2;
-
-  width:
-    min(100%, 620px);
-
-  /*
-   * Use almost the entire screen height.
-   * Scroll is still allowed as fallback.
-   */
-  max-height:
-    calc(100dvh - 24px);
-
-  padding:
-    44px 48px 28px;
-
-  overflow-y:
-    auto;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.42);
-
-  background:
-    rgba(255, 255, 255, 0.84);
-
-  color:
-    #5d6258;
-
-  box-shadow:
-    0 25px 65px
-    rgba(0, 0, 0, 0.18);
+  width: min(100%, 620px);
+  max-height: calc(100dvh - 24px);
+  padding: 44px 48px 28px;
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, 0.84);
+  color: #5d6258;
+  box-shadow: 0 25px 65px rgba(0, 0, 0, 0.18);
 }
-
-/* ==============================
-   CLOSE
-============================== */
 
 .intro-rsvp-close {
   position: absolute;
-
   top: 22px;
   right: 22px;
-
   display: grid;
   place-items: center;
-
   width: 42px;
   height: 42px;
-
   border: 0;
-
   background: transparent;
-
   color: #655e55;
-
   font-size: 1.7rem;
-
   cursor: pointer;
 }
 
-/* ==============================
-   MODAL TYPOGRAPHY
-============================== */
-
 .intro-rsvp-step h3 {
   color: #332e29;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    clamp(2.5rem, 8vw, 3.6rem);
-
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.5rem, 8vw, 3.6rem);
   font-weight: 500;
-
   line-height: 1;
 }
 
-.intro-rsvp-modal-description,
-.intro-rsvp-seat-message {
+.intro-rsvp-modal-description, .intro-rsvp-seat-message {
   margin-top: 13px;
-
   color: #655f57;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
+  font-family: "Cormorant Garamond", serif;
   font-size: 1.25rem;
-
   font-style: italic;
-
   line-height: 1.45;
 }
 
-/* ==========================================================
-   RSVP — GUEST SELECTION TITLE
-========================================================== */
-
 #introRsvpModalTitle {
-  font-size:
-    clamp(
-      2rem,
-      6vw,
-      2.8rem
-    );
-
-  line-height:
-    1.05;
+  font-size: clamp( 2rem, 6vw, 2.8rem );
+  line-height: 1.05;
 }
-
-/* ==============================
-   SEARCH RESULTS
-============================== */
 
 .intro-rsvp-results {
   display: grid;
-
   gap: 12px;
-
   margin-top: 34px;
 }
 
 .intro-rsvp-guest-result {
   width: 100%;
-
   padding: 20px 22px;
-
-  border:
-    1px solid #d9cec1;
-
+  border: 1px solid #d9cec1;
   background: transparent;
-
   color: #3d3832;
-
   text-align: left;
-
   cursor: pointer;
-
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .intro-rsvp-guest-result:hover {
-  background:
-    rgba(255, 255, 255, 0.55);
-
-  transform:
-    translateY(-2px);
+  background: rgba(255, 255, 255, 0.55);
+  transform: translateY(-2px);
 }
 
 .intro-rsvp-guest-result strong {
   display: block;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
+  font-family: "Cormorant Garamond", serif;
   font-size: 1.65rem;
-
   font-weight: 500;
 }
 
 .intro-rsvp-guest-result span {
   display: block;
-
   margin-top: 5px;
-
   color: #847b70;
-
   font-size: 0.68rem;
   font-weight: 600;
-
   letter-spacing: 0.2em;
-
   text-transform: uppercase;
 }
-
-/* ==============================
-   BACK BUTTON
-============================== */
 
 .intro-rsvp-back {
   display: inline-flex;
-
   align-items: center;
-
   gap: 9px;
-
   margin-bottom: 34px;
-
   border: 0;
-
   background: transparent;
-
   color: #676057;
-
   font-size: 0.72rem;
   font-weight: 600;
-
   letter-spacing: 0.22em;
-
   text-transform: uppercase;
-
   cursor: pointer;
 }
 
-/* ==============================
-   RESPONSE OPTIONS
-============================== */
-
 .intro-rsvp-response-options {
   display: grid;
-
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
-
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
-
   margin-top: 34px;
   margin-bottom: 26px;
 }
 
 .intro-rsvp-response-option {
   display: flex;
-
   flex-direction: column;
-
   align-items: center;
   justify-content: center;
-
   min-height: 170px;
-
   gap: 18px;
-
-  border:
-    1px solid #cfc4b7;
-
+  border: 1px solid #cfc4b7;
   background: transparent;
-
   color: #655e55;
-
   cursor: pointer;
-
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    transform 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
 .intro-rsvp-response-option:hover {
-  transform:
-    translateY(-3px);
+  transform: translateY(-3px);
 }
 
 .intro-rsvp-response-option.is-selected {
-  border-color:
-    var(--sage-dark);
-
-  background:
-    rgba(140, 153, 125, 0.13);
-
-  color:
-    var(--sage-dark);
+  border-color: var(--sage-dark);
+  background: rgba(140, 153, 125, 0.13);
+  color: var(--sage-dark);
 }
 
 .intro-rsvp-response-icon {
@@ -4589,443 +2248,212 @@ body.spa-initializing .music-button {
 
 .intro-rsvp-response-option > span:last-child {
   font-size: 0.78rem;
-
   font-weight: 600;
-
   letter-spacing: 0.24em;
-
   line-height: 1.5;
-
   text-align: center;
-
   text-transform: uppercase;
 }
-
-/* ==========================================================
-   DECLINE — 3 STEP CONFIRMATION
-========================================================== */
 
 .intro-rsvp-step {
   position: relative;
 }
 
-
-/* Overlay inside the RSVP response step */
-
 .intro-rsvp-decline-confirmation {
   position: absolute;
   inset: 0;
   z-index: 50;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   padding: 24px;
-
-  /* light overlay */
   background: rgba(247, 242, 232, 0.28);
-
-  /* blur the content behind it */
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
 }
 
 .intro-rsvp-decline-confirmation-card {
   width: min(100%, 520px);
-
   padding: 36px 32px;
-
   border: 1px solid rgba(255, 255, 255, 0.42);
   background: #f7f2e8;
   color: #5d6258;
-
   box-shadow: 0 20px 55px rgba(48, 42, 34, 0.18);
   text-align: center;
 }
 
-
 .intro-rsvp-decline-confirmation[hidden] {
-  display:
-    none;
+  display: none;
 }
-
 
 .intro-rsvp-decline-confirmation-card {
-  width:
-    min(100%, 410px);
-
-  padding:
-    32px 28px;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.42);
-
-  border-radius:
-    0;
-
-background:
-  rgba(255, 255, 255, 0.84);
-
-  color:
-    #5d6258;
-
-  box-shadow:
-    0 20px 55px
-    rgba(48, 42, 34, 0.18);
-
-  text-align:
-    center;
-
-  animation:
-    rsvpDeclineConfirmationIn
-    0.28s
-    ease
-    both;
+  width: min(100%, 410px);
+  padding: 32px 28px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.84);
+  color: #5d6258;
+  box-shadow: 0 20px 55px rgba(48, 42, 34, 0.18);
+  text-align: center;
+  animation: rsvpDeclineConfirmationIn 0.28s ease both;
 }
-
-/* 1 OF 3 */
 
 .intro-rsvp-decline-progress {
-  display:
-    block;
-
-  margin-bottom:
-    14px;
-
-  color:
-    var(--gold);
-
-  font-family:
-    "Montserrat",
-    sans-serif;
-
-  font-size:
-    0.62rem;
-
-  font-weight:
-    600;
-
-  letter-spacing:
-    0.2em;
-
-  text-transform:
-    uppercase;
+  display: block;
+  margin-bottom: 14px;
+  color: var(--gold);
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
 }
-
-
-/* TITLE */
 
 .intro-rsvp-decline-confirmation-card h4 {
-  margin:
-    0;
-
-  color:
-    #4f4a44;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    clamp(
-      2rem,
-      7vw,
-      2.8rem
-    );
-
-  font-weight:
-    500;
-
-  line-height:
-    1.05;
+  margin: 0;
+  color: #4f4a44;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp( 2rem, 7vw, 2.8rem );
+  font-weight: 500;
+  line-height: 1.05;
 }
-
-
-/* MESSAGE */
 
 .intro-rsvp-decline-confirmation-card p {
-  max-width:
-    330px;
-
-  margin:
-    18px auto 0;
-
-  color:
-    #6c665e;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    1.12rem;
-
-  font-style:
-    italic;
-
-  line-height:
-    1.5;
+  max-width: 330px;
+  margin: 18px auto 0;
+  color: #6c665e;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.12rem;
+  font-style: italic;
+  line-height: 1.5;
 }
-
-
-/* BUTTONS */
 
 .intro-rsvp-decline-actions {
-  display:
-    grid;
-
-  grid-template-columns:
-    repeat(
-      2,
-      minmax(0, 1fr)
-    );
-
-  gap:
-    10px;
-
-  margin-top:
-    28px;
+  display: grid;
+  grid-template-columns: repeat( 2, minmax(0, 1fr) );
+  gap: 10px;
+  margin-top: 28px;
 }
 
-
-.intro-rsvp-decline-cancel,
-.intro-rsvp-decline-confirm {
-  min-height:
-    50px;
-
-  padding:
-    12px 14px;
-
-  border-radius:
-    0;
-
-  font-family:
-    "Montserrat",
-    sans-serif;
-
-  font-size:
-    0.67rem;
-
-  font-weight:
-    600;
-
-  letter-spacing:
-    0.1em;
-
-  text-transform:
-    uppercase;
-
-  cursor:
-    pointer;
+.intro-rsvp-decline-cancel, .intro-rsvp-decline-confirm {
+  min-height: 50px;
+  padding: 12px 14px;
+  border-radius: 0;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.67rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
 }
-
-
-/* Never Mind */
 
 .intro-rsvp-decline-cancel {
-  border:
-    1px solid
-    #cfc4b7;
-
-  background:
-    transparent;
-
-  color:
-    #6b655e;
+  border: 1px solid #cfc4b7;
+  background: transparent;
+  color: #6b655e;
 }
-
-
-/* Yes */
 
 .intro-rsvp-decline-confirm {
-  border:
-    1px solid
-    #5d6258;
-
-  background:
-    #5d6258;
-
-  color:
-    #ffffff;
+  border: 1px solid #5d6258;
+  background: #5d6258;
+  color: #ffffff;
 }
 
-
-.intro-rsvp-decline-cancel:hover,
-.intro-rsvp-decline-confirm:hover {
-  opacity:
-    0.88;
+.intro-rsvp-decline-cancel:hover, .intro-rsvp-decline-confirm:hover {
+  opacity: 0.88;
 }
-
-
-/* Animation */
 
 @keyframes rsvpDeclineConfirmationIn {
-
   from {
-    opacity:
-      0;
-
-    transform:
-      translateY(12px)
-      scale(0.97);
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
   }
 
   to {
-    opacity:
-      1;
-
-    transform:
-      translateY(0)
-      scale(1);
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
-
 }
-
-
-/* Mobile */
 
 @media (max-width: 480px) {
-
   .intro-rsvp-decline-confirmation {
-    padding:
-      12px;
+    padding: 12px;
   }
-
 
   .intro-rsvp-decline-confirmation-card {
-    padding:
-      28px 20px;
+    padding: 28px 20px;
   }
-
 
   .intro-rsvp-decline-confirmation-card h4 {
-    font-size:
-      2rem;
+    font-size: 2rem;
   }
-
 
   .intro-rsvp-decline-confirmation-card p {
-    font-size:
-      1rem;
+    font-size: 1rem;
   }
-
 
   .intro-rsvp-decline-actions {
-    grid-template-columns:
-      1fr;
+    grid-template-columns: 1fr;
   }
-
 }
 
-/* ==============================
-   BUTTONS
-============================== */
-
-.intro-rsvp-primary-button,
-.intro-rsvp-secondary-button {
+.intro-rsvp-primary-button, .intro-rsvp-secondary-button {
   width: 100%;
-
   min-height: 58px;
-
   padding: 14px 20px;
-
   font-size: 0.78rem;
   font-weight: 600;
-
   letter-spacing: 0.25em;
-
   text-transform: uppercase;
-
   cursor: pointer;
 }
 
 .intro-rsvp-primary-button {
   border: 0;
-
   background: #3e3934;
-
   color: #ffffff;
 }
 
 .intro-rsvp-primary-button:disabled {
   opacity: 0.42;
-
   cursor: not-allowed;
 }
 
 .intro-rsvp-secondary-button {
   margin-top: 12px;
-
-  border:
-    1px solid #cfc4b7;
-
+  border: 1px solid #cfc4b7;
   background: transparent;
-
   color: #655e55;
 }
 
-/* ==============================
-   SUCCESS
-============================== */
-
 .intro-rsvp-success {
-  padding:
-    30px 0 10px;
-
+  padding: 30px 0 10px;
   text-align: center;
 }
 
 .intro-rsvp-success-icon {
   display: grid;
-
   place-items: center;
-
   width: 74px;
   height: 74px;
-
-  margin:
-    0 auto 25px;
-
-  border:
-    1px solid
-    rgba(111, 125, 99, 0.35);
-
+  margin: 0 auto 25px;
+  border: 1px solid rgba(111, 125, 99, 0.35);
   border-radius: 50%;
-
-  color:
-    var(--sage-dark);
-
+  color: var(--sage-dark);
   font-size: 2.2rem;
 }
 
-.intro-rsvp-success p:not(
-  .intro-rsvp-modal-eyebrow
-) {
-  margin:
-    18px 0 30px;
-
+.intro-rsvp-success p:not( .intro-rsvp-modal-eyebrow ) {
+  margin: 18px 0 30px;
   color: #666057;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
+  font-family: "Cormorant Garamond", serif;
   font-size: 1.2rem;
 }
 
-/* ==============================
-   MOBILE
-============================== */
-
 @media (max-width: 600px) {
-
   .intro-rsvp-section {
     min-height: auto;
-
-    padding:
-      75px 12px;
+    padding: 75px 12px;
   }
 
   .intro-rsvp-header {
@@ -5041,71 +2469,48 @@ background:
   }
 
   .intro-rsvp-search-card {
-    padding:
-      22px 18px;
+    padding: 22px 18px;
   }
 
   .intro-rsvp-modal {
     padding: 10px;
   }
 
-    .intro-rsvp-modal {
-    padding:
-      6px;
+  .intro-rsvp-modal {
+    padding: 6px;
   }
 
   .intro-rsvp-modal-card {
-    max-height:
-      calc(100dvh - 12px);
-
-    padding:
-      38px 20px 20px;
+    max-height: calc(100dvh - 12px);
+    padding: 38px 20px 20px;
   }
 
   .intro-rsvp-response-options {
-    gap:
-      12px;
+    gap: 12px;
   }
 
   .intro-rsvp-response-option {
-    min-height:
-      145px;
+    min-height: 145px;
   }
 }
-
-/* ==========================================================
-   INDEX RSVP — SUBMIT LOTTIE
-========================================================== */
 
 .intro-rsvp-submit-loader {
   position: fixed;
   inset: 0;
   z-index: 1000001;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   width: 100%;
   height: 100vh;
   height: 100dvh;
-
-  background:
-    rgba(34, 30, 27, 0.58);
-
-  -webkit-backdrop-filter:
-    blur(5px);
-
-  backdrop-filter:
-    blur(5px);
-
+  background: rgba(34, 30, 27, 0.58);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-
-  transition:
-    opacity 0.3s ease,
-    visibility 0.3s ease;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .intro-rsvp-submit-loader.is-visible {
@@ -5118,17 +2523,12 @@ background:
   display: flex;
   align-items: center;
   justify-content: center;
-
-  width:
-    min(280px, 72vw);
-
-  height:
-    min(280px, 72vw);
+  width: min(280px, 72vw);
+  height: min(280px, 72vw);
 }
 
 #introRsvpSubmitAnimation {
   display: block;
-
   width: 100%;
   height: 100%;
 }
@@ -5139,662 +2539,263 @@ background:
     height: 220px;
   }
 }
-/* ==========================================================
-   INDEX RSVP — DETAILS
-========================================================== */
 
-#introRsvpWishStep
-.intro-rsvp-back {
-  margin-bottom:
-    16px;
+#introRsvpWishStep .intro-rsvp-back {
+  margin-bottom: 16px;
 }
-
-
-/* ==========================================================
-   SELECTED GUEST
-========================================================== */
 
 .intro-rsvp-selected-guest {
-  margin-top:
-    18px;
-
-  margin-bottom:
-    14px;
-
-  padding:
-    11px 14px;
-
-  border:
-    1px solid
-    rgba(111, 125, 99, 0.2);
-
-  background:
-    rgba(140, 153, 125, 0.08);
+  margin-top: 18px;
+  margin-bottom: 14px;
+  padding: 11px 14px;
+  border: 1px solid rgba(111, 125, 99, 0.2);
+  background: rgba(140, 153, 125, 0.08);
 }
-
 
 .intro-rsvp-selected-guest span {
-  display:
-    block;
-
-  margin-bottom:
-    3px;
-
-  color:
-    var(--muted);
-
-  font-size:
-    0.62rem;
-
-  font-weight:
-    600;
-
-  letter-spacing:
-    0.16em;
-
-  text-transform:
-    uppercase;
+  display: block;
+  margin-bottom: 3px;
+  color: var(--muted);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
-
 
 .intro-rsvp-selected-guest strong {
-  display:
-    block;
-
-  color:
-    var(--sage-dark);
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    1.25rem;
-
-  font-weight:
-    600;
-
-  line-height:
-    1.2;
+  display: block;
+  color: var(--sage-dark);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.2;
 }
-
-
-/* ==========================================================
-   DETAIL FIELDS
-========================================================== */
 
 .intro-rsvp-details-field {
-  margin-bottom:
-    14px;
+  margin-bottom: 14px;
 }
-
 
 .intro-rsvp-details-field label {
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  gap:
-    5px;
-
-  margin-bottom:
-    5px;
-
-  color:
-    #756e65;
-
-  font-size:
-    0.67rem;
-
-  font-weight:
-    600;
-
-  letter-spacing:
-    0.17em;
-
-  text-transform:
-    uppercase;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 5px;
+  color: #756e65;
+  font-size: 0.67rem;
+  font-weight: 600;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
 }
-
 
 .intro-rsvp-details-field label > span {
-  color:
-    #a85c53;
+  color: #a85c53;
 }
-
 
 .intro-rsvp-details-field label small {
-  margin-left:
-    auto;
-
-  color:
-    #aaa197;
-
-  font-size:
-    0.55rem;
-
-  letter-spacing:
-    0.1em;
+  margin-left: auto;
+  color: #aaa197;
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
 }
 
+.intro-rsvp-details-field input, .intro-rsvp-details-field textarea {
+  width: 100%;
+  padding: 8px 2px;
+  border: 0;
+  border-bottom: 1px solid #aca398;
+  border-radius: 0;
+  outline: 0;
+  background: transparent;
+  color: #48423d;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 16px;
+  line-height: 1.4;
+}
 
-.intro-rsvp-details-field input,
 .intro-rsvp-details-field textarea {
-  width:
-    100%;
-
-  padding:
-    8px 2px;
-
-  border:
-    0;
-
-  border-bottom:
-    1px solid
-    #aca398;
-
-  border-radius:
-    0;
-
-  outline:
-    0;
-
-  background:
-    transparent;
-
-  color:
-    #48423d;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    16px;
-
-  line-height:
-    1.4;
+  height: 78px;
+  min-height: 78px;
+  resize: vertical;
 }
 
-
-/*
- * Smaller message box.
- */
-.intro-rsvp-details-field textarea {
-  height:
-    78px;
-
-  min-height:
-    78px;
-
-  resize:
-    vertical;
+.intro-rsvp-details-field input::placeholder, .intro-rsvp-details-field textarea::placeholder {
+  color: #aaa39b;
 }
 
-
-.intro-rsvp-details-field input::placeholder,
-.intro-rsvp-details-field textarea::placeholder {
-  color:
-    #aaa39b;
+.intro-rsvp-details-field input:focus, .intro-rsvp-details-field textarea:focus {
+  border-bottom-color: var(--sage-dark);
+  box-shadow: 0 1px 0 var(--sage-dark);
 }
 
-
-.intro-rsvp-details-field input:focus,
-.intro-rsvp-details-field textarea:focus {
-  border-bottom-color:
-    var(--sage-dark);
-
-  box-shadow:
-    0 1px 0
-    var(--sage-dark);
-}
-
-
-/* ==========================================================
-   VALIDATION MESSAGE
-========================================================== */
-
-/*
- * When there is no error,
- * don't reserve empty vertical space.
- */
 .intro-rsvp-details-message:empty {
-  min-height:
-    0;
-
-  margin:
-    0;
+  min-height: 0;
+  margin: 0;
 }
-
 
 .intro-rsvp-details-message:not(:empty) {
-  min-height:
-    22px;
-
-  margin:
-    0 0 10px;
-
-  color:
-    #9b5149;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    0.95rem;
+  min-height: 22px;
+  margin: 0 0 10px;
+  color: #9b5149;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 0.95rem;
 }
 
-
-/* ==========================================================
-   DETAIL BUTTONS
-========================================================== */
-
-#introRsvpWishStep
-.intro-rsvp-primary-button,
-#introRsvpWishStep
-.intro-rsvp-secondary-button {
-  min-height:
-    48px;
-
-  padding:
-    10px 18px;
+#introRsvpWishStep .intro-rsvp-primary-button, #introRsvpWishStep .intro-rsvp-secondary-button {
+  min-height: 48px;
+  padding: 10px 18px;
 }
 
-
-#introRsvpWishStep
-.intro-rsvp-secondary-button {
-  margin-top:
-    8px;
+#introRsvpWishStep .intro-rsvp-secondary-button {
+  margin-top: 8px;
 }
 
-/* ==============================
-   HIDDEN SUBMISSION
-============================== */
-
-.intro-rsvp-hidden-form,
-.intro-rsvp-hidden-frame {
+.intro-rsvp-hidden-form, .intro-rsvp-hidden-frame {
   position: absolute;
-
   width: 1px;
   height: 1px;
-
   border: 0;
-
   opacity: 0;
-
   pointer-events: none;
 }
-/* ==========================================================
-   RSVP SUCCESS CELEBRATION
-========================================================== */
 
 .rsvp-success-celebration {
-  position:
-    fixed;
-
-  inset:
-    0;
-
-  z-index:
-    9999999;
-
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  justify-content:
-    center;
-
-  width:
-    100%;
-
-  height:
-    100dvh;
-
-  padding:
-    20px;
-
-  overflow:
-    hidden;
-
-  /* SAME BACKDROP AS RSVP MODAL */
-  background:
-    rgba(36, 31, 27, 0.66);
-
-  -webkit-backdrop-filter:
-    blur(5px);
-
-  backdrop-filter:
-    blur(5px);
-
-  opacity:
-    0;
-
-  visibility:
-    hidden;
-
-  pointer-events:
-    none;
-
-  transition:
-    opacity 0.45s ease,
-    visibility 0.45s ease;
+  position: fixed;
+  inset: 0;
+  z-index: 9999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100dvh;
+  padding: 20px;
+  overflow: hidden;
+  background: rgba(36, 31, 27, 0.66);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.45s ease, visibility 0.45s ease;
 }
-
 
 .rsvp-success-celebration.is-visible {
-  opacity:
-    1;
-
-  visibility:
-    visible;
-
-  pointer-events:
-    auto;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
-
-
-/* ==========================================================
-   FALLING ROSES
-========================================================== */
 
 #rsvpFallingRoses {
-  position:
-    absolute;
-
-  inset:
-    0;
-
-  z-index:
-    1;
-
-  width:
-    100%;
-
-  height:
-    100%;
-
-  pointer-events:
-    none;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
-
-
-/* ==========================================================
-   SUCCESS MESSAGE CARD
-========================================================== */
-
-/* ==========================================================
-   SUCCESS MESSAGE CARD
-   Match Intro Message / Scripture Card
-========================================================== */
 
 .rsvp-success-message {
-  position:
-    relative;
-
-  z-index:
-    2;
-
-  /* SAME WIDTH AS INTRO + SCRIPTURE */
-  width:
-    min(100%, 500px);
-
-  padding:
-    40px 32px;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.42);
-
-  /* SAME BACKGROUND */
-  background:
-    rgba(255, 255, 255, 0.84);
-
-  color:
-    #5d6258;
-
-  box-shadow:
-    0 25px 65px
-    rgba(0, 0, 0, 0.18);
-
-  text-align:
-    center;
-
-  -webkit-backdrop-filter:
-    blur(10px);
-
-  backdrop-filter:
-    blur(10px);
+  position: relative;
+  z-index: 2;
+  width: min(100%, 500px);
+  padding: 40px 32px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, 0.84);
+  color: #5d6258;
+  box-shadow: 0 25px 65px rgba(0, 0, 0, 0.18);
+  text-align: center;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
-
-/* ==========================================================
-   LABEL
-========================================================== */
-
 .rsvp-success-label {
-  display:
-    block;
-
-  margin-bottom:
-    12px;
-
-  color:
-    var(--gold);
-
-      font-family:
-    "Montserrat",
-    sans-serif;
-
-
-  font-size:
-    1rem;
-
-  font-weight:
-    600;
-
-  letter-spacing:
-    0.2em;
-
-  text-transform:
-    uppercase;
+  display: block;
+  margin-bottom: 12px;
+  color: var(--gold);
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
 }
 
 .rsvp-success-label span {
   display: inline-block;
-
-  margin:
-    0 6px;
-
-  color:
-    var(--gold);
-
-  font-family:
-    "Allura",
-    cursive;
-
-  font-size:
-    3.2rem;
-    
+  margin: 0 6px;
+  color: var(--gold);
+  font-family: "Allura", cursive;
+  font-size: 3.2rem;
 }
-
-
-
-/* ==========================================================
-   TITLE
-========================================================== */
 
 .rsvp-success-message h2 {
-  margin:
-    0;
-
-  color:
-    #4f4a44;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    clamp(
-      3rem,
-      9vw,
-      4.4rem
-    );
-
-  font-weight:
-    500;
-
-  line-height:
-    1;
+  margin: 0;
+  color: #4f4a44;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp( 3rem, 9vw, 4.4rem );
+  font-weight: 500;
+  line-height: 1;
 }
-
-
-/* ==========================================================
-   MESSAGE
-========================================================== */
 
 .rsvp-success-message p {
-  max-width:
-    420px;
-
-  margin:
-    20px auto 0;
-
-  color:
-    #6c665e;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    1.2rem;
-
-  font-style:
-    italic;
-
-  line-height:
-    1.55;
+  max-width: 420px;
+  margin: 20px auto 0;
+  color: #6c665e;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.2rem;
+  font-style: italic;
+  line-height: 1.55;
 }
 
-
-/* ==========================================================
-   SIGNATURE
-========================================================== */
-
 .rsvp-success-signature {
-  display:
-    block;
-
-  margin-top:
-    24px;
-
-  color:
-    #5d6258;
-
-  font-family:
-    "Allura",
-    cursive;
-
-  font-size:
-    3rem;
-
-  line-height:
-    1;
+  display: block;
+  margin-top: 24px;
+  color: #5d6258;
+  font-family: "Allura", cursive;
+  font-size: 3rem;
+  line-height: 1;
 }
 
 .rsvp-success-signature span {
   display: inline-block;
-
-  margin:
-    0 6px;
-
-  color:
-    var(--gold);
-
-  font-family:
-    "Allura",
-    cursive;
-
-  font-size:
-    3.2rem;
-    
+  margin: 0 6px;
+  color: var(--gold);
+  font-family: "Allura", cursive;
+  font-size: 3.2rem;
 }
 
-
-/* ==========================================================
-   MOBILE
-========================================================== */
-
 @media (max-width: 600px) {
-
-   .rsvp-success-celebration {
-    padding:
-      12px;
+  .rsvp-success-celebration {
+    padding: 12px;
   }
 
   .rsvp-success-message {
-    width:
-      100%;
-
-    max-width:
-      500px;
-
-    padding:
-      34px 20px;
+    width: 100%;
+    max-width: 500px;
+    padding: 34px 20px;
   }
 
   .rsvp-success-message h2 {
-    font-size:
-      3.2rem;
+    font-size: 3.2rem;
   }
-
 
   .rsvp-success-message p {
-    max-width:
-      320px;
-
-    font-size:
-      1.08rem;
+    max-width: 320px;
+    font-size: 1.08rem;
   }
-
 
   .rsvp-success-signature {
-    font-size:
-      2.7rem;
+    font-size: 2.7rem;
   }
-
 }
-
-/* ==========================================================
-   CONSISTENT INTRO SECTION SPACING
-========================================================== */
 
 :root {
   --intro-section-spacing: clamp(120px, 15svh, 160px);
 }
 
-.intro-message-section,
-.intro-scripture-section,
-.intro-scratch-section,
-.intro-location-section,
-.intro-attire-section,
-.intro-gift-section,
-.intro-rsvp-section {
+.intro-message-section, .intro-scripture-section, .intro-scratch-section, .intro-location-section, .intro-attire-section, .intro-gift-section, .intro-rsvp-section {
   width: 100%;
   min-height: auto;
   padding: var(--intro-section-spacing) 12px;
 }
-
-/* ==========================================================
-   SCRIPTURE — SLIGHTLY HIGHER ONLY
-========================================================== */
 
 .intro-scripture-card {
   top: -40px;
@@ -5810,13 +2811,10 @@ background:
   }
 }
 
-/* ==========================================================
-   DECLINE REASON
-========================================================== */
+/* DECLINE REASON */
 
 .intro-rsvp-decline-reason {
   margin-top: 24px;
-
   text-align: left;
 }
 
@@ -5826,580 +2824,177 @@ background:
 
 .intro-rsvp-decline-reason label {
   display: block;
-
   margin-bottom: 9px;
-
   color: #756e65;
-
-  font-family:
-    "Montserrat",
-    sans-serif;
-
+  font-family: "Montserrat", sans-serif;
   font-size: 0.62rem;
   font-weight: 600;
-
   letter-spacing: 0.14em;
-
   text-transform: uppercase;
 }
 
 .intro-rsvp-decline-reason textarea {
   display: block;
-
   width: 100%;
   min-height: 95px;
-
   padding: 12px 14px;
-
-  border:
-    1px solid
-    #cfc4b7;
-
+  border: 1px solid #cfc4b7;
   border-radius: 0;
-
   outline: none;
-
-  background:
-    rgba(255, 255, 255, 0.45);
-
-  color:
-    #5d6258;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
+  background: rgba(255, 255, 255, 0.45);
+  color: #5d6258;
+  font-family: "Cormorant Garamond", serif;
   font-size: 1.05rem;
-
   line-height: 1.45;
-
   resize: vertical;
 }
 
 .intro-rsvp-decline-reason textarea:focus {
-  border-color:
-    #8f887f;
+  border-color: #8f887f;
 }
 
 .intro-rsvp-decline-reason textarea::placeholder {
-  color:
-    #aaa49c;
+  color: #aaa49c;
 }
 
 .intro-rsvp-decline-reason-error {
   min-height: 18px;
-
   margin-top: 6px;
-
-  color:
-    #a85c53;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
+  color: #a85c53;
+  font-family: "Cormorant Garamond", serif;
   font-size: 0.9rem;
 }
-/* ==========================================================
-   VIDEO-STYLE WEDDING INVITATION ENTRY
-========================================================== */
+
+/* VIDEO-STYLE WEDDING INVITATION ENTRY */
 
 body.invitation-gate-active {
-  overflow:
-    hidden;
+  overflow: hidden;
 }
-
-
-/* ==========================================================
-   FULL-SCREEN ENTRY GATE
-========================================================== */
 
 .invitation-entry-gate {
-  position:
-    fixed;
-
-  inset:
-    0;
-
-  z-index:
-    9000;
-
-  display:
-    flex;
-
-  align-items:
-    stretch;
-
-  justify-content:
-    stretch;
-
-  width:
-    100%;
-
-  height:
-    100vh;
-
-  height:
-    100dvh;
-
-  /*
-   * IMPORTANT
-   * No outer spacing anymore.
-   */
-  padding:
-    0;
-
-  overflow:
-    hidden;
-
-  /*
-   * Envelope itself now covers
-   * the entire screen.
-   */
-  background:
-    transparent;
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  padding: 0;
+  overflow: hidden;
+  background: transparent;
 }
-
-
-/* ==========================================================
-   WRAPPER
-========================================================== */
 
 .video-invitation-wrap {
-  position:
-    relative;
-
-  display:
-    block;
-
-  width:
-    100%;
-
-  height:
-    100vh;
-
-  height:
-    100dvh;
-
-  min-height:
-    100dvh;
-
-  overflow:
-    hidden;
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 100dvh;
+  overflow: hidden;
 }
-
-
-/* ==========================================================
-   MAIN INVITATION / ENVELOPE
-========================================================== */
 
 .video-invitation-cover {
-  position:
-    absolute;
-
-  inset:
-    0;
-
-  width:
-    100%;
-
-  height:
-    100%;
-
-  max-width:
-    none;
-
-  max-height:
-    none;
-
-  overflow:
-    hidden;
-
-  border:
-    0;
-
-  border-radius:
-    0;
-
-  background:
-  transparent;
-
-  box-shadow:
-    none;
-
-  isolation:
-    isolate;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  isolation: isolate;
 }
-
-/* ==========================================================
-   INVITATION UNDER THE ENVELOPE
-========================================================== */
 
 .video-invitation-card {
-  position:
-    absolute;
-
-  inset:
-    0;
-
-  z-index:
-    1;
-
-  overflow:
-    hidden;
-
-  background:
-    #f8f4ec;
-
-  transform-origin:
-    center center;
-
-  will-change:
-    transform;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  background: #f8f4ec;
+  transform-origin: center center;
+  will-change: transform;
 }
-
-/* ==========================================================
-   INVITATION CONTENT
-========================================================== */
 
 .video-invitation-card-content {
-  position:
-    absolute;
-
-  right:
-    0;
-
-  bottom:
-    0;
-
-  left:
-    0;
-
-  z-index:
-    2;
-
-  padding:
-    22px
-    24px
-    27px;
-
-  color:
-    #373431;
-
-  text-align:
-    center;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  padding: 22px 24px 27px;
+  color: #373431;
+  text-align: center;
 }
-/* ==========================================================
-   ENVELOPE PAPER — SHARED
-
-   Texture similar to kraft paper in the video.
-========================================================== */
 
 .video-envelope-piece {
-  position:
-    absolute;
-
-  inset:
-    0;
-
-  z-index:
-    5;
-
-  /*
-   * Replace beige / #caad86-style
-   * envelope paper with the same
-   * background used by the index.
-   */
-  background-color:
-    #f7f2e8;
-
-  background-image:
-    url("../images/indexBackground.png");
-
-  background-repeat:
-    repeat;
-
-  background-size:
-    680px auto;
-
-  background-position:
-    center top;
-
-  will-change:
-    transform;
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background-color: #f7f2e8;
+  background-image: url("../images/indexBackground.png");
+  background-repeat: repeat;
+  background-size: 680px auto;
+  background-position: center top;
+  will-change: transform;
 }
-
-
-/* ==========================================================
-   TOP / LEFT KRAFT FOLD
-
-   The point meets near the wax seal.
-========================================================== */
 
 .video-envelope-top {
-  clip-path:
-    polygon(
-      0 0,
-      100% 0,
-      45% 49%,
-      0 60%
-    );
-
-  filter:
-    drop-shadow(
-      3px
-      4px
-      4px
-      rgba(
-        62,
-        43,
-        28,
-        0.2
-      )
-    );
+  clip-path: polygon( 0 0, 100% 0, 45% 49%, 0 60% );
+  filter: drop-shadow( 3px 4px 4px rgba( 62, 43, 28, 0.2 ) );
 }
-
-
-/* ==========================================================
-   BOTTOM KRAFT FOLD
-========================================================== */
 
 .video-envelope-bottom {
-  clip-path:
-    polygon(
-      0 42%,
-      45% 49%,
-      100% 100%,
-      0 100%
-    );
-
-  filter:
-    drop-shadow(
-      2px
-      -3px
-      4px
-      rgba(
-        62,
-        43,
-        28,
-        0.18
-      )
-    );
+  clip-path: polygon( 0 42%, 45% 49%, 100% 100%, 0 100% );
+  filter: drop-shadow( 2px -3px 4px rgba( 62, 43, 28, 0.18 ) );
 }
-
-
-/* ==========================================================
-   RIGHT DARK FLAP GROUP
-
-   Contains both black flap + seal.
-========================================================== */
 
 .video-envelope-right {
-  position:
-    absolute;
-
-  inset:
-    0;
-
-  z-index:
-    7;
-
-  pointer-events:
-    none;
-
-  will-change:
-    transform;
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  pointer-events: none;
+  will-change: transform;
 }
-
-
-/* ==========================================================
-   BLACK ENVELOPE FLAP + REAL DIAGONAL SHADOW
-========================================================== */
 
 .video-envelope-dark {
-  position:
-    absolute;
-
-  inset:
-    0;
-
-  z-index:
-    1;
-
-  /*
-   * Do NOT clip this wrapper.
-   * The shadow needs room to render.
-   */
-  overflow:
-    visible;
-
-  background:
-    transparent;
-
-  /*
-   * Shadow is applied to the clipped
-   * image inside ::before.
-   */
-  filter:
-    drop-shadow(
-      -16px 0 20px
-      rgba(0, 0, 0, 0.42)
-    )
-    drop-shadow(
-      -4px 0 5px
-      rgba(0, 0, 0, 0.45)
-    );
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: visible;
+  background: transparent;
+  filter: drop-shadow( -16px 0 20px rgba(0, 0, 0, 0.42) ) drop-shadow( -4px 0 5px rgba(0, 0, 0, 0.45) );
 }
-
-
-/* ==========================================================
-   ACTUAL BLACK COVER IMAGE
-========================================================== */
 
 .video-envelope-dark::before {
-  content:
-    "";
-
-  position:
-    absolute;
-
-  inset:
-    0;
-
-  background-image:
-    url("../images/invitationBalckCover.png");
-
-  background-repeat:
-    no-repeat;
-
-  background-position:
-    center;
-
-  background-size:
-    100% 100%;
-
-  /*
-   * Only the image is clipped.
-   */
-  clip-path:
-    polygon(
-      100% 0,
-      100% 100%,
-      45% 49%
-    );
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("../images/invitationBalckCover.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  clip-path: polygon( 100% 0, 100% 100%, 45% 49% );
 }
 
-
-/* ==========================================================
-   OPEN NOTE
-========================================================== */
-
-.video-invitation-wrap
-.intro-open-note {
-  position:
-    absolute;
-
-  right:
-    20px;
-
-  bottom:
-    max(
-      22px,
-      env(safe-area-inset-bottom)
-    );
-
-  left:
-    20px;
-
-  z-index:
-    20;
-
-  margin:
-    0;
-
-  color:
-    #5d6258;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    1rem;
-
-  font-style:
-    italic;
-
-  line-height:
-    1.3;
-
-  text-align:
-    center;
-
-  pointer-events:
-    none;
-}
-
-
-/* ==========================================================
-   TABLET / SHORTER SCREENS
-========================================================== */
-
-  .video-invitation-wrap
-  .intro-open-note {
-    margin-top:
-      10px;
-  }
-
-
-
-/* ==========================================================
-   MOBILE
-========================================================== */
-
-@media (
-  max-width:
-  600px
-) {
-
-
+@media ( max-width: 600px ) {
   .video-invitation-card-content {
-    padding:
-      20px
-      17px
-      23px;
+    padding: 20px 17px 23px;
   }
-  .video-invitation-wrap
-  .intro-open-note {
-    margin-top:
-      12px;
-
-    font-size:
-      0.92rem;
-  }
-
 }
 
+/* EXTRA SMALL PHONES */
 
-/* ==========================================================
-   EXTRA SMALL PHONES
-========================================================== */
-
-@media (
-  max-width:
-  380px
-) {
-
-
+@media ( max-width: 380px ) {
   .video-invitation-script {
-    font-size:
-      2.65rem;
+    font-size: 2.65rem;
   }
-
 }
-/* ==========================================================
-   RHAF & JEN IMAGE SEAL
-========================================================== */
 
 .video-invitation-seal {
   position: absolute;
@@ -6409,7 +3004,7 @@ body.invitation-gate-active {
   display: flex;
   align-items: center;
   justify-content: center;
-   width: 150px;
+  width: 150px;
   height: 150px;
   padding: 0;
   border: 0;
@@ -6424,31 +3019,14 @@ body.invitation-gate-active {
 
 .video-invitation-seal-image {
   display: block;
-
   width: 100%;
   height: 100%;
-
   object-fit: contain;
-
   pointer-events: none;
-
   user-select: none;
-
   -webkit-user-drag: none;
-
-  /*
-   * Breathing animation.
-   * Keep the 90deg rotation.
-   */
-  animation:
-    sealBreathing
-    5s
-    ease-in-out
-    infinite;
-
-  will-change:
-    transform,
-    filter;
+  animation: sealBreathing 5s ease-in-out infinite;
+  will-change: transform, filter;
 }
 
 .video-invitation-seal:focus-visible {
@@ -6459,529 +3037,216 @@ body.invitation-gate-active {
 
 @media (max-width: 600px) {
   .video-invitation-seal {
-      width: 130px;
+    width: 130px;
     height: 130px;
   }
 }
 
 @media (max-width: 380px) {
   .video-invitation-seal {
-      width: 115px;
+    width: 115px;
     height: 115px;
   }
 }
 
-/* ==========================================================
-   SEAL BREATHING
-========================================================== */
-
 @keyframes sealBreathing {
-
-  0%,
-  100% {
-    transform:
-      rotate(90deg)
-      scale(1);
-
-    filter:
-      drop-shadow(
-        0 7px 12px
-        rgba(0, 0, 0, 0.3)
-      )
-      drop-shadow(
-        0 0 0
-        rgba(183, 160, 106, 0)
-      );
+  0%, 100% {
+    transform: rotate(90deg) scale(1);
+    filter: drop-shadow( 0 7px 12px rgba(0, 0, 0, 0.3) ) drop-shadow( 0 0 0 rgba(183, 160, 106, 0) );
   }
-
 
   50% {
-    transform:
-      rotate(90deg)
-      scale(1.08);
-
-    filter:
-      drop-shadow(
-        0 10px 16px
-        rgba(0, 0, 0, 0.36)
-      )
-      drop-shadow(
-        0 0 16px
-        rgba(183, 160, 106, 0.42)
-      );
+    transform: rotate(90deg) scale(1.08);
+    filter: drop-shadow( 0 10px 16px rgba(0, 0, 0, 0.36) ) drop-shadow( 0 0 16px rgba(183, 160, 106, 0.42) );
   }
-
 }
 
-.video-invitation-seal:disabled
-.video-invitation-seal-image {
-  animation:
-    none;
-
-  transform:
-    rotate(90deg)
-    scale(1);
+.video-invitation-seal:disabled .video-invitation-seal-image {
+  animation: none;
+  transform: rotate(90deg) scale(1);
 }
-
 
 .video-invitation-seal:disabled::after {
-  display:
-    none;
+  display: none;
 }
-
-/* ==========================================================
-   CLICK HINT HALO
-========================================================== */
 
 .video-invitation-seal::after {
-  content:
-    "";
-
-  position:
-    absolute;
-
-  inset:
-    12%;
-
-  z-index:
-    -1;
-
-  border:
-    2px solid
-    rgba(183, 160, 106, 0.5);
-
-  border-radius:
-    50%;
-
-  pointer-events:
-    none;
-
-  animation:
-    sealHalo
-     5s
-    ease-out
-    infinite;
+  content: "";
+  position: absolute;
+  inset: 12%;
+  z-index: -1;
+  border: 2px solid rgba(183, 160, 106, 0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: sealHalo 5s ease-out infinite;
 }
-
 
 @keyframes sealHalo {
-
   0% {
-    opacity:
-      0.65;
-
-    transform:
-      scale(0.88);
+    opacity: 0.65;
+    transform: scale(0.88);
   }
-
 
   65% {
-    opacity:
-      0;
-
-    transform:
-      scale(1.35);
+    opacity: 0;
+    transform: scale(1.35);
   }
-
 
   100% {
-    opacity:
-      0;
-
-    transform:
-      scale(1.35);
+    opacity: 0;
+    transform: scale(1.35);
   }
-
 }
 
-@media (
-  prefers-reduced-motion:
-  reduce
-) {
-
-  .video-invitation-seal-image,
-  .video-invitation-seal::after {
-    animation:
-      none;
+@media ( prefers-reduced-motion: reduce ) {
+  .video-invitation-seal-image, .video-invitation-seal::after {
+    animation: none;
   }
-
 }
 
-/* ==========================================================
-   CONTINUE TO WEDDING PAGES
-========================================================== */
+/* CONTINUE TO WEDDING PAGES */
 
 .intro-wedding-pages-section {
-  position:
-    relative;
-
-  z-index:
-    3;
-
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  justify-content:
-    center;
-
-  width:
-    100%;
-
-  padding:
-    100px
-    12px
-    150px;
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 100px 12px 150px;
 }
-
 
 .intro-wedding-pages-card {
-  width:
-    min(
-      100%,
-      520px
-    );
-
-  padding:
-    42px
-    30px;
-
-  border:
-    1px solid
-    rgba(
-      255,
-      255,
-      255,
-      0.42
-    );
-
-  background:
-    rgba(
-      255,
-      255,
-      255,
-      0.84
-    );
-
-  color:
-    #5d6258;
-
-  box-shadow:
-    0 25px 65px
-    rgba(
-      0,
-      0,
-      0,
-      0.18
-    );
-
-  text-align:
-    center;
-
-  -webkit-backdrop-filter:
-    blur(10px);
-
-  backdrop-filter:
-    blur(10px);
+  width: min( 100%, 520px );
+  padding: 42px 30px;
+  border: 1px solid rgba( 255, 255, 255, 0.42 );
+  background: rgba( 255, 255, 255, 0.84 );
+  color: #5d6258;
+  box-shadow: 0 25px 65px rgba( 0, 0, 0, 0.18 );
+  text-align: center;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
-
 
 .intro-wedding-pages-eyebrow {
-  margin-bottom:
-    10px;
-
-   color:
-    #dc4844;
-
-  font-family:
-    "Montserrat",
-    sans-serif;
-
-  font-size:
-    1rem;
-
-  font-weight:
-    600;
-
-  letter-spacing:
-    0.2em;
-
-  text-transform:
-    uppercase;
+  margin-bottom: 10px;
+  color: #dc4844;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
 }
-
 
 .intro-wedding-pages-card h2 {
-  margin:
-    0;
-
-  color:
-    #4b4844;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    clamp(
-      2.1rem,
-      8vw,
-      3.2rem
-    );
-
-  font-weight:
-    500;
-
-  line-height:
-    1;
+  margin: 0;
+  color: #4b4844;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp( 2.1rem, 8vw, 3.2rem );
+  font-weight: 500;
+  line-height: 1;
 }
-
 
 .intro-wedding-pages-description {
-  max-width:
-    390px;
-
-  margin:
-    18px auto
-    28px;
-
-  color:
-    #77716b;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size:
-    1.08rem;
-
-  line-height:
-    1.55;
+  max-width: 390px;
+  margin: 18px auto 28px;
+  color: #77716b;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.08rem;
+  line-height: 1.55;
 }
-
 
 .intro-wedding-pages-button {
-  display:
-    inline-flex;
-
-  align-items:
-    center;
-
-  justify-content:
-    center;
-
-  gap:
-    14px;
-
-  min-height:
-    54px;
-
-  padding:
-    0 26px;
-
-  border:
-    1px solid
-    #4d4945;
-
-  border-radius:
-    0;
-
-  background:
-    #4d4945;
-
-  color:
-    #ffffff;
-
-  font-family:
-    "Montserrat",
-    sans-serif;
-
-  font-size:
-    0.72rem;
-
-  font-weight:
-    600;
-
-  letter-spacing:
-    0.12em;
-
-  text-transform:
-    uppercase;
-
-  cursor:
-    pointer;
-
-  transition:
-    transform 0.25s ease,
-    background-color 0.25s ease,
-    box-shadow 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 54px;
+  padding: 0 26px;
+  border: 1px solid #4d4945;
+  border-radius: 0;
+  background: #4d4945;
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
 }
-
 
 .intro-wedding-pages-button:hover {
-  background:
-    #3e3a37;
-
-  transform:
-    translateY(-2px);
-
-  box-shadow:
-    0 12px 26px
-    rgba(
-      0,
-      0,
-      0,
-      0.18
-    );
+  background: #3e3a37;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba( 0, 0, 0, 0.18 );
 }
-
 
 .intro-wedding-pages-button i {
-  transition:
-    transform
-    0.25s
-    ease;
+  transition: transform 0.25s ease;
 }
-
 
 .intro-wedding-pages-button:hover i {
-  transform:
-    translateX(4px);
+  transform: translateX(4px);
 }
-
 
 .intro-wedding-pages-button:disabled {
-  cursor:
-    default;
-
-  pointer-events:
-    none;
+  cursor: default;
+  pointer-events: none;
 }
-
-
-/* ==========================================================
-   MOBILE
-========================================================== */
 
 @media (max-width: 600px) {
-
   .intro-wedding-pages-section {
-    padding:
-      90px
-      12px
-      120px;
+    padding: 90px 12px 120px;
   }
-
 
   .intro-wedding-pages-card {
-    padding:
-      36px
-      22px;
+    padding: 36px 22px;
   }
-
 
   .intro-wedding-pages-button {
-    width:
-      100%;
-
-    min-height:
-      56px;
+    width: 100%;
+    min-height: 56px;
   }
 
+  .intro-wedding-pages-eyebrow {
+    font-size: 0.61rem;
+  }
 }
 
-/* ==========================================================
-   WEDDING SPA INSIDE INDEX.HTML
-
-   Keep the Wedding SPA prepared but invisible
-   until the invitation is finished.
-========================================================== */
+/* WEDDING SPA INSIDE INDEX.HTML */
 
 .wedding-spa-shell {
-  position:
-    absolute;
-
-  top:
-    0;
-
-  left:
-    0;
-
-  z-index:
-    -1;
-
-  width:
-    100%;
-
-  min-height:
-    100vh;
-
-  min-height:
-    100dvh;
-
-  background:
-    var(--sage-dark);
-
-  opacity:
-    0;
-
-  visibility:
-    hidden;
-
-  pointer-events:
-    none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--sage-dark);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
-
-/* ==========================================================
-   WEDDING EXPERIENCE ACTIVE
-========================================================== */
-
-body.wedding-spa-active
-.wedding-spa-shell {
-  position:
-    relative;
-
-  z-index:
-    1;
-
-  opacity:
-    1;
-
-  visibility:
-    visible;
-
-  pointer-events:
-    auto;
+body.wedding-spa-active .wedding-spa-shell {
+  position: relative;
+  z-index: 1;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
-
-/*
- * Invitation is completely removed once
- * the Wedding SPA takes over.
- */
-body.wedding-spa-active
-#invitationIntro,
-
-body.wedding-spa-active
-#invitationEntryGate,
-
-body.wedding-spa-active
-#weddingLoader {
-  display:
-    none !important;
+body.wedding-spa-active #invitationIntro, body.wedding-spa-active #invitationEntryGate, body.wedding-spa-active #weddingLoader {
+  display: none !important;
 }
 
-/* ==========================================================
-   INDEX → WEDDING HOME: 3D BOOK PAGE FLIP
-========================================================== */
+/* INDEX → WEDDING HOME: 3D BOOK PAGE FLIP */
 
 body.wedding-flip-active {
   overflow: hidden !important;
 }
-/* INDEX → HOME FLIP */
 
 .wedding-flip-stage {
   position: fixed;
@@ -6989,9 +3254,7 @@ body.wedding-flip-active {
   z-index: 999998;
   overflow: hidden;
   perspective: 1800px;
-
-  /* Fallback only — Home should be visible underneath */
-  background: transparent;;
+  background: transparent;
 }
 
 .wedding-flip-cover {
@@ -6999,7 +3262,6 @@ body.wedding-flip-active {
   inset: 0;
   z-index: 2;
   overflow: hidden;
-
   background: #f7f2e8;
   transform-origin: left center;
   backface-visibility: hidden;
@@ -7012,11 +3274,6 @@ body.wedding-flip-active {
   overflow: hidden;
 }
 
-body.wedding-flip-active {
-  overflow: hidden !important;
-}
-
-/* Ensure Wedding Home is visible behind the turning page */
 body.wedding-flip-active #weddingSpaShell {
   display: block !important;
   visibility: visible !important;
@@ -7028,34 +3285,27 @@ body.wedding-flip-active #app {
   visibility: visible !important;
 }
 
-/* Prevent the loader from covering the Home page */
 body.wedding-flip-active #pageTransitionLoader {
   display: none !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .wedding-flip-cover,
-  .wedding-flip-home {
+  .wedding-flip-cover, .wedding-flip-home {
     transform: none !important;
     transition: none !important;
   }
 }
 
-
-/* ==========================================================
-   GLOBAL WEDDING NAVIGATION
-========================================================== */
+/* GLOBAL WEDDING NAVIGATION */
 
 :root {
   --nav-height: 76px;
   --nav-active-size: 54px;
   --nav-bg: #ffffff;
-  --nav-active: #8c997d;
-  --nav-muted: #aeb2b5;
+  --nav-active: #000000;
+  --nav-muted: #808080;
   --nav-bottom: 12px;
 }
-
-/* GLOBAL NAVIGATION WRAPPER */
 
 #globalNavigation {
   position: relative;
@@ -7063,49 +3313,33 @@ body.wedding-flip-active #pageTransitionLoader {
   pointer-events: none;
 }
 
-/* MAIN NAVIGATION */
-
 .bottom-navigation.curved-nav {
   position: fixed;
-  bottom: calc(
-    var(--nav-bottom) + env(safe-area-inset-bottom)
-  );
+  bottom: calc( var(--nav-bottom) + env(safe-area-inset-bottom) );
   left: 50%;
-
   z-index: 10000;
-
   display: grid;
-  grid-template-columns:
-    repeat(var(--nav-count), minmax(0, 1fr));
-
+  grid-template-columns: repeat(var(--nav-count), minmax(0, 1fr));
   width: min(calc(100% - 24px), 680px);
   height: var(--nav-height);
-
   padding: 0;
   margin: 0;
-
   border: 0;
   border-radius: 999px;
   background: transparent;
   box-shadow: none;
-
   overflow: visible;
   isolation: isolate;
-
   transform: translateX(-50%);
   pointer-events: auto;
 }
-
-/* CURVED BACKGROUND */
 
 .curved-nav .nav-background {
   position: absolute;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-
-  filter:
-    drop-shadow(0 3px 8px rgba(0, 0, 0, 0.10));
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.10));
 }
 
 .curved-nav .nav-background-svg {
@@ -7119,66 +3353,45 @@ body.wedding-flip-active #pageTransitionLoader {
   fill: var(--nav-bg);
 }
 
-/* NAVIGATION ITEMS */
-
 .curved-nav .nav-item {
   position: relative;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-
   gap: 7px;
-
   width: 100%;
   min-width: 0;
   height: 100%;
-
   padding: 0 0 12px;
   margin: 0;
-
   border: 0;
   border-radius: 0;
-
   background: transparent;
   box-shadow: none;
-
   color: var(--nav-muted);
   text-decoration: none;
   text-align: center;
-
   transform: none;
   z-index: 1;
 }
 
-/* ICON */
-
 .curved-nav .nav-icon {
   position: relative;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   width: 24px;
   height: 26px;
-
   margin: 0;
   padding: 0;
-
   border: 0;
   border-radius: 0;
-
   background: transparent;
   color: var(--nav-muted);
   box-shadow: none;
-
   transform: none;
-
-  transition:
-    color 0.2s ease,
-    transform 0.2s ease;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .curved-nav .nav-icon i {
@@ -7186,59 +3399,38 @@ body.wedding-flip-active #pageTransitionLoader {
   line-height: 1;
 }
 
-/* LABEL */
-
 .curved-nav .nav-label {
   display: block;
-
   width: 100%;
-
   margin: 0;
   padding: 0;
-
   font-family: "Montserrat", sans-serif;
   font-size: 9px;
   font-weight: 500;
   line-height: 1.2;
-
   color: var(--nav-muted);
   white-space: nowrap;
-
   transform: none;
 }
-
-/* ==========================================================
-   ACTIVE NAVIGATION ITEM
-========================================================== */
 
 .curved-nav .nav-item.active {
   color: var(--nav-active);
   z-index: 5;
 }
 
-/* RAISED ACTIVE CIRCLE */
-
 .curved-nav .nav-item.active .nav-icon {
   position: absolute;
-
   top: calc(var(--nav-active-size) / -2);
   left: 50%;
-
   width: var(--nav-active-size);
   height: var(--nav-active-size);
-
   margin: 0;
   padding: 0;
-
   border-radius: 50%;
   border: 0;
-
   background: var(--nav-bg);
   color: var(--nav-active);
-
-  box-shadow:
-    0 4px 0 rgba(140, 153, 125, 0.14);
-
+  box-shadow: 0 4px 0 rgba(140, 153, 125, 0.14);
   transform: translateX(-50%);
 }
 
@@ -7246,14 +3438,10 @@ body.wedding-flip-active #pageTransitionLoader {
   font-size: 23px;
 }
 
-/* ACTIVE LABEL */
-
 .curved-nav .nav-item.active .nav-label {
   color: var(--nav-active);
   font-weight: 600;
 }
-
-/* HOVER */
 
 .curved-nav .nav-item:not(.active):hover .nav-icon {
   color: var(--nav-active);
@@ -7264,17 +3452,11 @@ body.wedding-flip-active #pageTransitionLoader {
   color: var(--nav-active);
 }
 
-/* FOCUS */
-
 .curved-nav .nav-item:focus-visible {
   outline: 2px solid var(--nav-active);
   outline-offset: -3px;
   border-radius: 8px;
 }
-
-/* ==========================================================
-   MOBILE RESPONSIVE
-========================================================== */
 
 @media (max-width: 480px) {
   :root {
@@ -7310,33 +3492,24 @@ body.wedding-flip-active #pageTransitionLoader {
   }
 }
 
-/* REDUCED MOTION */
-
 @media (prefers-reduced-motion: reduce) {
   .curved-nav .nav-icon {
     transition: none;
   }
 }
 
-
-
-/* RSVP SKIP MESSAGE - FUN TOOLTIP */
-
 .intro-rsvp-skip-tooltip {
   margin-top: 12px;
   padding: 14px 18px;
-
   background: #fff0f0;
   border: 1px solid #f1c5c5;
   border-radius: 12px;
-
   color: #b84a4a;
   font-family: "Montserrat", sans-serif;
   font-size: 0.82rem;
   font-weight: 500;
   line-height: 1.7;
   text-align: center;
-
   animation: skipTooltipPop 0.3s ease-out;
 }
 
@@ -7361,9 +3534,6 @@ body.wedding-flip-active #pageTransitionLoader {
   }
 }
 
-
-/* MESSAGE TO US - FLOATING TOOLTIP */
-
 .intro-rsvp-details-field:has(#rsvpMessageTooltip) {
   position: relative;
 }
@@ -7371,49 +3541,36 @@ body.wedding-flip-active #pageTransitionLoader {
 .rsvp-message-tooltip {
   position: absolute;
   z-index: 100;
-
   bottom: calc(145% - 45px);
   left: 50%;
-
   width: max-content;
   max-width: 100%;
-
   padding: 14px 18px;
-
   background: #ffffff;
   border: 1px solid #555555;
   border-radius: 12px;
-
   color: #555555;
   font-family: "Montserrat", sans-serif;
   font-size: 12px;
   line-height: 1.6;
   text-align: center;
-
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-
   transform: translateX(-50%);
 }
 
-/* HIDE TOOLTIP */
 .rsvp-message-tooltip[hidden] {
   display: none !important;
 }
 
-/* TOOLTIP ARROW */
 .rsvp-message-tooltip::after {
   content: "";
   position: absolute;
-
   bottom: -8px;
   left: 50%;
-
   width: 14px;
   height: 14px;
-
   background: #ffffff;
   border-right: 1px solid #555555;
   border-bottom: 1px solid #555555;
-
   transform: translateX(-50%) rotate(45deg);
 }
