@@ -7,79 +7,185 @@ body[data-current-page="attire"] {
   background-color: #f7f2e8;
 }
 
-body[data-current-page="attire"] .page-container {
+body[data-current-page="attire"] .attire-page {
   min-height: 100dvh;
-
-  padding-bottom:
-    calc(var(--nav-height) + 42px + env(safe-area-inset-bottom));
+  padding-bottom: calc(
+    var(--nav-height) + 42px + env(safe-area-inset-bottom)
+  );
 
   background: #f7f2e8
     url("../../images/indexBackground.png")
     center top / 680px auto repeat;
 }
 
-/* HERO */
+
+/* ==========================================================
+   ATTIRE HERO IMAGE
+========================================================== */
+
 
 .attire-hero {
-  min-height: 42svh;
-  background:
-    linear-gradient(rgba(30, 32, 30, 0.12), rgba(30, 32, 30, 0.32)),
-    url("../../images/rhafjeneight.webp") center 38% / cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 0;
+  padding: 10px 10px 0;
+  background: transparent;
 }
 
-.attire-hero .page-hero-overlay {
-  background: linear-gradient(
-    to bottom,
-    rgba(22, 24, 22, 0.25),
-    rgba(22, 24, 22, 0.72)
-  );
+.attire-hero-parallax {
+  width: min(100%, 540px);
+  will-change: transform;
 }
 
-.attire-hero .page-hero-content {
-  padding: 20px;
+.attire-hero-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  transform-origin: center;
 }
 
-.attire-hero .page-hero-content p {
-  margin-bottom: 5px;
-  color: rgba(255, 255, 255, 0.94);
-  font-size: 1rem;
+
+/* ==========================================================
+   ATTIRE PAGE HEADER
+========================================================== */
+
+.attire-page-header {
+  padding: 35px 20px 30px;
+  text-align: center;
 }
 
-.attire-hero .page-hero-content h1 {
-  max-width: 480px;
-  margin-inline: auto;
-  font-size: clamp(3.2rem, 14vw, 5.5rem);
-  line-height: 0.9;
-  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+.attire-page-header p {
+  margin: 0 0 8px;
+  color: #ffffff;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.25rem;
+  font-style: italic;
+  font-weight: 700;
 }
 
-/* CONTENT */
+.attire-page-header h1 {
+  margin: 0;
+  color: #ffffff;
+  font-family: "Allura", cursive;
+  font-size: clamp(3.4rem, 12vw, 5rem);
+  font-weight: 400;
+  line-height: 1.1;
+  -webkit-text-stroke: 0.7px #ffffff;
+}
+
+.attire-page-header p,
+.attire-page-header h1 {
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.45),
+    0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media (max-width: 600px) {
+  .attire-hero {
+    padding: 10px 10px 0;
+  }
+
+  .attire-hero-image {
+    width: 100%;
+  }
+
+  .attire-page-header {
+    padding: 30px 16px 25px;
+  }
+
+  .attire-page-header h1 {
+    font-size: clamp(3rem, 12vw, 4.3rem);
+  }
+}
+
+
+/* ==========================================================
+   ATTIRE CONTENT
+========================================================== */
 
 .attire-section {
   display: grid;
   gap: 22px;
+
   padding: 28px 16px
     calc(var(--nav-height) + 38px + env(safe-area-inset-bottom));
+
   background: transparent;
 }
+
+/* ==========================================================
+   SHARED CARDS
+========================================================== */
 
 .attire-intro-card,
 .attire-category-card {
   width: min(100%, 680px);
   margin-inline: auto;
   padding: 30px 22px;
+
   border: 1px solid rgba(92, 94, 90, 0.14);
   border-radius: 18px;
+
   background: rgba(255, 255, 255, 0.97);
   box-shadow: 0 14px 36px rgba(49, 52, 48, 0.12);
 }
 
 .attire-intro-card,
+
+/* GUEST ATTIRE INFORMATION */
+
 .guest-attire-card {
+  width: min(100%, 680px);
+  margin-inline: auto;
   text-align: center;
 }
 
-/* SHARED TYPOGRAPHY */
+.guest-attire-card .guest-attire-guidelines {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-top: 30px;
+}
+
+.guest-attire-card .guest-color-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.guest-attire-card .guest-color-option {
+  min-width: 0;
+}
+
+.guest-attire-card .guest-swatch {
+  width: 100%;
+  max-width: 72px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+@media (max-width: 600px) {
+  .guest-attire-card .guest-color-grid {
+    gap: 5px;
+  }
+
+  .guest-attire-card .guest-color-option small {
+    font-size: 0.5rem;
+  }
+}
+
+
+/* ==========================================================
+   SHARED TYPOGRAPHY
+========================================================== */
 
 .attire-intro-card h2,
 .attire-category-header h2,
@@ -110,20 +216,25 @@ body[data-current-page="attire"] .page-container {
 .guest-attire-description {
   max-width: 520px;
   margin: 13px auto 0;
+
   color: #666a63;
   font-size: 1.05rem;
   line-height: 1.55;
   text-align: center;
 }
 
-/* INTRO */
+/* ==========================================================
+   INTRO CARD
+========================================================== */
 
 .attire-card-icon {
   display: grid;
   place-items: center;
+
   width: 58px;
   height: 58px;
   margin: 0 auto 18px;
+
   border-radius: 50%;
   background: rgba(105, 108, 103, 0.11);
   color: var(--sage-dark);
@@ -143,33 +254,58 @@ body[data-current-page="attire"] .page-container {
 .attire-eyebrow {
   margin-bottom: 8px;
   color: var(--gold);
+
   font-size: 0.68rem;
   letter-spacing: 0.15em;
   text-align: center;
 }
 
-/* COLOR PALETTE */
-
-.attire-palette,
-.guest-color-grid {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-}
+/* ==========================================================
+   COLOR PALETTE
+========================================================== */
 
 .attire-palette {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+
   width: min(100%, 440px);
-  height: 68px;
+  height: auto;
   margin: 25px auto 0;
-  overflow: hidden;
-  border: 1px solid rgba(55, 57, 54, 0.14);
-  border-radius: 10px;
+
+  overflow: visible;
+  border: none;
+  border-radius: 0;
 }
 
-.attire-color {
+.attire-palette .guest-color-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.attire-palette .guest-swatch {
   display: block;
   width: 100%;
-  height: 100%;
+  max-width: 72px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid rgba(65, 67, 63, 0.13);
+  box-shadow: 0 4px 12px rgba(35, 37, 34, 0.08);
 }
+
+.attire-palette .guest-color-option small {
+  color: var(--muted);
+  font-size: 0.56rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* Shared grayscale colors */
 
 .attire-color-dark,
 .guest-swatch.charcoal {
@@ -199,14 +335,18 @@ body[data-current-page="attire"] .page-container {
 .attire-palette-note {
   margin-top: 11px;
   color: var(--muted);
+
   font-size: 0.66rem;
   font-weight: 500;
   letter-spacing: 0.07em;
+
   text-align: center;
   text-transform: uppercase;
 }
 
-/* CATEGORY */
+/* ==========================================================
+   ATTIRE CATEGORY
+========================================================== */
 
 .attire-category-header {
   margin-bottom: 25px;
@@ -226,21 +366,30 @@ body[data-current-page="attire"] .page-container {
 .attire-outfit-card {
   display: flex;
   flex-direction: column;
+
   min-width: 0;
   overflow: hidden;
+
   border: 1px solid rgba(92, 94, 90, 0.12);
   border-radius: 14px;
   background: rgba(243, 244, 241, 0.78);
 }
 
+/* ==========================================================
+   OUTFIT IMAGES
+========================================================== */
+
 .attire-image-frame {
   display: flex;
   align-items: flex-end;
   justify-content: center;
+
   min-width: 0;
   height: 310px;
   padding: 14px 10px 0;
+
   overflow: hidden;
+
   background: radial-gradient(
     circle at center,
     #ffffff,
@@ -270,6 +419,10 @@ body[data-current-page="attire"] .page-container {
   border-right: 1px solid rgba(92, 94, 90, 0.1);
 }
 
+/* ==========================================================
+   OUTFIT CONTENT
+========================================================== */
+
 .attire-outfit-content {
   flex: 1;
   padding: 18px 16px 20px;
@@ -279,6 +432,7 @@ body[data-current-page="attire"] .page-container {
 .attire-role {
   display: block;
   margin-bottom: 6px;
+
   color: var(--gold);
   font-size: 0.62rem;
   letter-spacing: 0.11em;
@@ -298,7 +452,9 @@ body[data-current-page="attire"] .page-container {
   line-height: 1.45;
 }
 
-/* GUEST ATTIRE */
+/* ==========================================================
+   GUEST ATTIRE
+========================================================== */
 
 .guest-attire-guidelines {
   gap: 14px;
@@ -311,6 +467,7 @@ body[data-current-page="attire"] .page-container {
   grid-template-columns: 38px minmax(0, 1fr);
   align-items: flex-start;
   gap: 11px;
+
   padding: 15px;
   border-radius: 12px;
   background: rgba(100, 104, 98, 0.07);
@@ -342,7 +499,9 @@ body[data-current-page="attire"] .page-container {
   line-height: 1.4;
 }
 
-/* GUEST COLORS */
+/* ==========================================================
+   GUEST RECOMMENDED COLORS
+========================================================== */
 
 .guest-color-theme {
   margin-top: 27px;
@@ -363,6 +522,7 @@ body[data-current-page="attire"] .page-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+
   min-width: 0;
   gap: 7px;
 }
@@ -372,6 +532,7 @@ body[data-current-page="attire"] .page-container {
   width: 100%;
   max-width: 72px;
   aspect-ratio: 1;
+
   border: 1px solid rgba(65, 67, 63, 0.13);
   border-radius: 50%;
   box-shadow: 0 4px 12px rgba(35, 37, 34, 0.08);
@@ -386,14 +547,18 @@ body[data-current-page="attire"] .page-container {
   text-transform: uppercase;
 }
 
-/* REMINDER */
+/* ==========================================================
+   GUEST REMINDER
+========================================================== */
 
 .attire-reminder {
   display: flex;
   align-items: flex-start;
   gap: 10px;
+
   margin-top: 26px;
   padding: 14px 15px;
+
   border-radius: 12px;
   background: rgba(183, 160, 106, 0.11);
   color: #6b634e;
@@ -410,27 +575,48 @@ body[data-current-page="attire"] .page-container {
   line-height: 1.4;
 }
 
-/* RESPONSIVE */
+/* ==========================================================
+   MOBILE RESPONSIVE
+========================================================== */
 
 @media (max-width: 600px) {
+
+  /* Hero image */
+
   .attire-hero {
-    min-height: 34svh;
+    padding: 30px 10px 0;
   }
 
-  .attire-hero .page-hero-content h1 {
-    font-size: clamp(3rem, 14vw, 4.3rem);
+  .attire-hero-image {
+    width: 100%;
   }
+
+  /* Header */
+
+  .attire-page-header {
+    padding: 10px 16px 20px;
+  }
+
+  .attire-page-header h1 {
+    font-size: clamp(3rem, 12vw, 4.3rem);
+  }
+
+  /* Content */
 
   .attire-section {
     padding: 18px 12px
       calc(var(--nav-height) + 38px + env(safe-area-inset-bottom));
   }
 
+  /* Cards */
+
   .attire-intro-card,
   .attire-category-card {
     padding: 25px 16px;
     border-radius: 15px;
   }
+
+  /* Outfit layout */
 
   .attire-outfit-grid,
   .guest-attire-guidelines {
@@ -441,8 +627,14 @@ body[data-current-page="attire"] .page-container {
     height: 290px;
   }
 
+  /* Palette */
+
   .attire-palette {
-    height: 58px;
+    gap: 5px;
+  }
+
+  .attire-palette .guest-color-option small {
+    font-size: 0.5rem;
   }
 
   .guest-color-grid {
@@ -453,3 +645,33 @@ body[data-current-page="attire"] .page-container {
     font-size: 0.5rem;
   }
 }
+
+
+/* ==========================================================
+   GUEST ATTIRE SHOWCASE
+========================================================== */
+
+.attire-guest-showcase {
+  width: min(100%, 680px);
+  margin: 0 auto;
+  padding: 0;
+  overflow: visible;
+  text-align: center;
+}
+
+.attire-guest-showcase-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  transform-origin: center center;
+  backface-visibility: hidden;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .attire-guest-showcase {
+    width: 100%;
+  }
+}
+

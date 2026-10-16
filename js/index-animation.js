@@ -511,6 +511,26 @@ document.addEventListener('DOMContentLoaded', () => {
       opacity: 0, y: 22, scale: 0.97, duration: 0.6, ease: 'power2.out',
     }, { trigger: '.intro-attire-reminder', start: 'top 90%' });
   }
+  
+  /* ======================================================
+   CONTINUOUS FLOATING COLOR CIRCLES
+====================================================== */
+
+const colorCircles = document.querySelectorAll(
+  ".intro-attire-color-option"
+);
+
+if (colorCircles.length) {
+  gsap.to(colorCircles, {
+    y: -6,
+    duration: 1.5,
+    stagger: 0.15,
+    repeat: -1,
+    yoyo: true,
+    ease: "sine.inOut",
+    delay: 1.5
+  });
+}
 
   function initGiftAnimations() {
     initSectionIntro('gift');
