@@ -7,9 +7,7 @@
 window.initializeLocationPage = function () {
   const page = document.querySelector(".location-page");
 
-  if (!page || page.dataset.gsapInitialized === "true") {
-    return;
-  }
+  if (!page || page.dataset.gsapInitialized === "true") return;
 
   if (!window.gsap || !window.ScrollTrigger) {
     console.warn("GSAP or ScrollTrigger is not loaded.");
@@ -22,34 +20,37 @@ window.initializeLocationPage = function () {
     "(prefers-reduced-motion: reduce)"
   ).matches;
 
-  // Remove any previous context before initialization.
   window.locationGsapContext?.revert();
 
   window.locationGsapContext = gsap.context(() => {
-
     if (reduceMotion) return;
 
     /* ======================================================
-       HERO ENTRANCE
+       IMAGE FIRST, THEN HEADER
     ====================================================== */
 
     gsap.timeline({
-      defaults: { ease: "power3.out" }
+      defaults: {
+        ease: "power3.out"
+      }
     })
-      .from(".location-hero .page-hero-overlay", {
+      .from(".location-hero", {
         opacity: 0,
-        duration: 0.8
+        y: 45,
+        scale: 1.05,
+        duration: 1.1,
+        clearProps: "transform,opacity"
       })
-      .from(".location-hero .page-hero-content p", {
+      .from(".location-page-header p", {
         opacity: 0,
-        y: 22,
-        duration: 0.6
-      }, "-=0.4")
-      .from(".location-hero .page-hero-content h1", {
+        y: 25,
+        duration: 0.65
+      }, "-=0.35")
+      .from(".location-page-header h1", {
         opacity: 0,
-        y: 38,
+        y: 35,
         scale: 0.94,
-        duration: 0.85
+        duration: 0.9
       }, "-=0.35");
 
     /* ======================================================
@@ -127,7 +128,6 @@ window.initializeLocationPage = function () {
     gsap.to(".location-hero", {
       backgroundPosition: "center 55%",
       ease: "none",
-
       scrollTrigger: {
         trigger: ".location-hero",
         start: "top top",
@@ -154,9 +154,7 @@ window.initializeLocationPage = function () {
 
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-      if (page.isConnected) {
-        ScrollTrigger.refresh();
-      }
+      if (page.isConnected) ScrollTrigger.refresh();
     });
   });
 };

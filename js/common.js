@@ -1,6 +1,6 @@
 /* Shared wedding navigation. Page keys must match js/app.js. */
 const WEDDING_NAVIGATION_ITEMS = [
-  { page: "home", icon: "fa-house", label: "Home" },
+  { page: "home", icon: "fa-images", label: "Prenup" },
   { page: "sponsors", icon: "fa-crown", label: "Sponsors" },
   { page: "location", icon: "fa-location-dot", label: "Location" },
   { page: "attire", icon: "fa-shirt", label: "Attire" },

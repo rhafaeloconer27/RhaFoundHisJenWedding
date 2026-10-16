@@ -408,9 +408,44 @@
             <p class="intro-wedding-pages-eyebrow">The Celebration Continues</p>
             <h2>There’s More to Explore</h2>
             <p class="intro-wedding-pages-description">Continue to our wedding pages for more details, memories, and everything we’ve prepared for our special day.</p>
-            <button type="button" class="intro-wedding-pages-button" id="openWeddingPagesButton">
-              <span> Continue to Our Wedding </span> <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            <div class="wedding-continue-tooltip-anchor">
+            <button
+              type="button"
+              class="intro-wedding-pages-button"
+              id="openWeddingPagesButton"
+              aria-controls="weddingRsvpReminder"
+              aria-expanded="false"
+            >
+              <span>Continue to Our Wedding</span>
+              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
             </button>
+
+            <!-- Interactive RSVP confirmation tooltip anchored to the Continue button. -->
+            <div
+              id="weddingRsvpReminder"
+              class="wedding-rsvp-reminder"
+              role="dialog"
+              aria-modal="false"
+              aria-labelledby="weddingRsvpReminderTitle"
+              aria-describedby="weddingRsvpReminderDescription"
+              hidden
+            >
+              <p class="wedding-rsvp-reminder-eyebrow">One little thing 💌</p>
+              <h3 id="weddingRsvpReminderTitle">Have you submitted your RSVP?</h3>
+              <p id="weddingRsvpReminderDescription">
+                Please let us know if you're coming before exploring our wedding pages.
+              </p>
+              <div class="wedding-rsvp-reminder-actions">
+                <button type="button" id="weddingRsvpYesButton" class="wedding-rsvp-reminder-yes">
+                  Yes, I've submitted
+                </button>
+                <button type="button" id="weddingRsvpNoButton" class="wedding-rsvp-reminder-no">
+                  No, take me to RSVP
+                </button>
+              </div>
+              <p id="weddingRsvpReminderError" class="wedding-rsvp-reminder-error" role="alert" hidden></p>
+            </div>
+            </div>
           </div>
         </section>
       </section>

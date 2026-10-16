@@ -3214,6 +3214,149 @@ body.invitation-gate-active {
   }
 }
 
+
+/* Floating confirmation tooltip anchored to the Continue button. */
+.wedding-continue-tooltip-anchor {
+  position: relative;
+  display: inline-block;
+  width: min(100%, 430px);
+  overflow: visible;
+  z-index: 5;
+}
+.wedding-continue-tooltip-anchor > .intro-wedding-pages-button { width: 100%; }
+
+.wedding-rsvp-reminder {
+  position: absolute;
+  top: auto;
+  bottom: calc(100% + 14px);
+  left: 50%;
+  z-index: 30;
+  width: min(100%, 430px);
+  margin: 0;
+  padding: 25px 22px 22px;
+  border: 1px solid rgba(94, 94, 84, 0.23);
+  border-radius: 12px;
+  background: #fffdfa;
+  box-shadow: 0 16px 38px rgba(51, 49, 43, 0.17);
+  text-align: center;
+  transform: translateX(-50%);
+  animation: weddingRsvpReminderEnter 0.25s ease-out both;
+}
+
+.wedding-rsvp-reminder[hidden],
+.wedding-rsvp-reminder-error[hidden] {
+  display: none !important;
+}
+
+.wedding-rsvp-reminder::before {
+  content: "";
+  position: absolute;
+  top: auto;
+  bottom: -9px;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  background: #fffaf5;
+  border-right: 1px solid #ddd6cd;
+  border-bottom: 1px solid #ddd6cd;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.wedding-rsvp-reminder-eyebrow {
+  margin: 0 0 9px;
+  color: #8c997d;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.intro-wedding-pages-card .wedding-rsvp-reminder h3 {
+  margin: 0;
+  color: #4b4844;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.45rem, 5vw, 1.8rem);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+#weddingRsvpReminderDescription {
+  margin: 11px auto 18px;
+  color: #77716b;
+  font-size: 0.79rem;
+  line-height: 1.65;
+}
+
+.wedding-rsvp-reminder-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.wedding-rsvp-reminder-actions button {
+  min-height: 48px;
+  padding: 10px 12px;
+  border: 1px solid #4d4945;
+  border-radius: 6px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1.45;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.wedding-rsvp-reminder-yes {
+  background: #4d4945;
+  color: #fff;
+}
+
+.wedding-rsvp-reminder button {
+  border-radius: 0 !important;
+}
+
+.wedding-rsvp-reminder-yes:hover { background: #393632; }
+
+.wedding-rsvp-reminder-no {
+  background: #fffdfa;
+  color: #4d4945;
+}
+
+.wedding-rsvp-reminder-no:hover { background: #f0eee7; }
+
+.wedding-rsvp-reminder-actions button:focus-visible {
+  outline: 3px solid #8c997d;
+  outline-offset: 3px;
+}
+
+.wedding-rsvp-reminder-error {
+  margin-top: 14px;
+  color: #b13b38;
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+
+@keyframes weddingRsvpReminderEnter {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 7px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@media (max-width: 480px) {
+  .wedding-rsvp-reminder { padding: 18px 14px 16px; }
+  .wedding-rsvp-reminder-actions { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wedding-rsvp-reminder { animation: none; }
+}
+
 /* WEDDING SPA INSIDE INDEX.HTML */
 
 .wedding-spa-shell {
@@ -3302,7 +3445,7 @@ body.wedding-flip-active #pageTransitionLoader {
   --nav-height: 76px;
   --nav-active-size: 54px;
   --nav-bg: #ffffff;
-  --nav-active: #000000;
+  --nav-active: #dc4844;
   --nav-muted: #808080;
   --nav-bottom: 12px;
 }
@@ -3406,11 +3549,11 @@ body.wedding-flip-active #pageTransitionLoader {
   padding: 0;
   font-family: "Montserrat", sans-serif;
   font-size: 9px;
-  font-weight: 500;
+  font-weight: 600;       /* Slightly bolder */
   line-height: 1.2;
   color: var(--nav-muted);
   white-space: nowrap;
-  transform: none;
+  transform: translateY(-4px); /* Move label upward */
 }
 
 .curved-nav .nav-item.active {
@@ -3484,7 +3627,9 @@ body.wedding-flip-active #pageTransitionLoader {
   }
 
   .curved-nav .nav-label {
-    font-size: 7px;
+  font-size: 8px;
+  font-weight: 600;
+  transform: translateY(-4px);
   }
 
   .curved-nav .nav-item.active .nav-icon i {

@@ -575,24 +575,90 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Continue to the SPA while keeping the current index-to-home flip.
-  openWeddingPagesButton?.addEventListener('click', async () => {
+  // Ask guests to confirm their RSVP before opening the wedding SPA.
+  const rsvpReminder = $('#weddingRsvpReminder');
+  const rsvpYesButton = $('#weddingRsvpYesButton');
+  const rsvpNoButton = $('#weddingRsvpNoButton');
+  const rsvpReminderError = $('#weddingRsvpReminderError');
+  const rsvpSection = $('#introRsvpSection');
+  const rsvpSearchInput = $('#introRsvpSearch');
+  let rsvpFocusTimer = null;
+
+  function setRsvpReminderVisible(visible, restoreFocus = false) {
+    if (!rsvpReminder) return;
+    rsvpReminder.hidden = !visible;
+    openWeddingPagesButton?.setAttribute('aria-expanded', String(visible));
+    if (visible) {
+      if (rsvpReminderError) {
+        rsvpReminderError.hidden = true;
+        rsvpReminderError.textContent = '';
+      }
+      rsvpYesButton?.focus();
+    } else if (restoreFocus) {
+      openWeddingPagesButton?.focus();
+    }
+  }
+
+  openWeddingPagesButton?.addEventListener('click', () => {
+    if (openWeddingPagesButton.disabled || !rsvpReminder) return;
+    setRsvpReminderVisible(rsvpReminder.hidden);
+  });
+
+  rsvpYesButton?.addEventListener('click', async () => {
     if (openWeddingPagesButton.disabled) return;
+    // setRsvpReminderVisible(false);
     openWeddingPagesButton.disabled = true;
     try {
       if (typeof window.startWeddingSpa !== 'function') {
         throw new Error('Wedding SPA router is unavailable.');
       }
-      await window.startWeddingSpa('home');
+      const result = await window.startWeddingSpa('home');
+      if (result === false) throw new Error('Unable to load Wedding Home.');
     } catch (error) {
       console.error('Unable to open Wedding Home:', error);
+      setRsvpReminderVisible(true);
+      if (rsvpReminderError) {
+        rsvpReminderError.textContent = 'Unable to open the wedding pages. Please try again.';
+        rsvpReminderError.hidden = false;
+      }
     } finally {
       openWeddingPagesButton.disabled = false;
     }
   });
 
+  rsvpNoButton?.addEventListener('click', () => {
+    setRsvpReminderVisible(false);
+    if (!rsvpSection) return;
+
+    // The existing RSVP guest-search form stays unchanged.
+    rsvpSection.scrollIntoView({
+      behavior: reducedMotion.matches ? 'auto' : 'smooth',
+      block: 'start',
+    });
+    window.clearTimeout(rsvpFocusTimer);
+    rsvpFocusTimer = window.setTimeout(() => {
+      rsvpSearchInput?.focus({ preventScroll: true });
+      rsvpFocusTimer = null;
+    }, reducedMotion.matches ? 0 : 550);
+  });
+
+  // A non-modal dialog should close when the visitor clicks elsewhere.
+  document.addEventListener('pointerdown', (event) => {
+    if (!rsvpReminder || rsvpReminder.hidden) return;
+    if (rsvpReminder.contains(event.target) || openWeddingPagesButton?.contains(event.target)) return;
+    setRsvpReminderVisible(false);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape' || !rsvpReminder || rsvpReminder.hidden) return;
+    event.preventDefault();
+    setRsvpReminderVisible(false, true);
+  });
+
   // Browser Back / BFCache: restore the continue button and invitation sections.
   window.addEventListener('pageshow', () => {
+    setRsvpReminderVisible(false);
+    window.clearTimeout(rsvpFocusTimer);
     if (openWeddingPagesButton) {
       openWeddingPagesButton.disabled = false;
       gsap.set(openWeddingPagesButton, { clearProps: 'transform' });
