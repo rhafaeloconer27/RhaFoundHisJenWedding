@@ -372,47 +372,6 @@ document.addEventListener("DOMContentLoaded", () => {
     resetState();
   }
 
-  
-/* Keep RSVP guest search visible above mobile keyboard */
-function keepRsvpSearchVisible() {
-  if (!window.matchMedia("(max-width: 600px)").matches) {
-    return;
-  }
-
-  if (document.activeElement !== ui.searchInput) {
-    return;
-  }
-
-  ui.searchInput.scrollIntoView({
-    behavior: "instant",
-    block: "center",
-    inline: "nearest"
-  });
-}
-
-let keyboardScrollTimer;
-
-ui.searchInput.addEventListener("focus", () => {
-  clearTimeout(keyboardScrollTimer);
-
-  keyboardScrollTimer = setTimeout(
-    keepRsvpSearchVisible,
-    350
-  );
-});
-
-if (window.visualViewport) {
-  window.visualViewport.addEventListener("resize", () => {
-    clearTimeout(keyboardScrollTimer);
-
-    keyboardScrollTimer = setTimeout(
-      keepRsvpSearchVisible,
-      100
-    );
-  });
-}
-
-
   function searchGuests() {
     const query = normalizeForSearch(ui.searchInput.value);
     if (query.length < 2) {
