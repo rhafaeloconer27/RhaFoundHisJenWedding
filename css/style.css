@@ -3719,3 +3719,33 @@ body.wedding-flip-active #pageTransitionLoader {
   border-bottom: 1px solid #555555;
   transform: translateX(-50%) rotate(45deg);
 }
+
+
+/* MOBILE RSVP KEYBOARD FIX */
+@media (max-width: 600px) {
+
+  #introRsvpModal {
+    max-height: 100dvh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #introRsvpGuestStep {
+    scroll-margin-top: 20px;
+    scroll-margin-bottom: 24px;
+  }
+
+  #introRsvpSearch {
+    font-size: 16px; /* Prevent iPhone auto-zoom */
+    scroll-margin-top: 20px;
+    scroll-margin-bottom: 110px;
+  }
+
+  #introRsvpResults {
+    max-height: min(35dvh, 260px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+}
