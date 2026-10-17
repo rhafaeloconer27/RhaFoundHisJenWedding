@@ -1,34 +1,29 @@
-
 /* ==========================================================
-   ATTIRE PAGE
+   ATTIRE PAGE — OPTIMIZED / SPA SAFE
 ========================================================== */
 
 body[data-current-page="attire"] {
   background-color: #f7f2e8;
+  overflow-x: clip;
 }
 
 body[data-current-page="attire"] .attire-page {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   min-height: 100dvh;
-  padding-bottom: calc(
-    var(--nav-height) + 42px + env(safe-area-inset-bottom)
-  );
-
-  background: #f7f2e8
-    url("../../images/indexBackground.png")
-    center top / 680px auto repeat;
+  overflow-x: clip;
+  padding-bottom: calc(var(--nav-height) + 42px + env(safe-area-inset-bottom));
+  background: #f7f2e8 url("../../images/indexBackground.png") center top / 680px auto repeat;
 }
 
-
-/* ==========================================================
-   ATTIRE HERO IMAGE
-========================================================== */
-
-
+/* HERO */
 .attire-hero {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
+  min-width: 0;
   min-height: 0;
   padding: 10px 10px 0;
   background: transparent;
@@ -36,157 +31,74 @@ body[data-current-page="attire"] .attire-page {
 
 .attire-hero-parallax {
   width: min(100%, 540px);
+  min-width: 0;
   will-change: transform;
 }
 
-.attire-hero-image {
+.attire-hero-image,
+.attire-guest-showcase-image,
+.entourage-image-showcase img {
   display: block;
   width: 100%;
+  max-width: 100%;
   height: auto;
   object-fit: contain;
   transform-origin: center;
+  backface-visibility: hidden;
 }
 
-
-/* ==========================================================
-   ATTIRE PAGE HEADER
-========================================================== */
-
+/* PAGE TITLE */
 .attire-page-header {
   padding: 35px 20px 30px;
   text-align: center;
 }
 
+.attire-page-header p,
+.attire-page-header h1 {
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, .45), 0 4px 12px rgba(0, 0, 0, .25);
+}
+
 .attire-page-header p {
   margin: 0 0 8px;
-  color: #ffffff;
-  font-family: "Cormorant Garamond", serif;
-  font-size: 1.25rem;
-  font-style: italic;
-  font-weight: 700;
+  font: italic 700 1.25rem "Cormorant Garamond", serif;
 }
 
 .attire-page-header h1 {
   margin: 0;
-  color: #ffffff;
   font-family: "Allura", cursive;
   font-size: clamp(3.4rem, 12vw, 5rem);
   font-weight: 400;
   line-height: 1.1;
-  -webkit-text-stroke: 0.7px #ffffff;
+  -webkit-text-stroke: .7px #fff;
 }
 
-.attire-page-header p,
-.attire-page-header h1 {
-  text-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.45),
-    0 4px 12px rgba(0, 0, 0, 0.25);
-}
-
-/* ==========================================================
-   MOBILE
-========================================================== */
-
-@media (max-width: 600px) {
-  .attire-hero {
-    padding: 10px 10px 0;
-  }
-
-  .attire-hero-image {
-    width: 100%;
-  }
-
-  .attire-page-header {
-    padding: 30px 16px 25px;
-  }
-
-  .attire-page-header h1 {
-    font-size: clamp(3rem, 12vw, 4.3rem);
-  }
-}
-
-
-/* ==========================================================
-   ATTIRE CONTENT
-========================================================== */
-
+/* CONTENT AND SHARED CARDS */
 .attire-section {
   display: grid;
   gap: 22px;
-
-  padding: 28px 16px
-    calc(var(--nav-height) + 38px + env(safe-area-inset-bottom));
-
+  width: 100%;
+  min-width: 0;
+  padding: 28px 16px calc(var(--nav-height) + 38px + env(safe-area-inset-bottom));
   background: transparent;
 }
 
-/* ==========================================================
-   SHARED CARDS
-========================================================== */
+.attire-section > * { min-width: 0; }
 
 .attire-intro-card,
 .attire-category-card {
   width: min(100%, 680px);
   margin-inline: auto;
   padding: 30px 22px;
-
-  border: 1px solid rgba(92, 94, 90, 0.14);
+  border: 1px solid rgba(92, 94, 90, .14);
   border-radius: 18px;
-
-  background: rgba(255, 255, 255, 0.97);
-  box-shadow: 0 14px 36px rgba(49, 52, 48, 0.12);
+  background: rgba(255, 255, 255, .97);
+  box-shadow: 0 14px 36px rgba(49, 52, 48, .12);
 }
 
-.attire-intro-card,
+.guest-attire-card { text-align: center; }
 
-/* GUEST ATTIRE INFORMATION */
-
-.guest-attire-card {
-  width: min(100%, 680px);
-  margin-inline: auto;
-  text-align: center;
-}
-
-.guest-attire-card .guest-attire-guidelines {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 14px;
-  margin-top: 30px;
-}
-
-.guest-attire-card .guest-color-grid {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 8px;
-  margin-top: 18px;
-}
-
-.guest-attire-card .guest-color-option {
-  min-width: 0;
-}
-
-.guest-attire-card .guest-swatch {
-  width: 100%;
-  max-width: 72px;
-  aspect-ratio: 1;
-  border-radius: 50%;
-}
-
-@media (max-width: 600px) {
-  .guest-attire-card .guest-color-grid {
-    gap: 5px;
-  }
-
-  .guest-attire-card .guest-color-option small {
-    font-size: 0.5rem;
-  }
-}
-
-
-/* ==========================================================
-   SHARED TYPOGRAPHY
-========================================================== */
-
+/* TYPOGRAPHY */
 .attire-intro-card h2,
 .attire-category-header h2,
 .guest-attire-card > h2,
@@ -216,33 +128,24 @@ body[data-current-page="attire"] .attire-page {
 .guest-attire-description {
   max-width: 520px;
   margin: 13px auto 0;
-
   color: #666a63;
   font-size: 1.05rem;
   line-height: 1.55;
   text-align: center;
 }
 
-/* ==========================================================
-   INTRO CARD
-========================================================== */
-
 .attire-card-icon {
   display: grid;
   place-items: center;
-
   width: 58px;
   height: 58px;
   margin: 0 auto 18px;
-
   border-radius: 50%;
-  background: rgba(105, 108, 103, 0.11);
+  background: rgba(105, 108, 103, .11);
   color: var(--sage-dark);
 }
 
-.attire-card-icon i {
-  font-size: 22px;
-}
+.attire-card-icon i { font-size: 22px; }
 
 .attire-eyebrow,
 .attire-role,
@@ -254,25 +157,23 @@ body[data-current-page="attire"] .attire-page {
 .attire-eyebrow {
   margin-bottom: 8px;
   color: var(--gold);
-
-  font-size: 0.68rem;
-  letter-spacing: 0.15em;
+  font-size: .68rem;
+  letter-spacing: .15em;
   text-align: center;
 }
 
-/* ==========================================================
-   COLOR PALETTE
-========================================================== */
-
-.attire-palette {
+/* GRAYSCALE PALETTE */
+.attire-palette,
+.guest-attire-card .guest-color-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 8px;
+}
 
+.attire-palette {
   width: min(100%, 440px);
   height: auto;
   margin: 25px auto 0;
-
   overflow: visible;
   border: none;
   border-radius: 0;
@@ -286,142 +187,60 @@ body[data-current-page="attire"] .attire-page {
   min-width: 0;
 }
 
-.attire-palette .guest-swatch {
-  display: block;
+.attire-palette .guest-swatch,
+.guest-attire-card .guest-swatch {
   width: 100%;
   max-width: 72px;
   aspect-ratio: 1;
   border-radius: 50%;
-  border: 1px solid rgba(65, 67, 63, 0.13);
-  box-shadow: 0 4px 12px rgba(35, 37, 34, 0.08);
+}
+
+.attire-palette .guest-swatch {
+  display: block;
+  border: 1px solid rgba(65, 67, 63, .13);
+  box-shadow: 0 4px 12px rgba(35, 37, 34, .08);
 }
 
 .attire-palette .guest-color-option small {
   color: var(--muted);
-  font-size: 0.56rem;
+  font-size: .56rem;
   font-weight: 600;
   line-height: 1.2;
   text-align: center;
   text-transform: uppercase;
 }
 
-/* Shared grayscale colors */
-
-.attire-color-dark,
-.guest-swatch.charcoal {
-  background: #555555;
-}
-
-.attire-color-slate,
-.guest-swatch.dark-gray {
-  background: #808080;
-}
-
-.attire-color-gray,
-.guest-swatch.medium-gray {
-  background: #a5a5a5;
-}
-
-.attire-color-silver,
-.guest-swatch.silver {
-  background: #bdbdbd;
-}
-
-.attire-color-light,
-.guest-swatch.light-gray {
-  background: #d8d8d8;
-}
+.attire-color-dark, .guest-swatch.charcoal { background: #555; }
+.attire-color-slate, .guest-swatch.dark-gray { background: #808080; }
+.attire-color-gray, .guest-swatch.medium-gray { background: #a5a5a5; }
+.attire-color-silver, .guest-swatch.silver { background: #bdbdbd; }
+.attire-color-light, .guest-swatch.light-gray { background: #d8d8d8; }
 
 .attire-palette-note {
   margin-top: 11px;
   color: var(--muted);
-
-  font-size: 0.66rem;
+  font-size: .66rem;
   font-weight: 500;
-  letter-spacing: 0.07em;
-
+  letter-spacing: .07em;
   text-align: center;
   text-transform: uppercase;
 }
 
-/* ==========================================================
-   ATTIRE CATEGORY
-========================================================== */
-
+/* CATEGORY AND OUTFIT CARDS */
 .attire-category-header {
   margin-bottom: 25px;
   text-align: center;
 }
 
-.attire-outfit-grid,
-.guest-attire-guidelines {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.attire-outfit-grid {
-  gap: 16px;
-}
-
 .attire-outfit-card {
   display: flex;
   flex-direction: column;
-
   min-width: 0;
   overflow: hidden;
-
-  border: 1px solid rgba(92, 94, 90, 0.12);
+  border: 1px solid rgba(92, 94, 90, .12);
   border-radius: 14px;
-  background: rgba(243, 244, 241, 0.78);
+  background: rgba(243, 244, 241, .78);
 }
-
-/* ==========================================================
-   OUTFIT IMAGES
-========================================================== */
-
-.attire-image-frame {
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-
-  min-width: 0;
-  height: 310px;
-  padding: 14px 10px 0;
-
-  overflow: hidden;
-
-  background: radial-gradient(
-    circle at center,
-    #ffffff,
-    #f0f1ee 72%,
-    #e5e7e2
-  );
-}
-
-.attire-image-frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center bottom;
-}
-
-.attire-women-gallery {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  min-width: 0;
-}
-
-.attire-women-gallery .attire-image-frame {
-  padding-inline: 2px;
-}
-
-.attire-women-gallery .attire-image-frame:first-child {
-  border-right: 1px solid rgba(92, 94, 90, 0.1);
-}
-
-/* ==========================================================
-   OUTFIT CONTENT
-========================================================== */
 
 .attire-outfit-content {
   flex: 1;
@@ -432,10 +251,9 @@ body[data-current-page="attire"] .attire-page {
 .attire-role {
   display: block;
   margin-bottom: 6px;
-
   color: var(--gold);
-  font-size: 0.62rem;
-  letter-spacing: 0.11em;
+  font-size: .62rem;
+  letter-spacing: .11em;
 }
 
 .attire-outfit-content h3 {
@@ -448,29 +266,32 @@ body[data-current-page="attire"] .attire-page {
 .attire-outfit-content p {
   margin-top: 9px;
   color: #74776f;
-  font-size: 0.96rem;
+  font-size: .96rem;
   line-height: 1.45;
 }
 
-/* ==========================================================
-   GUEST ATTIRE
-========================================================== */
-
-.guest-attire-guidelines {
+/* GUEST GUIDELINES */
+.guest-attire-guidelines,
+.guest-attire-card .guest-attire-guidelines {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 14px;
   margin-top: 25px;
   text-align: left;
 }
 
+.guest-attire-card .guest-attire-guidelines { margin-top: 30px; }
+.guest-attire-card .guest-color-grid { margin-top: 18px; }
+.guest-attire-card .guest-color-option { min-width: 0; }
+
 .guest-attire-item {
   display: grid;
   grid-template-columns: 38px minmax(0, 1fr);
-  align-items: flex-start;
+  align-items: start;
   gap: 11px;
-
   padding: 15px;
   border-radius: 12px;
-  background: rgba(100, 104, 98, 0.07);
+  background: rgba(100, 104, 98, .07);
 }
 
 .guest-attire-item > i {
@@ -484,83 +305,30 @@ body[data-current-page="attire"] .attire-page {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  min-width: 0;
 }
 
 .guest-attire-item span {
   color: var(--muted);
-  font-size: 0.62rem;
-  letter-spacing: 0.1em;
+  font-size: .62rem;
+  letter-spacing: .1em;
 }
 
 .guest-attire-item strong {
   color: #50544e;
-  font-size: 0.98rem;
+  font-size: .98rem;
   font-weight: 600;
   line-height: 1.4;
 }
-
-/* ==========================================================
-   GUEST RECOMMENDED COLORS
-========================================================== */
-
-.guest-color-theme {
-  margin-top: 27px;
-}
-
-.guest-color-theme h3 {
-  margin-bottom: 16px;
-  color: var(--sage-dark);
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-.guest-color-grid {
-  gap: 8px;
-}
-
-.guest-color-option {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  min-width: 0;
-  gap: 7px;
-}
-
-.guest-swatch {
-  display: block;
-  width: 100%;
-  max-width: 72px;
-  aspect-ratio: 1;
-
-  border: 1px solid rgba(65, 67, 63, 0.13);
-  border-radius: 50%;
-  box-shadow: 0 4px 12px rgba(35, 37, 34, 0.08);
-}
-
-.guest-color-option small {
-  color: var(--muted);
-  font-size: 0.56rem;
-  font-weight: 600;
-  line-height: 1.2;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-/* ==========================================================
-   GUEST REMINDER
-========================================================== */
 
 .attire-reminder {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-
   margin-top: 26px;
   padding: 14px 15px;
-
   border-radius: 12px;
-  background: rgba(183, 160, 106, 0.11);
+  background: rgba(183, 160, 106, .11);
   color: #6b634e;
   text-align: left;
 }
@@ -571,44 +339,65 @@ body[data-current-page="attire"] .attire-page {
 }
 
 .attire-reminder p {
-  font-size: 0.95rem;
+  font-size: .95rem;
   line-height: 1.4;
 }
 
-/* ==========================================================
-   MOBILE RESPONSIVE
-========================================================== */
+/* FULL-WIDTH IMAGE SHOWCASES */
+.attire-guest-showcase,
+.entourage-group {
+  width: min(100%, 680px);
+  min-width: 0;
+  margin-inline: auto;
+}
 
+.attire-guest-showcase {
+  padding: 0;
+  overflow: visible;
+  text-align: center;
+}
+
+.entourage-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.entourage-description-card {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid rgba(92, 94, 90, .14);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .97);
+  box-shadow: 0 14px 36px rgba(49, 52, 48, .12);
+}
+
+.entourage-description-card .attire-outfit-content {
+  padding: 24px 20px;
+  text-align: center;
+}
+
+.entourage-image-showcase {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  overflow: clip;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* MOBILE */
 @media (max-width: 600px) {
-
-  /* Hero image */
-
-  .attire-hero {
-    padding: 30px 10px 0;
-  }
-
-  .attire-hero-image {
-    width: 100%;
-  }
-
-  /* Header */
-
-  .attire-page-header {
-    padding: 10px 16px 20px;
-  }
-
-  .attire-page-header h1 {
-    font-size: clamp(3rem, 12vw, 4.3rem);
-  }
-
-  /* Content */
+  .attire-hero { padding: 30px 10px 0; }
+  .attire-page-header { padding: 10px 16px 20px; }
+  .attire-page-header h1 { font-size: clamp(3rem, 12vw, 4.3rem); }
 
   .attire-section {
-    padding: 18px 12px
-      calc(var(--nav-height) + 38px + env(safe-area-inset-bottom));
+    padding: 18px 12px calc(var(--nav-height) + 38px + env(safe-area-inset-bottom));
   }
-
-  /* Cards */
 
   .attire-intro-card,
   .attire-category-card {
@@ -616,62 +405,13 @@ body[data-current-page="attire"] .attire-page {
     border-radius: 15px;
   }
 
-  /* Outfit layout */
+  .attire-palette,
+  .guest-attire-card .guest-color-grid { gap: 5px; }
 
-  .attire-outfit-grid,
-  .guest-attire-guidelines {
-    grid-template-columns: 1fr;
-  }
+  .attire-palette .guest-color-option small,
+  .guest-attire-card .guest-color-option small { font-size: .5rem; }
 
-  .attire-image-frame {
-    height: 290px;
-  }
-
-  /* Palette */
-
-  .attire-palette {
-    gap: 5px;
-  }
-
-  .attire-palette .guest-color-option small {
-    font-size: 0.5rem;
-  }
-
-  .guest-color-grid {
-    gap: 5px;
-  }
-
-  .guest-color-option small {
-    font-size: 0.5rem;
-  }
+  .entourage-group { gap: 8px; }
+  .entourage-description-card { border-radius: 15px; }
+  .entourage-description-card .attire-outfit-content { padding: 24px 16px; }
 }
-
-
-/* ==========================================================
-   GUEST ATTIRE SHOWCASE
-========================================================== */
-
-.attire-guest-showcase {
-  width: min(100%, 680px);
-  margin: 0 auto;
-  padding: 0;
-  overflow: visible;
-  text-align: center;
-}
-
-.attire-guest-showcase-image {
-  display: block;
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  transform-origin: center center;
-  backface-visibility: hidden;
-}
-
-/* MOBILE */
-@media (max-width: 600px) {
-  .attire-guest-showcase {
-    width: 100%;
-  }
-}
-
