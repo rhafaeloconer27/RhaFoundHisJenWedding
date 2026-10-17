@@ -1,126 +1,68 @@
-<!-- =====================================================
-     GIFT GUIDE PAGE PARTIAL
-
-     Important:
-     - No <!DOCTYPE html>
-     - No <html>
-     - No <head>
-     - No <body>
-     - No navigation
-     - No scripts
-
-     Loaded inside:
-     <div id="app"></div>
-====================================================== -->
-
+<!-- Gift Guide SPA partial -->
 <main class="page-container gift-page">
-
-  <!-- GIFT HERO -->
-
-  <section class="page-hero small-hero gift-hero">
-
-    <div class="page-hero-overlay"></div>
-
-    <div class="page-hero-content">
-      <p>Your presence is our greatest gift</p>
-
-      <h1>
-        Gift Guide
-      </h1>
+  <section class="gift-hero" aria-label="Wedding gift animation">
+    <div class="gift-hero-lottie-circle">
+      <lottie-player id="giftMoneyLottie" class="gift-hero-lottie" src="images/moneyGift.json" background="transparent" speed="1" loop autoplay aria-label="Animated wedding gift"></lottie-player>
     </div>
-
   </section>
 
-  <!-- GIFT CONTENT -->
+  <header class="gift-page-header">
+    <p>Your presence is our greatest gift</p>
+    <h1 id="gift-page-title">Gift Guide</h1>
+  </header>
 
   <section class="content-section gift-section">
-
     <article class="gift-card">
-
-      <!-- ICON -->
-
-      <div
-        class="gift-card-icon"
-        aria-hidden="true"
-      >
-        <i class="fa-solid fa-gift"></i>
-      </div>
-
-      <p class="gift-card-label">
-        A Note from the Couple
-      </p>
-
-      <h2 class="gift-card-title">
-        With Love and Gratitude
-      </h2>
-
+      <div class="gift-card-icon" aria-hidden="true"><i class="fa-solid fa-gift"></i></div>
+      <p class="gift-card-label">A Note from the Couple</p>
+      <h2 class="gift-card-title">With Love and Gratitude</h2>
       <div class="gift-message">
-
-        <p>
-          Your presence at our wedding is the greatest gift
-          we could ever ask for.
-        </p>
-
-        <p>
-          However, if you wish to honor us with a gift,
-          a monetary blessing would be deeply appreciated
-          as we begin our journey together as husband and wife.
-        </p>
-
-        <p>
-          Your thoughtful contribution will help us build
-          our future, create a home filled with love,
-          and make lasting memories as newlyweds.
-        </p>
-
+        <p>Your presence at our wedding is the greatest gift we could ever ask for.</p>
+        <p>As we begin our journey as husband and wife, your love, prayers, and support mean so much to us. Should you wish to honor us with a gift, a monetary blessing would be sincerely appreciated as we build our future together.</p>
       </div>
-
-      <!-- DECORATIVE DIVIDER -->
-
-      <div
-        class="gift-divider"
-        aria-hidden="true"
-      >
-        <span></span>
-        <i class="fa-solid fa-heart"></i>
-        <span></span>
-      </div>
-
-      <!-- THANK YOU MESSAGE -->
-
-      <p class="gift-thank-you">
-        Thank you for your love, prayers, and support.
-      </p>
-
-      <p class="gift-signature">
-        With love,
-        <strong>Rhaf &amp; Jen</strong>
-      </p>
-
+      <div class="gift-divider" aria-hidden="true"><span></span><i class="fa-solid fa-heart"></i><span></span></div>
+      <p class="gift-thank-you">Thank you for celebrating this beautiful chapter of our lives.</p>
+      <p class="gift-signature">With love, <strong><span>Rhaf</span> <em>&amp;</em> <span>Jen</span></strong></p>
     </article>
-
-    <!-- OPTIONAL REMINDER -->
 
     <article class="gift-reminder-card">
-
-      <i
-        class="fa-regular fa-envelope"
-        aria-hidden="true"
-      ></i>
-
+      <i class="fa-regular fa-envelope" aria-hidden="true"></i>
       <div>
-        <h3>
-          A Gentle Reminder
-        </h3>
-
-        <p>
-          Gifts are never required. Celebrating this special
-          day with you is already more than enough for us.
-        </p>
+        <h3>A Gentle Reminder</h3>
+        <p>Gifts are never required. Celebrating this special day with you is already more than enough for us.</p>
       </div>
-
     </article>
 
+    <section class="gift-payment-section" aria-labelledby="gift-payment-title">
+      <div class="gift-payment-heading">
+        <span class="gift-payment-eyebrow">A Little Way to Share Your Love</span>
+        <h2 id="gift-payment-title">A Gift, If You Wish</h2>
+        <p>For those who prefer to send a monetary gift digitally, you may use either option below.</p>
+      </div>
+
+      <div class="gift-payment-grid">
+        <article class="gift-payment-card">
+          <button type="button" class="gift-qr-button" data-qr-src="images/gcash.jpg" data-qr-title="GCash" aria-label="View GCash QR code">
+            <span class="gift-qr-frame"><img src="images/gcash.jpg" alt="GCash QR code" loading="lazy" decoding="async"></span>
+            <span class="gift-qr-view"><i class="fa-solid fa-expand" aria-hidden="true"></i> Click to view</span>
+          </button>
+        </article>
+        <article class="gift-payment-card">
+          <button type="button" class="gift-qr-button" data-qr-src="images/securitybank.jpg" data-qr-title="Security Bank" aria-label="View Security Bank QR code">
+            <span class="gift-qr-frame"><img src="images/securitybank.jpg" alt="Security Bank QR code" loading="lazy" decoding="async"></span>
+            <span class="gift-qr-view"><i class="fa-solid fa-expand" aria-hidden="true"></i> Click to view</span>
+          </button>
+        </article>
+      </div>
+    </section>
   </section>
 
+  <div id="giftQrModal" class="gift-qr-modal" role="dialog" aria-modal="true" aria-labelledby="giftQrModalTitle" aria-hidden="true" hidden>
+    <div class="gift-qr-modal-content">
+      <button type="button" class="gift-qr-close" aria-label="Close QR popup"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+      <h2 id="giftQrModalTitle">QR Code</h2>
+      <img id="giftQrModalImage" alt="Payment QR code">
+      <p>Scan this QR code to send your gift.</p>
+    </div>
+  </div>
 </main>

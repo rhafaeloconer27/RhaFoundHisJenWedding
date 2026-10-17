@@ -655,11 +655,10 @@ if (colorCircles.length) {
       behavior: reducedMotion.matches ? 'auto' : 'smooth',
       block: 'start',
     });
-    window.clearTimeout(rsvpFocusTimer);
-    rsvpFocusTimer = window.setTimeout(() => {
-      rsvpSearchInput?.focus({ preventScroll: true });
-      rsvpFocusTimer = null;
-    }, reducedMotion.matches ? 0 : 550);
+   rsvpSection.scrollIntoView({
+    behavior: reducedMotion.matches ? 'auto' : 'smooth',
+    block: 'start'
+  });
   });
 
   // A non-modal dialog should close when the visitor clicks elsewhere.

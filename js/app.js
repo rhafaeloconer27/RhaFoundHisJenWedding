@@ -63,7 +63,9 @@ document.addEventListener("DOMContentLoaded", () => {
     gift: {
       file: "pages/gift/gift.html",
       css: "pages/gift/gift.css",
+      js: "pages/gift/giftGuide.js",
       title: "Gift Guide | Rhaf & Jen",
+  hook: "GiftGuide"
     },
     faq: {
       file: "pages/faq/faq.html",
@@ -80,9 +82,14 @@ document.addEventListener("DOMContentLoaded", () => {
     ".hero-countdown",
     ".page-hero-content",
     ".rsvp-section > *",
-    ".gift-section > *",
   ];
-  const ownScrollAnimationPages = new Set(["sponsors", "location", "attire", "faq"]);
+  const ownScrollAnimationPages = new Set([
+  "sponsors",
+  "location",
+  "attire",
+  "gift",
+  "faq"
+]);
   const sectionAnimationSelectors = {
     sponsors: [".sponsors-section > *"],
     location: [".location-section > *"],
