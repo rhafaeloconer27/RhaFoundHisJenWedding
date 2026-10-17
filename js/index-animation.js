@@ -624,6 +624,15 @@ if (colorCircles.length) {
     setRsvpReminderVisible(rsvpReminder.hidden);
   });
 
+  // Reuse the original wedding transition after successful RSVP.
+  window.openWeddingAfterRsvp = async () => {
+    if (typeof window.startWeddingSpa !== 'function') {
+      throw new Error('Wedding SPA router is unavailable.');
+    }
+    const result = await window.startWeddingSpa('home');
+    if (result === false) throw new Error('Unable to load Wedding Home.');
+  };
+
   rsvpYesButton?.addEventListener('click', async () => {
     if (openWeddingPagesButton.disabled) return;
     // setRsvpReminderVisible(false);
@@ -688,3 +697,96 @@ if (colorCircles.length) {
     });
   });
 });
+
+/* =========================================================
+   INDEX GIFT GUIDE - GCASH / SECURITY BANK QR POPUP
+   Requires the introGiftQrModal HTML and payment buttons.
+========================================================= */
+(() => {
+  function initializeIntroGiftQR() {
+    const modal = document.getElementById('introGiftQrModal');
+    if (!modal || modal.dataset.initialized === 'true') return;
+
+    const image = modal.querySelector('#introGiftQrImage');
+    const title = modal.querySelector('#introGiftQrTitle');
+    const closeButton = modal.querySelector('.intro-gift-qr-close');
+    const panel = modal.querySelector('.intro-gift-qr-content');
+    if (!image || !title || !closeButton || !panel) return;
+
+    modal.dataset.initialized = 'true';
+    // Prevent parent transforms/scroll animations from clipping the overlay.
+    document.body.appendChild(modal);
+
+    let previousFocus = null;
+    let previousOverflow = '';
+    let closing = false;
+
+    function openModal(button) {
+      if (!modal.hidden) return;
+      previousFocus = button;
+      title.textContent = button.dataset.qrTitle || 'QR Code';
+      image.src = button.dataset.qrSrc || '';
+      image.alt = `${title.textContent} QR code`;
+      previousOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      closing = false;
+      modal.hidden = false;
+      modal.setAttribute('aria-hidden', 'false');
+
+      if (window.gsap && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        gsap.killTweensOf([modal, panel]);
+        gsap.fromTo(modal, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.25 });
+        gsap.fromTo(panel, { autoAlpha: 0, y: 30, scale: 0.9 }, {
+          autoAlpha: 1, y: 0, scale: 1, duration: 0.4, ease: 'back.out(1.5)'
+        });
+      }
+      closeButton.focus();
+    }
+
+    function closeModal() {
+      if (modal.hidden || closing) return;
+      closing = true;
+
+      function finishClose() {
+        modal.hidden = true;
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = previousOverflow;
+        if (window.gsap) gsap.set([modal, panel], { clearProps: 'all' });
+        closing = false;
+        previousFocus?.focus();
+      }
+
+      if (window.gsap && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        gsap.killTweensOf([modal, panel]);
+        gsap.to(panel, { autoAlpha: 0, y: 15, duration: 0.2 });
+        gsap.to(modal, { autoAlpha: 0, duration: 0.23, onComplete: finishClose });
+      } else {
+        finishClose();
+      }
+    }
+
+    document.querySelectorAll('.intro-gift-payment-button').forEach(button => {
+      button.addEventListener('click', () => openModal(button));
+    });
+    closeButton.addEventListener('click', closeModal);
+    modal.addEventListener('click', event => {
+      if (event.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', event => {
+      if (modal.hidden) return;
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeModal();
+      } else if (event.key === 'Tab') {
+        event.preventDefault();
+        closeButton.focus();
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeIntroGiftQR);
+  } else {
+    initializeIntroGiftQR();
+  }
+})();

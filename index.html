@@ -223,6 +223,58 @@
             <p class="intro-gift-thank-you">Thank you for celebrating this beautiful chapter of our lives.</p>
             <p class="intro-gift-signature">With love,</p>
             <h1 class="intro-message-signature-name">Rhaf <span>&amp; </span> Jen</h1>
+            <!-- DIGITAL GIFT OPTIONS -->
+
+  <p class="intro-gift-payment-description">
+    For those who prefer to send a monetary gift digitally,
+    you may use either option below.
+  </p>
+
+  <div class="intro-gift-payment-options">
+  <button
+    type="button"
+    class="intro-gift-payment-button"
+    data-qr-title="GCash"
+    data-qr-src="images/gcash.jpg"
+    aria-label="View GCash QR code"
+  >
+    <img src="images/gcashIcon.png" alt="GCash" />
+  </button>
+
+  <button
+    type="button"
+    class="intro-gift-payment-button"
+    data-qr-title="Security Bank"
+    data-qr-src="images/securitybank.jpg"
+    aria-label="View Security Bank QR code"
+  >
+    <img src="images/securitybankIcon.png" alt="Security Bank" />
+  </button>
+</div>
+
+<!-- QR POPUP -->
+<div id="introGiftQrModal"
+     class="intro-gift-qr-modal"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="introGiftQrTitle"
+     aria-hidden="true"
+     hidden>
+
+  <div class="intro-gift-qr-content">
+    <button type="button"
+            class="intro-gift-qr-close"
+            aria-label="Close QR popup">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <h2 id="introGiftQrTitle">QR Code</h2>
+
+    <img id="introGiftQrImage" alt="Payment QR code">
+
+    <p>Scan this QR code to send your gift.</p>
+  </div>
+</div>
           </article>
           <article class="intro-gift-reminder">
             <i class="fa-regular fa-envelope" aria-hidden="true"></i>
@@ -403,51 +455,7 @@
             ></lottie-player>
           </div>
         </div>
-        <section class="intro-wedding-pages-section" aria-label="Continue to wedding pages">
-          <div class="intro-wedding-pages-card">
-            <p class="intro-wedding-pages-eyebrow">The Celebration Continues</p>
-            <h2>There’s More to Explore</h2>
-            <p class="intro-wedding-pages-description">Continue to our wedding pages for more details, memories, and everything we’ve prepared for our special day.</p>
-            <div class="wedding-continue-tooltip-anchor">
-            <button
-              type="button"
-              class="intro-wedding-pages-button"
-              id="openWeddingPagesButton"
-              aria-controls="weddingRsvpReminder"
-              aria-expanded="false"
-            >
-              <span>Continue to Our Wedding</span>
-              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-            </button>
 
-            <!-- Interactive RSVP confirmation tooltip anchored to the Continue button. -->
-            <div
-              id="weddingRsvpReminder"
-              class="wedding-rsvp-reminder"
-              role="dialog"
-              aria-modal="false"
-              aria-labelledby="weddingRsvpReminderTitle"
-              aria-describedby="weddingRsvpReminderDescription"
-              hidden
-            >
-              <p class="wedding-rsvp-reminder-eyebrow">One little thing 💌</p>
-              <h3 id="weddingRsvpReminderTitle">Have you submitted your RSVP?</h3>
-              <p id="weddingRsvpReminderDescription">
-                Please let us know if you're coming before exploring our wedding pages.
-              </p>
-              <div class="wedding-rsvp-reminder-actions">
-                <button type="button" id="weddingRsvpYesButton" class="wedding-rsvp-reminder-yes">
-                  Yes, I've submitted
-                </button>
-                <button type="button" id="weddingRsvpNoButton" class="wedding-rsvp-reminder-no">
-                  No, take me to RSVP
-                </button>
-              </div>
-              <p id="weddingRsvpReminderError" class="wedding-rsvp-reminder-error" role="alert" hidden></p>
-            </div>
-            </div>
-          </div>
-        </section>
       </section>
     </main>
     <div class="rsvp-success-celebration" id="rsvpSuccessCelebration" aria-hidden="false">
