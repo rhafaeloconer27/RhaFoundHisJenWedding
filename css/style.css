@@ -3871,3 +3871,225 @@ body.wedding-flip-active #pageTransitionLoader {
 #introRsvpSearchButton {
   transform: translateX(16px);
 }
+
+
+/* ==========================================================
+   CONTINUE TO WEDDING PAGES
+========================================================== */
+
+.intro-wedding-pages-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  padding: 70px 18px 110px;
+}
+
+.intro-wedding-pages-card {
+  width: min(100%, 520px);
+  margin: 0 auto;
+  padding: 42px 32px;
+
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow: 0 25px 65px rgba(0, 0, 0, 0.18);
+
+  text-align: center;
+
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.intro-wedding-pages-eyebrow {
+  margin-bottom: 12px;
+
+  color: #dc4844;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.intro-wedding-pages-card h2 {
+  color: #5d6258;
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2rem, 7vw, 2.7rem);
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.intro-wedding-pages-description {
+  max-width: 420px;
+  margin: 18px auto 28px;
+
+  color: #74736c;
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.12rem;
+  line-height: 1.6;
+}
+
+/* Continue button */
+
+.wedding-continue-tooltip-anchor {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.intro-wedding-pages-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  min-height: 50px;
+  padding: 15px 24px;
+
+  border: none;
+  border-radius: 999px;
+
+  background: #dc4844;
+  color: #ffffff;
+
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+
+  cursor: pointer;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.intro-wedding-pages-button:hover {
+  transform: translateY(-3px);
+  opacity: 0.92;
+}
+
+.intro-wedding-pages-button i {
+  font-size: 14px;
+}
+
+/* RSVP tooltip */
+
+.wedding-rsvp-reminder {
+  position: absolute;
+  bottom: calc(100% + 16px);
+  left: 50%;
+  z-index: 20;
+
+  width: min(340px, calc(100vw - 44px));
+  padding: 24px 20px;
+
+  transform: translateX(-50%);
+
+  border: 1px solid rgba(111, 125, 99, 0.18);
+  border-radius: 16px;
+
+  background: #ffffff;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
+
+  text-align: center;
+}
+
+.wedding-rsvp-reminder[hidden],
+.wedding-rsvp-reminder-error[hidden] {
+  display: none !important;
+}
+
+.wedding-rsvp-reminder-eyebrow {
+  margin-bottom: 10px;
+
+  color: #dc4844;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.wedding-rsvp-reminder h3 {
+  color: #5d6258;
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.55rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+#weddingRsvpReminderDescription {
+  margin: 12px 0 20px;
+
+  color: #74736c;
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+.wedding-rsvp-reminder-actions {
+  display: grid;
+  gap: 10px;
+}
+
+.wedding-rsvp-reminder-actions button {
+  width: 100%;
+  padding: 12px 14px;
+
+  border-radius: 10px;
+
+  font-size: 0.72rem;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.wedding-rsvp-reminder-yes {
+  border: none;
+  background: #dc4844;
+  color: #ffffff;
+}
+
+.wedding-rsvp-reminder-no {
+  border: 1px solid rgba(220, 72, 68, 0.3);
+  background: #ffffff;
+  color: #dc4844;
+}
+
+.wedding-rsvp-reminder-error {
+  margin-top: 12px;
+  color: #dc4844;
+  font-size: 0.75rem;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .intro-wedding-pages-section {
+    padding: 55px 12px 90px;
+  }
+
+  .intro-wedding-pages-card {
+    width: 100%;
+    padding: 34px 20px;
+  }
+
+  .intro-wedding-pages-eyebrow {
+    font-size: 0.61rem;
+  }
+
+  .intro-wedding-pages-card h2 {
+    font-size: 2rem;
+  }
+
+  .intro-wedding-pages-description {
+    font-size: 1rem;
+  }
+
+  .intro-wedding-pages-button {
+    width: 100%;
+    padding: 15px 16px;
+    font-size: 0.7rem;
+  }
+}

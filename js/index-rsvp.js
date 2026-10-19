@@ -1358,20 +1358,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.body.style.overflow = "hidden";
 
-    successTimeout = window.setTimeout(() => {
+   
+successTimeout = window.setTimeout(() => {
+  hideSuccess();
 
-      hideSuccess();
+  // Only guests who joyfully accepted will automatically
+  // continue to the Wedding Home page.
+  if (accepting) {
+    Promise.resolve()
+      .then(() => window.openWeddingAfterRsvp())
+      .catch((error) => {
+        console.error("[INDEX RSVP] Unable to open Wedding Home:", error);
+        alert("Unable to open the wedding pages. Please try again.");
+      });
+  }
 
-      // The original Wedding Home transition starts automatically.
-      // Keep the same transition function used by the former Continue button.
-      Promise.resolve()
-        .then(() => window.openWeddingAfterRsvp())
-        .catch((error) => {
-          console.error("[INDEX RSVP] Unable to open Wedding Home:", error);
-          alert("Unable to open the wedding pages. Please refresh and try again.");
-        });
+  // Regretfully declined:
+  // Stay on the invitation page without redirecting.
 
-    }, SUCCESS_CELEBRATION_TIME_MS);
+}, SUCCESS_CELEBRATION_TIME_MS);
+
 
   }
 
