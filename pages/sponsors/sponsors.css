@@ -1,4 +1,3 @@
-
 /* ==========================================================
    SPONSORS PAGE
 ========================================================== */
@@ -8,34 +7,102 @@ body[data-current-page="sponsors"] {
 }
 
 body[data-current-page="sponsors"] .sponsors-page {
-  min-height: 100vh;
   min-height: 100dvh;
+  padding-bottom: calc(var(--nav-height) + 42px + env(safe-area-inset-bottom));
 
-  padding-bottom:
-    calc(var(--nav-height) + 42px + env(safe-area-inset-bottom));
+  background: #f7f2e8 url("../../images/indexBackground.png") center top / 680px
+    auto repeat;
+}
 
-  background: #f7f2e8
-    url("../../images/indexBackground.png")
-    center top / 680px auto repeat;
+.sponsors-page {
+  width: 100%;
+  min-width: 0;
+  overflow-x: clip;
 }
 
 /* ==========================================================
-   CONTENT
+   HERO & LOTTIE
+========================================================== */
+
+.sponsors-hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 30px 10px 0;
+  position: relative;
+  top: -60px;
+}
+
+.sponsors-hero-lottie-circle {
+  display: grid;
+  place-items: center;
+
+  width: clamp(280px, 90vw, 500px);
+  aspect-ratio: 1;
+
+  background: url("../../images/sponsorsBackground.png") center / contain
+    no-repeat;
+}
+
+.sponsors-hero-lottie {
+  display: block;
+  width: 90%;
+  height: 90%;
+  background: transparent;
+  transform: translateY(50px);
+}
+
+.sponsors-hero-lottie svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ==========================================================
+   PAGE HEADER
+========================================================== */
+
+.sponsors-page-header {
+  /* margin-top: -35px;  */
+  padding: 10px 20px 20px;
+  text-align: center;
+}
+
+.sponsors-page-header p,
+.sponsors-page-header h1 {
+  color: #fff;
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.45),
+    0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.sponsors-page-header p {
+  margin: 0 0 8px;
+  font:
+    italic 700 1.25rem "Cormorant Garamond",
+    serif;
+}
+
+.sponsors-page-header h1 {
+  margin: 0;
+  font-family: "Allura", cursive;
+  font-size: clamp(3.4rem, 12vw, 5rem);
+  font-weight: 400;
+  line-height: 1.1;
+  -webkit-text-stroke: 0.7px #fff;
+}
+
+/* ==========================================================
+   CONTENT & CARDS
 ========================================================== */
 
 .sponsors-section {
   display: grid;
   gap: 20px;
-
   width: 100%;
-  padding: 45px 16px 40px;
-
-  background: transparent;
+  padding: 20px 16px 40px;
 }
-
-/* ==========================================================
-   CARDS
-========================================================== */
 
 .sponsors-card {
   width: min(100%, 620px);
@@ -45,11 +112,8 @@ body[data-current-page="sponsors"] .sponsors-page {
 
   border: 1px solid rgba(111, 125, 99, 0.2);
   border-radius: 20px;
-
   background: rgba(255, 255, 255, 0.96);
-
   box-shadow: 0 14px 36px rgba(58, 67, 52, 0.13);
-
   text-align: center;
 }
 
@@ -62,7 +126,6 @@ body[data-current-page="sponsors"] .sponsors-page {
   margin: 0 auto 18px;
 
   border-radius: 50%;
-
   background: rgba(140, 153, 125, 0.14);
   color: var(--sage-dark);
 }
@@ -73,9 +136,7 @@ body[data-current-page="sponsors"] .sponsors-page {
 
 .sponsors-card-label {
   margin-bottom: 8px;
-
   color: var(--gold);
-
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -84,7 +145,6 @@ body[data-current-page="sponsors"] .sponsors-page {
 
 .sponsors-card-title {
   color: var(--sage-dark);
-
   font-family: "Cormorant Garamond", serif;
   font-size: clamp(1.9rem, 7vw, 2.6rem);
   font-weight: 600;
@@ -92,7 +152,7 @@ body[data-current-page="sponsors"] .sponsors-page {
 }
 
 /* ==========================================================
-   SHARED GRID AND ITEM STYLES
+   SHARED GRIDS
 ========================================================== */
 
 .sponsors-name-list,
@@ -111,6 +171,10 @@ body[data-current-page="sponsors"] .sponsors-page {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+/* ==========================================================
+   SHARED ITEM STYLES
+========================================================== */
+
 .sponsors-name-list p,
 .secondary-sponsor-item,
 .entourage-box-item,
@@ -124,7 +188,6 @@ body[data-current-page="sponsors"] .sponsors-page {
 .entourage-box-role,
 .entourage-role {
   color: var(--muted);
-
   font-size: 0.64rem;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -136,7 +199,6 @@ body[data-current-page="sponsors"] .sponsors-page {
 .entourage-group strong,
 .sponsors-name-list p {
   color: #454b41;
-
   font-family: "Cormorant Garamond", serif;
   font-weight: 600;
 }
@@ -151,22 +213,19 @@ body[data-current-page="sponsors"] .sponsors-page {
 
 .sponsors-name-list p {
   padding: 13px 14px;
-
   font-size: 1.08rem;
   line-height: 1.4;
 }
 
 .sponsors-name-list p span {
   margin: 0 4px;
-
   color: var(--gold);
-
   font-family: "Allura", cursive;
   font-size: 1.25em;
 }
 
 /* ==========================================================
-   SECONDARY SPONSORS AND BEARERS
+   SECONDARY SPONSORS & BEARERS
 ========================================================== */
 
 .secondary-sponsor-item {
@@ -174,9 +233,7 @@ body[data-current-page="sponsors"] .sponsors-page {
   grid-template-columns: 42px minmax(0, 1fr);
   align-items: center;
   gap: 12px;
-
   padding: 14px;
-
   text-align: left;
 }
 
@@ -204,7 +261,7 @@ body[data-current-page="sponsors"] .sponsors-page {
 }
 
 /* ==========================================================
-   ENTOURAGE AND FLOWER GIRLS
+   ENTOURAGE & FLOWER GIRLS
 ========================================================== */
 
 .entourage-box-item {
@@ -241,12 +298,27 @@ body[data-current-page="sponsors"] .sponsors-page {
 }
 
 /* ==========================================================
-   MOBILE
+   RESPONSIVE — TABLET & MOBILE
 ========================================================== */
+
+@media (max-width: 600px) {
+  .sponsors-hero-lottie-circle {
+    width: min(95vw, 450px);
+  }
+
+  .sponsors-page-header {
+    margin-top: -45px;
+    padding: 10px 16px 16px;
+  }
+
+  .sponsors-page-header h1 {
+    font-size: clamp(3rem, 12vw, 4.3rem);
+  }
+}
 
 @media (max-width: 480px) {
   .sponsors-section {
-    padding: 18px 12px 40px;
+    padding: 12px 12px 40px;
   }
 
   .sponsors-card {
@@ -300,16 +372,13 @@ body[data-current-page="sponsors"] .sponsors-page {
     letter-spacing: 0.07em;
   }
 
-  .entourage-box-content strong {
-    font-size: 0.82rem;
+  .entourage-box-content strong,
+  .entourage-group strong {
+    font-size: 0.84rem;
   }
 
   .honor-attendants-grid {
     gap: 10px;
-  }
-
-  .entourage-group strong {
-    font-size: 0.84rem;
   }
 
   .flower-girls-box-grid .entourage-box-role {
@@ -320,4 +389,3 @@ body[data-current-page="sponsors"] .sponsors-page {
     font-size: 0.8rem;
   }
 }
-

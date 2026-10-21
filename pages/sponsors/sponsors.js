@@ -27,6 +27,43 @@ window.initializeSponsorsPage = function () {
   window.sponsorsGsapContext = gsap.context(() => {
     if (reduceMotion) return;
 
+
+    /* SPONSORS HERO ENTRANCE */
+
+    const heroTimeline = gsap.timeline({
+      defaults: {
+        ease: "power3.out",
+      },
+    });
+
+    heroTimeline
+      .from(".sponsors-hero-lottie-circle", {
+        autoAlpha: 0,
+        y: 65,
+        scale: 0.88,
+        duration: 1.1,
+      })
+      .from(
+        ".sponsors-page-header p",
+        {
+          autoAlpha: 0,
+          y: 25,
+          duration: 0.65,
+        },
+        "-=0.5"
+      )
+      .from(
+        ".sponsors-page-header h1",
+        {
+          autoAlpha: 0,
+          y: 38,
+          scale: 0.94,
+          duration: 0.85,
+        },
+        "-=0.4"
+      );
+
+
     const cards = gsap.utils.toArray(
       page.querySelectorAll(".sponsors-card")
     );
@@ -128,6 +165,30 @@ window.initializeSponsorsPage = function () {
   page.dataset.gsapInitialized = "true";
 
   // Refresh ScrollTrigger after SPA rendering
+
+
+  /* SPONSORS LOTTIE */
+
+  const sponsorsLottie = page.querySelector("#sponsorsLottie");
+
+  if (sponsorsLottie) {
+    const startLottie = () => {
+      if (!page.isConnected) return;
+
+      if (reduceMotion) {
+        sponsorsLottie.stop?.();
+      } else {
+        sponsorsLottie.play?.();
+      }
+    };
+
+    if (customElements.get("lottie-player")) {
+      startLottie();
+    } else {
+      customElements.whenDefined("lottie-player").then(startLottie);
+    }
+  }
+
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       if (page.isConnected) {
@@ -142,6 +203,7 @@ window.initializeSponsorsPage = function () {
 ========================================================== */
 
 window.cleanupSponsorsPage = function () {
+  document.querySelector(".sponsors-page #sponsorsLottie")?.stop?.();
   window.sponsorsGsapContext?.revert();
   window.sponsorsGsapContext = null;
 

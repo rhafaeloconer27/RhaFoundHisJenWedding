@@ -106,11 +106,11 @@
       if (card) {
         const tl = gsap.timeline({
           scrollTrigger: {
-  trigger: card,
-  start: "top 90%",
-  once: true,
-  invalidateOnRefresh: true
-}
+            trigger: card,
+            start: "top 90%",
+            once: true,
+            invalidateOnRefresh: true
+          }
         });
         tl.from(card, { autoAlpha: 0, y: 65, scale: .96, duration: .9, ease: "power3.out" })
           .from(card.querySelector(".gift-card-icon"), { autoAlpha: 0, scale: .35, rotation: -20, duration: .65, ease: "back.out(1.8)" }, "-=.5")
