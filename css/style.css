@@ -34,15 +34,23 @@ body {
   color: var(--text);
 }
 
-body, button, input, select, textarea {
+body,
+button,
+input,
+select,
+textarea {
   font-family: "Montserrat", sans-serif;
 }
 
-button, input, select, textarea {
+button,
+input,
+select,
+textarea {
   font: inherit;
 }
 
-button, a {
+button,
+a {
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -59,7 +67,7 @@ img {
 
 .page-container {
   min-height: 100vh;
-  padding-bottom: calc( var(--nav-height) + 18px + env(safe-area-inset-bottom) );
+  padding-bottom: calc(var(--nav-height) + 18px + env(safe-area-inset-bottom));
 }
 
 /* INDEX LOADER */
@@ -102,18 +110,27 @@ body.loading-active {
 
 /* SPA INITIAL / PAGE TRANSITION */
 
-body.spa-initializing, body.page-transition-active {
+body.spa-initializing,
+body.page-transition-active {
   overflow: hidden;
 }
 
-body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-initializing #musicButton, body.spa-initializing .music-button {
+body.spa-initializing #app,
+body.spa-initializing #globalNavigation,
+body.spa-initializing #musicButton,
+body.spa-initializing .music-button {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
 }
 
-#app, #globalNavigation, #musicButton, .music-button {
-  transition: opacity 0.5s ease, visibility 0.5s ease;
+#app,
+#globalNavigation,
+#musicButton,
+.music-button {
+  transition:
+    opacity 0.5s ease,
+    visibility 0.5s ease;
 }
 
 .page-transition-loader {
@@ -135,7 +152,9 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
+  transition:
+    opacity 0.5s ease,
+    visibility 0.5s ease;
 }
 
 .page-transition-loader.is-visible {
@@ -235,7 +254,7 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: rgba( 35, 42, 32, 0.58 );
+  background: rgba(35, 42, 32, 0.58);
 }
 
 .page-hero-content {
@@ -252,7 +271,7 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
 .page-hero-content h1 {
   margin-top: 4px;
   font-family: "Allura", cursive;
-  font-size: clamp( 3.4rem, 16vw, 5.6rem );
+  font-size: clamp(3.4rem, 16vw, 5.6rem);
   font-weight: 400;
   line-height: 1;
 }
@@ -275,15 +294,15 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   left: 0;
   z-index: 1000;
   display: grid;
-  grid-template-columns: repeat( 7, minmax(0, 1fr) );
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   align-items: end;
   width: 100%;
   height: var(--nav-height);
   min-height: var(--nav-height);
   margin: 0;
-  padding: 3px 4px max( 3px, env(safe-area-inset-bottom) );
-  border-top: 1px solid rgba( 111, 125, 99, 0.18 );
-  background: rgba( 255, 255, 255, 0.97 );
+  padding: 3px 4px max(3px, env(safe-area-inset-bottom));
+  border-top: 1px solid rgba(111, 125, 99, 0.18);
+  background: rgba(255, 255, 255, 0.97);
   box-shadow: var(--soft-shadow);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
@@ -316,7 +335,10 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   border-radius: 50%;
   background: #fafbf8;
   color: var(--sage-dark);
-  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .nav-icon i {
@@ -348,7 +370,8 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
 
 /* MUSIC BUTTON */
 
-#musicButton, .music-button {
+#musicButton,
+.music-button {
   position: fixed;
   top: 18px;
   right: 18px;
@@ -364,19 +387,24 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   background: transparent;
   color: var(--white);
   cursor: pointer;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
-#musicButton:hover, .music-button:hover {
+#musicButton:hover,
+.music-button:hover {
   opacity: 0.85;
   transform: scale(1.1);
 }
 
-#musicButton:active, .music-button:active {
+#musicButton:active,
+.music-button:active {
   transform: scale(0.95);
 }
 
-#musicButton i, .music-button i {
+#musicButton i,
+.music-button i {
   font-size: 19px;
 }
 
@@ -389,11 +417,12 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
 }
 
 .page-content-animate.page-content-visible {
-  animation: pageContentEnter 0.72s cubic-bezier( 0.22, 1, 0.36, 1 ) both;
-  animation-delay: var( --page-animation-delay, 0ms );
+  animation: pageContentEnter 0.72s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--page-animation-delay, 0ms);
 }
 
-.page-hero-content.page-content-animate.page-content-visible, .hero-content.page-content-animate.page-content-visible {
+.page-hero-content.page-content-animate.page-content-visible,
+.hero-content.page-content-animate.page-content-visible {
   animation-name: pageHeroContentEnter;
   animation-duration: 0.85s;
 }
@@ -460,7 +489,8 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
 /* GLOBAL RESPONSIVE */
 
 @media (max-width: 639px) {
-  #musicButton, .music-button {
+  #musicButton,
+  .music-button {
     top: 14px;
     right: 13px;
   }
@@ -468,7 +498,7 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
 
 @media (max-width: 480px) {
   .bottom-navigation {
-    padding: 3px 2px max( 3px, env(safe-area-inset-bottom) );
+    padding: 3px 2px max(3px, env(safe-area-inset-bottom));
   }
 }
 
@@ -500,31 +530,35 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
     left: auto;
     width: min(100%, 680px);
     transform: translateX(50%);
-    border: 1px solid rgba( 111, 125, 99, 0.22 );
+    border: 1px solid rgba(111, 125, 99, 0.22);
     border-bottom: 0;
     border-radius: 20px 20px 0 0;
   }
 
-  #musicButton, .music-button {
-    right: calc( 50% - 330px );
+  #musicButton,
+  .music-button {
+    right: calc(50% - 330px);
   }
 }
 
 /* ACCESSIBILITY */
 
-@media ( prefers-reduced-motion: reduce ) {
+@media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
 
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     scroll-behavior: auto !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 
-  .page-content-animate, .page-content-animate.page-content-visible {
+  .page-content-animate,
+  .page-content-animate.page-content-visible {
     opacity: 1 !important;
     transform: none !important;
     animation: none !important;
@@ -536,7 +570,8 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
 
 @media (max-width: 600px) {
   .invitation-intro {
-    padding: max( 16px, env(safe-area-inset-top) ) 12px max( 16px, env(safe-area-inset-bottom) );
+    padding: max(16px, env(safe-area-inset-top)) 12px
+      max(16px, env(safe-area-inset-bottom));
   }
 
   .invitation-stage {
@@ -553,7 +588,7 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   }
 
   .reveal-content h1 {
-    font-size: clamp( 4.1rem, 18vw, 5rem );
+    font-size: clamp(4.1rem, 18vw, 5rem);
   }
 
   .reveal-invites {
@@ -577,7 +612,7 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   width: 100%;
   min-height: 100vh;
   min-height: 100svh;
-  padding: max( 80px, env(safe-area-inset-top) ) 18px 70px;
+  padding: max(80px, env(safe-area-inset-top)) 18px 70px;
 }
 
 .intro-message-card {
@@ -594,7 +629,7 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
 .intro-message-text {
   margin-bottom: 24px;
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp( 1.2rem, 4vw, 1.45rem );
+  font-size: clamp(1.2rem, 4vw, 1.45rem);
   line-height: 1.65;
 }
 
@@ -614,7 +649,7 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   margin-top: 20px;
   color: #74736c;
   font-family: "Allura", cursive;
-  font-size: clamp( 2.5rem, 8vw, 3.5rem );
+  font-size: clamp(2.5rem, 8vw, 3.5rem);
   font-weight: 400;
   line-height: 0.9;
 }
@@ -629,7 +664,7 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
 
 @media (max-width: 600px) {
   .intro-message-section {
-    padding: max( 55px, env(safe-area-inset-top) ) 12px 55px;
+    padding: max(55px, env(safe-area-inset-top)) 12px 55px;
   }
 
   .intro-message-card {
@@ -689,7 +724,7 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   margin: 0;
   color: #5d6258;
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp( 1.2rem, 4vw, 1.45rem );
+  font-size: clamp(1.2rem, 4vw, 1.45rem);
   line-height: 2;
   white-space: normal;
 }
@@ -812,7 +847,9 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.35s ease, visibility 0.35s ease;
+  transition:
+    opacity 0.35s ease,
+    visibility 0.35s ease;
 }
 
 .rsvp-submit-loader.is-visible {
@@ -899,14 +936,14 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   margin: 0 auto 38px;
   color: #74736c;
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp( 1.2rem, 4vw, 1.45rem );
+  font-size: clamp(1.2rem, 4vw, 1.45rem);
   line-height: 1.5;
   text-align: center;
 }
 
 .scratch-date-circles {
   display: grid;
-  grid-template-columns: repeat( 3, minmax(0, 1fr) );
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: center;
   justify-items: center;
   gap: 22px;
@@ -1017,7 +1054,9 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   font-style: italic;
 }
 
-.scratch-save-date-animation, .scratch-date-complete > span, .scratch-date-complete > small {
+.scratch-save-date-animation,
+.scratch-date-complete > span,
+.scratch-date-complete > small {
   will-change: opacity, transform;
 }
 
@@ -1048,7 +1087,7 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
 
   .scratch-date-circles {
     display: grid;
-    grid-template-columns: repeat( 3, minmax(0, 1fr) );
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     align-items: center;
     justify-items: center;
     width: 100%;
@@ -1057,7 +1096,7 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   }
 
   .scratch-circle {
-    width: min( 100%, 104px );
+    width: min(100%, 104px);
     aspect-ratio: 1;
     border-radius: 50%;
   }
@@ -1075,7 +1114,7 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   }
 
   #saveTheDateAnimation {
-    width: min( 100%, 250px );
+    width: min(100%, 250px);
     height: 190px;
   }
 
@@ -1138,7 +1177,7 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   margin: 0 auto;
   color: #5d6258;
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp( 2rem, 7vw, 2.6rem );
+  font-size: clamp(2rem, 7vw, 2.6rem);
   font-weight: 500;
   line-height: 1.08;
 }
@@ -1254,7 +1293,9 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.18);
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
 }
 
 .intro-location-map-overlay:hover .intro-location-map-label {
@@ -1277,7 +1318,9 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   letter-spacing: 0.12em;
   text-decoration: none;
   text-transform: uppercase;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 .intro-location-map-button:hover {
@@ -1407,7 +1450,7 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
 .intro-attire-title {
   color: #5d6258;
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp( 2rem, 7vw, 2.7rem );
+  font-size: clamp(2rem, 7vw, 2.7rem);
   font-weight: 500;
   line-height: 1.08;
 }
@@ -1423,7 +1466,7 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
 
 .intro-attire-guidelines {
   display: grid;
-  grid-template-columns: repeat( 2, minmax(0, 1fr) );
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
   margin-top: 30px;
   text-align: left;
@@ -1481,7 +1524,7 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
 
 .intro-attire-color-grid {
   display: grid;
-  grid-template-columns: repeat( 5, minmax(0, 1fr) );
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   align-items: start;
   gap: 12px;
 }
@@ -1699,7 +1742,7 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   margin: 0 auto;
   color: #5d6258;
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp( 2rem, 7vw, 2.7rem );
+  font-size: clamp(2rem, 7vw, 2.7rem);
   font-weight: 500;
   line-height: 1.08;
 }
@@ -1770,7 +1813,7 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   margin-top: 20px;
   color: #74736c;
   font-family: "Allura", cursive;
-  font-size: clamp( 2.5rem, 8vw, 3.5rem );
+  font-size: clamp(2.5rem, 8vw, 3.5rem);
   font-weight: 400;
   line-height: 0.9;
 }
@@ -1945,7 +1988,7 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
 .intro-rsvp-header h2 {
   color: #5d6258;
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp( 2.5rem, 9vw, 3.8rem );
+  font-size: clamp(2.5rem, 9vw, 3.8rem);
   font-weight: 500;
   line-height: 1;
 }
@@ -1955,7 +1998,7 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   margin: 22px auto 0;
   color: #74736c;
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp( 1.05rem, 4vw, 1.25rem );
+  font-size: clamp(1.05rem, 4vw, 1.25rem);
   line-height: 1.55;
 }
 
@@ -2002,7 +2045,7 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
 
 .intro-rsvp-search-box input::placeholder {
   color: #aaa6a0;
-  font-size: .9rem;
+  font-size: 0.9rem;
 }
 
 .intro-rsvp-search-box button {
@@ -2016,7 +2059,9 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   color: #dc4844;
   font-size: 1.15rem;
   cursor: pointer;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .intro-rsvp-search-box button:hover {
@@ -2089,7 +2134,9 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
 }
 
 .intro-rsvp-modal.is-visible {
@@ -2144,7 +2191,8 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   line-height: 1;
 }
 
-.intro-rsvp-modal-description, .intro-rsvp-seat-message {
+.intro-rsvp-modal-description,
+.intro-rsvp-seat-message {
   margin-top: 13px;
   color: #655f57;
   font-family: "Cormorant Garamond", serif;
@@ -2154,7 +2202,7 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
 }
 
 #introRsvpModalTitle {
-  font-size: clamp( 2rem, 6vw, 2.8rem );
+  font-size: clamp(2rem, 6vw, 2.8rem);
   line-height: 1.05;
 }
 
@@ -2172,7 +2220,9 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   color: #3d3832;
   text-align: left;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .intro-rsvp-guest-result:hover {
@@ -2231,7 +2281,10 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   background: transparent;
   color: #655e55;
   cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .intro-rsvp-response-option:hover {
@@ -2315,7 +2368,7 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   margin: 0;
   color: #4f4a44;
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp( 2rem, 7vw, 2.8rem );
+  font-size: clamp(2rem, 7vw, 2.8rem);
   font-weight: 500;
   line-height: 1.05;
 }
@@ -2332,12 +2385,13 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
 
 .intro-rsvp-decline-actions {
   display: grid;
-  grid-template-columns: repeat( 2, minmax(0, 1fr) );
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   margin-top: 28px;
 }
 
-.intro-rsvp-decline-cancel, .intro-rsvp-decline-confirm {
+.intro-rsvp-decline-cancel,
+.intro-rsvp-decline-confirm {
   min-height: 50px;
   padding: 12px 14px;
   border-radius: 0;
@@ -2361,7 +2415,8 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   color: #ffffff;
 }
 
-.intro-rsvp-decline-cancel:hover, .intro-rsvp-decline-confirm:hover {
+.intro-rsvp-decline-cancel:hover,
+.intro-rsvp-decline-confirm:hover {
   opacity: 0.88;
 }
 
@@ -2399,7 +2454,8 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   }
 }
 
-.intro-rsvp-primary-button, .intro-rsvp-secondary-button {
+.intro-rsvp-primary-button,
+.intro-rsvp-secondary-button {
   width: 100%;
   min-height: 58px;
   padding: 14px 20px;
@@ -2445,7 +2501,7 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   font-size: 2.2rem;
 }
 
-.intro-rsvp-success p:not( .intro-rsvp-modal-eyebrow ) {
+.intro-rsvp-success p:not(.intro-rsvp-modal-eyebrow) {
   margin: 18px 0 30px;
   color: #666057;
   font-family: "Cormorant Garamond", serif;
@@ -2512,7 +2568,9 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
 }
 
 .intro-rsvp-submit-loader.is-visible {
@@ -2600,7 +2658,8 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   letter-spacing: 0.1em;
 }
 
-.intro-rsvp-details-field input, .intro-rsvp-details-field textarea {
+.intro-rsvp-details-field input,
+.intro-rsvp-details-field textarea {
   width: 100%;
   padding: 8px 2px;
   border: 0;
@@ -2620,11 +2679,13 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   resize: vertical;
 }
 
-.intro-rsvp-details-field input::placeholder, .intro-rsvp-details-field textarea::placeholder {
+.intro-rsvp-details-field input::placeholder,
+.intro-rsvp-details-field textarea::placeholder {
   color: #aaa39b;
 }
 
-.intro-rsvp-details-field input:focus, .intro-rsvp-details-field textarea:focus {
+.intro-rsvp-details-field input:focus,
+.intro-rsvp-details-field textarea:focus {
   border-bottom-color: var(--sage-dark);
   box-shadow: 0 1px 0 var(--sage-dark);
 }
@@ -2642,7 +2703,8 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   font-size: 0.95rem;
 }
 
-#introRsvpWishStep .intro-rsvp-primary-button, #introRsvpWishStep .intro-rsvp-secondary-button {
+#introRsvpWishStep .intro-rsvp-primary-button,
+#introRsvpWishStep .intro-rsvp-secondary-button {
   min-height: 48px;
   padding: 10px 18px;
 }
@@ -2651,7 +2713,8 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   margin-top: 8px;
 }
 
-.intro-rsvp-hidden-form, .intro-rsvp-hidden-frame {
+.intro-rsvp-hidden-form,
+.intro-rsvp-hidden-frame {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -2677,7 +2740,9 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.45s ease, visibility 0.45s ease;
+  transition:
+    opacity 0.45s ease,
+    visibility 0.45s ease;
 }
 
 .rsvp-success-celebration.is-visible {
@@ -2732,7 +2797,7 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   margin: 0;
   color: #4f4a44;
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp( 3rem, 9vw, 4.4rem );
+  font-size: clamp(3rem, 9vw, 4.4rem);
   font-weight: 500;
   line-height: 1;
 }
@@ -2793,7 +2858,13 @@ body.spa-initializing #app, body.spa-initializing #globalNavigation, body.spa-in
   --intro-section-spacing: clamp(120px, 15svh, 160px);
 }
 
-.intro-message-section, .intro-scripture-section, .intro-scratch-section, .intro-location-section, .intro-attire-section, .intro-gift-section, .intro-rsvp-section {
+.intro-message-section,
+.intro-scripture-section,
+.intro-scratch-section,
+.intro-location-section,
+.intro-attire-section,
+.intro-gift-section,
+.intro-rsvp-section {
   width: 100%;
   min-height: auto;
   padding: var(--intro-section-spacing) 12px;
@@ -2947,13 +3018,13 @@ body.invitation-gate-active {
 }
 
 .video-envelope-top {
-  clip-path: polygon( 0 0, 100% 0, 45% 49%, 0 60% );
-  filter: drop-shadow( 3px 4px 4px rgba( 62, 43, 28, 0.2 ) );
+  clip-path: polygon(0 0, 100% 0, 45% 49%, 0 60%);
+  filter: drop-shadow(3px 4px 4px rgba(62, 43, 28, 0.2));
 }
 
 .video-envelope-bottom {
-  clip-path: polygon( 0 42%, 45% 49%, 100% 100%, 0 100% );
-  filter: drop-shadow( 2px -3px 4px rgba( 62, 43, 28, 0.18 ) );
+  clip-path: polygon(0 42%, 45% 49%, 100% 100%, 0 100%);
+  filter: drop-shadow(2px -3px 4px rgba(62, 43, 28, 0.18));
 }
 
 .video-envelope-right {
@@ -2970,7 +3041,8 @@ body.invitation-gate-active {
   z-index: 1;
   overflow: visible;
   background: transparent;
-  filter: drop-shadow( -16px 0 20px rgba(0, 0, 0, 0.42) ) drop-shadow( -4px 0 5px rgba(0, 0, 0, 0.45) );
+  filter: drop-shadow(-16px 0 20px rgba(0, 0, 0, 0.42))
+    drop-shadow(-4px 0 5px rgba(0, 0, 0, 0.45));
 }
 
 .video-envelope-dark::before {
@@ -2981,10 +3053,10 @@ body.invitation-gate-active {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 100%;
-  clip-path: polygon( 100% 0, 100% 100%, 45% 49% );
+  clip-path: polygon(100% 0, 100% 100%, 45% 49%);
 }
 
-@media ( max-width: 600px ) {
+@media (max-width: 600px) {
   .video-invitation-card-content {
     padding: 20px 17px 23px;
   }
@@ -2992,7 +3064,7 @@ body.invitation-gate-active {
 
 /* EXTRA SMALL PHONES */
 
-@media ( max-width: 380px ) {
+@media (max-width: 380px) {
   .video-invitation-script {
     font-size: 2.65rem;
   }
@@ -3052,14 +3124,17 @@ body.invitation-gate-active {
 }
 
 @keyframes sealBreathing {
-  0%, 100% {
+  0%,
+  100% {
     transform: rotate(90deg) scale(1);
-    filter: drop-shadow( 0 7px 12px rgba(0, 0, 0, 0.3) ) drop-shadow( 0 0 0 rgba(183, 160, 106, 0) );
+    filter: drop-shadow(0 7px 12px rgba(0, 0, 0, 0.3))
+      drop-shadow(0 0 0 rgba(183, 160, 106, 0));
   }
 
   50% {
     transform: rotate(90deg) scale(1.08);
-    filter: drop-shadow( 0 10px 16px rgba(0, 0, 0, 0.36) ) drop-shadow( 0 0 16px rgba(183, 160, 106, 0.42) );
+    filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.36))
+      drop-shadow(0 0 16px rgba(183, 160, 106, 0.42));
   }
 }
 
@@ -3100,8 +3175,9 @@ body.invitation-gate-active {
   }
 }
 
-@media ( prefers-reduced-motion: reduce ) {
-  .video-invitation-seal-image, .video-invitation-seal::after {
+@media (prefers-reduced-motion: reduce) {
+  .video-invitation-seal-image,
+  .video-invitation-seal::after {
     animation: none;
   }
 }
@@ -3119,12 +3195,12 @@ body.invitation-gate-active {
 }
 
 .intro-wedding-pages-card {
-  width: min( 100%, 520px );
+  width: min(100%, 520px);
   padding: 42px 30px;
-  border: 1px solid rgba( 255, 255, 255, 0.42 );
-  background: rgba( 255, 255, 255, 0.84 );
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, 0.84);
   color: #5d6258;
-  box-shadow: 0 25px 65px rgba( 0, 0, 0, 0.18 );
+  box-shadow: 0 25px 65px rgba(0, 0, 0, 0.18);
   text-align: center;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
@@ -3144,7 +3220,7 @@ body.invitation-gate-active {
   margin: 0;
   color: #4b4844;
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp( 2.1rem, 8vw, 3.2rem );
+  font-size: clamp(2.1rem, 8vw, 3.2rem);
   font-weight: 500;
   line-height: 1;
 }
@@ -3175,13 +3251,16 @@ body.invitation-gate-active {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .intro-wedding-pages-button:hover {
   background: #3e3a37;
   transform: translateY(-2px);
-  box-shadow: 0 12px 26px rgba( 0, 0, 0, 0.18 );
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.18);
 }
 
 .intro-wedding-pages-button i {
@@ -3216,7 +3295,6 @@ body.invitation-gate-active {
   }
 }
 
-
 /* Floating confirmation tooltip anchored to the Continue button. */
 .wedding-continue-tooltip-anchor {
   position: relative;
@@ -3225,7 +3303,9 @@ body.invitation-gate-active {
   overflow: visible;
   z-index: 5;
 }
-.wedding-continue-tooltip-anchor > .intro-wedding-pages-button { width: 100%; }
+.wedding-continue-tooltip-anchor > .intro-wedding-pages-button {
+  width: 100%;
+}
 
 .wedding-rsvp-reminder {
   position: absolute;
@@ -3237,7 +3317,7 @@ body.invitation-gate-active {
   margin: 0;
   padding: 25px 22px 22px;
   border: 1px solid rgba(94, 94, 84, 0.23);
-  border-radius: 12px;
+  /* border-radius: 12px; */
   background: #fffdfa;
   box-shadow: 0 16px 38px rgba(51, 49, 43, 0.17);
   text-align: center;
@@ -3299,13 +3379,15 @@ body.invitation-gate-active {
   min-height: 48px;
   padding: 10px 12px;
   border: 1px solid #4d4945;
-  border-radius: 6px;
+  /* border-radius: 6px; */
   font-family: "Montserrat", sans-serif;
   font-size: 0.7rem;
   font-weight: 600;
   line-height: 1.45;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .wedding-rsvp-reminder-yes {
@@ -3317,14 +3399,18 @@ body.invitation-gate-active {
   border-radius: 0 !important;
 }
 
-.wedding-rsvp-reminder-yes:hover { background: #393632; }
+.wedding-rsvp-reminder-yes:hover {
+  background: #393632;
+}
 
 .wedding-rsvp-reminder-no {
   background: #fffdfa;
   color: #4d4945;
 }
 
-.wedding-rsvp-reminder-no:hover { background: #f0eee7; }
+.wedding-rsvp-reminder-no:hover {
+  background: #f0eee7;
+}
 
 .wedding-rsvp-reminder-actions button:focus-visible {
   outline: 3px solid #8c997d;
@@ -3351,12 +3437,18 @@ body.invitation-gate-active {
 }
 
 @media (max-width: 480px) {
-  .wedding-rsvp-reminder { padding: 18px 14px 16px; }
-  .wedding-rsvp-reminder-actions { grid-template-columns: 1fr; }
+  .wedding-rsvp-reminder {
+    padding: 18px 14px 16px;
+  }
+  .wedding-rsvp-reminder-actions {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .wedding-rsvp-reminder { animation: none; }
+  .wedding-rsvp-reminder {
+    animation: none;
+  }
 }
 
 /* WEDDING SPA INSIDE INDEX.HTML */
@@ -3383,7 +3475,9 @@ body.wedding-spa-active .wedding-spa-shell {
   pointer-events: auto;
 }
 
-body.wedding-spa-active #invitationIntro, body.wedding-spa-active #invitationEntryGate, body.wedding-spa-active #weddingLoader {
+body.wedding-spa-active #invitationIntro,
+body.wedding-spa-active #invitationEntryGate,
+body.wedding-spa-active #weddingLoader {
   display: none !important;
 }
 
@@ -3435,7 +3529,8 @@ body.wedding-flip-active #pageTransitionLoader {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .wedding-flip-cover, .wedding-flip-home {
+  .wedding-flip-cover,
+  .wedding-flip-home {
     transform: none !important;
     transition: none !important;
   }
@@ -3460,7 +3555,7 @@ body.wedding-flip-active #pageTransitionLoader {
 
 .bottom-navigation.curved-nav {
   position: fixed;
-  bottom: calc( var(--nav-bottom) + env(safe-area-inset-bottom) );
+  bottom: calc(var(--nav-bottom) + env(safe-area-inset-bottom));
   left: 50%;
   z-index: 10000;
   display: grid;
@@ -3484,7 +3579,7 @@ body.wedding-flip-active #pageTransitionLoader {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.10));
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.1));
 }
 
 .curved-nav .nav-background-svg {
@@ -3536,7 +3631,9 @@ body.wedding-flip-active #pageTransitionLoader {
   color: var(--nav-muted);
   box-shadow: none;
   transform: none;
-  transition: color 0.2s ease, transform 0.2s ease;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .curved-nav .nav-icon i {
@@ -3551,7 +3648,7 @@ body.wedding-flip-active #pageTransitionLoader {
   padding: 0;
   font-family: "Montserrat", sans-serif;
   font-size: 9px;
-  font-weight: 600;       /* Slightly bolder */
+  font-weight: 600; /* Slightly bolder */
   line-height: 1.2;
   color: var(--nav-muted);
   white-space: nowrap;
@@ -3629,9 +3726,9 @@ body.wedding-flip-active #pageTransitionLoader {
   }
 
   .curved-nav .nav-label {
-  font-size: 8px;
-  font-weight: 600;
-  transform: translateY(-4px);
+    font-size: 8px;
+    font-weight: 600;
+    transform: translateY(-4px);
   }
 
   .curved-nav .nav-item.active .nav-icon i {
@@ -3756,7 +3853,7 @@ body.wedding-flip-active #pageTransitionLoader {
   margin: 30px auto 24px;
   color: #74736c;
   font-family: "Cormorant Garamond", serif;
-  font-size: .90rem;
+  font-size: 0.9rem;
   line-height: 1.5;
 }
 
@@ -3772,7 +3869,7 @@ body.wedding-flip-active #pageTransitionLoader {
   align-items: center;
   justify-content: center;
 
- width: 55px;
+  width: 55px;
   height: 55px;
   padding: 0;
   margin: 0;
@@ -3872,7 +3969,6 @@ body.wedding-flip-active #pageTransitionLoader {
   transform: translateX(16px);
 }
 
-
 /* ==========================================================
    CONTINUE TO WEDDING PAGES
 ========================================================== */
@@ -3892,7 +3988,7 @@ body.wedding-flip-active #pageTransitionLoader {
   padding: 42px 32px;
 
   border: 1px solid rgba(255, 255, 255, 0.42);
-  border-radius: 18px;
+  /* border-radius: 18px; */
 
   background: rgba(255, 255, 255, 0.84);
   box-shadow: 0 25px 65px rgba(0, 0, 0, 0.18);
@@ -3951,7 +4047,7 @@ body.wedding-flip-active #pageTransitionLoader {
   padding: 15px 24px;
 
   border: none;
-  border-radius: 999px;
+  /* border-radius: 999px; */
 
   background: #dc4844;
   color: #ffffff;
@@ -3961,7 +4057,9 @@ body.wedding-flip-active #pageTransitionLoader {
   letter-spacing: 0.04em;
 
   cursor: pointer;
-  transition: transform 0.25s ease, opacity 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
 }
 
 .intro-wedding-pages-button:hover {
@@ -3987,7 +4085,7 @@ body.wedding-flip-active #pageTransitionLoader {
   transform: translateX(-50%);
 
   border: 1px solid rgba(111, 125, 99, 0.18);
-  border-radius: 16px;
+  /* border-radius: 16px; */
 
   background: #ffffff;
   box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
@@ -4037,7 +4135,7 @@ body.wedding-flip-active #pageTransitionLoader {
   width: 100%;
   padding: 12px 14px;
 
-  border-radius: 10px;
+  /* border-radius: 10px; */
 
   font-size: 0.72rem;
   font-weight: 600;
@@ -4091,5 +4189,187 @@ body.wedding-flip-active #pageTransitionLoader {
     width: 100%;
     padding: 15px 16px;
     font-size: 0.7rem;
+  }
+}
+
+.intro-gallery-section {
+  --gallery-width: clamp(125px, 23vw, 260px);
+  --gallery-height: clamp(175px, 32vw, 350px);
+  --gallery-radius: 340px;
+
+  width: 100%;
+  padding: 80px 0 60px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.intro-gallery-scene {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: calc(var(--gallery-height) + 120px);
+
+  perspective: 1100px;
+  perspective-origin: center center;
+  overflow: visible;
+}
+
+.intro-gallery-carousel {
+  position: relative;
+  width: var(--gallery-width);
+  height: var(--gallery-height);
+
+  transform-style: preserve-3d;
+  animation: introGalleryRotate 35s linear infinite;
+  animation-play-state: paused;
+  will-change: transform;
+}
+
+.intro-gallery-section.is-visible .intro-gallery-carousel {
+  animation-play-state: running;
+}
+
+.intro-gallery-photo {
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  overflow: hidden;
+
+  background: #eee;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+
+  /* Keep images visible from both sides */
+  backface-visibility: visible;
+  -webkit-backface-visibility: visible;
+}
+
+.intro-gallery-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Eight images around the 3D carousel */
+.intro-gallery-photo:nth-child(1) {
+  transform: rotateY(0deg) translateZ(var(--gallery-radius));
+}
+
+.intro-gallery-photo:nth-child(2) {
+  transform: rotateY(45deg) translateZ(var(--gallery-radius));
+}
+
+.intro-gallery-photo:nth-child(3) {
+  transform: rotateY(90deg) translateZ(var(--gallery-radius));
+}
+
+.intro-gallery-photo:nth-child(4) {
+  transform: rotateY(135deg) translateZ(var(--gallery-radius));
+}
+
+.intro-gallery-photo:nth-child(5) {
+  transform: rotateY(180deg) translateZ(var(--gallery-radius));
+}
+
+.intro-gallery-photo:nth-child(6) {
+  transform: rotateY(225deg) translateZ(var(--gallery-radius));
+}
+
+.intro-gallery-photo:nth-child(7) {
+  transform: rotateY(270deg) translateZ(var(--gallery-radius));
+}
+
+.intro-gallery-photo:nth-child(8) {
+  transform: rotateY(315deg) translateZ(var(--gallery-radius));
+}
+
+@keyframes introGalleryRotate {
+  from {
+    transform: rotateY(0deg);
+  }
+
+  to {
+    transform: rotateY(-360deg);
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .intro-gallery-section {
+    --gallery-width: 130px;
+    --gallery-height: 185px;
+    --gallery-radius: 170px;
+
+    padding: 60px 0 40px;
+  }
+
+  .intro-gallery-scene {
+    height: 290px;
+    perspective: 850px;
+  }
+
+  .intro-gallery-carousel {
+    animation-duration: 32s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-gallery-carousel {
+    animation: none !important;
+  }
+}
+
+/* REDUCED MOTION */
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-gallery-carousel {
+    animation: none !important;
+  }
+}
+
+/* GALLERY HEADER — SAME STYLE AS LOCATION */
+
+.gallery-page-header {
+  padding: 10px 20px 20px;
+  text-align: center;
+}
+
+.gallery-page-header p {
+  margin: 0 0 8px;
+  color: #ffffff;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.25rem;
+  font-style: italic;
+  font-weight: 800;
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.45),
+    0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.gallery-page-header h1 {
+  margin: 0;
+  color: #ffffff;
+  font-family: "Allura", cursive;
+  font-size: clamp(3.4rem, 12vw, 5rem);
+  font-weight: 600;
+  line-height: 1.1;
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.45),
+    0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 600px) {
+  .gallery-page-header {
+    padding: 5px 16px 15px;
+  }
+
+  .gallery-page-header p {
+    font-size: 1.1rem;
+  }
+
+  .gallery-page-header h1 {
+    font-size: clamp(3rem, 12vw, 3.8rem);
   }
 }

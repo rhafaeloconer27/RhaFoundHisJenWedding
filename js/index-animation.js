@@ -186,6 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initMessageAnimations();
     initScriptureAnimations();
     initScratchAnimations();
+    initGalleryAnimations();
     initLocationAnimations();
     initAttireAnimations();
     initGiftAnimations();
@@ -230,6 +231,58 @@ document.addEventListener('DOMContentLoaded', () => {
       scrollTrigger: { trigger: '.intro-scratch-section', start: 'top 78%' },
     });
   }
+
+
+  /* ==========================================
+   INDEX — 3D GALLERY INITIALIZATION
+========================================== */
+
+  function initGalleryAnimations() {
+    const section = document.querySelector(
+      ".intro-gallery-section"
+    );
+
+    if (!section) return;
+
+    // Reveal heading when section enters viewport.
+    gsap.from(".intro-gallery-heading", {
+      opacity: 0,
+      y: 35,
+      duration: 0.9,
+      ease: "power3.out",
+
+      scrollTrigger: {
+        trigger: section,
+        start: "top 85%",
+        once: true
+      }
+    });
+
+    // Run carousel only when section is visible.
+    ScrollTrigger.create({
+      trigger: section,
+
+      start: "top bottom",
+      end: "bottom top",
+
+      onEnter: () => {
+        section.classList.add("is-visible");
+      },
+
+      onEnterBack: () => {
+        section.classList.add("is-visible");
+      },
+
+      onLeave: () => {
+        section.classList.remove("is-visible");
+      },
+
+      onLeaveBack: () => {
+        section.classList.remove("is-visible");
+      }
+    });
+  }
+
 
   function initScratchDate() {
     const canvases = document.querySelectorAll('.scratch-circle-canvas');
@@ -511,26 +564,26 @@ document.addEventListener('DOMContentLoaded', () => {
       opacity: 0, y: 22, scale: 0.97, duration: 0.6, ease: 'power2.out',
     }, { trigger: '.intro-attire-reminder', start: 'top 90%' });
   }
-  
+
   /* ======================================================
    CONTINUOUS FLOATING COLOR CIRCLES
 ====================================================== */
 
-const colorCircles = document.querySelectorAll(
-  ".intro-attire-color-option"
-);
+  const colorCircles = document.querySelectorAll(
+    ".intro-attire-color-option"
+  );
 
-if (colorCircles.length) {
-  gsap.to(colorCircles, {
-    y: -6,
-    duration: 1.5,
-    stagger: 0.15,
-    repeat: -1,
-    yoyo: true,
-    ease: "sine.inOut",
-    delay: 1.5
-  });
-}
+  if (colorCircles.length) {
+    gsap.to(colorCircles, {
+      y: -6,
+      duration: 1.5,
+      stagger: 0.15,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+      delay: 1.5
+    });
+  }
 
   function initGiftAnimations() {
     initSectionIntro('gift');
@@ -664,10 +717,10 @@ if (colorCircles.length) {
       behavior: reducedMotion.matches ? 'auto' : 'smooth',
       block: 'start',
     });
-   rsvpSection.scrollIntoView({
-    behavior: reducedMotion.matches ? 'auto' : 'smooth',
-    block: 'start'
-  });
+    rsvpSection.scrollIntoView({
+      behavior: reducedMotion.matches ? 'auto' : 'smooth',
+      block: 'start'
+    });
   });
 
   // A non-modal dialog should close when the visitor clicks elsewhere.
