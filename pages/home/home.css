@@ -1,52 +1,64 @@
 /* ==========================================================
-   HOME PAGE
+   HOME PAGE — HERO, COUNTDOWN & PRENUP GALLERY
+   Optimized for SPA layout and responsive screens.
 ========================================================== */
 
-/* ==============================
-   HOME HERO
-============================== */
+/* Home can scroll to the gallery below the fullscreen hero. */
+body[data-current-page="home"] {
+  width: 100%;
+  min-height: 100dvh;
+  margin: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
 
+body[data-current-page="home"] #app {
+  position: relative;
+  width: 100%;
+  min-height: 100dvh;
+  overflow: visible;
+}
+
+body[data-current-page="home"] .page-container {
+  position: relative;
+  width: 100%;
+  min-height: 100dvh;
+  margin: 0;
+  padding: 0 0 var(--nav-height);
+  overflow: visible;
+}
+
+/* ==============================
+   FULLSCREEN HERO
+============================== */
 .wedding-hero {
   position: relative;
-
   width: 100%;
-  height: 100%;
-  min-height: 0;
-
+  height: 100dvh;
+  min-height: 100dvh;
   overflow: hidden;
-
-  background-image: url("../../images/indexBackground.png");
-  background-repeat: repeat;
-  background-size: 680px auto;
-  background-position: center top;
-  background-color: #f7f2e8;
-
+  background: #f7f2e8 url("../../images/indexBackground.png") center top / 680px
+    auto repeat;
   color: var(--white);
   text-align: center;
 }
 
-
-/* ==============================
-   HOME SLIDESHOW
-============================== */
-
-.hero-slideshow {
+.hero-slideshow,
+.hero-slide,
+.hero-overlay {
   position: absolute;
   inset: 0;
-  z-index: 1;
+}
 
+.hero-slideshow {
+  z-index: 1;
   overflow: hidden;
 }
 
 .hero-slide {
-  position: absolute;
-  inset: 0;
-
   opacity: 0;
   visibility: hidden;
-
   transform: scale(1.06);
-
   transition:
     opacity 1.4s ease,
     visibility 1.4s ease,
@@ -56,361 +68,26 @@
 .hero-slide.active {
   opacity: 1;
   visibility: visible;
-
   transform: scale(1);
 }
 
 .hero-slide img {
+  display: block;
   width: 100%;
   height: 100%;
-
   object-fit: cover;
   object-position: center;
-
   opacity: 0;
-
-  transition:
-    opacity 0.6s ease;
+  transition: opacity 0.6s ease;
 }
 
 .hero-slide img.is-loaded {
   opacity: 1;
 }
 
-
-/* ==============================
-   HERO OVERLAY
-============================== */
-
 .hero-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-
-  pointer-events: none;
-
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(20, 25, 19, 0.08) 0%,
-      rgba(20, 25, 19, 0.18) 42%,
-      rgba(20, 25, 19, 0.55) 78%,
-      rgba(20, 25, 19, 0.72) 100%
-    );
-}
-
-
-/* ==============================
-   HERO CONTENT
-============================== */
-
-.hero-content {
-  position: relative;
-  z-index: 3;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-
-  padding: 160px 18px 24px;
-
-  text-align: center;
-}
-
-
-/* ==============================
-   COUPLE NAME
-============================== */
-
-.couple-name {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  margin: 0;
-
-  color: var(--white);
-
-  font-family:
-    "Allura",
-    cursive;
-
-  font-size:
-    clamp(4rem, 22vw, 7.2rem);
-
-  font-weight: 400;
-  line-height: 0.7;
-
-  text-shadow:
-    0 4px 18px
-    rgba(0, 0, 0, 0.35);
-}
-
-.couple-name .ampersand {
-  margin: 14px 0 10px;
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
-  font-size: 0.5em;
-  line-height: 1;
-}
-
-
-/* ==============================
-   WEDDING DATE
-============================== */
-
-.wedding-date {
-  margin: 0;
-
-  color: var(--white);
-
-  font-size: 0.87rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-}
-
-
-
-/* ==========================================
-   HOME - FULL SCREEN SLIDESHOW
-========================================== */
-
-body[data-current-page="home"] {
-  width: 100%;
-  height: 100dvh;
-  margin: 0;
-  overflow: hidden;
-}
-
-/* Full screen SPA container */
-body[data-current-page="home"] #app {
-  position: relative;
-  width: 100%;
-  height: 100dvh;
-  overflow: hidden;
-}
-
-
-body[data-current-page="home"]
-.page-container {
-  width: 100%;
-
-  /* height:
-    calc(
-      100dvh -
-      var(--nav-height) -
-      var(--countdown-height)
-    ); */
-
-  min-height: 0;
-  padding-bottom: 0;
-
-  overflow: hidden;
-}
-
-body[data-current-page="home"]
-.hero-slideshow,
-body[data-current-page="home"]
-.hero-slide,
-body[data-current-page="home"]
-.hero-slide img {
-  width: 100%;
-  height: 100%;
-}
-
-
-/* ==============================
-   COUNTDOWN
-============================== */
-
-.hero-countdown {
-  position: fixed;
-  right: 0;
-  bottom: var(--nav-height);
-  left: 0;
-  z-index: 990;
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(4, minmax(0, 1fr));
-
-  width: 100%;
-  height: var(--countdown-height);
-
-  padding: 5px 4px 4px;
-
-  background: var(--sage-dark);
-  color: var(--white);
-
-  -webkit-backdrop-filter:
-    blur(5px);
-
-  backdrop-filter:
-    blur(5px);
-}
-
-.countdown-item {
-  position: relative;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  min-width: 0;
-  padding: 0 2px;
-
-  text-align: center;
-}
-
-.countdown-item:not(:last-child)::after {
-  content: "";
-
-  position: absolute;
-  top: 2px;
-  right: 0;
-
-  width: 1px;
-  height: 28px;
-
-  background:
-    rgba(255, 255, 255, 0.3);
-}
-
-.countdown-line {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 24px;
-  min-height: 17px;
-
-  padding-bottom: 2px;
-
-  border-bottom:
-    1px solid
-    rgba(255, 255, 255, 0.65);
-}
-
-.countdown-number {
-  display: block;
-
-  color: var(--white);
-
-  font-size: 15px;
-  font-weight: 700;
-  line-height: 1;
-}
-
-.countdown-label {
-  display: block;
-
-  margin-top: 2px;
-
-  color: var(--white);
-
-  font-size: 6px;
-  font-weight: 500;
-  letter-spacing: 0.03em;
-
-  text-transform: uppercase;
-}
-
-
-/* ==============================
-   HOME RESPONSIVE
-============================== */
-
-@media (min-width: 640px) {
-  .hero-content {
-    padding-bottom: 48px;
-  }
-}
-
-@media (min-width: 900px) {
-  body[data-current-page="home"]
-  .hero-countdown {
-    right: 50%;
-    left: auto;
-
-    width: min(100%, 680px);
-
-    transform:
-      translateX(50%);
-  }
-}
-
-
-/* ==============================
-   ACCESSIBILITY
-============================== */
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-slide {
-    transform: none;
-  }
-}
-
-/* Keep Home content above the countdown */
-
-/* No height subtraction for countdown/nav */
-body[data-current-page="home"] .page-container {
-  position: relative;
-  width: 100%;
-  height: 100dvh;
-  min-height: 0;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
-
-body[data-current-page="home"] .wedding-hero {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  overflow: hidden;
-}
-
-body[data-current-page="home"] .hero-slideshow {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  overflow: hidden;
-}
-
-body[data-current-page="home"] .hero-slide {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-body[data-current-page="home"] .hero-slide img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-
-body[data-current-page="home"] .hero-overlay {
-  position: absolute;
-  inset: 0;
   z-index: 2;
   pointer-events: none;
-
   background: linear-gradient(
     to bottom,
     rgba(20, 25, 19, 0.08) 0%,
@@ -420,76 +97,238 @@ body[data-current-page="home"] .hero-overlay {
   );
 }
 
-body[data-current-page="home"] .hero-content {
+.hero-content {
   position: absolute;
   inset: 0;
   z-index: 3;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-
-  width: 100%;
-  height: 100%;
-
-  padding: 100px 18px calc(
-    var(--nav-height) +
-    var(--countdown-height) +
-    env(safe-area-inset-bottom, 0px) +
-    45px
-  );
-
+  padding: 100px 18px
+    calc(
+      var(--nav-height) + var(--countdown-height) +
+        env(safe-area-inset-bottom, 0px) + 45px
+    );
   text-align: center;
   pointer-events: none;
 }
 
-/* ==========================================================
-   HOME COUNTDOWN
-========================================================== */
+.couple-name {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  color: var(--white);
+  font-family: "Allura", cursive;
+  font-size: clamp(4rem, 22vw, 7.2rem);
+  font-weight: 400;
+  line-height: 0.7;
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+}
 
-body[data-current-page="home"] .hero-countdown {
+.couple-name .ampersand {
+  margin: 14px 0 10px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 0.5em;
+  line-height: 1;
+}
+
+.wedding-date {
+  margin: 0;
+  color: var(--white);
+  font-size: 0.87rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+
+/* ==============================
+   HERO COUNTDOWN
+============================== */
+.hero-countdown {
   position: absolute;
-
-  left: 20%;
   right: 0;
-
-  bottom: calc(
-    var(--nav-height) +
-    env(safe-area-inset-bottom, 0px) +
-    40px
-  );
-
+  bottom: calc(var(--nav-height) + env(safe-area-inset-bottom, 0px) + 40px);
+  left: 20%;
   z-index: 10;
-
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-
   width: 60%;
   height: var(--countdown-height);
-
   padding: 5px 4px 4px;
-
   background: transparent;
-  color: #ffffff;
-
-  box-shadow: none;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
+  color: var(--white);
 }
 
-body[data-current-page="home"] .countdown-number,
-body[data-current-page="home"] .countdown-label {
-  color: #ffffff;
+.countdown-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  padding: 0 2px;
+  text-align: center;
 }
 
-/* Countdown separators */
-body[data-current-page="home"]
 .countdown-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  right: 0;
+  width: 1px;
+  height: 28px;
   background: rgba(255, 255, 255, 0.4);
 }
 
-/* Countdown underline */
-body[data-current-page="home"] .countdown-line {
+.countdown-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  min-height: 17px;
+  padding-bottom: 2px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.65);
+}
+
+.countdown-number,
+.countdown-label {
+  display: block;
+  color: var(--white);
+}
+
+.countdown-number {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.countdown-label {
+  margin-top: 2px;
+  font-size: 6px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+/* ==============================
+   PRENUP GALLERY — PLAIN WHITE
+============================== */
+.home-gallery {
+  position: relative;
+  width: 100%;
+  padding: 70px 16px 90px;
+  background: #fff;
+}
+
+.home-gallery-heading {
+  max-width: 600px;
+  margin: 0 auto 35px;
+  text-align: center;
+}
+
+.home-gallery-heading span {
+  display: block;
+  margin-bottom: 12px;
+  color: #b47b72;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+}
+
+.home-gallery-heading h2 {
+  margin: 0 0 14px;
+  color: #4c4845;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.5rem, 7vw, 3.8rem);
+  font-weight: 500;
+}
+
+.home-gallery-heading p {
+  max-width: 400px;
+  margin: 0 auto;
+  color: #77716c;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+
+.home-gallery-grid {
+  columns: 2;
+  column-gap: 12px;
+  width: 100%;
+  max-width: 1050px;
+  margin: 0 auto;
+}
+
+.home-gallery-item {
+  display: block;
+  width: 100%;
+  margin: 0 0 12px;
+  break-inside: avoid;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #e9e4dc;
+}
+
+.home-gallery-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+/* ==============================
+   RESPONSIVE
+============================== */
+@media (min-width: 640px) {
+  .hero-content {
+    padding-bottom: calc(
+      var(--nav-height) + var(--countdown-height) +
+        env(safe-area-inset-bottom, 0px) + 69px
+    );
+  }
+}
+
+@media (max-width: 600px) {
+  .home-gallery {
+    padding: 55px 12px 80px;
+  }
+
+  .home-gallery-heading {
+    margin-bottom: 28px;
+  }
+
+  .home-gallery-heading h2 {
+    font-size: 2.7rem;
+  }
+
+  .home-gallery-heading p {
+    font-size: 1.1rem;
+  }
+
+  .home-gallery-grid {
+    column-gap: 8px;
+  }
+
+  .home-gallery-item {
+    margin-bottom: 8px;
+    border-radius: 8px;
+  }
+}
+
+/* ==============================
+   ACCESSIBILITY
+============================== */
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide {
+    transform: none;
+    transition: none;
+  }
+
+  .hero-slide img,
+  .home-gallery-item img {
+    transition: none;
+  }
 }

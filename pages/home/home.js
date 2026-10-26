@@ -9,7 +9,7 @@
 let homeSlideshowInterval = null;
 let homeVisibilityHandler = null;
 let homeCountdownInterval = null;
-
+let homeGalleryAnimationContext = null;
 /* =========================================================
    INITIALIZE HOME
 ========================================================= */
@@ -19,6 +19,7 @@ window.initializeHomePage = function () {
 
   initializeHeroSlideshow();
   initializeWeddingCountdown();
+  initializeGalleryParallax();
 };
 
 /* =========================================================
@@ -49,6 +50,10 @@ window.cleanupHomePage = function () {
     );
 
     homeVisibilityHandler = null;
+  }
+  if (homeGalleryAnimationContext) {
+    homeGalleryAnimationContext.revert();
+    homeGalleryAnimationContext = null;
   }
 };
 
@@ -294,19 +299,19 @@ function initializeWeddingCountdown() {
     const hours =
       Math.floor(
         (remainingTime % day) /
-          hour
+        hour
       );
 
     const minutes =
       Math.floor(
         (remainingTime % hour) /
-          minute
+        minute
       );
 
     const seconds =
       Math.floor(
         (remainingTime % minute) /
-          second
+        second
       );
 
     daysElement.textContent =
@@ -329,4 +334,95 @@ function initializeWeddingCountdown() {
       updateCountdown,
       1000
     );
+}
+
+
+/* =========================================================
+   HOME GALLERY — GSAP PARALLAX & SCROLL REVEAL
+========================================================= */
+
+function initializeGalleryParallax() {
+  const gallery = document.querySelector(".home-gallery");
+
+  if (
+    !gallery ||
+    typeof gsap === "undefined" ||
+    typeof ScrollTrigger === "undefined"
+  ) {
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const items = gsap.utils.toArray(
+    ".home-gallery-item",
+    gallery
+  );
+
+  if (!items.length) return;
+
+  homeGalleryAnimationContext = gsap.context(() => {
+    // Gallery heading reveal
+    gsap.from(".home-gallery-heading", {
+      opacity: 0,
+      y: 35,
+      duration: 1,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: ".home-gallery-heading",
+        start: "top 90%",
+        once: true
+      }
+    });
+
+    // Respect reduced-motion preferences
+    if (
+      window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches
+    ) {
+      return;
+    }
+
+    items.forEach((item, index) => {
+      const image = item.querySelector("img");
+
+      if (!image) return;
+
+      // Fade and slide each photo into view
+      gsap.from(item, {
+        opacity: 0,
+        y: 45,
+        duration: 0.9,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: item,
+          start: "top 95%",
+          once: true
+        }
+      });
+
+      // Subtle parallax on the photo itself
+      gsap.fromTo(
+        image,
+        {
+          yPercent: -5,
+          scale: 1.12
+        },
+        {
+          yPercent: 5,
+          scale: 1.12,
+          ease: "none",
+          scrollTrigger: {
+            trigger: item,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1.2
+          }
+        }
+      );
+    });
+  }, gallery);
+
+  ScrollTrigger.refresh();
 }

@@ -4298,20 +4298,19 @@ body.wedding-flip-active #pageTransitionLoader {
 /* Mobile */
 @media (max-width: 600px) {
   .intro-gallery-section {
-    --gallery-width: 130px;
-    --gallery-height: 185px;
-    --gallery-radius: 170px;
-
+    --gallery-width: 175px;
+    --gallery-height: 260px;
+    --gallery-radius: 225px;
     padding: 60px 0 40px;
   }
 
   .intro-gallery-scene {
-    height: 290px;
-    perspective: 850px;
+    height: 380px;
+    perspective: 1000px;
   }
 
   .intro-gallery-carousel {
-    animation-duration: 32s;
+    animation-duration: 35s;
   }
 }
 
