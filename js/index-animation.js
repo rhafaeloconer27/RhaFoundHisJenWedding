@@ -172,12 +172,59 @@ document.addEventListener('DOMContentLoaded', () => {
     }, scrollTrigger);
   }
 
+
+  // Scattered Polaroid photographs behind every invitation section.
+  function initPrenupParallax() {
+    // Reuse the same eight real prenup photo paths as the index gallery.
+    const photos = [
+      'images/prenup/prenup2.webp', 'images/prenup/prenup20.webp',
+      'images/prenup/prenup7.webp', 'images/prenup/prenup51.webp',
+      'images/prenup/prenup9.webp', 'images/prenup/prenup62.webp',
+      'images/prenup/prenup19.webp', 'images/prenup/prenup36.webp'
+    ];
+    const random = (seed) => {
+      const value = Math.sin(seed * 127.1 + 78.233) * 43758.5453;
+      return value - Math.floor(value);
+    };
+    document.querySelectorAll('.prenup-parallax').forEach((layer, sectionIndex) => {
+      if (layer.dataset.prenupReady) return;
+      layer.dataset.prenupReady = 'true';
+      const section = layer.parentElement;
+      const count = window.innerWidth <= 600 ? 4 : 6;
+      for (let i = 0; i < count; i++) {
+        const seed = sectionIndex * 100 + i * 17 + 1;
+        const polaroid = document.createElement('div');
+        polaroid.className = 'prenup-polaroid';
+        const img = document.createElement('img');
+        img.src = photos[(sectionIndex * 3 + i) % photos.length];
+        img.alt = '';
+        img.loading = 'lazy';
+        polaroid.appendChild(img);
+        layer.appendChild(polaroid);
+        const leftSide = i % 2 === 0;
+        const x = leftSide ? -10 + random(seed) * 24 : 70 + random(seed + 1) * 18;
+        const y = 4 + ((i + 0.5) / count) * 86 + (random(seed + 2) - 0.5) * 12;
+        const angle = -24 + random(seed + 3) * 48;
+        const speed = 35 + random(seed + 4) * 95;
+        polaroid.style.left = `${x}%`;
+        polaroid.style.top = `${y}%`;
+        gsap.set(polaroid, { rotation: angle, xPercent: -50, yPercent: -50 });
+        if (reducedMotion.matches) continue;
+        gsap.fromTo(polaroid, { y: speed }, {
+          y: -speed, ease: 'none',
+          scrollTrigger: { trigger: section, start: 'top bottom', end: 'bottom top', scrub: 1.5 }
+        });
+      }
+    });
+  }
+
   function initializeLongScroll() {
     if (longScrollInitialized) return;
     longScrollInitialized = true;
 
     // Scratch interaction must also work for reduced-motion visitors.
     initScratchDate();
+    initPrenupParallax();
     if (reducedMotion.matches) {
       showLongScrollWithoutMotion();
       return;

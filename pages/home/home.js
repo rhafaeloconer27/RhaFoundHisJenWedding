@@ -72,7 +72,8 @@ function initializeHomeGallery() {
 function initializeHeroSlideshow(session) {
   const slideshow = document.querySelector(".hero-slideshow");
   if (!slideshow) return;
-  const order = shuffledPhotoNumbers();
+  // const order = shuffledPhotoNumbers();
+  const order = [64, ...shuffledPhotoNumbers()];
   const slides = [0, 1].map(() => {
     const slide = document.createElement("div");
     slide.className = "hero-slide";
@@ -208,7 +209,7 @@ function initializeExpoSlider() {
   homeExpoController = controller;
   const signal = controller.signal;
   // Nine images keeps this interactive section light. Change these IDs to your favorites.
-  const photoIds = [1, 8, 15, 22, 29, 36, 43, 50, 57];
+  const photoIds = [1, 8, 2, 20, 62, 22, 25, 28, 29, 32, 35, 36, 38, 40, 43, 45, 46, 51, 57];
   const cards = photoIds.map((number, index) => {
     const card = document.createElement("figure");
     card.className = "expo-card";

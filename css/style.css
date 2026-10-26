@@ -4372,3 +4372,73 @@ body.wedding-flip-active #pageTransitionLoader {
     font-size: clamp(3rem, 12vw, 3.8rem);
   }
 }
+
+/* Soft floating shadow for bottom navigation */
+.curved-nav .nav-background {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.08))
+    drop-shadow(0 10px 22px rgba(0, 0, 0, 0.12));
+}
+
+/* INDEX — SCATTERED PRENUP POLAROID PARALLAX */
+.invitation-stage > .intro-message-section,
+.invitation-stage > .intro-scripture-section,
+.invitation-stage > .intro-scratch-section,
+.invitation-stage > .intro-gallery-section,
+.invitation-stage > .intro-location-section,
+.invitation-stage > .intro-attire-section,
+.invitation-stage > .intro-gift-section,
+.invitation-stage > .intro-rsvp-section {
+  position: relative;
+  isolation: isolate;
+}
+.prenup-parallax {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.prenup-polaroid {
+  position: absolute;
+  width: clamp(110px, 24vw, 210px);
+  padding: 9px 9px 30px;
+  background: #fffdf9;
+  box-shadow:
+    0 12px 28px rgba(35, 30, 25, 0.18),
+    0 3px 8px rgba(35, 30, 25, 0.08);
+  transform-origin: center;
+  will-change: transform;
+}
+.prenup-polaroid img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}
+/* Existing cards and headings remain readable in front of the photographs. */
+.invitation-stage
+  > :is(
+    .intro-message-section,
+    .intro-scripture-section,
+    .intro-scratch-section,
+    .intro-gallery-section,
+    .intro-location-section,
+    .intro-attire-section,
+    .intro-gift-section,
+    .intro-rsvp-section
+  )
+  > :not(.prenup-parallax) {
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 600px) {
+  .prenup-polaroid {
+    width: clamp(105px, 35vw, 160px);
+    padding: 7px 7px 23px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .prenup-polaroid {
+    will-change: auto;
+  }
+}
