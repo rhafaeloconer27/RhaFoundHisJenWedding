@@ -4442,3 +4442,30 @@ body.wedding-flip-active #pageTransitionLoader {
     will-change: auto;
   }
 }
+
+/* Allow Polaroid photos to extend beyond their sections */
+.invitation-intro,
+.invitation-stage,
+.intro-message-section,
+.prenup-parallax {
+  overflow: visible;
+}
+
+/* Keep the photo layer behind the invitation text */
+.prenup-parallax {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.prenup-polaroid {
+  position: absolute;
+  overflow: visible;
+  transform-origin: center;
+}
+
+/* Prevent the entire page from scrolling horizontally */
+.invitation-intro-body {
+  overflow-x: clip;
+}
