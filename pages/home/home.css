@@ -1,24 +1,19 @@
-/* ==========================================================
-   HOME PAGE — HERO, COUNTDOWN & PRENUP GALLERY
-   Optimized for SPA layout and responsive screens.
-========================================================== */
-
-/* Home can scroll to the gallery below the fullscreen hero. */
+/* Home page: fullscreen slideshow, countdown, and masonry gallery. */
 body[data-current-page="home"] {
   width: 100%;
   min-height: 100dvh;
   margin: 0;
   overflow-x: hidden;
   overflow-y: auto;
+  background: #fff;
 }
-
 body[data-current-page="home"] #app {
   position: relative;
   width: 100%;
   min-height: 100dvh;
   overflow: visible;
+  background: #fff;
 }
-
 body[data-current-page="home"] .page-container {
   position: relative;
   width: 100%;
@@ -26,35 +21,30 @@ body[data-current-page="home"] .page-container {
   margin: 0;
   padding: 0 0 var(--nav-height);
   overflow: visible;
+  background: #fff;
 }
-
-/* ==============================
-   FULLSCREEN HERO
-============================== */
 .wedding-hero {
   position: relative;
   width: 100%;
   height: 100dvh;
   min-height: 100dvh;
   overflow: hidden;
-  background: #f7f2e8 url("../../images/indexBackground.png") center top / 680px
-    auto repeat;
+  border-radius: 0 0 999px 999px;
+  background: #fff;
   color: var(--white);
   text-align: center;
+  isolation: isolate;
 }
-
 .hero-slideshow,
 .hero-slide,
 .hero-overlay {
   position: absolute;
   inset: 0;
 }
-
 .hero-slideshow {
   z-index: 1;
   overflow: hidden;
 }
-
 .hero-slide {
   opacity: 0;
   visibility: hidden;
@@ -64,13 +54,11 @@ body[data-current-page="home"] .page-container {
     visibility 1.4s ease,
     transform 7s ease;
 }
-
 .hero-slide.active {
   opacity: 1;
   visibility: visible;
   transform: scale(1);
 }
-
 .hero-slide img {
   display: block;
   width: 100%;
@@ -80,11 +68,9 @@ body[data-current-page="home"] .page-container {
   opacity: 0;
   transition: opacity 0.6s ease;
 }
-
 .hero-slide img.is-loaded {
   opacity: 1;
 }
-
 .hero-overlay {
   z-index: 2;
   pointer-events: none;
@@ -96,7 +82,6 @@ body[data-current-page="home"] .page-container {
     rgba(20, 25, 19, 0.65) 100%
   );
 }
-
 .hero-content {
   position: absolute;
   inset: 0;
@@ -113,7 +98,6 @@ body[data-current-page="home"] .page-container {
   text-align: center;
   pointer-events: none;
 }
-
 .couple-name {
   display: flex;
   flex-direction: column;
@@ -126,14 +110,12 @@ body[data-current-page="home"] .page-container {
   line-height: 0.7;
   text-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
 }
-
 .couple-name .ampersand {
   margin: 14px 0 10px;
   font-family: "Cormorant Garamond", serif;
   font-size: 0.5em;
   line-height: 1;
 }
-
 .wedding-date {
   margin: 0;
   color: var(--white);
@@ -141,10 +123,6 @@ body[data-current-page="home"] .page-container {
   font-weight: 500;
   letter-spacing: 0.08em;
 }
-
-/* ==============================
-   HERO COUNTDOWN
-============================== */
 .hero-countdown {
   position: absolute;
   right: 0;
@@ -159,7 +137,6 @@ body[data-current-page="home"] .page-container {
   background: transparent;
   color: var(--white);
 }
-
 .countdown-item {
   position: relative;
   display: flex;
@@ -170,7 +147,6 @@ body[data-current-page="home"] .page-container {
   padding: 0 2px;
   text-align: center;
 }
-
 .countdown-item:not(:last-child)::after {
   content: "";
   position: absolute;
@@ -180,7 +156,6 @@ body[data-current-page="home"] .page-container {
   height: 28px;
   background: rgba(255, 255, 255, 0.4);
 }
-
 .countdown-line {
   display: flex;
   align-items: center;
@@ -190,19 +165,16 @@ body[data-current-page="home"] .page-container {
   padding-bottom: 2px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.65);
 }
-
 .countdown-number,
 .countdown-label {
   display: block;
   color: var(--white);
 }
-
 .countdown-number {
   font-size: 15px;
   font-weight: 700;
   line-height: 1;
 }
-
 .countdown-label {
   margin-top: 2px;
   font-size: 6px;
@@ -210,23 +182,17 @@ body[data-current-page="home"] .page-container {
   letter-spacing: 0.03em;
   text-transform: uppercase;
 }
-
-/* ==============================
-   PRENUP GALLERY — PLAIN WHITE
-============================== */
 .home-gallery {
   position: relative;
   width: 100%;
   padding: 70px 16px 90px;
   background: #fff;
 }
-
 .home-gallery-heading {
   max-width: 600px;
   margin: 0 auto 35px;
   text-align: center;
 }
-
 .home-gallery-heading span {
   display: block;
   margin-bottom: 12px;
@@ -235,7 +201,6 @@ body[data-current-page="home"] .page-container {
   font-weight: 600;
   letter-spacing: 0.18em;
 }
-
 .home-gallery-heading h2 {
   margin: 0 0 14px;
   color: #4c4845;
@@ -243,7 +208,6 @@ body[data-current-page="home"] .page-container {
   font-size: clamp(2.5rem, 7vw, 3.8rem);
   font-weight: 500;
 }
-
 .home-gallery-heading p {
   max-width: 400px;
   margin: 0 auto;
@@ -252,7 +216,6 @@ body[data-current-page="home"] .page-container {
   font-size: 1.2rem;
   line-height: 1.5;
 }
-
 .home-gallery-grid {
   columns: 2;
   column-gap: 12px;
@@ -260,7 +223,6 @@ body[data-current-page="home"] .page-container {
   max-width: 1050px;
   margin: 0 auto;
 }
-
 .home-gallery-item {
   display: block;
   width: 100%;
@@ -270,18 +232,12 @@ body[data-current-page="home"] .page-container {
   border-radius: 10px;
   background: #e9e4dc;
 }
-
 .home-gallery-item img {
   display: block;
   width: 100%;
   height: auto;
-  transform-origin: center center;
-  will-change: transform;
+  transform-origin: center;
 }
-
-/* ==============================
-   RESPONSIVE
-============================== */
 @media (min-width: 640px) {
   .hero-content {
     padding-bottom: calc(
@@ -290,45 +246,33 @@ body[data-current-page="home"] .page-container {
     );
   }
 }
-
 @media (max-width: 600px) {
   .home-gallery {
     padding: 55px 12px 80px;
   }
-
   .home-gallery-heading {
     margin-bottom: 28px;
   }
-
   .home-gallery-heading h2 {
     font-size: 2.7rem;
   }
-
   .home-gallery-heading p {
     font-size: 1.1rem;
   }
-
   .home-gallery-grid {
     column-gap: 8px;
   }
-
   .home-gallery-item {
     margin-bottom: 8px;
     border-radius: 8px;
   }
 }
-
-/* ==============================
-   ACCESSIBILITY
-============================== */
 @media (prefers-reduced-motion: reduce) {
   .hero-slide {
     transform: none;
     transition: none;
   }
-
-  .hero-slide img,
-  .home-gallery-item img {
+  .hero-slide img {
     transition: none;
   }
 }

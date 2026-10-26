@@ -1,163 +1,40 @@
-<!-- =====================================================
-     HOME PAGE PARTIAL
-
-     Important:
-     - No <!DOCTYPE html>
-     - No <html>
-     - No <head>
-     - No <body>
-     - No global navigation
-     - No music.js
-     - No common.js
-     - No home.js
-
-     This file will be loaded inside:
-     <div id="app"></div>
-====================================================== -->
-
+<!-- SPA partial. JS fills slideshow and gallery using images/prenup/prenup1.webp ... prenup64.webp. -->
 <main class="page-container">
   <section class="wedding-hero">
-    <!-- HOME BACKGROUND SLIDESHOW -->
-
-    <div class="hero-slideshow" aria-hidden="true">
-      <div class="hero-slide active">
-        <img
-          src="images/rhafjenone.webp"
-          alt=""
-          loading="eager"
-          fetchpriority="high"
-          decoding="async"
-        />
-      </div>
-
-      <!--
-    REMAINING IMAGES:
-    Load with lower priority because they are not yet visible.
-  -->
-      <div class="hero-slide">
-        <img
-          src="images/rhafjentwo.webp"
-          alt=""
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
-
-      <div class="hero-slide">
-        <img
-          src="images/rhafjenthree.webp"
-          alt=""
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
-
-      <div class="hero-slide">
-        <img
-          src="images/rhafjenfour.webp"
-          alt=""
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
-
-      <div class="hero-slide">
-        <img
-          src="images/rhafjenfive.webp"
-          alt=""
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
-
-      <div class="hero-slide">
-        <img
-          src="images/rhafjensix.webp"
-          alt=""
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
-
-      <div class="hero-slide">
-        <img
-          src="images/rhafjenseven.webp"
-          alt=""
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
-    </div>
-
-    <!-- DARK OVERLAY -->
-
+    <div class="hero-slideshow" aria-hidden="true"></div>
     <div class="hero-overlay"></div>
-
-    <!-- COUPLE NAME AND DATE -->
-
     <div class="hero-content">
       <h1 class="couple-name">
-        <span>Rhaf</span>
-
-        <span class="ampersand"> &amp; </span>
-
-        <span>Jen</span>
+        <span>Rhaf</span><span class="ampersand">&amp;</span><span>Jen</span>
       </h1>
-
-      <!-- <p class="wedding-date">
-        FEBRUARY 4, 2027
-      </p> -->
     </div>
-
-    <!-- WEDDING COUNTDOWN -->
-
     <div class="hero-countdown" aria-label="Wedding countdown">
-      <!-- DAYS -->
-
       <div class="countdown-item">
         <div class="countdown-line">
-          <strong id="days" class="countdown-number"> 000 </strong>
+          <strong id="days" class="countdown-number">000</strong>
         </div>
-
-        <span class="countdown-label"> DAYS </span>
+        <span class="countdown-label">DAYS</span>
       </div>
-
-      <!-- HOURS -->
-
       <div class="countdown-item">
         <div class="countdown-line">
-          <strong id="hours" class="countdown-number"> 00 </strong>
+          <strong id="hours" class="countdown-number">00</strong>
         </div>
-
-        <span class="countdown-label"> HOURS </span>
+        <span class="countdown-label">HOURS</span>
       </div>
-
-      <!-- MINUTES -->
-
       <div class="countdown-item">
         <div class="countdown-line">
-          <strong id="minutes" class="countdown-number"> 00 </strong>
+          <strong id="minutes" class="countdown-number">00</strong>
         </div>
-
-        <span class="countdown-label"> MINUTES </span>
+        <span class="countdown-label">MINUTES</span>
       </div>
-
-      <!-- SECONDS -->
-
       <div class="countdown-item">
         <div class="countdown-line">
-          <strong id="seconds" class="countdown-number"> 00 </strong>
+          <strong id="seconds" class="countdown-number">00</strong>
         </div>
-
-        <span class="countdown-label"> SECONDS </span>
+        <span class="countdown-label">SECONDS</span>
       </div>
     </div>
   </section>
-
-  <!-- =========================================
-       PRENUP PHOTO GALLERY
-  ========================================== -->
-
   <section class="home-gallery" id="homeGallery">
     <div class="home-gallery-heading">
       <span>CAPTURED MOMENTS</span>
@@ -167,70 +44,6 @@
         love.
       </p>
     </div>
-
-    <div class="home-gallery-grid">
-      <figure class="home-gallery-item">
-        <img
-          src="images/rhafjenone.webp"
-          alt="Rhaf and Jen prenup photo 1"
-          loading="lazy"
-          decoding="async"
-        />
-      </figure>
-
-      <figure class="home-gallery-item">
-        <img
-          src="images/rhafjentwo.webp"
-          alt="Rhaf and Jen prenup photo 2"
-          loading="lazy"
-          decoding="async"
-        />
-      </figure>
-
-      <figure class="home-gallery-item">
-        <img
-          src="images/rhafjenthree.webp"
-          alt="Rhaf and Jen prenup photo 3"
-          loading="lazy"
-          decoding="async"
-        />
-      </figure>
-
-      <figure class="home-gallery-item">
-        <img
-          src="images/rhafjenfour.webp"
-          alt="Rhaf and Jen prenup photo 4"
-          loading="lazy"
-          decoding="async"
-        />
-      </figure>
-
-      <figure class="home-gallery-item">
-        <img
-          src="images/rhafjenfive.webp"
-          alt="Rhaf and Jen prenup photo 5"
-          loading="lazy"
-          decoding="async"
-        />
-      </figure>
-
-      <figure class="home-gallery-item">
-        <img
-          src="images/rhafjensix.webp"
-          alt="Rhaf and Jen prenup photo 6"
-          loading="lazy"
-          decoding="async"
-        />
-      </figure>
-
-      <figure class="home-gallery-item">
-        <img
-          src="images/rhafjenseven.webp"
-          alt="Rhaf and Jen prenup photo 7"
-          loading="lazy"
-          decoding="async"
-        />
-      </figure>
-    </div>
+    <div class="home-gallery-grid"></div>
   </section>
 </main>

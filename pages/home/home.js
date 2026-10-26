@@ -1,428 +1,195 @@
-/* =========================================================
-   HOME PAGE — SPA COMPATIBLE
-
-   Works with:
-   .hero-slideshow
-   .hero-slide
-========================================================= */
-
+/* SPA home module: one photo manifest, lazy gallery, randomized slideshow. */
 let homeSlideshowInterval = null;
 let homeVisibilityHandler = null;
 let homeCountdownInterval = null;
 let homeGalleryAnimationContext = null;
-/* =========================================================
-   INITIALIZE HOME
-========================================================= */
+let homeGalleryRefreshHandler = null;
+let homeSession = 0;
+
+const HOME_IMAGE_FOLDER = "images/prenup/";
+const HOME_IMAGE_COUNT = 64;
+const HOME_SLIDESHOW_DELAY = 5000;
+const HOME_WEDDING_DATE = new Date("2027-02-04T15:00:00+08:00").getTime();
+
+function homeImagePath(number) {
+  return `${HOME_IMAGE_FOLDER}prenup${number}.webp`;
+}
+
+function shuffledPhotoNumbers() {
+  const numbers = Array.from({ length: HOME_IMAGE_COUNT }, (_, i) => i + 1);
+  for (let i = numbers.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [numbers[i], numbers[j]] = [numbers[j], numbers[i]];
+  }
+  return numbers;
+}
 
 window.initializeHomePage = function () {
   window.cleanupHomePage();
-
-  initializeHeroSlideshow();
+  const session = homeSession;
+  initializeHomeGallery();
+  initializeHeroSlideshow(session);
   initializeWeddingCountdown();
   initializeGalleryParallax();
 };
 
-/* =========================================================
-   CLEANUP HOME
-========================================================= */
-
 window.cleanupHomePage = function () {
-  if (homeSlideshowInterval !== null) {
-    window.clearInterval(
-      homeSlideshowInterval
-    );
-
-    homeSlideshowInterval = null;
-  }
-
-  if (homeCountdownInterval !== null) {
-    window.clearInterval(
-      homeCountdownInterval
-    );
-
-    homeCountdownInterval = null;
-  }
-
-  if (homeVisibilityHandler) {
-    document.removeEventListener(
-      "visibilitychange",
-      homeVisibilityHandler
-    );
-
-    homeVisibilityHandler = null;
-  }
-  if (homeGalleryAnimationContext) {
-    homeGalleryAnimationContext.revert();
-    homeGalleryAnimationContext = null;
-  }
+  homeSession++;
+  if (homeSlideshowInterval !== null) clearInterval(homeSlideshowInterval);
+  if (homeCountdownInterval !== null) clearInterval(homeCountdownInterval);
+  homeSlideshowInterval = homeCountdownInterval = null;
+  if (homeVisibilityHandler) document.removeEventListener("visibilitychange", homeVisibilityHandler);
+  homeVisibilityHandler = null;
+  if (homeGalleryRefreshHandler) window.removeEventListener("load", homeGalleryRefreshHandler);
+  homeGalleryRefreshHandler = null;
+  if (homeGalleryAnimationContext) homeGalleryAnimationContext.revert();
+  homeGalleryAnimationContext = null;
 };
 
-/* =========================================================
-   HERO SLIDESHOW
-========================================================= */
+function initializeHomeGallery() {
+  const grid = document.querySelector(".home-gallery-grid");
+  if (!grid) return;
+  const fragment = document.createDocumentFragment();
+  for (let number = 1; number <= HOME_IMAGE_COUNT; number++) {
+    const figure = document.createElement("figure");
+    figure.className = "home-gallery-item";
+    const image = document.createElement("img");
+    image.src = homeImagePath(number);
+    image.alt = `Rhaf and Jen prenup photo ${number}`;
+    image.loading = "lazy";
+    image.decoding = "async";
+    image.addEventListener("error", () => { figure.hidden = true; }, { once: true });
+    figure.append(image);
+    fragment.append(figure);
+  }
+  grid.replaceChildren(fragment);
+}
 
-function initializeHeroSlideshow() {
-  const slideshow =
-    document.querySelector(
-      ".hero-slideshow"
-    );
+function initializeHeroSlideshow(session) {
+  const slideshow = document.querySelector(".hero-slideshow");
+  if (!slideshow) return;
+  const order = shuffledPhotoNumbers();
+  const slides = [0, 1].map(() => {
+    const slide = document.createElement("div");
+    slide.className = "hero-slide";
+    const image = document.createElement("img");
+    image.alt = "";
+    image.decoding = "async";
+    slide.append(image);
+    return slide;
+  });
+  slideshow.replaceChildren(...slides);
+  let activeSlot = 0;
+  let nextPhotoIndex = 0;
+  let isTransitioning = false;
+  let started = false;
 
-  if (!slideshow) {
-    return;
+  function loadPhoto(slot, photoNumber) {
+    return new Promise((resolve) => {
+      const image = slides[slot].querySelector("img");
+      image.classList.remove("is-loaded");
+      const source = homeImagePath(photoNumber);
+      const probe = new Image();
+      probe.onload = () => {
+        if (session !== homeSession) return resolve(false);
+        image.src = source;
+        image.classList.add("is-loaded");
+        resolve(true);
+      };
+      probe.onerror = () => resolve(false);
+      probe.src = source;
+    });
   }
 
-  const slides =
-    Array.from(
-      slideshow.querySelectorAll(
-        ".hero-slide"
-      )
-    );
-
-  if (slides.length === 0) {
-    return;
-  }
-
-  let currentSlideIndex = 0;
-
-  const slideshowDelay = 5000;
-
-  function showSlide(index) {
-    currentSlideIndex =
-      (index + slides.length) %
-      slides.length;
-
-    slides.forEach(
-      function (slide, slideIndex) {
-        slide.classList.toggle(
-          "active",
-          slideIndex === currentSlideIndex
-        );
+  async function loadNextValid(slot) {
+    for (let attempt = 0; attempt < HOME_IMAGE_COUNT; attempt++) {
+      if (nextPhotoIndex >= order.length) {
+        // Shuffle each new cycle; avoid immediately repeating the previous image.
+        const previous = order[order.length - 1];
+        const nextOrder = shuffledPhotoNumbers();
+        if (nextOrder[0] === previous && nextOrder.length > 1) {
+          [nextOrder[0], nextOrder[1]] = [nextOrder[1], nextOrder[0]];
+        }
+        order.splice(0, order.length, ...nextOrder);
+        nextPhotoIndex = 0;
       }
-    );
-  }
-
-  function showNextSlide() {
-    showSlide(
-      currentSlideIndex + 1
-    );
-  }
-
-  function stopSlideshow() {
-    if (
-      homeSlideshowInterval === null
-    ) {
-      return;
+      const number = order[nextPhotoIndex++];
+      if (await loadPhoto(slot, number)) return true;
+      if (session !== homeSession) return false;
     }
+    return false;
+  }
 
-    window.clearInterval(
-      homeSlideshowInterval
-    );
+  async function advance() {
+    if (isTransitioning || session !== homeSession || document.hidden) return;
+    isTransitioning = true;
+    const nextSlot = 1 - activeSlot;
+    const loaded = await loadNextValid(nextSlot);
+    if (loaded && session === homeSession) {
+      slides[nextSlot].classList.add("active");
+      slides[activeSlot].classList.remove("active");
+      activeSlot = nextSlot;
+    }
+    isTransitioning = false;
+  }
 
+  function start() {
+    if (homeSlideshowInterval !== null || document.hidden || !started) return;
+    homeSlideshowInterval = window.setInterval(advance, HOME_SLIDESHOW_DELAY);
+  }
+  function stop() {
+    if (homeSlideshowInterval !== null) clearInterval(homeSlideshowInterval);
     homeSlideshowInterval = null;
   }
+  homeVisibilityHandler = () => { if (document.hidden) stop(); else start(); };
+  document.addEventListener("visibilitychange", homeVisibilityHandler);
 
-  function startSlideshow() {
-    stopSlideshow();
-
-    if (slides.length <= 1) {
-      return;
-    }
-
-    homeSlideshowInterval =
-      window.setInterval(
-        showNextSlide,
-        slideshowDelay
-      );
-  }
-
-  slides.forEach(function (slide) {
-    const image =
-      slide.querySelector("img");
-
-    if (!image) {
-      return;
-    }
-
-    function markImageLoaded() {
-      image.classList.add(
-        "is-loaded"
-      );
-    }
-
-    if (
-      image.complete &&
-      image.naturalWidth > 0
-    ) {
-      markImageLoaded();
-    } else {
-      image.addEventListener(
-        "load",
-        markImageLoaded,
-        {
-          once: true,
-        }
-      );
-
-      image.addEventListener(
-        "error",
-        markImageLoaded,
-        {
-          once: true,
-        }
-      );
-    }
+  loadNextValid(0).then((loaded) => {
+    if (!loaded || session !== homeSession) return;
+    slides[0].classList.add("active");
+    started = true;
+    start();
   });
-
-  showSlide(0);
-
-  startSlideshow();
-
-  homeVisibilityHandler =
-    function () {
-      if (document.hidden) {
-        stopSlideshow();
-      } else {
-        startSlideshow();
-      }
-    };
-
-  document.addEventListener(
-    "visibilitychange",
-    homeVisibilityHandler
-  );
 }
-
-/* =========================================================
-   WEDDING COUNTDOWN
-========================================================= */
 
 function initializeWeddingCountdown() {
-  const daysElement =
-    document.getElementById("days");
-
-  const hoursElement =
-    document.getElementById("hours");
-
-  const minutesElement =
-    document.getElementById(
-      "minutes"
-    );
-
-  const secondsElement =
-    document.getElementById(
-      "seconds"
-    );
-
-  if (
-    !daysElement ||
-    !hoursElement ||
-    !minutesElement ||
-    !secondsElement
-  ) {
-    return;
-  }
-
-  const weddingDate =
-    new Date(
-      "2027-02-04T15:00:00+08:00"
-    ).getTime();
-
-  function formatNumber(
-    value,
-    minimumLength
-  ) {
-    return String(value).padStart(
-      minimumLength,
-      "0"
-    );
-  }
-
-  function updateCountdown() {
-    if (
-      !daysElement.isConnected ||
-      !hoursElement.isConnected ||
-      !minutesElement.isConnected ||
-      !secondsElement.isConnected
-    ) {
-      if (
-        homeCountdownInterval !== null
-      ) {
-        window.clearInterval(
-          homeCountdownInterval
-        );
-
-        homeCountdownInterval = null;
-      }
-
+  const fields = ["days", "hours", "minutes", "seconds"].map(id => document.getElementById(id));
+  if (fields.some(element => !element)) return;
+  function update() {
+    if (fields.some(element => !element.isConnected)) {
+      clearInterval(homeCountdownInterval);
+      homeCountdownInterval = null;
       return;
     }
-
-    const remainingTime =
-      weddingDate - Date.now();
-
-    if (remainingTime <= 0) {
-      daysElement.textContent =
-        "000";
-
-      hoursElement.textContent =
-        "00";
-
-      minutesElement.textContent =
-        "00";
-
-      secondsElement.textContent =
-        "00";
-
-      if (
-        homeCountdownInterval !== null
-      ) {
-        window.clearInterval(
-          homeCountdownInterval
-        );
-
-        homeCountdownInterval = null;
-      }
-
-      return;
-    }
-
-    const second = 1000;
-    const minute = second * 60;
-    const hour = minute * 60;
-    const day = hour * 24;
-
-    const days =
-      Math.floor(
-        remainingTime / day
-      );
-
-    const hours =
-      Math.floor(
-        (remainingTime % day) /
-        hour
-      );
-
-    const minutes =
-      Math.floor(
-        (remainingTime % hour) /
-        minute
-      );
-
-    const seconds =
-      Math.floor(
-        (remainingTime % minute) /
-        second
-      );
-
-    daysElement.textContent =
-      formatNumber(days, 3);
-
-    hoursElement.textContent =
-      formatNumber(hours, 2);
-
-    minutesElement.textContent =
-      formatNumber(minutes, 2);
-
-    secondsElement.textContent =
-      formatNumber(seconds, 2);
+    const remaining = Math.max(0, HOME_WEDDING_DATE - Date.now());
+    const seconds = Math.floor(remaining / 1000);
+    const values = [Math.floor(seconds / 86400), Math.floor(seconds / 3600) % 24, Math.floor(seconds / 60) % 60, seconds % 60];
+    fields.forEach((element, index) => { element.textContent = String(values[index]).padStart(index === 0 ? 3 : 2, "0"); });
+    if (!remaining) { clearInterval(homeCountdownInterval); homeCountdownInterval = null; }
   }
-
-  updateCountdown();
-
-  homeCountdownInterval =
-    window.setInterval(
-      updateCountdown,
-      1000
-    );
+  update();
+  if (HOME_WEDDING_DATE > Date.now()) homeCountdownInterval = setInterval(update, 1000);
 }
-
-
-/* =========================================================
-   HOME GALLERY — GSAP PARALLAX & SCROLL REVEAL
-========================================================= */
 
 function initializeGalleryParallax() {
   const gallery = document.querySelector(".home-gallery");
-
-  if (
-    !gallery ||
-    typeof gsap === "undefined" ||
-    typeof ScrollTrigger === "undefined"
-  ) {
-    return;
-  }
-
+  if (!gallery || typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
   gsap.registerPlugin(ScrollTrigger);
-
-  const items = gsap.utils.toArray(
-    ".home-gallery-item",
-    gallery
-  );
-
-  if (!items.length) return;
-
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   homeGalleryAnimationContext = gsap.context(() => {
-    // Gallery heading reveal
-    gsap.from(".home-gallery-heading", {
-      opacity: 0,
-      y: 35,
-      duration: 1,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: ".home-gallery-heading",
-        start: "top 90%",
-        once: true
-      }
-    });
-
-    // Respect reduced-motion preferences
-    if (
-      window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-      ).matches
-    ) {
-      return;
-    }
-
-    items.forEach((item, index) => {
+    if (reduceMotion) return;
+    gsap.from(".home-gallery-heading", { autoAlpha: 0, y: 35, duration: 1, ease: "power2.out", scrollTrigger: { trigger: ".home-gallery-heading", start: "top 90%", once: true } });
+    gsap.utils.toArray(".home-gallery-item", gallery).forEach(item => {
       const image = item.querySelector("img");
-
       if (!image) return;
-
-      // Fade and slide each photo into view
-      gsap.from(item, {
-        opacity: 0,
-        y: 45,
-        duration: 0.9,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: item,
-          start: "top 95%",
-          once: true
-        }
-      });
-
-      // Subtle parallax on the photo itself
-      gsap.fromTo(
-        image,
-        {
-          yPercent: -5,
-          scale: 1.12
-        },
-        {
-          yPercent: 5,
-          scale: 1.12,
-          ease: "none",
-          scrollTrigger: {
-            trigger: item,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.2
-          }
-        }
-      );
+      gsap.from(item, { autoAlpha: 0, y: 45, duration: .9, ease: "power2.out", scrollTrigger: { trigger: item, start: "top 95%", once: true } });
+      gsap.fromTo(image, { yPercent: -5, scale: 1.12 }, { yPercent: 5, scale: 1.12, ease: "none", scrollTrigger: { trigger: item, start: "top bottom", end: "bottom top", scrub: 1.2 } });
     });
   }, gallery);
-
+  // Lazy-loaded images can change masonry height; update trigger positions.
+  const grid = gallery.querySelector(".home-gallery-grid");
+  if (grid) {
+    grid.addEventListener("load", () => ScrollTrigger.refresh(), true);
+  }
   ScrollTrigger.refresh();
 }
