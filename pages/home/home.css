@@ -276,3 +276,131 @@ body[data-current-page="home"] .page-container {
     transition: none;
   }
 }
+
+/* Interactive Expo-inspired photo showcase, between hero and gallery. */
+.expo-section {
+  background: #fff;
+  padding: 78px 0 72px;
+  overflow: hidden;
+  text-align: center;
+  color: #4c4845;
+}
+.expo-heading {
+  padding: 0 20px;
+  margin: 0 auto 26px;
+  max-width: 600px;
+}
+.expo-heading > span {
+  display: block;
+  color: #b47b72;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.expo-heading h2 {
+  font:
+    500 clamp(2.4rem, 7vw, 3.8rem)/1.1 "Cormorant Garamond",
+    serif;
+  margin: 0 0 12px;
+}
+.expo-heading p {
+  font:
+    1.15rem/1.5 "Cormorant Garamond",
+    serif;
+  color: #77716c;
+  margin: 0;
+}
+.expo-stage {
+  height: clamp(330px, 55vw, 520px);
+  position: relative;
+  overflow: hidden;
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+  outline-offset: -5px;
+}
+.expo-stage.is-dragging {
+  cursor: grabbing;
+}
+.expo-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  perspective: 1100px;
+  pointer-events: none;
+}
+.expo-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(190px, 32vw, 315px);
+  height: clamp(270px, 45vw, 440px);
+  margin: 0;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #e9e4dc;
+  box-shadow: 0 18px 45px rgba(55, 42, 37, 0.17);
+  transform-origin: center center;
+  transition:
+    transform 0.55s cubic-bezier(0.22, 0.8, 0.2, 1),
+    opacity 0.45s ease;
+  will-change: transform, opacity;
+}
+.expo-card img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  pointer-events: none;
+}
+.expo-card.is-center {
+  box-shadow: 0 22px 55px rgba(55, 42, 37, 0.24);
+}
+.expo-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 14px;
+}
+.expo-arrow {
+  width: 42px;
+  height: 42px;
+  border: 1px solid #d7cbc6;
+  border-radius: 50%;
+  background: #fff;
+  color: #7b645d;
+  font-size: 20px;
+  cursor: pointer;
+}
+.expo-arrow:hover {
+  background: #f8f1ed;
+}
+.expo-position {
+  min-width: 65px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: #87766f;
+}
+@media (max-width: 600px) {
+  .expo-section {
+    padding: 58px 0 52px;
+  }
+  .expo-stage {
+    height: 375px;
+  }
+  .expo-card {
+    width: 225px;
+    height: 320px;
+    border-radius: 12px;
+  }
+  .expo-heading {
+    margin-bottom: 14px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .expo-card {
+    transition: none;
+  }
+}

@@ -5,6 +5,7 @@ let homeCountdownInterval = null;
 let homeGalleryAnimationContext = null;
 let homeGalleryRefreshHandler = null;
 let homeSession = 0;
+let homeExpoController = null;
 
 const HOME_IMAGE_FOLDER = "images/prenup/";
 const HOME_IMAGE_COUNT = 64;
@@ -28,6 +29,7 @@ window.initializeHomePage = function () {
   window.cleanupHomePage();
   const session = homeSession;
   initializeHomeGallery();
+  initializeExpoSlider();
   initializeHeroSlideshow(session);
   initializeWeddingCountdown();
   initializeGalleryParallax();
@@ -35,6 +37,8 @@ window.initializeHomePage = function () {
 
 window.cleanupHomePage = function () {
   homeSession++;
+  if (homeExpoController) homeExpoController.abort();
+  homeExpoController = null;
   if (homeSlideshowInterval !== null) clearInterval(homeSlideshowInterval);
   if (homeCountdownInterval !== null) clearInterval(homeCountdownInterval);
   homeSlideshowInterval = homeCountdownInterval = null;
@@ -192,4 +196,80 @@ function initializeGalleryParallax() {
     grid.addEventListener("load", () => ScrollTrigger.refresh(), true);
   }
   ScrollTrigger.refresh();
+}
+
+/* Expo-inspired draggable rotating carousel. Does not depend on a framework. */
+function initializeExpoSlider() {
+  const stage = document.querySelector(".expo-stage");
+  const track = stage?.querySelector(".expo-track");
+  const section = stage?.closest(".expo-section");
+  if (!stage || !track || !section) return;
+  const controller = new AbortController();
+  homeExpoController = controller;
+  const signal = controller.signal;
+  // Nine images keeps this interactive section light. Change these IDs to your favorites.
+  const photoIds = [1, 8, 15, 22, 29, 36, 43, 50, 57];
+  const cards = photoIds.map((number, index) => {
+    const card = document.createElement("figure");
+    card.className = "expo-card";
+    const image = document.createElement("img");
+    image.src = homeImagePath(number);
+    image.alt = `Rhaf and Jen prenup moment ${index + 1}`;
+    image.loading = "lazy";
+    image.decoding = "async";
+    card.append(image);
+    return card;
+  });
+  track.replaceChildren(...cards);
+  const label = section.querySelector(".expo-position");
+  let current = 0;
+  let startX = null;
+  let startY = null;
+  let pointerId = null;
+  const wrap = (value) => (value + cards.length) % cards.length;
+  function render() {
+    const mobile = window.matchMedia("(max-width:600px)").matches;
+    const step = mobile ? 115 : 205;
+    cards.forEach((card, i) => {
+      let delta = i - current;
+      if (delta > cards.length / 2) delta -= cards.length;
+      if (delta < -cards.length / 2) delta += cards.length;
+      const distance = Math.abs(delta);
+      const visible = distance <= 2;
+      card.style.transform = `translate(-50%, -50%) translateX(${delta * step}px) translateY(${distance * 15}px) rotate(${delta * (mobile ? 10 : 12)}deg) scale(${Math.max(.75, 1 - distance * .1)})`;
+      card.style.opacity = visible ? "1" : "0";
+      card.style.zIndex = String(20 - distance);
+      card.classList.toggle("is-center", delta === 0);
+      card.setAttribute("aria-hidden", String(delta !== 0));
+    });
+    if (label) label.textContent = `${String(current + 1).padStart(2, "0")} / ${String(cards.length).padStart(2, "0")}`;
+  }
+  function move(delta) { current = wrap(current + delta); render(); }
+  section.querySelector(".expo-prev")?.addEventListener("click", () => move(-1), { signal });
+  section.querySelector(".expo-next")?.addEventListener("click", () => move(1), { signal });
+  stage.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowRight") { event.preventDefault(); move(1); }
+    if (event.key === "ArrowLeft") { event.preventDefault(); move(-1); }
+  }, { signal });
+  stage.addEventListener("pointerdown", (event) => {
+    if (event.button !== 0) return;
+    startX = event.clientX;
+    startY = event.clientY;
+    pointerId = event.pointerId;
+    stage.classList.add("is-dragging");
+  }, { signal });
+  stage.addEventListener("pointerup", (event) => {
+    if (pointerId !== event.pointerId || startX === null) return;
+    const dx = event.clientX - startX;
+    const dy = event.clientY - startY;
+    if (Math.abs(dx) > 35 && Math.abs(dx) > Math.abs(dy)) move(dx < 0 ? 1 : -1);
+    startX = startY = pointerId = null;
+    stage.classList.remove("is-dragging");
+  }, { signal });
+  stage.addEventListener("pointercancel", () => {
+    startX = startY = pointerId = null;
+    stage.classList.remove("is-dragging");
+  }, { signal });
+  window.addEventListener("resize", render, { signal });
+  render();
 }
