@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
       css: "pages/gift/gift.css",
       js: "pages/gift/giftGuide.js",
       title: "Gift Guide | Rhaf & Jen",
-  hook: "GiftGuide"
+      hook: "GiftGuide"
     },
     faq: {
       file: "pages/faq/faq.html",
@@ -84,12 +84,12 @@ document.addEventListener("DOMContentLoaded", () => {
     ".rsvp-section > *",
   ];
   const ownScrollAnimationPages = new Set([
-  "sponsors",
-  "location",
-  "attire",
-  "gift",
-  "faq"
-]);
+    "sponsors",
+    "location",
+    "attire",
+    "gift",
+    "faq"
+  ]);
   const sectionAnimationSelectors = {
     sponsors: [".sponsors-section > *"],
     location: [".location-section > *"],
@@ -431,13 +431,13 @@ document.addEventListener("DOMContentLoaded", () => {
       callPageHook("cleanup", currentPage);
       app.innerHTML = html;
       mountedNewPage = true;
-      resetPageScroll();
 
       await loadPageStylesheet(config.css);
       await loadPageScript(config.js);
 
       currentPage = pageName;
       document.title = config.title;
+      // Reset once while the transition loader still covers the page.
       resetPageScroll(); // Before initializing GSAP ScrollTriggers.
       const elements = preparePageAnimation(pageName);
       await waitForPageAssets(pageName);
@@ -446,10 +446,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (updateHistory) history.pushState({ page: pageName }, "", createPageUrl(pageName));
       revealPage(elements);
 
-      // A second reset after layout/animation setup keeps new pages at the top.
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        if (version === navigationVersion && currentPage === pageName) resetPageScroll();
-      }));
       return true;
     } catch (error) {
       console.error("Page loading error:", error);
@@ -568,8 +564,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!(event.target instanceof Element)) return;
     const link = event.target.closest("a[data-page]");
     if (!link || event.defaultPrevented || event.button !== 0 ||
-        event.ctrlKey || event.metaKey || event.shiftKey || event.altKey ||
-        link.hasAttribute("download") || (link.target && link.target !== "_self")) return;
+      event.ctrlKey || event.metaKey || event.shiftKey || event.altKey ||
+      link.hasAttribute("download") || (link.target && link.target !== "_self")) return;
 
     const pageName = link.dataset.page;
     if (!Object.hasOwn(pages, pageName)) return;

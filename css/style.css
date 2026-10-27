@@ -4469,3 +4469,23 @@ body.wedding-flip-active #pageTransitionLoader {
 .invitation-intro-body {
   overflow-x: clip;
 }
+/* Prevent excess horizontal space on mobile */
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+.invitation-intro-body,
+.invitation-intro,
+.invitation-stage {
+  width: 100%;
+  max-width: 100%;
+}
+
+@media (max-width: 600px) {
+  .invitation-intro {
+    overflow-x: clip;
+  }
+}
