@@ -3,7 +3,7 @@
 /* VARIABLES */
 
 html {
-  background-color: #ff4000;
+  background-color: rgba(255, 64, 0, 0);
 }
 :root {
   --sage: #8c997d;
@@ -202,7 +202,7 @@ body.spa-initializing .music-button {
   min-height: 100dvh;
   overflow-x: hidden;
   overflow-y: auto;
-  background: #0410f2;
+  background: rgba(4, 16, 242, 0);
 }
 
 .invitation-intro {
