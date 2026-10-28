@@ -4768,3 +4768,7 @@ body.wedding-native-flip #pageTransitionLoader {
     transition: none;
   }
 }
+/* Hide wedding navigation on index.html only */
+body.invitation-intro-body #globalNavigation {
+  display: none !important;
+}
