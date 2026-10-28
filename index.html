@@ -770,6 +770,11 @@
           >
             <input
               type="hidden"
+              name="submissionId"
+              id="introRsvpSubmissionId"
+            />
+            <input
+              type="hidden"
               id="introRsvpHiddenGuestName"
               name="guestName"
             />
@@ -936,6 +941,19 @@
         </div>
       </div>
     </div>
+
+    <script>
+      window.addEventListener("message", function (event) {
+        console.log("[RSVP MESSAGE RECEIVED]", {
+          origin: event.origin,
+          data: event.data,
+          isTopWindow: window === window.top,
+        });
+      });
+
+      console.log("[RSVP DEBUGGER] Ready");
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
     <script src="js/common.js"></script>
@@ -943,5 +961,36 @@
     <script src="js/app.js"></script>
     <script src="js/index-animation.js"></script>
     <script src="js/index-rsvp.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("introRsvpSubmissionForm");
+        const frame = document.getElementById("introRsvpSubmissionFrame");
+
+        if (!form || !frame) return;
+
+        console.log("[RSVP DEBUG] Monitoring actual submission");
+
+        form.addEventListener("submit", () => {
+          console.log("[RSVP DEBUG] Native submit event");
+        });
+
+        frame.addEventListener("load", () => {
+          console.log("[RSVP DEBUG] Iframe load", {
+            time: new Date().toISOString(),
+            url: frame.src,
+            frameName: frame.name,
+          });
+        });
+
+        window.addEventListener("message", (event) => {
+          console.log("[RSVP DEBUG] Message received", {
+            origin: event.origin,
+            data: event.data,
+            sourceMatchesFrame: event.source === frame.contentWindow,
+          });
+        });
+      });
+    </script>
   </body>
 </html>

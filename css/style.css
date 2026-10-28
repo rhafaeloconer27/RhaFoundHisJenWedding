@@ -4517,3 +4517,169 @@ body {
   margin: auto;
   overscroll-behavior: contain;
 }
+
+/* Prevent scrolling during the invitation-to-home transition */
+html:has(body.wedding-flip-active) {
+  overflow: hidden !important;
+  scroll-behavior: auto !important;
+}
+
+body.wedding-flip-active {
+  overflow: hidden !important;
+  overscroll-behavior: none;
+}
+
+/* Keep the transition snapshot fixed in the viewport */
+.wedding-flip-stage {
+  position: fixed !important;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 999998;
+  overflow: hidden;
+  perspective: 1800px;
+  background: #f7f2e8;
+  pointer-events: auto;
+  contain: layout paint;
+}
+
+.wedding-flip-cover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #f7f2e8;
+  transform-origin: left center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
+}
+
+.wedding-flip-cover-inner {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Prevent the new Home page from causing visible movement */
+body.wedding-flip-active #weddingSpaShell {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+body.wedding-flip-active #pageTransitionLoader {
+  display: none !important;
+}
+
+/* Invitation transition: prevent visible scroll movement */
+
+body.wedding-flip-active {
+  overflow: hidden !important;
+  overscroll-behavior: none;
+}
+
+body.wedding-flip-active #invitationIntro {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
+}
+
+body.wedding-flip-active #pageTransitionLoader {
+  display: none !important;
+}
+
+/* Optimized fixed-viewport book flip: independent of document scroll position. */
+.wedding-flip-stage {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 999998;
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+  perspective: 1800px;
+  background: transparent !important;
+  pointer-events: auto;
+  overscroll-behavior: none;
+}
+.wedding-flip-cover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: #f7f2e8;
+  overflow: hidden;
+  transform-origin: left center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
+}
+.wedding-flip-cover-inner {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.wedding-flip-cover-inner .invitation-intro {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  overflow: visible;
+  contain: none;
+}
+body.wedding-flip-active {
+  overflow-anchor: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .wedding-flip-cover {
+    will-change: auto;
+  }
+}
+
+/* Native screenshot-based 3D flip (Chrome/Edge and other supporting browsers).
+   Browser-captured snapshots do not reflow when SPA resets the scroll position. */
+@keyframes weddingNativeTurn {
+  0% {
+    transform: perspective(1800px) rotateY(0deg);
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    transform: perspective(1800px) rotateY(-105deg);
+    opacity: 0.86;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html:has(body.wedding-native-flip)::view-transition-old(root) {
+    animation: weddingNativeTurn 1.05s cubic-bezier(0.65, 0, 0.25, 1) both;
+    transform-origin: left center;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    z-index: 2;
+  }
+  html:has(body.wedding-native-flip)::view-transition-new(root) {
+    animation: none;
+    z-index: 1;
+  }
+  html:has(body.wedding-native-flip)::view-transition-image-pair(root) {
+    perspective: 1800px;
+    isolation: isolate;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html:has(body.wedding-native-flip)::view-transition-old(root),
+  html:has(body.wedding-native-flip)::view-transition-new(root) {
+    animation-duration: 0.01ms;
+  }
+}
+body.wedding-native-flip #pageTransitionLoader {
+  display: none !important;
+}

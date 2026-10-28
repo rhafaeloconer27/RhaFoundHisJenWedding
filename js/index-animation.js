@@ -713,9 +713,9 @@ document.addEventListener('DOMContentLoaded', () => {
         rsvpReminderError.hidden = true;
         rsvpReminderError.textContent = '';
       }
-      rsvpYesButton?.focus();
+      rsvpYesButton?.focus({ preventScroll: true });
     } else if (restoreFocus) {
-      openWeddingPagesButton?.focus();
+      openWeddingPagesButton?.focus({ preventScroll: true });
     }
   }
 
@@ -733,27 +733,41 @@ document.addEventListener('DOMContentLoaded', () => {
     if (result === false) throw new Error('Unable to load Wedding Home.');
   };
 
-  rsvpYesButton?.addEventListener('click', async () => {
-    if (openWeddingPagesButton.disabled) return;
-    // setRsvpReminderVisible(false);
+
+  rsvpYesButton?.addEventListener('click', async (event) => {
+    event.preventDefault();
+
+    if (openWeddingPagesButton.disabled || window.weddingFlipInProgress) {
+      return;
+    }
+
     openWeddingPagesButton.disabled = true;
+
     try {
       if (typeof window.startWeddingSpa !== 'function') {
         throw new Error('Wedding SPA router is unavailable.');
       }
+
       const result = await window.startWeddingSpa('home');
-      if (result === false) throw new Error('Unable to load Wedding Home.');
+
+      if (result === false) {
+        throw new Error('Unable to load Wedding Home.');
+      }
     } catch (error) {
       console.error('Unable to open Wedding Home:', error);
+
       setRsvpReminderVisible(true);
+
       if (rsvpReminderError) {
-        rsvpReminderError.textContent = 'Unable to open the wedding pages. Please try again.';
+        rsvpReminderError.textContent =
+          'Unable to open the wedding pages. Please try again.';
         rsvpReminderError.hidden = false;
       }
     } finally {
       openWeddingPagesButton.disabled = false;
     }
   });
+
 
   rsvpNoButton?.addEventListener('click', () => {
     setRsvpReminderVisible(false);
@@ -890,3 +904,15 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeIntroGiftQR();
   }
 })();
+
+console.log("[RSVP DEBUG] Debugger loaded");
+
+// TEMPORARY RSVP MESSAGE DEBUGGER
+window.addEventListener("message", function (event) {
+  if (event.data?.type === "RHAF_JEN_RSVP_RESPONSE") {
+    console.log("[RSVP DEBUG] Confirmation received:", {
+      origin: event.origin,
+      data: event.data
+    });
+  }
+});

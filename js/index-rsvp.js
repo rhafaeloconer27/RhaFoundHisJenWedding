@@ -6,19 +6,15 @@
 
 \========================================================= */
 
-
-
 document.addEventListener("DOMContentLoaded", () => {
 
-  const SUBMISSION_TIMEOUT_MS = 20000;
+  // Verification deadline is configured below.
 
   const MINIMUM_LOADER_TIME_MS = 1400;
 
   const SUCCESS_CELEBRATION_TIME_MS = 6500;
 
   const RESPONSE_TYPE = "RHAF_JEN_RSVP_RESPONSE";
-
-
 
   // Names and roles are intentionally kept identical to the original guest list.
 
@@ -246,8 +242,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   ];
 
-
-
   const get = (id) => document.getElementById(id);
 
   const ui = Object.fromEntries(
@@ -348,8 +342,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   );
 
-
-
   if (!ui.searchInput || !ui.modal || !ui.form || !ui.frame) {
 
     console.error("[INDEX RSVP] Required RSVP elements are missing.");
@@ -358,15 +350,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-
-
   function normalizeSpaces(value) {
 
     return String(value || "").replace(/\s+/g, " ").trim();
 
   }
-
-
 
   function normalizeForSearch(value) {
 
@@ -388,8 +376,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-
-
   function formatDisplayName(name) {
 
     return normalizeSpaces(name).toLowerCase().split(" ")
@@ -410,8 +396,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-
-
   function getFirstName(name) {
 
     const first = normalizeSpaces(name)
@@ -424,8 +408,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-
-
   const guests = GUEST_NAMES.map((name) => ({
 
     name,
@@ -437,8 +419,6 @@ document.addEventListener("DOMContentLoaded", () => {
     displayName: formatDisplayName(name),
 
   }));
-
-
 
   const responseOptions = [...document.querySelectorAll(".intro-rsvp-response-option")];
 
@@ -468,7 +448,131 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let successScrollTimeout = null;
 
+  let activeSubmissionId = null;
 
+  let verificationTimer = null;
+
+  let verificationInProgress = false;
+
+  const VERIFY_INTERVAL_MS = 2000;
+
+  const VERIFY_TIMEOUT_MS = 30000;
+
+  function verifySubmission(submissionId) {
+
+    return new Promise((resolve) => {
+
+      const callbackName =
+
+        "rsvpVerify_" + Math.random().toString(36).slice(2);
+
+      const script = document.createElement("script");
+
+      let finished = false;
+
+      const cleanup = () => {
+
+        delete window[callbackName];
+
+        script.remove();
+
+        clearTimeout(timeout);
+
+      };
+
+      const finish = (result) => {
+
+        if (finished) return;
+
+        finished = true;
+
+        cleanup();
+
+        resolve(result);
+
+      };
+
+      window[callbackName] = (data) => {
+
+        if (data?.submissionId !== submissionId) {
+
+          finish(false);
+
+          return;
+
+        }
+
+        finish(data.found === true);
+
+      };
+
+      const timeout = setTimeout(() => finish(false), 5000);
+
+      const url = new URL(ui.form.action);
+
+      url.searchParams.set("submissionId", submissionId);
+
+      url.searchParams.set("callback", callbackName);
+
+      script.src = url.toString();
+
+      script.onerror = () => finish(false);
+
+      document.head.appendChild(script);
+
+    });
+
+  }
+
+  async function pollSubmissionConfirmation() {
+
+    if (verificationInProgress || !submissionPending) return;
+
+    verificationInProgress = true;
+
+    try {
+
+      const id = activeSubmissionId;
+
+      const confirmed = await verifySubmission(id);
+
+      if (!submissionPending || activeSubmissionId !== id) return;
+
+      if (confirmed) {
+
+        console.log("[RSVP] Confirmed in Google Sheets:", id);
+
+        // Reuse your existing success handler.
+
+        await onSubmissionMessage({
+
+          data: {
+
+            type: RESPONSE_TYPE,
+
+            success: true,
+
+            message: "RSVP saved successfully.",
+
+            submissionId: id
+
+          },
+
+          origin: "verified",
+
+          verifiedInternally: true
+
+        });
+
+      }
+
+    } finally {
+
+      verificationInProgress = false;
+
+    }
+
+  }
 
   // Exact role-specific messages from the original RSVP flow.
 
@@ -528,8 +632,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-
-
   const DECLINE_MESSAGES = {
 
     guest: [
@@ -554,23 +656,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   };
 
-
-
   function setText(element, value) {
 
     if (element) element.textContent = value;
 
   }
 
-
-
   function showStep(step) {
 
     modalSteps.forEach((element) => { element.hidden = element !== step; });
 
   }
-
-
 
   function setModalVisible(visible) {
 
@@ -581,8 +677,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.style.overflow = visible ? "hidden" : "";
 
   }
-
-
 
   function setSubmitLoader(visible) {
 
@@ -604,8 +698,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-
-
   function setSubmitting(loading) {
 
     if (ui.submitButton) {
@@ -624,15 +716,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-
-
   function showDetailsMessage(message = "") {
 
     setText(ui.detailsMessage, message);
 
   }
-
-
 
   function clearResponseSelection() {
 
@@ -643,8 +731,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (ui.continueButton) ui.continueButton.disabled = true;
 
   }
-
-
 
   function setResponse(value) {
 
@@ -660,8 +746,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-
-
   function hideDecline() {
 
     if (ui.declinePanel) ui.declinePanel.hidden = true;
@@ -669,8 +753,6 @@ document.addEventListener("DOMContentLoaded", () => {
     declineStep = 0;
 
   }
-
-
 
   function resetState() {
 
@@ -693,12 +775,15 @@ document.addEventListener("DOMContentLoaded", () => {
     window.clearTimeout(submissionTimeout);
 
     submissionTimeout = null;
+    window.clearInterval(verificationTimer);
+    verificationTimer = null;
+    activeSubmissionId = null;
 
     [ui.contactInput, ui.messengerInput, ui.wishInput,
 
-      ui.hiddenName, ui.hiddenContact, ui.hiddenMessenger, ui.hiddenMessage,
+    ui.hiddenName, ui.hiddenContact, ui.hiddenMessenger, ui.hiddenMessage,
 
-      ui.hiddenAttendance, ui.declineReason].forEach((field) => {
+    ui.hiddenAttendance, ui.declineReason].forEach((field) => {
 
       if (field) field.value = "";
 
@@ -732,8 +817,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-
-
   function closeModal() {
 
     if (submissionPending) return;
@@ -743,8 +826,6 @@ document.addEventListener("DOMContentLoaded", () => {
     resetState();
 
   }
-
-
 
   function searchGuests() {
 
@@ -810,8 +891,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-
-
   function selectGuest(guest) {
 
     selectedGuest = guest;
@@ -836,15 +915,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-
-
   function getDeclineMessages() {
 
     return DECLINE_MESSAGES[selectedGuest?.role === "Principal Sponsor" ? "sponsor" : "guest"];
 
   }
-
-
 
   function showDecline() {
 
@@ -886,8 +961,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-
-
   function startDecline() {
 
     declineStep = 0;
@@ -897,8 +970,6 @@ document.addEventListener("DOMContentLoaded", () => {
     showDecline();
 
   }
-
-
 
   function confirmDecline() {
 
@@ -931,8 +1002,6 @@ document.addEventListener("DOMContentLoaded", () => {
     submitDecline(reason);
 
   }
-
-
 
   function validateAccept() {
 
@@ -990,8 +1059,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-
-
   function haveSubmissionFields() {
 
     return Boolean(ui.form && ui.frame && ui.hiddenName && ui.hiddenContact &&
@@ -999,8 +1066,6 @@ document.addEventListener("DOMContentLoaded", () => {
       ui.hiddenMessenger && ui.hiddenMessage && ui.hiddenAttendance);
 
   }
-
-
 
   function fillForm(values) {
 
@@ -1015,8 +1080,6 @@ document.addEventListener("DOMContentLoaded", () => {
     ui.hiddenAttendance.value = values.attendance;
 
   }
-
-
 
   function submitAccept() {
 
@@ -1040,7 +1103,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       message: ui.wishInput.value.trim(),
 
-      attendance: "YES",
+      attendance: "accept",
 
     });
 
@@ -1049,8 +1112,6 @@ document.addEventListener("DOMContentLoaded", () => {
     beginSubmission("full");
 
   }
-
-
 
   function submitDecline(reason) {
 
@@ -1080,7 +1141,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       message: reason,
 
-      attendance: "NO",
+      attendance: "decline",
 
     });
 
@@ -1092,45 +1153,65 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-
-
   function beginSubmission(mode) {
+    if (submissionPending) return;
 
     submissionMode = mode;
-
     submissionPending = true;
-
     processingResponse = false;
-
     submissionStartedAt = Date.now();
-
     setSubmitting(mode === "full");
-
     setSubmitLoader(true);
 
     window.clearTimeout(submissionTimeout);
-
-    submissionTimeout = window.setTimeout(() => {
-
-      failSubmission("The RSVP is taking longer than expected. Please check your connection and try again.", mode);
-
-    }, SUBMISSION_TIMEOUT_MS);
+    window.clearInterval(verificationTimer);
 
     try {
+      const idField = document.getElementById("introRsvpSubmissionId");
+      if (!idField) throw new Error("Missing RSVP submission ID field in index.html.");
+
+      // Exactly one ID per submission. The same ID is used by POST and verification.
+      activeSubmissionId = crypto.randomUUID();
+      idField.value = activeSubmissionId;
 
       ui.form.submit();
 
+      // The iframe reply is preferred; verification is a fallback.
+      verificationTimer = window.setInterval(
+        pollSubmissionConfirmation, VERIFY_INTERVAL_MS
+      );
+
+      submissionTimeout = window.setTimeout(async () => {
+        if (!submissionPending || processingResponse) return;
+        const id = activeSubmissionId;
+        window.clearInterval(verificationTimer);
+        verificationTimer = null;
+        const confirmed = await verifySubmission(id);
+        if (!submissionPending || processingResponse || activeSubmissionId !== id) return;
+
+        if (confirmed) {
+          await onSubmissionMessage({
+            data: {
+              type: RESPONSE_TYPE,
+              success: true,
+              message: "RSVP saved successfully.",
+              submissionId: id
+            },
+            origin: "verified",
+            verifiedInternally: true
+          });
+        } else {
+          failSubmission(
+            "We couldn't confirm whether your RSVP was saved. Please check before submitting again.",
+            mode
+          );
+        }
+      }, VERIFY_TIMEOUT_MS);
     } catch (error) {
-
       console.error("[INDEX RSVP] Submission failed:", error);
-
       failSubmission("Unable to send your RSVP. Please try again.", mode);
-
     }
-
   }
-
-
 
   function failSubmission(message, mode = submissionMode) {
 
@@ -1145,6 +1226,8 @@ document.addEventListener("DOMContentLoaded", () => {
     window.clearTimeout(submissionTimeout);
 
     submissionTimeout = null;
+    window.clearInterval(verificationTimer);
+    verificationTimer = null;
 
     setSubmitLoader(false);
 
@@ -1170,9 +1253,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-
-
   function isTrustedGoogleResponse(event) {
+
+    if (event.verifiedInternally === true && event.origin === "verified") {
+
+      return true;
+
+    }
 
     // An Apps Script HTMLService reply can originate in a nested iframe.
 
@@ -1210,8 +1297,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!frameMatches) return false;
 
-
-
     // Preserve compatibility with Apps Script sandboxed (opaque) iframe origins.
 
     if (!event.origin || event.origin === "null") return true;
@@ -1240,35 +1325,94 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-
-
   async function onSubmissionMessage(event) {
 
     const data = event.data;
 
-    if (!data || typeof data !== "object" || data.type !== RESPONSE_TYPE) return;
+    console.log("[INDEX RSVP] Incoming message:", {
 
-    if (!submissionPending || processingResponse || !isTrustedGoogleResponse(event)) return;
+      origin: event.origin,
+
+      data,
+
+      submissionPending,
+
+      processingResponse
+
+    });
+
+    if (!data || typeof data !== "object" || data.type !== RESPONSE_TYPE) {
+
+      return;
+
+    }
+
+    if (data.submissionId !== activeSubmissionId) {
+      console.warn("[RSVP] Ignoring confirmation for another submission");
+      return;
+    }
+
+    const trusted = isTrustedGoogleResponse(event);
+
+    console.log("[INDEX RSVP] RSVP confirmation check:", {
+
+      trusted,
+
+      submissionPending,
+
+      processingResponse,
+
+      success: data.success
+
+    });
+
+    if (!submissionPending || processingResponse || !trusted) {
+
+      console.warn("[INDEX RSVP] Confirmation ignored");
+
+      return;
+
+    }
 
     processingResponse = true;
 
     window.clearTimeout(submissionTimeout);
 
     submissionTimeout = null;
+    window.clearInterval(verificationTimer);
+    verificationTimer = null;
 
     const mode = submissionMode;
 
-    await new Promise((resolve) => window.setTimeout(
+    await new Promise((resolve) =>
 
-      resolve, Math.max(0, MINIMUM_LOADER_TIME_MS - (Date.now() - submissionStartedAt))
+      window.setTimeout(
 
-    ));
+        resolve,
+
+        Math.max(
+
+          0,
+
+          MINIMUM_LOADER_TIME_MS - (Date.now() - submissionStartedAt)
+
+        )
+
+      )
+
+    );
 
     if (!submissionPending || submissionMode !== mode) return;
 
     if (data.success !== true) {
 
-      failSubmission(data.message || "Unable to submit your RSVP. Please try again.", mode);
+      failSubmission(
+
+        data.message || "Unable to submit your RSVP. Please try again.",
+
+        mode
+
+      );
 
       return;
 
@@ -1297,8 +1441,6 @@ document.addEventListener("DOMContentLoaded", () => {
     window.setTimeout(() => showSuccess(guestName, attendance), 250);
 
   }
-
-
 
   function controlRoses(play) {
 
@@ -1330,8 +1472,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-
-
   function showSuccess(guestName, attendance) {
 
     if (!ui.successOverlay) return;
@@ -1358,30 +1498,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.body.style.overflow = "hidden";
 
-   
-successTimeout = window.setTimeout(() => {
-  hideSuccess();
+    successTimeout = window.setTimeout(() => {
 
-  // Only guests who joyfully accepted will automatically
-  // continue to the Wedding Home page.
-  if (accepting) {
-    Promise.resolve()
-      .then(() => window.openWeddingAfterRsvp())
-      .catch((error) => {
-        console.error("[INDEX RSVP] Unable to open Wedding Home:", error);
-        alert("Unable to open the wedding pages. Please try again.");
-      });
+      hideSuccess();
+
+      // Only guests who joyfully accepted will automatically
+
+      // continue to the Wedding Home page.
+
+      if (accepting) {
+
+        Promise.resolve()
+
+          .then(() => window.openWeddingAfterRsvp())
+
+          .catch((error) => {
+
+            console.error("[INDEX RSVP] Unable to open Wedding Home:", error);
+
+            alert("Unable to open the wedding pages. Please try again.");
+
+          });
+
+      }
+
+      // Regretfully declined:
+
+      // Stay on the invitation page without redirecting.
+
+    }, SUCCESS_CELEBRATION_TIME_MS);
+
   }
-
-  // Regretfully declined:
-  // Stay on the invitation page without redirecting.
-
-}, SUCCESS_CELEBRATION_TIME_MS);
-
-
-  }
-
-
 
   function hideSuccess() {
 
@@ -1399,8 +1546,6 @@ successTimeout = window.setTimeout(() => {
 
   }
 
-
-
   function scrollToInvitationCard() {
 
     ui.invitationCover?.scrollIntoView({
@@ -1412,8 +1557,6 @@ successTimeout = window.setTimeout(() => {
     });
 
   }
-
-
 
   // Guest selection uses one listener, even when search results are rebuilt.
 
@@ -1428,8 +1571,6 @@ successTimeout = window.setTimeout(() => {
     if (guest) selectGuest(guest);
 
   });
-
-
 
   responseOptions.forEach((option) => option.addEventListener("click", () => {
 
@@ -1447,8 +1588,6 @@ successTimeout = window.setTimeout(() => {
 
   }));
 
-
-
   ui.declineConfirm?.addEventListener("click", confirmDecline);
 
   ui.declineCancel?.addEventListener("click", () => {
@@ -1461,8 +1600,6 @@ successTimeout = window.setTimeout(() => {
 
   ui.declineReason?.addEventListener("input", () => setText(ui.declineReasonError, ""));
 
-
-
   ui.continueButton?.addEventListener("click", () => {
 
     if (!selectedGuest || selectedResponse !== "accept" || submissionPending) return;
@@ -1474,8 +1611,6 @@ successTimeout = window.setTimeout(() => {
     window.setTimeout(() => ui.contactInput?.focus(), 150);
 
   });
-
-
 
   document.querySelectorAll("[data-rsvp-back]").forEach((button) => {
 
@@ -1494,8 +1629,6 @@ successTimeout = window.setTimeout(() => {
     });
 
   });
-
-
 
   ui.submitButton?.addEventListener("click", submitAccept);
 
@@ -1541,13 +1674,9 @@ successTimeout = window.setTimeout(() => {
 
   ui.wishInput?.addEventListener("input", hideMessageTooltip);
 
-
-
   [...document.querySelectorAll("[data-rsvp-close]"), ui.modalClose]
 
     .filter(Boolean).forEach((button) => button.addEventListener("click", closeModal));
-
-
 
   document.addEventListener("keydown", (event) => {
 
@@ -1568,8 +1697,6 @@ successTimeout = window.setTimeout(() => {
     }
 
   });
-
-
 
   window.addEventListener("message", onSubmissionMessage);
 
