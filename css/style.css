@@ -4683,3 +4683,88 @@ body.wedding-flip-active {
 body.wedding-native-flip #pageTransitionLoader {
   display: none !important;
 }
+
+/* Collapsible navigation: single source of truth. */
+#globalNavigation {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  pointer-events: none;
+}
+.wedding-nav-wrapper {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.wedding-nav-toggle {
+  position: fixed;
+  left: auto;
+  right: 18px;
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  z-index: 10002;
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #b47b72;
+  color: #fff;
+  font-size: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  pointer-events: auto;
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    opacity 0.25s ease,
+    scale 0.35s ease,
+    visibility 0.25s;
+}
+.wedding-nav-wrapper.is-expanded .wedding-nav-toggle {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  scale: 0.65;
+}
+.wedding-nav-wrapper .bottom-navigation.curved-nav {
+  position: fixed;
+  left: 50%;
+  right: auto;
+  bottom: calc(var(--nav-bottom) + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  transform-origin: right center;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    transform 0.48s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.3s ease,
+    visibility 0.48s;
+}
+.wedding-nav-wrapper.is-collapsed .bottom-navigation.curved-nav {
+  transform: translateX(calc(50vw + 24px));
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.wedding-nav-toggle:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+@media (max-width: 480px) {
+  .wedding-nav-toggle {
+    right: 14px;
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+    width: 46px;
+    height: 46px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wedding-nav-toggle,
+  .wedding-nav-wrapper .bottom-navigation.curved-nav {
+    transition: none;
+  }
+}
