@@ -24,7 +24,23 @@ const WEDDING_NAVIGATION_ITEMS = [
         <div class="nav-background" aria-hidden="true"><svg class="nav-background-svg" preserveAspectRatio="none" aria-hidden="true"><path class="nav-background-path"></path></svg></div>
         ${items}
       </nav>
-      <button type="button" class="wedding-nav-toggle" aria-label="Expand navigation" aria-controls="weddingCurvedNav" aria-expanded="false"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
+      <button
+  type="button"
+  class="wedding-nav-toggle"
+  aria-label="Expand navigation"
+  aria-controls="weddingCurvedNav"
+  aria-expanded="false"
+>
+  <lottie-player
+    id="navCollapseAnimation"
+    src="images/navCollapse.json"
+    background="transparent"
+    speed="1"
+    autoplay
+    loop
+    aria-hidden="true"
+  ></lottie-player>
+</button>
     </div>`;
   }
 

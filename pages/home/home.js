@@ -147,8 +147,12 @@ function initializeHeroSlideshow(session) {
     const nextSlot = 1 - activeSlot;
     const loaded = await loadNextValid(nextSlot);
     if (loaded && session === homeSession) {
+      // Restore normal transitions after the first photo.
+      slides[activeSlot].classList.remove("initial-slide");
+
       slides[nextSlot].classList.add("active");
       slides[activeSlot].classList.remove("active");
+
       activeSlot = nextSlot;
     }
     isTransitioning = false;
@@ -167,7 +171,10 @@ function initializeHeroSlideshow(session) {
 
   loadNextValid(0).then((loaded) => {
     if (!loaded || session !== homeSession) return;
-    slides[0].classList.add("active");
+
+    // Display the first photo immediately without transition.
+    slides[0].classList.add("initial-slide", "active");
+
     started = true;
     start();
   });

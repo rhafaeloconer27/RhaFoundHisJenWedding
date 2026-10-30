@@ -59,6 +59,18 @@ body[data-current-page="home"] .page-container {
   visibility: visible;
   transform: scale(1);
 }
+/* Disable animation for the initial display of the first photo only */
+.hero-slide.initial-slide,
+.hero-slide.initial-slide.active {
+  transition: none;
+}
+
+/* Disable the initial image fade-in */
+.hero-slide.initial-slide img,
+.hero-slide.initial-slide img.is-loaded {
+  opacity: 1;
+  transition: none;
+}
 .hero-slide img {
   display: block;
   width: 100%;
@@ -340,11 +352,9 @@ body[data-current-page="home"] .page-container {
 
   margin: 0;
   overflow: visible;
-
   border-radius: 16px;
   background: transparent;
 
-  /* Shadow follows the rotated photo */
   box-shadow: none;
 
   filter: drop-shadow(0 8px 12px rgba(55, 42, 37, 0.12))
@@ -353,11 +363,12 @@ body[data-current-page="home"] .page-container {
   transform-origin: center center;
 
   transition:
-    transform 0.55s cubic-bezier(0.22, 0.8, 0.2, 1),
-    opacity 0.45s ease,
-    filter 0.45s ease;
+    transform 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.85s ease-in-out,
+    filter 1.1s ease;
 
   will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 .expo-card img {
   width: 100%;
@@ -372,8 +383,8 @@ body[data-current-page="home"] .page-container {
 .expo-card.is-center {
   box-shadow: none;
 
-  filter: drop-shadow(0 10px 16px rgba(55, 42, 37, 0.16))
-    drop-shadow(0 24px 30px rgba(55, 42, 37, 0.22));
+  filter: drop-shadow(0 12px 18px rgba(55, 42, 37, 0.16))
+    drop-shadow(0 26px 32px rgba(55, 42, 37, 0.22));
 }
 .expo-controls {
   display: flex;
