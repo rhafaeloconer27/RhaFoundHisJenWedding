@@ -125,6 +125,9 @@ document.addEventListener("DOMContentLoaded", () => {
           // Storage can be disabled by the browser.
         }
         directEntryTimer = null;
+        if (currentPage === "home") {
+          window.startWeddingNavigationPreview?.();
+        }
       }, 1000);
     }
   }
@@ -356,6 +359,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (version !== revealVersion) return;
         revealTimer = null;
         setLoaderVisible(false);
+        if (currentPage === "home") {
+          window.startWeddingNavigationPreview?.();
+        }
         animationTimer = window.setTimeout(() => {
           if (version !== revealVersion) return;
           animationTimer = null;
@@ -455,6 +461,10 @@ document.addEventListener("DOMContentLoaded", () => {
     } finally {
       body.classList.remove("wedding-native-flip");
       window.weddingFlipInProgress = false;
+
+      if (succeeded) {
+        window.startWeddingNavigationPreview?.();
+      }
     }
   }
 
@@ -549,6 +559,10 @@ document.addEventListener("DOMContentLoaded", () => {
       root.style.scrollBehavior = previousScrollBehavior;
       body.classList.remove("wedding-flip-active");
       window.weddingFlipInProgress = false;
+
+      if (currentPage === "home") {
+        window.startWeddingNavigationPreview?.();
+      }
     }
   }
 

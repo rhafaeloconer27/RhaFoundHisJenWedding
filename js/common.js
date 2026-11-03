@@ -65,14 +65,19 @@ const WEDDING_NAVIGATION_ITEMS = [
     navPreviewTimeout = null;
   }
 
+  // Called by app.js only after the homepage becomes visible.
   function startNavigationPreview() {
-    if (initialPreviewStarted || navPreviewDisabled || !wrapper ||
-      document.body.classList.contains("spa-initializing")) return;
+    if (initialPreviewStarted || navPreviewDisabled || !wrapper || currentPage !== "home") return;
+    const body = document.body;
+    if (body.classList.contains("spa-initializing") ||
+      body.classList.contains("wedding-flip-active") ||
+      body.classList.contains("wedding-native-flip") ||
+      body.classList.contains("page-transition-active") ||
+      document.documentElement.classList.contains("wedding-direct-entry")) return;
 
     initialPreviewStarted = true;
-    spaReadyObserver.disconnect();
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
+    stopNavigationPreview();
     setExpanded(true);
     navPreviewTimeout = setTimeout(() => {
       navPreviewTimeout = null;
@@ -80,8 +85,7 @@ const WEDDING_NAVIGATION_ITEMS = [
     }, NAV_PREVIEW_DURATION);
   }
 
-  // Wait for the SPA loader to finish so guests actually see the preview.
-  const spaReadyObserver = new MutationObserver(() => startNavigationPreview());
+  window.startWeddingNavigationPreview = startNavigationPreview;
 
   function ensureNavigation() {
     let container = document.getElementById("globalNavigation");
@@ -190,10 +194,7 @@ const WEDDING_NAVIGATION_ITEMS = [
   window.addEventListener("resize", scheduleShapeUpdate, { passive: true });
   function initialize() {
     renderCommonNavigation(document.body.dataset.currentPage || "home");
-    if (document.body.classList.contains("spa-initializing")) {
-      spaReadyObserver.observe(document.body, { attributes: true, attributeFilter: ["class"] });
-    }
-    startNavigationPreview();
+    // app.js triggers the preview when the transition has actually completed.
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initialize, { once: true });
   else initialize();
