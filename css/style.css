@@ -4802,3 +4802,29 @@ body.invitation-intro-body #globalNavigation {
   height: 33px;
   flex-shrink: 0;
 }
+
+/* RSVP GUEST NAME LOTTIE */
+
+.intro-rsvp-search-lottie {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 10px auto;
+  pointer-events: none;
+}
+
+#searchNameAnimation {
+  display: block;
+  width: 200px;
+  height: 200px;
+  max-width: 100%;
+  background: transparent;
+}
+
+@media (max-width: 600px) {
+  #searchNameAnimation {
+    width: 160px;
+    height: 160px;
+  }
+}

@@ -1,23 +1,20 @@
-/* ==========================================================
-   ATTIRE PAGE — OPTIMIZED / SPA SAFE
-========================================================== */
-
+/* ATTIRE PAGE — SPA SAFE */
 body[data-current-page="attire"] {
   background-color: #f7f2e8;
   overflow-x: clip;
 }
-
 body[data-current-page="attire"] .attire-page {
   width: 100%;
   max-width: 100%;
   min-width: 0;
   min-height: 100dvh;
   overflow-x: clip;
-  padding-bottom: calc(var(--nav-height) + 42px + env(safe-area-inset-bottom));
-  background: #f7f2e8 url("../../images/indexBackground.png") center top / 680px auto repeat;
+  padding-bottom: calc(
+    var(--nav-height, 70px) + 42px + env(safe-area-inset-bottom)
+  );
+  background: #f7f2e8 url("../../images/indexBackground.png") center top / 680px
+    auto repeat;
 }
-
-/* HERO */
 .attire-hero {
   display: flex;
   align-items: center;
@@ -28,13 +25,11 @@ body[data-current-page="attire"] .attire-page {
   padding: 10px 10px 0;
   background: transparent;
 }
-
 .attire-hero-parallax {
   width: min(100%, 540px);
   min-width: 0;
   will-change: transform;
 }
-
 .attire-hero-image,
 .attire-guest-showcase-image,
 .entourage-image-showcase img {
@@ -46,59 +41,56 @@ body[data-current-page="attire"] .attire-page {
   transform-origin: center;
   backface-visibility: hidden;
 }
-
-/* PAGE TITLE */
 .attire-page-header {
   padding: 35px 20px 30px;
   text-align: center;
 }
-
 .attire-page-header p,
 .attire-page-header h1 {
   color: #fff;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, .45), 0 4px 12px rgba(0, 0, 0, .25);
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.45),
+    0 4px 12px rgba(0, 0, 0, 0.25);
 }
-
 .attire-page-header p {
   margin: 0 0 8px;
-  font: italic 700 1.25rem "Cormorant Garamond", serif;
+  font:
+    italic 700 1.25rem "Cormorant Garamond",
+    serif;
 }
-
 .attire-page-header h1 {
   margin: 0;
   font-family: "Allura", cursive;
   font-size: clamp(3.4rem, 12vw, 5rem);
   font-weight: 400;
   line-height: 1.1;
-  -webkit-text-stroke: .7px #fff;
+  -webkit-text-stroke: 0.7px #fff;
 }
-
-/* CONTENT AND SHARED CARDS */
 .attire-section {
   display: grid;
   gap: 22px;
   width: 100%;
   min-width: 0;
-  padding: 28px 16px calc(var(--nav-height) + 38px + env(safe-area-inset-bottom));
+  padding: 28px 16px
+    calc(var(--nav-height, 70px) + 38px + env(safe-area-inset-bottom));
   background: transparent;
 }
-
-.attire-section > * { min-width: 0; }
-
+.attire-section > * {
+  min-width: 0;
+}
 .attire-intro-card,
 .attire-category-card {
   width: min(100%, 680px);
   margin-inline: auto;
   padding: 30px 22px;
-  border: 1px solid rgba(92, 94, 90, .14);
+  border: 1px solid rgba(92, 94, 90, 0.14);
   border-radius: 18px;
-  background: rgba(255, 255, 255, .97);
-  box-shadow: 0 14px 36px rgba(49, 52, 48, .12);
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 14px 36px rgba(49, 52, 48, 0.12);
 }
-
-.guest-attire-card { text-align: center; }
-
-/* TYPOGRAPHY */
+.guest-attire-card {
+  text-align: center;
+}
 .attire-intro-card h2,
 .attire-category-header h2,
 .guest-attire-card > h2,
@@ -108,21 +100,18 @@ body[data-current-page="attire"] .attire-page {
 .attire-outfit-content h3,
 .attire-outfit-content p,
 .guest-attire-item strong,
-.guest-color-theme h3,
 .attire-reminder p {
   font-family: "Cormorant Garamond", serif;
 }
-
 .attire-intro-card h2,
 .attire-category-header h2,
 .guest-attire-card > h2 {
-  color: var(--sage-dark);
+  color: var(--sage-dark, #5f5f5f);
   font-size: clamp(2rem, 8vw, 2.8rem);
   font-weight: 600;
   line-height: 1.08;
   text-align: center;
 }
-
 .attire-intro-text,
 .attire-category-header > p,
 .guest-attire-description {
@@ -133,7 +122,6 @@ body[data-current-page="attire"] .attire-page {
   line-height: 1.55;
   text-align: center;
 }
-
 .attire-card-icon {
   display: grid;
   place-items: center;
@@ -141,44 +129,36 @@ body[data-current-page="attire"] .attire-page {
   height: 58px;
   margin: 0 auto 18px;
   border-radius: 50%;
-  background: rgba(105, 108, 103, .11);
-  color: var(--sage-dark);
+  background: rgba(105, 108, 103, 0.11);
+  color: var(--sage-dark, #5f5f5f);
 }
-
-.attire-card-icon i { font-size: 22px; }
-
+.attire-card-icon i {
+  font-size: 22px;
+}
 .attire-eyebrow,
 .attire-role,
 .guest-attire-item span {
   font-weight: 600;
   text-transform: uppercase;
 }
-
 .attire-eyebrow {
   margin-bottom: 8px;
-  color: var(--gold);
-  font-size: .68rem;
-  letter-spacing: .15em;
+  color: var(--gold, #b47b72);
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
   text-align: center;
 }
-
-/* GRAYSCALE PALETTE */
-.attire-palette,
-.guest-attire-card .guest-color-grid {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 8px;
-}
-
 .attire-palette {
-  width: min(100%, 440px);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  width: min(100%, 340px);
   height: auto;
   margin: 25px auto 0;
   overflow: visible;
-  border: none;
+  border: 0;
   border-radius: 0;
 }
-
 .attire-palette .guest-color-option {
   display: flex;
   flex-direction: column;
@@ -186,104 +166,85 @@ body[data-current-page="attire"] .attire-page {
   gap: 8px;
   min-width: 0;
 }
-
-.attire-palette .guest-swatch,
-.guest-attire-card .guest-swatch {
+.attire-palette .guest-swatch {
+  display: block;
   width: 100%;
   max-width: 72px;
   aspect-ratio: 1;
   border-radius: 50%;
+  border: 1px solid rgba(65, 67, 63, 0.13);
+  box-shadow: 0 4px 12px rgba(35, 37, 34, 0.08);
 }
-
-.attire-palette .guest-swatch {
-  display: block;
-  border: 1px solid rgba(65, 67, 63, .13);
-  box-shadow: 0 4px 12px rgba(35, 37, 34, .08);
-}
-
 .attire-palette .guest-color-option small {
-  color: var(--muted);
-  font-size: .56rem;
+  color: var(--muted, #77716c);
+  font-size: 0.65rem;
   font-weight: 600;
   line-height: 1.2;
   text-align: center;
   text-transform: uppercase;
 }
-
-.attire-color-dark, .guest-swatch.charcoal { background: #555; }
-.attire-color-slate, .guest-swatch.dark-gray { background: #808080; }
-.attire-color-gray, .guest-swatch.medium-gray { background: #a5a5a5; }
-.attire-color-silver, .guest-swatch.silver { background: #bdbdbd; }
-.attire-color-light, .guest-swatch.light-gray { background: #d8d8d8; }
-
+.attire-palette .guest-swatch.lilac {
+  background: #b2a0c7;
+}
+.attire-palette .guest-swatch.mocha {
+  background: #a58e84;
+}
+.attire-palette .guest-swatch.rust {
+  background: #ad624b;
+}
 .attire-palette-note {
   margin-top: 11px;
-  color: var(--muted);
-  font-size: .66rem;
+  color: var(--muted, #77716c);
+  font-size: 0.66rem;
   font-weight: 500;
-  letter-spacing: .07em;
+  letter-spacing: 0.07em;
   text-align: center;
   text-transform: uppercase;
 }
-
-/* CATEGORY AND OUTFIT CARDS */
 .attire-category-header {
-  margin-bottom: 25px;
+  margin-bottom: 0;
   text-align: center;
 }
-
 .attire-outfit-card {
   display: flex;
   flex-direction: column;
   min-width: 0;
   overflow: hidden;
-  border: 1px solid rgba(92, 94, 90, .12);
+  border: 1px solid rgba(92, 94, 90, 0.12);
   border-radius: 14px;
-  background: rgba(243, 244, 241, .78);
+  background: rgba(243, 244, 241, 0.78);
 }
-
 .attire-outfit-content {
   flex: 1;
   padding: 18px 16px 20px;
   text-align: center;
 }
-
 .attire-role {
   display: block;
   margin-bottom: 6px;
-  color: var(--gold);
-  font-size: .62rem;
-  letter-spacing: .11em;
+  color: var(--gold, #b47b72);
+  font-size: 0.62rem;
+  letter-spacing: 0.11em;
 }
-
 .attire-outfit-content h3 {
   color: #50554d;
   font-size: 1.35rem;
   font-weight: 600;
   line-height: 1.15;
 }
-
 .attire-outfit-content p {
   margin-top: 9px;
   color: #74776f;
-  font-size: .96rem;
+  font-size: 0.96rem;
   line-height: 1.45;
 }
-
-/* GUEST GUIDELINES */
-.guest-attire-guidelines,
-.guest-attire-card .guest-attire-guidelines {
+.guest-attire-guidelines {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 14px;
-  margin-top: 25px;
+  margin-top: 30px;
   text-align: left;
 }
-
-.guest-attire-card .guest-attire-guidelines { margin-top: 30px; }
-.guest-attire-card .guest-color-grid { margin-top: 18px; }
-.guest-attire-card .guest-color-option { min-width: 0; }
-
 .guest-attire-item {
   display: grid;
   grid-template-columns: 38px minmax(0, 1fr);
@@ -291,36 +252,31 @@ body[data-current-page="attire"] .attire-page {
   gap: 11px;
   padding: 15px;
   border-radius: 12px;
-  background: rgba(100, 104, 98, .07);
+  background: rgba(100, 104, 98, 0.07);
 }
-
 .guest-attire-item > i {
   padding-top: 3px;
-  color: var(--sage-dark);
+  color: var(--sage-dark, #5f5f5f);
   font-size: 18px;
   text-align: center;
 }
-
 .guest-attire-item div {
   display: flex;
   flex-direction: column;
   gap: 5px;
   min-width: 0;
 }
-
 .guest-attire-item span {
-  color: var(--muted);
-  font-size: .62rem;
-  letter-spacing: .1em;
+  color: var(--muted, #77716c);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
 }
-
 .guest-attire-item strong {
   color: #50544e;
-  font-size: .98rem;
+  font-size: 0.98rem;
   font-weight: 600;
   line-height: 1.4;
 }
-
 .attire-reminder {
   display: flex;
   align-items: flex-start;
@@ -328,90 +284,97 @@ body[data-current-page="attire"] .attire-page {
   margin-top: 26px;
   padding: 14px 15px;
   border-radius: 12px;
-  background: rgba(183, 160, 106, .11);
+  background: rgba(183, 160, 106, 0.11);
   color: #6b634e;
   text-align: left;
 }
-
 .attire-reminder i {
   margin-top: 2px;
-  color: var(--gold);
+  color: var(--gold, #b47b72);
 }
-
 .attire-reminder p {
-  font-size: .95rem;
+  font-size: 0.95rem;
   line-height: 1.4;
 }
-
-/* FULL-WIDTH IMAGE SHOWCASES */
 .attire-guest-showcase,
 .entourage-group {
   width: min(100%, 680px);
   min-width: 0;
   margin-inline: auto;
 }
-
 .attire-guest-showcase {
   padding: 0;
   overflow: visible;
   text-align: center;
 }
-
 .entourage-group {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
 }
-
 .entourage-description-card {
   width: 100%;
   overflow: hidden;
-  border: 1px solid rgba(92, 94, 90, .14);
+  border: 1px solid rgba(92, 94, 90, 0.14);
   border-radius: 18px;
-  background: rgba(255, 255, 255, .97);
-  box-shadow: 0 14px 36px rgba(49, 52, 48, .12);
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 14px 36px rgba(49, 52, 48, 0.12);
 }
-
 .entourage-description-card .attire-outfit-content {
   padding: 24px 20px;
   text-align: center;
 }
-
+.entourage-description-card .attire-outfit-content + .attire-outfit-content {
+  border-top: 1px solid rgba(92, 94, 90, 0.12);
+}
 .entourage-image-showcase {
   width: 100%;
   min-width: 0;
   margin: 0;
   padding: 0;
-  overflow: clip;
-  border: none;
+  overflow: visible;
+  border: 0;
   background: transparent;
   box-shadow: none;
 }
-
-/* MOBILE */
 @media (max-width: 600px) {
-  .attire-hero { padding: 30px 10px 0; }
-  .attire-page-header { padding: 10px 16px 20px; }
-  .attire-page-header h1 { font-size: clamp(3rem, 12vw, 4.3rem); }
-
-  .attire-section {
-    padding: 18px 12px calc(var(--nav-height) + 38px + env(safe-area-inset-bottom));
+  .attire-hero {
+    padding: 30px 10px 0;
   }
-
+  .attire-page-header {
+    padding: 10px 16px 20px;
+  }
+  .attire-page-header h1 {
+    font-size: clamp(3rem, 12vw, 4.3rem);
+  }
+  .attire-section {
+    padding: 18px 12px
+      calc(var(--nav-height, 70px) + 38px + env(safe-area-inset-bottom));
+  }
   .attire-intro-card,
   .attire-category-card {
     padding: 25px 16px;
     border-radius: 15px;
   }
-
-  .attire-palette,
-  .guest-attire-card .guest-color-grid { gap: 5px; }
-
-  .attire-palette .guest-color-option small,
-  .guest-attire-card .guest-color-option small { font-size: .5rem; }
-
-  .entourage-group { gap: 8px; }
-  .entourage-description-card { border-radius: 15px; }
-  .entourage-description-card .attire-outfit-content { padding: 24px 16px; }
+  .attire-palette {
+    gap: 5px;
+  }
+  .attire-palette .guest-color-option small {
+    font-size: 0.6rem;
+  }
+  .entourage-group {
+    gap: 8px;
+  }
+  .entourage-description-card {
+    border-radius: 15px;
+  }
+  .entourage-description-card .attire-outfit-content {
+    padding: 24px 16px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .attire-hero-parallax {
+    will-change: auto;
+  }
 }

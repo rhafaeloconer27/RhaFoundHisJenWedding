@@ -320,7 +320,7 @@
             </a>
           </article>
         </div>
-        <div class="intro-attire-section">
+        <!-- <div class="intro-attire-section">
           <div class="prenup-parallax" aria-hidden="true"></div>
           <article class="intro-attire-card">
             <div class="intro-attire-icon" aria-hidden="true">
@@ -385,7 +385,7 @@
               </p>
             </div>
           </article>
-        </div>
+        </div> -->
         <div class="intro-gift-section">
           <div class="prenup-parallax" aria-hidden="true"></div>
           <article class="intro-gift-card">
@@ -494,9 +494,21 @@
             </p>
           </div>
           <div class="intro-rsvp-search-card">
-            <label class="intro-rsvp-search-label" for="introRsvpSearch"
-              >Guest Name</label
-            >
+            <label class="intro-rsvp-search-label" for="introRsvpSearch">
+              Guest Name
+            </label>
+
+            <div class="intro-rsvp-search-lottie">
+              <lottie-player
+                id="searchNameAnimation"
+                src="images/searchName.json"
+                background="transparent"
+                speed="1"
+                loop
+                autoplay
+                aria-label="Search guest name animation"
+              ></lottie-player>
+            </div>
             <div class="intro-rsvp-search-box">
               <input
                 type="text"
