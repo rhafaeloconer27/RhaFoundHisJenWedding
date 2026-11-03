@@ -2,6 +2,68 @@
 window.initializeAttirePage = function () {
   const page = document.querySelector('.attire-page');
   if (!page || page.dataset.gsapInitialized === 'true') return;
+
+
+  // Attire photo fullscreen preview
+  const lightbox = document.createElement("div");
+  lightbox.className = "attire-lightbox";
+  lightbox.hidden = true;
+
+  lightbox.innerHTML = `
+    <button
+      type="button"
+      class="attire-lightbox-close"
+      aria-label="Close photo preview"
+    >
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <img class="attire-lightbox-image" alt="">
+  `;
+
+  // Append outside SPA container so it stays fixed.
+  document.body.appendChild(lightbox);
+
+  const previewImage = lightbox.querySelector(
+    ".attire-lightbox-image"
+  );
+  const closeButton = lightbox.querySelector(
+    ".attire-lightbox-close"
+  );
+
+  let lastTrigger = null;
+
+  function closePreview() {
+    lightbox.hidden = true;
+    previewImage.removeAttribute("src");
+    lastTrigger?.focus();
+  }
+
+  page.querySelectorAll("[data-attire-preview]").forEach(button => {
+    button.addEventListener("click", () => {
+      const image = button.querySelector("img");
+      if (!image) return;
+
+      lastTrigger = button;
+      previewImage.src = image.currentSrc || image.src;
+      previewImage.alt = image.alt;
+
+      lightbox.hidden = false;
+      closeButton.focus();
+    });
+  });
+
+  closeButton.addEventListener("click", closePreview);
+
+  lightbox.addEventListener("click", event => {
+    if (event.target === lightbox) closePreview();
+  });
+
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && !lightbox.hidden) {
+      closePreview();
+    }
+  });
+
   if (!window.gsap || !window.ScrollTrigger) return;
 
   gsap.registerPlugin(ScrollTrigger);

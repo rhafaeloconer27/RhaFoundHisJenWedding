@@ -189,8 +189,8 @@ body[data-current-page="attire"] .attire-page {
 .attire-palette .guest-swatch.mocha {
   background: #a58e84;
 }
-.attire-palette .guest-swatch.rust {
-  background: #ad624b;
+.attire-palette .guest-swatch.sage-green {
+  background: #929f78;
 }
 .attire-palette-note {
   margin-top: 11px;
@@ -376,5 +376,98 @@ body[data-current-page="attire"] .attire-page {
 @media (prefers-reduced-motion: reduce) {
   .attire-hero-parallax {
     will-change: auto;
+  }
+}
+
+/* Clickable attire sample images */
+.attire-image-trigger {
+  display: block;
+  position: relative;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.attire-image-trigger img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.attire-zoom-hint {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 14px;
+  border-radius: 30px;
+  background: rgba(30, 35, 29, 0.75);
+  color: white;
+  font:
+    500 0.72rem "Montserrat",
+    sans-serif;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.attire-image-trigger:hover img {
+  filter: brightness(0.96);
+}
+
+.attire-image-trigger:focus-visible {
+  outline: 3px solid #929f78;
+  outline-offset: 4px;
+}
+
+/* Fullscreen photo preview */
+.attire-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 55px 16px 24px;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(8px);
+}
+
+.attire-lightbox[hidden] {
+  display: none !important;
+}
+
+.attire-lightbox-image {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100dvh - 90px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.attire-lightbox-close {
+  position: absolute;
+  top: max(15px, env(safe-area-inset-top));
+  right: 18px;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  color: white;
+  font-size: 23px;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .attire-zoom-hint {
+    bottom: 8px;
+    padding: 7px 11px;
+    font-size: 0.65rem;
   }
 }

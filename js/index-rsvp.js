@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     "MAE NEY ROSH BAYAGNA": "Bridesmaid",
 
-    "MAE ARCY CONSTANTINO": "Bridesmaid",
+    // "MAE ARCY CONSTANTINO": "Bridesmaid",
 
     "EMBER VILLANUEVA": "Flower Girl",
 
