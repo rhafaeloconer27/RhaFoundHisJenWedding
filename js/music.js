@@ -186,47 +186,47 @@ async function initializeGlobalMusic() {
     );
 
 
-   const isInvitationIndex =
-  Boolean(
-    document.getElementById(
-      "openInvitationButton"
-    )
-  );
+    const isInvitationIndex =
+      Boolean(
+        document.getElementById(
+          "openInvitationButton"
+        )
+      );
 
 
-/*
- * index.html:
- * music must start ONLY from the seal.
- */
-if (
-  isInvitationIndex
-) {
+    /*
+     * index.html:
+     * music must start ONLY from the seal.
+     */
+    if (
+      isInvitationIndex
+    ) {
 
-  if (
-    musicButton
-  ) {
+      if (
+        musicButton
+      ) {
 
-    musicButton.style.display =
-      "none";
+        musicButton.style.display =
+          "none";
 
-  }
-
-
-  return;
-
-}
+      }
 
 
-/*
- * Direct visit to wedding.html.
- */
-if (
-  shouldPlay
-) {
+      return;
 
-  attemptAutomaticPlayback();
+    }
 
-}
+
+    /*
+     * Direct visit to wedding.html.
+     */
+    if (
+      shouldPlay
+    ) {
+
+      attemptAutomaticPlayback();
+
+    }
 
 
     return;
@@ -389,7 +389,7 @@ function createMusicElements() {
 async function startWeddingMusic(
   {
     restart =
-      false,
+    false,
   } = {}
 ) {
 
@@ -600,6 +600,8 @@ async function toggleMusic() {
 
 async function playMusic() {
 
+  if (weddingVideoAudioActive) return;
+
   if (
     !bgMusic
   ) {
@@ -719,6 +721,8 @@ function pauseMusic() {
 ========================================================== */
 
 async function attemptAutomaticPlayback() {
+
+  if (weddingVideoAudioActive) return;
 
   if (
     !bgMusic
@@ -1180,3 +1184,27 @@ function getMusicState(
   }
 
 }
+
+/* ==========================================================
+   VIDEO / BACKGROUND MUSIC COORDINATION
+   Pause without changing the guest's saved play preference.
+========================================================== */
+let weddingVideoAudioActive = false;
+
+window.pauseWeddingMusicForVideo = function () {
+  const audio = document.getElementById("bgMusic");
+  const wasPlaying = Boolean(audio && !audio.paused);
+  weddingVideoAudioActive = true;
+  if (wasPlaying) audio.pause();
+  return wasPlaying;
+};
+
+window.resumeWeddingMusicAfterVideo = function (wasPlaying) {
+  weddingVideoAudioActive = false;
+  if (!wasPlaying) return;
+  if (getMusicState(MUSIC_PLAYING_KEY) !== "true") return;
+  const audio = document.getElementById("bgMusic");
+  if (!audio || !audio.paused) return;
+  // Preserve currentTime; never restart the song.
+  void playMusic();
+};

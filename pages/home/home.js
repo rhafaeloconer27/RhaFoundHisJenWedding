@@ -92,6 +92,7 @@ function initializeHomeGallery() {
 function initializeHomeVideo() {
   const openButtons = document.querySelectorAll("[data-home-video]");
   if (!openButtons.length) return;
+
   const controller = new AbortController();
   homeVideoController = controller;
   const { signal } = controller;
@@ -101,51 +102,120 @@ function initializeHomeVideo() {
   modal.hidden = true;
   modal.setAttribute("role", "dialog");
   modal.setAttribute("aria-modal", "true");
-  modal.setAttribute("aria-label", "Rhaf and Jen Prenup Film");
+  modal.setAttribute("aria-label", "Rhaf and Jen Wedding Film");
   modal.innerHTML = `
     <button type="button" class="home-video-close" aria-label="Close video">
       <i class="fa-solid fa-xmark" aria-hidden="true"></i>
     </button>
     <div class="home-video-modal-frame"></div>`;
   document.body.appendChild(modal);
+
   const frame = modal.querySelector(".home-video-modal-frame");
   const closeButton = modal.querySelector(".home-video-close");
   let previousOverflow = "";
   let previousFocus = null;
+  let player = null;
+  let playerGeneration = 0;
+  let restoreMusicOnClose = false;
+  let musicRestored = false;
+
+  // The IFrame API is required to receive YouTube's ENDED event.
+  function loadYouTubeApi() {
+    if (window.YT?.Player) return Promise.resolve(window.YT);
+    if (!window.homeYouTubeApiPromise) {
+      window.homeYouTubeApiPromise = new Promise((resolve, reject) => {
+        const previousCallback = window.onYouTubeIframeAPIReady;
+        window.onYouTubeIframeAPIReady = () => {
+          if (typeof previousCallback === "function") previousCallback();
+          resolve(window.YT);
+        };
+        const script = document.createElement("script");
+        script.src = "https://www.youtube.com/iframe_api";
+        script.onerror = () => reject(new Error("YouTube Player API unavailable"));
+        document.head.appendChild(script);
+      }).catch(error => {
+        window.homeYouTubeApiPromise = null;
+        throw error;
+      });
+    }
+    return window.homeYouTubeApiPromise;
+  }
+
+  function restoreMusic() {
+    if (musicRestored) return;
+    musicRestored = true;
+    window.resumeWeddingMusicAfterVideo?.(restoreMusicOnClose);
+  }
 
   function closeVideo() {
     if (modal.hidden) return;
-    // Removing the iframe stops YouTube playback immediately.
+    playerGeneration++;
+    try { player?.destroy?.(); } catch (_) { /* Already removed */ }
+    player = null;
     frame.replaceChildren();
     modal.classList.remove("is-open");
     modal.hidden = true;
     document.body.style.overflow = previousOverflow;
     document.body.classList.remove("home-video-modal-open");
+    restoreMusic();
     if (previousFocus?.isConnected) previousFocus.focus();
     previousFocus = null;
   }
 
   function openVideo(videoKey) {
     if (!modal.hidden) return;
+    const url = HOME_VIDEO_URLS[videoKey] || HOME_VIDEO_URLS.prenup;
+    const videoId = new URL(url).pathname.split("/").pop();
+    const generation = ++playerGeneration;
     previousFocus = document.activeElement;
     previousOverflow = document.body.style.overflow;
-    const iframe = document.createElement("iframe");
-    iframe.src = HOME_VIDEO_URLS[videoKey] || HOME_VIDEO_URLS.prenup;
-    iframe.title = "Rhaf and Jen Prenup Film";
-    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen";
-    iframe.allowFullscreen = true;
-    iframe.referrerPolicy = "strict-origin-when-cross-origin";
-    iframe.setAttribute("loading", "eager");
-    iframe.setAttribute("aria-label", "Rhaf and Jen Prenup Film on YouTube");
-    frame.replaceChildren(iframe);
+    musicRestored = false;
+    restoreMusicOnClose = window.pauseWeddingMusicForVideo?.() ?? false;
+
     modal.hidden = false;
     document.body.style.overflow = "hidden";
     document.body.classList.add("home-video-modal-open");
+    frame.replaceChildren();
+    const playerHost = document.createElement("div");
+    playerHost.id = `home-youtube-player-${generation}`;
+    frame.appendChild(playerHost);
+
+    loadYouTubeApi().then(YT => {
+      if (signal.aborted || modal.hidden || generation !== playerGeneration) return;
+      player = new YT.Player(playerHost.id, {
+        videoId,
+        playerVars: { autoplay: 1, playsinline: 1, rel: 0 },
+        events: {
+          onReady(event) {
+            if (modal.hidden || generation !== playerGeneration) return;
+            event.target.playVideo();
+          },
+          onStateChange(event) {
+            if (generation !== playerGeneration) return;
+            if (event.data === YT.PlayerState.ENDED) restoreMusic();
+          },
+          onError(event) {
+            console.warn("YouTube video player error:", event.data);
+            restoreMusic();
+          }
+        }
+      });
+    }).catch(error => {
+      if (modal.hidden || generation !== playerGeneration) return;
+      console.warn(error);
+      // Fallback still plays the video, but cannot detect its end.
+      const iframe = document.createElement("iframe");
+      iframe.src = url;
+      iframe.title = "Rhaf and Jen Wedding Film";
+      iframe.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+      iframe.allowFullscreen = true;
+      frame.replaceChildren(iframe);
+    });
+
     requestAnimationFrame(() => {
       if (!modal.hidden && !signal.aborted) modal.classList.add("is-open");
     });
     closeButton.focus();
-    // YouTube may block autoplay on some devices; users can press Play.
   }
 
   openButtons.forEach(button => button.addEventListener("click", () => openVideo(button.dataset.homeVideo), { signal }));
