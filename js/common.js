@@ -13,6 +13,12 @@ const WEDDING_NAVIGATION_ITEMS = [
   let currentPage = "home";
   let observer, frameId = 0;
 
+  const NAV_PREVIEW_DURATION = 3000;
+  let navPreviewTimeout = null;
+  let navManuallyOpened = false;
+  let navPreviewDisabled = false;
+  let initialPreviewStarted = false;
+
   function markup() {
     const items = WEDDING_NAVIGATION_ITEMS.map(({ page, icon, label }) => `
       <a class="nav-item" href="${page === "home" ? "wedding.html" : `wedding.html?page=${page}`}" data-page="${page}">
@@ -25,27 +31,27 @@ const WEDDING_NAVIGATION_ITEMS = [
         ${items}
       </nav>
       <button
-  type="button"
-  class="wedding-nav-toggle"
-  aria-label="Expand navigation"
-  aria-controls="weddingCurvedNav"
-  aria-expanded="false"
->
-  <lottie-player
-    id="navCollapseAnimation"
-    src="images/navCollapse.json"
-    background="transparent"
-    speed="1"
-    autoplay
-    loop
-    aria-hidden="true"
-  ></lottie-player>
-</button>
+        type="button"
+        class="wedding-nav-toggle"
+        aria-label="Expand navigation"
+        aria-controls="weddingCurvedNav"
+        aria-expanded="false"
+      >
+        <lottie-player
+          id="navCollapseAnimation"
+          src="images/navCollapse.json"
+          background="transparent"
+          speed="1"
+          autoplay
+          loop
+          aria-hidden="true"
+        ></lottie-player>
+      </button>
     </div>`;
   }
 
   function setExpanded(expanded) {
-    if (!wrapper) return;
+    if (!wrapper || !toggle || !nav) return;
     wrapper.classList.toggle("is-expanded", expanded);
     wrapper.classList.toggle("is-collapsed", !expanded);
     toggle.setAttribute("aria-expanded", String(expanded));
@@ -53,6 +59,29 @@ const WEDDING_NAVIGATION_ITEMS = [
     nav.inert = !expanded;
     if (expanded) scheduleShapeUpdate();
   }
+
+  function stopNavigationPreview() {
+    clearTimeout(navPreviewTimeout);
+    navPreviewTimeout = null;
+  }
+
+  function startNavigationPreview() {
+    if (initialPreviewStarted || navPreviewDisabled || !wrapper ||
+      document.body.classList.contains("spa-initializing")) return;
+
+    initialPreviewStarted = true;
+    spaReadyObserver.disconnect();
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    setExpanded(true);
+    navPreviewTimeout = setTimeout(() => {
+      navPreviewTimeout = null;
+      if (!navManuallyOpened && !navPreviewDisabled) setExpanded(false);
+    }, NAV_PREVIEW_DURATION);
+  }
+
+  // Wait for the SPA loader to finish so guests actually see the preview.
+  const spaReadyObserver = new MutationObserver(() => startNavigationPreview());
 
   function ensureNavigation() {
     let container = document.getElementById("globalNavigation");
@@ -75,10 +104,21 @@ const WEDDING_NAVIGATION_ITEMS = [
     shape = nav.querySelector(".nav-background-path");
     links = [...nav.querySelectorAll(".nav-item")];
     setExpanded(false);
+
     toggle.addEventListener("click", (event) => {
       event.preventDefault();
+      // After the guest discovers the navigation, do not interrupt again.
+      navManuallyOpened = true;
+      navPreviewDisabled = true;
+      stopNavigationPreview();
       setExpanded(true);
     });
+
+    nav.addEventListener("pointerdown", () => {
+      navPreviewDisabled = true;
+      stopNavigationPreview();
+    });
+
     if (typeof ResizeObserver !== "undefined") {
       observer = new ResizeObserver(scheduleShapeUpdate);
       observer.observe(nav);
@@ -88,12 +128,17 @@ const WEDDING_NAVIGATION_ITEMS = [
 
   // One global listener, even if the SPA navigation is recreated.
   document.addEventListener("pointerdown", (event) => {
-    if (wrapper?.classList.contains("is-expanded") && !nav.contains(event.target)) {
+    if (wrapper?.classList.contains("is-expanded") && !wrapper.contains(event.target)) {
+      navManuallyOpened = false;
+      clearTimeout(navPreviewTimeout);
       setExpanded(false);
     }
   });
+
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && wrapper?.classList.contains("is-expanded")) {
+      navManuallyOpened = false;
+      clearTimeout(navPreviewTimeout);
       setExpanded(false);
       toggle.focus();
     }
@@ -143,7 +188,13 @@ const WEDDING_NAVIGATION_ITEMS = [
 
   window.updateCommonNavigation = renderCommonNavigation;
   window.addEventListener("resize", scheduleShapeUpdate, { passive: true });
-  function initialize() { renderCommonNavigation(document.body.dataset.currentPage || "home"); }
+  function initialize() {
+    renderCommonNavigation(document.body.dataset.currentPage || "home");
+    if (document.body.classList.contains("spa-initializing")) {
+      spaReadyObserver.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+    }
+    startNavigationPreview();
+  }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initialize, { once: true });
   else initialize();
 })();

@@ -6,6 +6,8 @@ let homeGalleryAnimationContext = null;
 let homeGalleryRefreshHandler = null;
 let homeSession = 0;
 let homeExpoController = null;
+let homeVideoController = null;
+let homeVideoClose = null;
 
 let homeExpoAutoplayInterval = null;
 const HOME_EXPO_AUTOPLAY_DELAY = 3000;
@@ -14,6 +16,12 @@ const HOME_IMAGE_FOLDER = "images/prenup/";
 const HOME_IMAGE_COUNT = 64;
 const HOME_SLIDESHOW_DELAY = 5000;
 const HOME_WEDDING_DATE = new Date("2027-02-04T15:00:00+08:00").getTime();
+
+// YouTube Unlisted Short, embedded in a portrait player.
+const HOME_VIDEO_URLS = {
+  prenup: "https://www.youtube.com/embed/rVe4pea6dew?autoplay=1&playsinline=1&rel=0",
+  second: "https://www.youtube.com/embed/KYkteeVvgmw?autoplay=1&playsinline=1&rel=0"
+};
 
 function homeImagePath(number) {
   return `${HOME_IMAGE_FOLDER}prenup${number}.webp`;
@@ -31,6 +39,7 @@ function shuffledPhotoNumbers() {
 window.initializeHomePage = function () {
   window.cleanupHomePage();
   const session = homeSession;
+  initializeHomeVideo();
   initializeHomeGallery();
   initializeExpoSlider();
   initializeHeroSlideshow(session);
@@ -39,6 +48,7 @@ window.initializeHomePage = function () {
 };
 
 window.cleanupHomePage = function () {
+  homeVideoClose?.();
   homeSession++;
   if (homeExpoController) homeExpoController.abort();
   homeExpoController = null;
@@ -48,6 +58,8 @@ window.cleanupHomePage = function () {
   if (homeVisibilityHandler) document.removeEventListener("visibilitychange", homeVisibilityHandler);
   homeVisibilityHandler = null;
   if (homeGalleryRefreshHandler) window.removeEventListener("load", homeGalleryRefreshHandler);
+  const galleryGrid = document.querySelector(".home-gallery-grid");
+  if (galleryGrid && homeGalleryRefreshHandler) galleryGrid.removeEventListener("load", homeGalleryRefreshHandler, true);
   homeGalleryRefreshHandler = null;
   if (homeGalleryAnimationContext) homeGalleryAnimationContext.revert();
   homeGalleryAnimationContext = null;
@@ -74,6 +86,90 @@ function initializeHomeGallery() {
     fragment.append(figure);
   }
   grid.replaceChildren(fragment);
+}
+
+
+function initializeHomeVideo() {
+  const openButtons = document.querySelectorAll("[data-home-video]");
+  if (!openButtons.length) return;
+  const controller = new AbortController();
+  homeVideoController = controller;
+  const { signal } = controller;
+  const modal = document.createElement("div");
+  modal.className = "home-video-modal";
+  modal.id = "homeVideoModal";
+  modal.hidden = true;
+  modal.setAttribute("role", "dialog");
+  modal.setAttribute("aria-modal", "true");
+  modal.setAttribute("aria-label", "Rhaf and Jen Prenup Film");
+  modal.innerHTML = `
+    <button type="button" class="home-video-close" aria-label="Close video">
+      <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+    </button>
+    <div class="home-video-modal-frame"></div>`;
+  document.body.appendChild(modal);
+  const frame = modal.querySelector(".home-video-modal-frame");
+  const closeButton = modal.querySelector(".home-video-close");
+  let previousOverflow = "";
+  let previousFocus = null;
+
+  function closeVideo() {
+    if (modal.hidden) return;
+    // Removing the iframe stops YouTube playback immediately.
+    frame.replaceChildren();
+    modal.classList.remove("is-open");
+    modal.hidden = true;
+    document.body.style.overflow = previousOverflow;
+    document.body.classList.remove("home-video-modal-open");
+    if (previousFocus?.isConnected) previousFocus.focus();
+    previousFocus = null;
+  }
+
+  function openVideo(videoKey) {
+    if (!modal.hidden) return;
+    previousFocus = document.activeElement;
+    previousOverflow = document.body.style.overflow;
+    const iframe = document.createElement("iframe");
+    iframe.src = HOME_VIDEO_URLS[videoKey] || HOME_VIDEO_URLS.prenup;
+    iframe.title = "Rhaf and Jen Prenup Film";
+    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen";
+    iframe.allowFullscreen = true;
+    iframe.referrerPolicy = "strict-origin-when-cross-origin";
+    iframe.setAttribute("loading", "eager");
+    iframe.setAttribute("aria-label", "Rhaf and Jen Prenup Film on YouTube");
+    frame.replaceChildren(iframe);
+    modal.hidden = false;
+    document.body.style.overflow = "hidden";
+    document.body.classList.add("home-video-modal-open");
+    requestAnimationFrame(() => {
+      if (!modal.hidden && !signal.aborted) modal.classList.add("is-open");
+    });
+    closeButton.focus();
+    // YouTube may block autoplay on some devices; users can press Play.
+  }
+
+  openButtons.forEach(button => button.addEventListener("click", () => openVideo(button.dataset.homeVideo), { signal }));
+  closeButton.addEventListener("click", closeVideo, { signal });
+  modal.addEventListener("click", event => {
+    if (event.target === modal) closeVideo();
+  }, { signal });
+  document.addEventListener("keydown", event => {
+    if (modal.hidden) return;
+    if (event.key === "Escape") { event.preventDefault(); closeVideo(); }
+    else if (event.key === "Tab") {
+      const focusables = [closeButton, frame.querySelector("iframe")].filter(Boolean);
+      const first = focusables[0], last = focusables[focusables.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    }
+  }, { signal });
+  homeVideoClose = () => {
+    closeVideo();
+    controller.abort();
+    modal.remove();
+    homeVideoController = null;
+    homeVideoClose = null;
+  };
 }
 
 function initializeHeroSlideshow(session) {
@@ -217,7 +313,8 @@ function initializeGalleryParallax() {
   // Lazy-loaded images can change masonry height; update trigger positions.
   const grid = gallery.querySelector(".home-gallery-grid");
   if (grid) {
-    grid.addEventListener("load", () => ScrollTrigger.refresh(), true);
+    homeGalleryRefreshHandler = () => ScrollTrigger.refresh();
+    grid.addEventListener("load", homeGalleryRefreshHandler, true);
   }
   ScrollTrigger.refresh();
 }

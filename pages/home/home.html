@@ -1,4 +1,4 @@
-<!-- SPA partial. JS fills slideshow and gallery using images/prenup/prenup1.webp ... prenup64.webp. -->
+<!-- SPA home partial; requires existing global styles, Font Awesome, GSAP and ScrollTrigger -->
 <main class="page-container">
   <section class="wedding-hero">
     <div class="hero-slideshow" aria-hidden="true"></div>
@@ -52,6 +52,54 @@
       aria-label="Prenup photos"
     >
       <div class="expo-track"></div>
+    </div>
+  </section>
+  <section class="home-video-section" aria-labelledby="homeVideoTitle">
+    <h3 class="home-video-secondary-title">Before We Say “I Do”</h3>
+    <div class="home-video-collection">
+      <div class="home-video-entry">
+        <button
+          type="button"
+          class="home-video-preview"
+          id="homeVideoOpen"
+          data-home-video="prenup"
+          aria-label="Watch Rhaf and Jen's prenup film"
+        >
+          <img
+            src="images/prenup/prenup22.webp"
+            alt="Rhaf and Jen prenup film cover"
+            loading="lazy"
+            decoding="async"
+          />
+          <span class="home-video-preview-overlay"
+            ><span class="home-video-play"
+              ><i class="fa-solid fa-play" aria-hidden="true"></i></span
+            ><span class="home-video-watch">WATCH OUR FILM</span></span
+          >
+        </button>
+      </div>
+      <div class="home-video-entry">
+        <h3 class="home-video-secondary-title">She Said Yes!</h3>
+        <button
+          type="button"
+          class="home-video-preview"
+          id="homeVideoOpenSecond"
+          data-home-video="second"
+          aria-label="Watch Rhaf and Jen's second video"
+        >
+          <img
+            src="https://i.ytimg.com/vi/KYkteeVvgmw/hqdefault.jpg"
+            alt="Rhaf and Jen second video cover"
+            loading="lazy"
+            decoding="async"
+          />
+          <span class="home-video-preview-overlay"
+            ><span class="home-video-play"
+              ><i class="fa-solid fa-play" aria-hidden="true"></i></span
+            ><span class="home-video-watch">WATCH OUR SECOND FILM</span></span
+          >
+        </button>
+      </div>
     </div>
   </section>
   <section class="home-gallery" id="homeGallery">

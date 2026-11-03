@@ -433,3 +433,361 @@ body[data-current-page="home"] .page-container {
     transition: none;
   }
 }
+
+/* Portrait video preview */
+.home-video-preview {
+  position: relative;
+  display: block;
+  width: min(100%, 310px);
+  aspect-ratio: 9 / 16;
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #25201e;
+  cursor: pointer;
+  box-shadow: 0 14px 38px rgba(50, 37, 32, 0.18);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.home-video-preview > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.home-video-preview-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.08),
+    rgba(0, 0, 0, 0.42)
+  );
+}
+
+.home-video-play {
+  display: grid;
+  place-items: center;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: #785a52;
+  font-size: 24px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+  transition: transform 0.3s ease;
+}
+
+.home-video-watch {
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+}
+
+@media (hover: hover) {
+  .home-video-preview:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 45px rgba(50, 37, 32, 0.22);
+  }
+
+  .home-video-preview:hover .home-video-play {
+    transform: scale(1.1);
+  }
+}
+
+/* Fullscreen video viewer */
+.home-video-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.96);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.25s ease,
+    visibility 0.25s ease;
+}
+
+.home-video-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.home-video-modal[hidden] {
+  display: none;
+}
+
+.home-video-modal-frame {
+  position: relative;
+  width: min(100%, calc(90dvh * 9 / 16));
+  aspect-ratio: 9 / 16;
+  max-height: 90dvh;
+  overflow: hidden;
+  background: #111;
+  border-radius: 12px;
+}
+
+.home-video-modal-frame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.home-video-close {
+  position: absolute;
+  top: max(15px, env(safe-area-inset-top));
+  right: 15px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  background: rgba(40, 40, 40, 0.85);
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+body.home-video-modal-open {
+  overflow: hidden !important;
+}
+
+@media (max-width: 600px) {
+  .home-video-preview {
+    width: min(100%, 270px);
+    border-radius: 14px;
+  }
+
+  .home-video-modal {
+    padding: 10px;
+  }
+
+  .home-video-modal-frame {
+    width: min(100%, calc(94dvh * 9 / 16));
+    max-height: 94dvh;
+    border-radius: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-video-preview,
+  .home-video-play,
+  .home-video-modal {
+    transition: none;
+  }
+}
+
+/* Prenup video heading and caption */
+.home-video-section {
+  position: relative;
+  width: 100%;
+  padding: 85px 20px 90px;
+  background: #fff;
+  text-align: center;
+}
+.home-video-heading {
+  max-width: 650px;
+  margin: 0 auto 35px;
+}
+.home-video-heading span {
+  display: block;
+  margin-bottom: 12px;
+  color: #b47b72;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+}
+.home-video-heading h2 {
+  margin: 0 0 14px;
+  color: #4c4845;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.5rem, 7vw, 3.8rem);
+  font-weight: 500;
+}
+.home-video-heading p {
+  max-width: 450px;
+  margin: 0 auto;
+  color: #77716c;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+.home-video-caption {
+  margin: 28px auto 0;
+  color: #87766f;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.15rem;
+  font-style: italic;
+}
+@media (max-width: 600px) {
+  .home-video-section {
+    padding: 60px 12px 65px;
+  }
+  .home-video-heading {
+    margin-bottom: 25px;
+  }
+  .home-video-heading h2 {
+    font-size: 2.7rem;
+  }
+  .home-video-heading p {
+    font-size: 1.1rem;
+  }
+  .home-video-caption {
+    margin-top: 20px;
+    font-size: 1rem;
+  }
+}
+
+/* Both native MP4 and third-party embeds fit the portrait viewer. */
+.home-video-modal-frame video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+.home-video-modal-frame iframe {
+  background: #000;
+}
+.home-video-close {
+  z-index: 5;
+}
+.home-video-preview:focus-visible,
+.home-video-close:focus-visible {
+  outline: 3px solid #b47b72;
+  outline-offset: 4px;
+}
+
+/* Native portrait player: keep controls at normal device scale. */
+.home-video-modal-frame {
+  width: min(100%, calc(88dvh * 9 / 16));
+  max-height: 88dvh;
+  aspect-ratio: 9 / 16;
+}
+.home-video-modal-frame video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.home-video-modal {
+  padding: 65px 12px 12px;
+}
+.home-video-close {
+  top: max(12px, env(safe-area-inset-top));
+  right: 12px;
+}
+.home-video-error {
+  color: #fff;
+  text-align: center;
+  padding: 30px 20px;
+  line-height: 1.6;
+}
+@media (max-width: 600px) {
+  .home-video-modal-frame {
+    width: min(100%, calc(90dvh * 9 / 16));
+    max-height: 90dvh;
+  }
+}
+
+/* YouTube Shorts portrait embed. Preserve native YouTube player controls. */
+.home-video-modal-frame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #000;
+}
+
+/* YouTube Shorts: final responsive portrait viewer overrides. */
+.home-video-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: max(60px, env(safe-area-inset-top)) 12px
+    max(12px, env(safe-area-inset-bottom));
+  background: rgba(0, 0, 0, 0.96);
+}
+.home-video-modal[hidden] {
+  display: none !important;
+}
+.home-video-modal-frame {
+  box-sizing: border-box;
+  flex: 0 1 auto;
+  width: min(100%, 410px, calc((100dvh - 90px) * 9 / 16));
+  height: auto;
+  max-height: calc(100dvh - 90px);
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #000;
+}
+.home-video-modal-frame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #000;
+}
+.home-video-close {
+  position: absolute;
+  z-index: 10;
+  top: max(12px, env(safe-area-inset-top));
+  right: max(12px, env(safe-area-inset-right));
+}
+@media (max-width: 600px) {
+  .home-video-modal {
+    padding: max(58px, env(safe-area-inset-top)) 8px
+      max(8px, env(safe-area-inset-bottom));
+  }
+  .home-video-modal-frame {
+    width: min(calc(100vw - 16px), calc((100dvh - 76px) * 9 / 16));
+    max-height: calc(100dvh - 76px);
+    border-radius: 8px;
+  }
+}
+
+/* Two portrait videos, stacked vertically under the film heading. */
+.home-video-collection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 52px;
+}
+.home-video-entry {
+  width: 100%;
+  text-align: center;
+}
+.home-video-secondary-title {
+  margin: 0 0 22px;
+  color: #4c4845;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  font-weight: 500;
+}
+@media (max-width: 600px) {
+  .home-video-collection {
+    gap: 40px;
+  }
+}
