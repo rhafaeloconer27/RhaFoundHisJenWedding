@@ -471,3 +471,49 @@ body[data-current-page="attire"] .attire-page {
     font-size: 0.65rem;
   }
 }
+
+/* Shared bottom-page navigation; load once globally or append to location.css. */
+.wedding-next-page {
+  display: flex;
+  justify-content: center;
+  padding: 36px 18px
+    calc(var(--nav-height, 80px) + 48px + env(safe-area-inset-bottom, 0px));
+  text-align: center;
+}
+.wedding-next-page-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 52px;
+  padding: 13px 26px;
+  border: 1px solid #c8b6a8;
+  border-radius: 999px;
+  background: #fffaf5;
+  color: #68574e;
+  text-decoration: none;
+  font:
+    600 1.15rem "Cormorant Garamond",
+    serif;
+  letter-spacing: 0.03em;
+  box-shadow: 0 8px 24px rgba(58, 48, 43, 0.1);
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+}
+.wedding-next-page-link:hover {
+  background: #f4e9df;
+  transform: translateY(-2px);
+}
+.wedding-next-page-link:focus-visible {
+  outline: 3px solid #ad8174;
+  outline-offset: 4px;
+}
+.wedding-next-page-link i {
+  font-size: 0.85em;
+}
+@media (prefers-reduced-motion: reduce) {
+  .wedding-next-page-link {
+    transition: none;
+  }
+}
