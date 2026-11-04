@@ -228,7 +228,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     "TERRENCE AXL OCONER",
 
-    "DANNY NAVARRO",
+    "DANILO NAVARRO",
 
     "MAT BLANCO",
 
