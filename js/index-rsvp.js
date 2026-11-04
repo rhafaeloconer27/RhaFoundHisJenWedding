@@ -52,9 +52,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     "MRS. SHERYL FULGENCIO": "Principal Sponsor",
 
-    "ELAR CAMPANANO": "Sand Sponsor",
+    "ELAR CAMPAÑANO": "Sand Sponsor",
 
-    "HANNAH CAMPANANO": "Sand Sponsor",
+    "HANNAH CAMPAÑANO": "Sand Sponsor",
 
     "WINSEL INGLESIAS": "Veil Sponsor",
 
