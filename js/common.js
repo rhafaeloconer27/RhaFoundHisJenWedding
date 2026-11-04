@@ -19,6 +19,12 @@ const WEDDING_NAVIGATION_ITEMS = [
   let navPreviewDisabled = false;
   let initialPreviewStarted = false;
 
+  const NAV_SCROLL_STOP_DELAY = 700;
+  const NAV_SCROLL_THRESHOLD = 5;
+  let scrollStopTimeout = null;
+  let lastScrollY = window.scrollY;
+  let scrollBehaviorEnabled = false;
+
   function markup() {
     const items = WEDDING_NAVIGATION_ITEMS.map(({ page, icon, label }) => `
       <a class="nav-item" href="${page === "home" ? "wedding.html" : `wedding.html?page=${page}`}" data-page="${page}">
@@ -58,6 +64,48 @@ const WEDDING_NAVIGATION_ITEMS = [
     toggle.setAttribute("aria-label", expanded ? "Navigation expanded" : "Expand navigation");
     nav.inert = !expanded;
     if (expanded) scheduleShapeUpdate();
+  }
+
+  function handleNavigationScroll() {
+    if (!wrapper || !nav || !toggle) return;
+
+    const currentScrollY = Math.max(0, window.scrollY);
+    const difference = currentScrollY - lastScrollY;
+    lastScrollY = currentScrollY;
+
+    if (
+      document.body.classList.contains("spa-initializing") ||
+      document.body.classList.contains("page-transition-active") ||
+      document.body.classList.contains("wedding-flip-active") ||
+      document.body.classList.contains("wedding-native-flip")
+    ) {
+      clearTimeout(scrollStopTimeout);
+      scrollStopTimeout = null;
+      return;
+    }
+
+    if (Math.abs(difference) < NAV_SCROLL_THRESHOLD && !scrollBehaviorEnabled) return;
+    scrollBehaviorEnabled = true;
+    stopNavigationPreview();
+
+    if (difference > 0 && wrapper.classList.contains("is-expanded")) {
+      setExpanded(false);
+    }
+
+    clearTimeout(scrollStopTimeout);
+    scrollStopTimeout = setTimeout(() => {
+      scrollStopTimeout = null;
+      if (!wrapper?.isConnected) return;
+      if (
+        document.body.classList.contains("spa-initializing") ||
+        document.body.classList.contains("page-transition-active") ||
+        document.body.classList.contains("wedding-flip-active") ||
+        document.body.classList.contains("wedding-native-flip")
+      ) return;
+      navManuallyOpened = false;
+      setExpanded(true);
+      scrollBehaviorEnabled = false;
+    }, NAV_SCROLL_STOP_DELAY);
   }
 
   function stopNavigationPreview() {
@@ -115,6 +163,8 @@ const WEDDING_NAVIGATION_ITEMS = [
       navManuallyOpened = true;
       navPreviewDisabled = true;
       stopNavigationPreview();
+      clearTimeout(scrollStopTimeout);
+      scrollStopTimeout = null;
       setExpanded(true);
     });
 
@@ -180,6 +230,10 @@ const WEDDING_NAVIGATION_ITEMS = [
 
   function renderCommonNavigation(pageName = "home") {
     currentPage = pageName;
+    lastScrollY = window.scrollY;
+    clearTimeout(scrollStopTimeout);
+    scrollStopTimeout = null;
+    scrollBehaviorEnabled = false;
     if (!ensureNavigation()) return;
     for (const link of links) {
       const active = link.dataset.page === currentPage;
@@ -192,6 +246,7 @@ const WEDDING_NAVIGATION_ITEMS = [
 
   window.updateCommonNavigation = renderCommonNavigation;
   window.addEventListener("resize", scheduleShapeUpdate, { passive: true });
+  window.addEventListener("scroll", handleNavigationScroll, { passive: true });
   function initialize() {
     renderCommonNavigation(document.body.dataset.currentPage || "home");
     // app.js triggers the preview when the transition has actually completed.
