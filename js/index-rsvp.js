@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     "BIANCA JOY SAMILLANO": "Maid of Honor",
 
-    "PS. MANRIC TAN PASCUAL": "Principal Sponsor",
+    "REV. DR. MANRIC TAN PASCUAL": "Principal Sponsor",
 
     "PS. ROSANNA TAN PASCUAL": "Principal Sponsor",
 
@@ -190,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     "KRIZZA DAYON",
 
-    "HANNAH CAMPANANO",
+    "HANNAH JOY CAMPANANO",
 
     "GARAE BELANO",
 
