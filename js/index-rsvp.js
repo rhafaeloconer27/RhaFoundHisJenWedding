@@ -178,7 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     "JOSHUA AQUINO",
 
-    "MARINEL CUARESMA",
+    "MARINELL CUARESMA",
 
     "LOURDES OCONER",
 
