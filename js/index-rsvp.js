@@ -220,8 +220,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     "MELAI CLORES TAGAPUEN",
 
-    "MARIA CASELYN BALMORES",
-
     "BERNARD SOLERO",
 
     "JOHN ROBERT DAYON",
@@ -236,9 +234,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     "PRINCESS BONILLA",
 
-    "WINTER ENGUITO (3YRS OLD)",
+    "WINTER ENGUITO ",
 
-    "ISAIAH PILLAS (3YRS OLD)",
+    "MARIA LETHIZiA PILLAS",
+
+    "JONA VILLARUEL",
 
   ];
 
